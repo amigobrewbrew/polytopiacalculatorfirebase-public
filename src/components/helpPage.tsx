@@ -62,7 +62,7 @@ class helpPage extends React.Component {
               <br></br>A big thanks to Programming with Mosh, Midjiwan and the
               Polytopia community!
               <br></br>
-              Press F12 the find the worst source code you have ever seen. Also
+              Press F12 to find the worst source code you have ever seen. Also
               available here:{" "}
               <a href="https://github.com/amigobrewbrew/polytopiacalculatorfirebase-public">
                 GitHub
