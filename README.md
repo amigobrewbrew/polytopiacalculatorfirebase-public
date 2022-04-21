@@ -2,7 +2,7 @@
 
 My first project doing Typescript and React.
 
-Use "npm run build" & "npm run start" before deploying react app to azure/firebase/hosting
+Use "npm install", "npm run build" & "npm run start" before deploying react app to azure/firebase/hosting
 
 Please contact me at: amigobrewbrew@gmail.com
 
