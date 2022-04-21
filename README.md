@@ -4,8 +4,6 @@ My first project doing Typescript and React.
 
 Use "npm install", "npm run build" & "npm run start" before deploying react app to azure/firebase/hosting
 
-Please contact me at: amigobrewbrew@gmail.com
-
 # Setup
 
 For firebase hosting, configure your project API keys for src/firebase.js in .env.local file or disable firebase all together.
