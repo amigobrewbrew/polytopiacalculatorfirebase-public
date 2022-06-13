@@ -1322,7 +1322,7 @@ class battleGroundDetails extends React.Component<State> {
           attacker.splashDamage === true &&
           attacker.typeUnit === "FireDragon"
         ) {
-          attacker.attack = 2.5;
+          attacker.attack = 2.33;
         }
 
         if (
