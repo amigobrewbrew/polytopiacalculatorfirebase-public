@@ -94,7 +94,7 @@ export abstract class AmphibianStats {
 export abstract class TridentionStats {
   public static healthMax = 15;
   public static healthMaxVeteran = 20;
-  public static attack = 2;
+  public static attack = 3;
   public static defence = 1;
 }
 
