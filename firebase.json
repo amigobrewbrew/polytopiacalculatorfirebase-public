@@ -1,13 +1,6 @@
 {
   "hosting": {
     "public": "build",
-    "redirects": [
-      {
-        "source": "/",
-        "destination": "https://calc.polytopia.app/",
-        "type": 301
-      }
-    ],
     "ignore": [
       "firebase.json",
       "**/.*",
