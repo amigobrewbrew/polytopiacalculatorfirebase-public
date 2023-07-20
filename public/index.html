@@ -55,3 +55,8 @@
     -->
   </body>
 </html>
+<script type="text/javascript">
+  if (location.hostname.indexOf("%REACT_APP_CUSTOM_DOMAIN%") === -1) {
+    location.replace("https://%REACT_APP_CUSTOM_DOMAIN%");
+  }
+</script>
