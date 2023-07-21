@@ -1347,7 +1347,7 @@ class battleGroundDetails extends React.Component<State> {
         let totalDamage = attackForce + defenceForce;
 
         attackResult = Math.round(
-          (attackForce / totalDamage) *
+          parseFloat((attackForce / totalDamage).toFixed(10)) *
             (attacker.attack + 0.5 * boostedBonusMultiplier) *
             4.5
         );
@@ -1362,7 +1362,9 @@ class battleGroundDetails extends React.Component<State> {
 
         if (defender.healthAfter > 0) {
           defenceResult = Math.round(
-            (defenceForce / totalDamage) * defender.defence * 4.5
+            parseFloat((defenceForce / totalDamage).toFixed(10)) *
+              defender.defence *
+              4.5
           );
         } else {
           defenceResult = 0;

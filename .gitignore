@@ -31,3 +31,5 @@ local.settings.json
 
 # firebase cache files
 /.firebase
+/.vscode
+.vscode/launch.json

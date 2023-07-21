@@ -2,15 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="canonical" href="https://%REACT_APP_CUSTOM_DOMAIN%" />
     <link rel="icon" href="%PUBLIC_URL%/Giant.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-
+    <meta
+      name="keywords"
+      content="polytopia, polytopia app, polytopia calculator, polytopia battle calculator, polytopia damage calculator, Ancients, Cymanti, Polaris, Elyrion, Aquarion, Cloak, Dagger"
+    />
     <meta
       name="description"
-      content="The quickest and easiest Polytopia Damage
-    Calculator on the web! Set up battle scenarios via a minimalistic UI and
-    calculate the outcome for the attackers and defenders. "
+      content="The best multiplayer Battle for Polytopia Damage Calculator on the web! Includes Ancients, Cymanti, Polaris, Elyrion, Aquarion, Cloak, Dagger and other special units. Supports multiple attackers and defenders scenarios."
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/Battleship.png" />
     <meta name="author" content="amigobrewbrew" />
@@ -33,6 +35,11 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Polytopia Damage Calculator</title>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5967034463547594"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -49,3 +56,8 @@
     -->
   </body>
 </html>
+<script type="text/javascript">
+  if (location.hostname.indexOf("%REACT_APP_CUSTOM_DOMAIN%") === -1) {
+    location.replace("https://%REACT_APP_CUSTOM_DOMAIN%");
+  }
+</script>
