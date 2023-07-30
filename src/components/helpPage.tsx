@@ -55,11 +55,8 @@ class helpPage extends React.Component {
               </ul>
             </span>
             <p>
-              Contact me for questions, tips, bugs etc. at:{" "}
-              <a href="mailto:amigobrewbrew@gmail.com">
-                amigobrewbrew@gmail.com
-              </a>{" "}
-              or on{" "}
+              Contact me for questions, tips, bugs etc. via{" "}
+              <a href={`mailto:${process.env.REACT_APP_EMAIL}`}>Email</a> or on{" "}
               <a href="https://discord.com/channels/1135234648360882297/1135235261777846423">
                 {" "}
                 Discord{" "}
