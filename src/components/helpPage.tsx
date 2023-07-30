@@ -26,18 +26,18 @@ class helpPage extends React.Component {
               <ul>
                 <li>Soldier icon: Unit on battefield</li>
                 <li>
-                  First number: Hit points of soldier before the battle. You can
+                  First number: Hitpoints of soldier before the battle. You can
                   adjust this number with direct input by clicking on the number
                   field
                 </li>
                 <li>
-                  Second number: Hit points of the soldier after the battle{" "}
+                  Second number: Hitpoints of the soldier after the battle{" "}
                 </li>
                 <li>[x]: Delete unit from battlefield</li>
-                <li>[+]: Increase soldier hit points by one</li>
-                <li>[-]: Decrease soldier hit points by one</li>
+                <li>[+]: Increase soldier hitpoints by one</li>
+                <li>[-]: Decrease soldier hitpoints by one</li>
                 <li>
-                  VET: When toggled, unit is veteran (plus 5 maximum hit points)
+                  VET: When toggled, unit is veteran (plus 5 maximum hitpoints)
                 </li>
                 <li>
                   SPLS: When toggled, unit is doing splash damage (fire dragon)
@@ -46,8 +46,8 @@ class helpPage extends React.Component {
                 <li>BST: When toggled, unit is boosted by cymanti shaman</li>
                 <li>
                   MX##: Set the maximum health for ships to 10, 15, 20, 25, 35
-                  or 40 hit points. Maximum hit points affects attacking and
-                  defensive power.
+                  or 40 hitpoints. Maximum hitpoints affects attacking and
+                  defensive power
                 </li>
                 <li>DEF: When toggled, unit gets defensive bonus </li>
                 <li>WALL: When toggled, unit gets walled bonus </li>
@@ -58,14 +58,27 @@ class helpPage extends React.Component {
               Contact me for questions, tips, bugs etc. at:{" "}
               <a href="mailto:amigobrewbrew@gmail.com">
                 amigobrewbrew@gmail.com
+              </a>{" "}
+              or on{" "}
+              <a href="https://discord.com/channels/1135234648360882297/1135235261777846423">
+                {" "}
+                Discord{" "}
               </a>
               <br></br>A big thanks to Programming with Mosh, Midjiwan and the
               Polytopia community!
               <br></br>
               Press F12 to find the worst source code you have ever seen. Also
-              available here:{" "}
+              available on{" "}
               <a href="https://github.com/amigobrewbrew/polytopiacalculatorfirebase-public">
+                {" "}
                 GitHub
+              </a>{" "}
+              <br></br>
+              Costs to maintain this website are very minimal; however, if you
+              like, you can support the website via{" "}
+              <a href="https://www.paypal.com/donate/?business=HEVFJL6C3XXRC&no_recurring=0&item_name=Support+Polytopia+Damage+Calculator+&currency_code=EUR">
+                {" "}
+                Paypal{" "}
               </a>
               <br></br>
             </p>
