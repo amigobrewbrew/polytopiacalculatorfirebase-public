@@ -240,7 +240,6 @@ class battleGroundDetails extends React.Component<State> {
           <AttackersSelection onAddAttacker={this.handleAddAttacker} />
           <DefendersSelection OnAddDefender={this.handleAddDefender} />
           {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
-          <span style={{ color: "#FFFFFE" }}>The Omnissiah provides </span>
         </div>
       </Box>
     );

@@ -19,4 +19,3 @@ Firebase: https://www.youtube.com/watch?v=PKwu15ldZ7k
 # Usage
 
 Feel free to use this code. Please credit me when using this code by linking to this github repository. Would be great to see your projects.
-Contact me at: amigobrewbrew@gmail.com
