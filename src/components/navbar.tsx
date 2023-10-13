@@ -39,6 +39,9 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
             <a href="/help" style={{ marginTop: 1 }}>
               Help
             </a>
+            <a href="/beta" style={{ marginTop: 1 }}>
+              Beta
+            </a>
             <a href="#" className="icon" onClick={() => this.myFunction()}>
               <img src={HamburgerMenu} alt="Hamburger menu" width="30" />
               <i className="fa fa-bars"></i>

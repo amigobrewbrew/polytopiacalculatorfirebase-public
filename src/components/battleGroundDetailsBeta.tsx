@@ -6,16 +6,16 @@
  */
 
 import * as React from "react";
-import AttackersSelection from "./attackersSelection";
-import DefendersSelection from "./defendersSelection";
-import SoldierUnitAsRender from "./soldierUnitAsRender";
-import * as Stats from "./unitStats";
+import AttackersSelectionBeta from "./attackersSelectionBeta";
+import DefendersSelectionBeta from "./defendersSelectionBeta";
+import SoldierUnitAsRenderBeta from "./soldierUnitAsRenderBeta";
+import * as StatsBeta from "./unitStatsBeta";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Grid from "@material-ui/core/Grid";
-import { analytics } from "./../firebase";
+import { analytics } from "../firebase";
 import { logEvent } from "firebase/analytics";
 
 // import { withAITracking } from "@microsoft/applicationinsights-react-js";
@@ -92,7 +92,7 @@ type State = {
  * Handles the add attacker and add defender actions of the Attacker and Defenders selection component
  * Calculates the Attackers and defender outcome simulation
  */
-class battleGroundDetails extends React.Component<State> {
+class battleGroundDetailsBeta extends React.Component<State> {
   state: State = {
     soldierUnitsAttackersAsRender: [],
     soldierUnitsDefenders: [],
@@ -145,7 +145,7 @@ class battleGroundDetails extends React.Component<State> {
                     }}
                   >
                     <Box sx={{ margin: 0 }}>
-                      <SoldierUnitAsRender
+                      <SoldierUnitAsRenderBeta
                         id={soldierUnitAtt.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -172,7 +172,7 @@ class battleGroundDetails extends React.Component<State> {
                         boostedBonus={soldierUnitAtt.boostedBonus}
                         shipUnit={soldierUnitAtt.shipUnit}
                         splashDamage={soldierUnitAtt.splashDamage}
-                      ></SoldierUnitAsRender>
+                      ></SoldierUnitAsRenderBeta>
                     </Box>
                   </Box>
                 )
@@ -200,7 +200,7 @@ class battleGroundDetails extends React.Component<State> {
                     }}
                   >
                     <Box sx={{ margin: 0 }}>
-                      <SoldierUnitAsRender
+                      <SoldierUnitAsRenderBeta
                         id={soldierUnitDef.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -227,7 +227,7 @@ class battleGroundDetails extends React.Component<State> {
                         boostedBonus={soldierUnitDef.boostedBonus}
                         shipUnit={soldierUnitDef.shipUnit}
                         splashDamage={soldierUnitDef.splashDamage}
-                      ></SoldierUnitAsRender>
+                      ></SoldierUnitAsRenderBeta>
                     </Box>
                   </Box>
                 )
@@ -235,15 +235,13 @@ class battleGroundDetails extends React.Component<State> {
             </Grid>
           </Grid>
         </Box>
+
         <div style={{ width: "100%", verticalAlign: "bottom", float: "left" }}>
-          <AttackersSelection onAddAttacker={this.handleAddAttacker} />
-          <DefendersSelection OnAddDefender={this.handleAddDefender} />
+          <AttackersSelectionBeta onAddAttacker={this.handleAddAttacker} />
+          <DefendersSelectionBeta OnAddDefender={this.handleAddDefender} />
           {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
         </div>
-        <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
-          {" "}
-          Find Raft, Scout, Rammer, Bomber and Juggernaut here!
-        </a>{" "}
+        <p> This page holds steam beta stats and units </p>
       </Box>
     );
   }
@@ -880,12 +878,16 @@ class battleGroundDetails extends React.Component<State> {
 
   istypeUnitaShipUnit = (typeUnit: string) => {
     switch (typeUnit) {
-      case "Boat":
+      case "Raft":
         return true;
-      case "Ship":
+      case "Scout":
         return true;
-      case "Battleship":
+      case "Rammer":
         return true;
+      case "Bomber":
+        return true;
+      case "Juggernaut":
+        return false;
       default:
         return false;
     }
@@ -894,81 +896,93 @@ class battleGroundDetails extends React.Component<State> {
   healthMax = (typeUnit: string) => {
     switch (typeUnit) {
       case "Warrior":
-        return Stats.WarriorStats.healthMax;
+        return StatsBeta.WarriorStats.healthMax;
       case "Archer":
-        return Stats.ArcherStats.healthMax;
+        return StatsBeta.ArcherStats.healthMax;
       case "Rider":
-        return Stats.RiderStats.healthMax;
+        return StatsBeta.RiderStats.healthMax;
       case "Defender":
-        return Stats.DefenderStats.healthMax;
+        return StatsBeta.DefenderStats.healthMax;
       case "Swordsman":
-        return Stats.SwordsmanStats.healthMax;
+        return StatsBeta.SwordsmanStats.healthMax;
       case "Catapult":
-        return Stats.CatapultStats.healthMax;
+        return StatsBeta.CatapultStats.healthMax;
       case "Knight":
-        return Stats.KnightStats.healthMax;
+        return StatsBeta.KnightStats.healthMax;
       case "Giant":
-        return Stats.GiantStats.healthMax;
-      case "Battleship":
-        return Stats.BattleshipStats.healthMax;
+        return StatsBeta.GiantStats.healthMax;
       case "MindBender":
-        return Stats.MindBenderStats.healthMax;
+        return StatsBeta.MindBenderStats.healthMax;
       case "NatureBunny":
-        return Stats.NatureBunnyStats.healthMax;
+        return StatsBeta.NatureBunnyStats.healthMax;
       case "Boat":
-        return Stats.BoatStats.healthMax;
+        return StatsBeta.BoatStats.healthMax;
       case "Ship":
-        return Stats.ShipStats.healthMax;
+        return StatsBeta.ShipStats.healthMax;
+      case "Battleship":
+        return StatsBeta.BattleshipStats.healthMax;
+      case "Pirate":
+        return StatsBeta.PirateStats.healthMax;
+      case "Raft":
+        return StatsBeta.RaftStats.healthMax;
+      case "Scout":
+        return StatsBeta.ScoutStats.healthMax;
+      case "Rammer":
+        return StatsBeta.RammerStats.healthMax;
+      case "Bomber":
+        return StatsBeta.BomberStats.healthMax;
+      case "Juggernaut":
+        return StatsBeta.JuggernautStats.healthMax;
       case "Amphibian":
-        return Stats.AmphibianStats.healthMax;
+        return StatsBeta.AmphibianStats.healthMax;
       case "Tridention":
-        return Stats.TridentionStats.healthMax;
+        return StatsBeta.TridentionStats.healthMax;
       case "Crab":
-        return Stats.CrabStats.healthMax;
+        return StatsBeta.CrabStats.healthMax;
       case "Polytaur":
-        return Stats.PolytaurStats.healthMax;
+        return StatsBeta.PolytaurStats.healthMax;
       case "Navalon":
-        return Stats.NavalonStats.healthMax;
+        return StatsBeta.NavalonStats.healthMax;
       case "DragonEgg":
-        return Stats.DragonEggStats.healthMax;
+        return StatsBeta.DragonEggStats.healthMax;
       case "BabyDragon":
-        return Stats.BabyDragonStats.healthMax;
+        return StatsBeta.BabyDragonStats.healthMax;
       case "FireDragon":
-        return Stats.FireDragonStats.healthMax;
+        return StatsBeta.FireDragonStats.healthMax;
       case "Mooni":
-        return Stats.MooniStats.healthMax;
+        return StatsBeta.MooniStats.healthMax;
       case "IceArcher":
-        return Stats.IceArcherStats.healthMax;
+        return StatsBeta.IceArcherStats.healthMax;
       case "BattleSled":
-        return Stats.BattleSledStats.healthMax;
+        return StatsBeta.BattleSledStats.healthMax;
       case "IceFortress":
-        return Stats.IceFortressStats.healthMax;
+        return StatsBeta.IceFortressStats.healthMax;
       case "Gaami":
-        return Stats.GaamiStats.healthMax;
+        return StatsBeta.GaamiStats.healthMax;
       case "Hexapod":
-        return Stats.HexapodStats.healthMax;
+        return StatsBeta.HexapodStats.healthMax;
       case "Kiton":
-        return Stats.KitonStats.healthMax;
+        return StatsBeta.KitonStats.healthMax;
       case "Phychi":
-        return Stats.PhychiStats.healthMax;
+        return StatsBeta.PhychiStats.healthMax;
       case "Raychi":
-        return Stats.RaychiStats.healthMax;
+        return StatsBeta.RaychiStats.healthMax;
       case "Shaman":
-        return Stats.ShamanStats.healthMax;
+        return StatsBeta.ShamanStats.healthMax;
       case "Exida":
-        return Stats.ExidaStats.healthMax;
+        return StatsBeta.ExidaStats.healthMax;
       case "Doomux":
-        return Stats.DoomuxStats.healthMax;
+        return StatsBeta.DoomuxStats.healthMax;
       case "Centipede":
-        return Stats.CentipedeStats.healthMax;
+        return StatsBeta.CentipedeStats.healthMax;
       case "Segment":
-        return Stats.SegmentStats.healthMax;
+        return StatsBeta.SegmentStats.healthMax;
       case "Dagger":
-        return Stats.DaggerStats.healthMax;
+        return StatsBeta.DaggerStats.healthMax;
       case "Cloak":
-        return Stats.CloakStats.healthMax;
+        return StatsBeta.CloakStats.healthMax;
       case "Dinghy":
-        return Stats.DinghyStats.healthMax;
+        return StatsBeta.DinghyStats.healthMax;
 
       default:
         return 0;
@@ -978,81 +992,93 @@ class battleGroundDetails extends React.Component<State> {
   healthMaxVeteran = (typeUnit: string) => {
     switch (typeUnit) {
       case "Warrior":
-        return Stats.WarriorStats.healthMaxVeteran;
+        return StatsBeta.WarriorStats.healthMaxVeteran;
       case "Archer":
-        return Stats.ArcherStats.healthMaxVeteran;
+        return StatsBeta.ArcherStats.healthMaxVeteran;
       case "Rider":
-        return Stats.RiderStats.healthMaxVeteran;
+        return StatsBeta.RiderStats.healthMaxVeteran;
       case "Defender":
-        return Stats.DefenderStats.healthMaxVeteran;
+        return StatsBeta.DefenderStats.healthMaxVeteran;
       case "Swordsman":
-        return Stats.SwordsmanStats.healthMaxVeteran;
+        return StatsBeta.SwordsmanStats.healthMaxVeteran;
       case "Catapult":
-        return Stats.CatapultStats.healthMaxVeteran;
+        return StatsBeta.CatapultStats.healthMaxVeteran;
       case "Knight":
-        return Stats.KnightStats.healthMaxVeteran;
+        return StatsBeta.KnightStats.healthMaxVeteran;
       case "Giant":
-        return Stats.GiantStats.healthMaxVeteran;
+        return StatsBeta.GiantStats.healthMaxVeteran;
       case "Battleship":
-        return Stats.BattleshipStats.healthMaxVeteran;
+        return StatsBeta.BattleshipStats.healthMaxVeteran;
       case "MindBender":
-        return Stats.MindBenderStats.healthMaxVeteran;
+        return StatsBeta.MindBenderStats.healthMaxVeteran;
       case "NatureBunny":
-        return Stats.NatureBunnyStats.healthMaxVeteran;
+        return StatsBeta.NatureBunnyStats.healthMaxVeteran;
       case "Boat":
-        return Stats.BoatStats.healthMaxVeteran;
+        return StatsBeta.BoatStats.healthMaxVeteran;
       case "Ship":
-        return Stats.ShipStats.healthMaxVeteran;
+        return StatsBeta.ShipStats.healthMaxVeteran;
       case "Amphibian":
-        return Stats.AmphibianStats.healthMaxVeteran;
+        return StatsBeta.AmphibianStats.healthMaxVeteran;
       case "Tridention":
-        return Stats.TridentionStats.healthMaxVeteran;
+        return StatsBeta.TridentionStats.healthMaxVeteran;
       case "Crab":
-        return Stats.CrabStats.healthMaxVeteran;
+        return StatsBeta.CrabStats.healthMaxVeteran;
       case "Polytaur":
-        return Stats.PolytaurStats.healthMaxVeteran;
+        return StatsBeta.PolytaurStats.healthMaxVeteran;
       case "Navalon":
-        return Stats.NavalonStats.healthMaxVeteran;
+        return StatsBeta.NavalonStats.healthMaxVeteran;
       case "DragonEgg":
-        return Stats.DragonEggStats.healthMaxVeteran;
+        return StatsBeta.DragonEggStats.healthMaxVeteran;
       case "BabyDragon":
-        return Stats.BabyDragonStats.healthMaxVeteran;
+        return StatsBeta.BabyDragonStats.healthMaxVeteran;
       case "FireDragon":
-        return Stats.FireDragonStats.healthMaxVeteran;
+        return StatsBeta.FireDragonStats.healthMaxVeteran;
       case "Mooni":
-        return Stats.MooniStats.healthMaxVeteran;
+        return StatsBeta.MooniStats.healthMaxVeteran;
       case "IceArcher":
-        return Stats.IceArcherStats.healthMaxVeteran;
+        return StatsBeta.IceArcherStats.healthMaxVeteran;
       case "BattleSled":
-        return Stats.BattleSledStats.healthMaxVeteran;
+        return StatsBeta.BattleSledStats.healthMaxVeteran;
       case "IceFortress":
-        return Stats.IceFortressStats.healthMaxVeteran;
+        return StatsBeta.IceFortressStats.healthMaxVeteran;
       case "Gaami":
-        return Stats.GaamiStats.healthMaxVeteran;
+        return StatsBeta.GaamiStats.healthMaxVeteran;
       case "Hexapod":
-        return Stats.HexapodStats.healthMaxVeteran;
+        return StatsBeta.HexapodStats.healthMaxVeteran;
       case "Kiton":
-        return Stats.KitonStats.healthMaxVeteran;
+        return StatsBeta.KitonStats.healthMaxVeteran;
       case "Phychi":
-        return Stats.PhychiStats.healthMaxVeteran;
+        return StatsBeta.PhychiStats.healthMaxVeteran;
       case "Raychi":
-        return Stats.RaychiStats.healthMaxVeteran;
+        return StatsBeta.RaychiStats.healthMaxVeteran;
       case "Shaman":
-        return Stats.ShamanStats.healthMaxVeteran;
+        return StatsBeta.ShamanStats.healthMaxVeteran;
       case "Exida":
-        return Stats.ExidaStats.healthMaxVeteran;
+        return StatsBeta.ExidaStats.healthMaxVeteran;
       case "Doomux":
-        return Stats.DoomuxStats.healthMaxVeteran;
+        return StatsBeta.DoomuxStats.healthMaxVeteran;
       case "Centipede":
-        return Stats.CentipedeStats.healthMaxVeteran;
+        return StatsBeta.CentipedeStats.healthMaxVeteran;
       case "Segment":
-        return Stats.SegmentStats.healthMaxVeteran;
+        return StatsBeta.SegmentStats.healthMaxVeteran;
       case "Dagger":
-        return Stats.DaggerStats.healthMaxVeteran;
+        return StatsBeta.DaggerStats.healthMaxVeteran;
       case "Cloak":
-        return Stats.CloakStats.healthMaxVeteran;
+        return StatsBeta.CloakStats.healthMaxVeteran;
       case "Dinghy":
-        return Stats.DinghyStats.healthMaxVeteran;
+        return StatsBeta.DinghyStats.healthMaxVeteran;
+      case "Pirate":
+        return StatsBeta.PirateStats.healthMaxVeteran;
+      case "Raft":
+        return StatsBeta.RaftStats.healthMaxVeteran;
+      case "Scout":
+        return StatsBeta.ScoutStats.healthMaxVeteran;
+      case "Rammer":
+        return StatsBeta.RammerStats.healthMaxVeteran;
+      case "Bomber":
+        return StatsBeta.BomberStats.healthMaxVeteran;
+      case "Juggernaut":
+        return StatsBeta.JuggernautStats.healthMaxVeteran;
 
       default:
         return 0;
@@ -1062,81 +1088,94 @@ class battleGroundDetails extends React.Component<State> {
   attack = (typeUnit: string) => {
     switch (typeUnit) {
       case "Warrior":
-        return Stats.WarriorStats.attack;
+        return StatsBeta.WarriorStats.attack;
       case "Archer":
-        return Stats.ArcherStats.attack;
+        return StatsBeta.ArcherStats.attack;
       case "Rider":
-        return Stats.RiderStats.attack;
+        return StatsBeta.RiderStats.attack;
       case "Defender":
-        return Stats.DefenderStats.attack;
+        return StatsBeta.DefenderStats.attack;
       case "Swordsman":
-        return Stats.SwordsmanStats.attack;
+        return StatsBeta.SwordsmanStats.attack;
       case "Catapult":
-        return Stats.CatapultStats.attack;
+        return StatsBeta.CatapultStats.attack;
       case "Knight":
-        return Stats.KnightStats.attack;
+        return StatsBeta.KnightStats.attack;
       case "Giant":
-        return Stats.GiantStats.attack;
+        return StatsBeta.GiantStats.attack;
       case "Battleship":
-        return Stats.BattleshipStats.attack;
+        return StatsBeta.BattleshipStats.attack;
       case "MindBender":
-        return Stats.MindBenderStats.attack;
+        return StatsBeta.MindBenderStats.attack;
       case "NatureBunny":
-        return Stats.NatureBunnyStats.attack;
+        return StatsBeta.NatureBunnyStats.attack;
       case "Boat":
-        return Stats.BoatStats.attack;
+        return StatsBeta.BoatStats.attack;
       case "Ship":
-        return Stats.ShipStats.attack;
+        return StatsBeta.ShipStats.attack;
       case "Amphibian":
-        return Stats.AmphibianStats.attack;
+        return StatsBeta.AmphibianStats.attack;
       case "Tridention":
-        return Stats.TridentionStats.attack;
+        return StatsBeta.TridentionStats.attack;
       case "Crab":
-        return Stats.CrabStats.attack;
+        return StatsBeta.CrabStats.attack;
       case "Polytaur":
-        return Stats.PolytaurStats.attack;
+        return StatsBeta.PolytaurStats.attack;
       case "Navalon":
-        return Stats.NavalonStats.attack;
+        return StatsBeta.NavalonStats.attack;
       case "DragonEgg":
-        return Stats.DragonEggStats.attack;
+        return StatsBeta.DragonEggStats.attack;
       case "BabyDragon":
-        return Stats.BabyDragonStats.attack;
+        return StatsBeta.BabyDragonStats.attack;
       case "FireDragon":
-        return Stats.FireDragonStats.attack;
+        return StatsBeta.FireDragonStats.attack;
       case "Mooni":
-        return Stats.MooniStats.attack;
+        return StatsBeta.MooniStats.attack;
       case "IceArcher":
-        return Stats.IceArcherStats.attack;
+        return StatsBeta.IceArcherStats.attack;
       case "BattleSled":
-        return Stats.BattleSledStats.attack;
+        return StatsBeta.BattleSledStats.attack;
       case "IceFortress":
-        return Stats.IceFortressStats.attack;
+        return StatsBeta.IceFortressStats.attack;
       case "Gaami":
-        return Stats.GaamiStats.attack;
+        return StatsBeta.GaamiStats.attack;
       case "Hexapod":
-        return Stats.HexapodStats.attack;
+        return StatsBeta.HexapodStats.attack;
       case "Kiton":
-        return Stats.KitonStats.attack;
+        return StatsBeta.KitonStats.attack;
       case "Phychi":
-        return Stats.PhychiStats.attack;
+        return StatsBeta.PhychiStats.attack;
       case "Raychi":
-        return Stats.RaychiStats.attack;
+        return StatsBeta.RaychiStats.attack;
       case "Shaman":
-        return Stats.ShamanStats.attack;
+        return StatsBeta.ShamanStats.attack;
       case "Exida":
-        return Stats.ExidaStats.attack;
+        return StatsBeta.ExidaStats.attack;
       case "Doomux":
-        return Stats.DoomuxStats.attack;
+        return StatsBeta.DoomuxStats.attack;
       case "Centipede":
-        return Stats.CentipedeStats.attack;
+        return StatsBeta.CentipedeStats.attack;
       case "Segment":
-        return Stats.SegmentStats.attack;
+        return StatsBeta.SegmentStats.attack;
       case "Dagger":
-        return Stats.DaggerStats.attack;
+        return StatsBeta.DaggerStats.attack;
       case "Cloak":
-        return Stats.CloakStats.attack;
+        return StatsBeta.CloakStats.attack;
       case "Dinghy":
-        return Stats.DinghyStats.attack;
+        return StatsBeta.DinghyStats.attack;
+
+      case "Pirate":
+        return StatsBeta.PirateStats.attack;
+      case "Raft":
+        return StatsBeta.RaftStats.attack;
+      case "Scout":
+        return StatsBeta.ScoutStats.attack;
+      case "Rammer":
+        return StatsBeta.RammerStats.attack;
+      case "Bomber":
+        return StatsBeta.BomberStats.attack;
+      case "Juggernaut":
+        return StatsBeta.JuggernautStats.attack;
 
       default:
         return 0;
@@ -1146,81 +1185,94 @@ class battleGroundDetails extends React.Component<State> {
   defence = (typeUnit: string) => {
     switch (typeUnit) {
       case "Warrior":
-        return Stats.WarriorStats.defence;
+        return StatsBeta.WarriorStats.defence;
       case "Archer":
-        return Stats.ArcherStats.defence;
+        return StatsBeta.ArcherStats.defence;
       case "Rider":
-        return Stats.RiderStats.defence;
+        return StatsBeta.RiderStats.defence;
       case "Defender":
-        return Stats.DefenderStats.defence;
+        return StatsBeta.DefenderStats.defence;
       case "Swordsman":
-        return Stats.SwordsmanStats.defence;
+        return StatsBeta.SwordsmanStats.defence;
       case "Catapult":
-        return Stats.CatapultStats.defence;
+        return StatsBeta.CatapultStats.defence;
       case "Knight":
-        return Stats.KnightStats.defence;
+        return StatsBeta.KnightStats.defence;
       case "Giant":
-        return Stats.GiantStats.defence;
+        return StatsBeta.GiantStats.defence;
       case "Battleship":
-        return Stats.BattleshipStats.defence;
+        return StatsBeta.BattleshipStats.defence;
       case "MindBender":
-        return Stats.MindBenderStats.defence;
+        return StatsBeta.MindBenderStats.defence;
       case "NatureBunny":
-        return Stats.NatureBunnyStats.defence;
+        return StatsBeta.NatureBunnyStats.defence;
       case "Boat":
-        return Stats.BoatStats.defence;
+        return StatsBeta.BoatStats.defence;
       case "Ship":
-        return Stats.ShipStats.defence;
+        return StatsBeta.ShipStats.defence;
       case "Amphibian":
-        return Stats.AmphibianStats.defence;
+        return StatsBeta.AmphibianStats.defence;
       case "Tridention":
-        return Stats.TridentionStats.defence;
+        return StatsBeta.TridentionStats.defence;
       case "Crab":
-        return Stats.CrabStats.defence;
+        return StatsBeta.CrabStats.defence;
       case "Polytaur":
-        return Stats.PolytaurStats.defence;
+        return StatsBeta.PolytaurStats.defence;
       case "Navalon":
-        return Stats.NavalonStats.defence;
+        return StatsBeta.NavalonStats.defence;
       case "DragonEgg":
-        return Stats.DragonEggStats.defence;
+        return StatsBeta.DragonEggStats.defence;
       case "BabyDragon":
-        return Stats.BabyDragonStats.defence;
+        return StatsBeta.BabyDragonStats.defence;
       case "FireDragon":
-        return Stats.FireDragonStats.defence;
+        return StatsBeta.FireDragonStats.defence;
       case "Mooni":
-        return Stats.MooniStats.defence;
+        return StatsBeta.MooniStats.defence;
       case "IceArcher":
-        return Stats.IceArcherStats.defence;
+        return StatsBeta.IceArcherStats.defence;
       case "BattleSled":
-        return Stats.BattleSledStats.defence;
+        return StatsBeta.BattleSledStats.defence;
       case "IceFortress":
-        return Stats.IceFortressStats.defence;
+        return StatsBeta.IceFortressStats.defence;
       case "Gaami":
-        return Stats.GaamiStats.defence;
+        return StatsBeta.GaamiStats.defence;
       case "Hexapod":
-        return Stats.HexapodStats.defence;
+        return StatsBeta.HexapodStats.defence;
       case "Kiton":
-        return Stats.KitonStats.defence;
+        return StatsBeta.KitonStats.defence;
       case "Phychi":
-        return Stats.PhychiStats.defence;
+        return StatsBeta.PhychiStats.defence;
       case "Raychi":
-        return Stats.RaychiStats.defence;
+        return StatsBeta.RaychiStats.defence;
       case "Shaman":
-        return Stats.ShamanStats.defence;
+        return StatsBeta.ShamanStats.defence;
       case "Exida":
-        return Stats.ExidaStats.defence;
+        return StatsBeta.ExidaStats.defence;
       case "Doomux":
-        return Stats.DoomuxStats.defence;
+        return StatsBeta.DoomuxStats.defence;
       case "Centipede":
-        return Stats.CentipedeStats.defence;
+        return StatsBeta.CentipedeStats.defence;
       case "Segment":
-        return Stats.SegmentStats.defence;
+        return StatsBeta.SegmentStats.defence;
       case "Dagger":
-        return Stats.DaggerStats.defence;
+        return StatsBeta.DaggerStats.defence;
       case "Cloak":
-        return Stats.CloakStats.defence;
+        return StatsBeta.CloakStats.defence;
       case "Dinghy":
-        return Stats.DinghyStats.defence;
+        return StatsBeta.DinghyStats.defence;
+
+      case "Pirate":
+        return StatsBeta.PirateStats.defence;
+      case "Raft":
+        return StatsBeta.RaftStats.defence;
+      case "Scout":
+        return StatsBeta.ScoutStats.defence;
+      case "Rammer":
+        return StatsBeta.RammerStats.defence;
+      case "Bomber":
+        return StatsBeta.BomberStats.defence;
+      case "Juggernaut":
+        return StatsBeta.JuggernautStats.defence;
 
       default:
         return 0;
@@ -1334,6 +1386,14 @@ class battleGroundDetails extends React.Component<State> {
           attacker.attack = 4;
         }
 
+        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+          attacker.attack = 2.33;
+        }
+
+        if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
+          attacker.attack = 4;
+        }
+
         let attackForce =
           ((attacker.attack + 0.5 * boostedBonusMultiplier) *
             attacker.healthBefore) /
@@ -1416,4 +1476,4 @@ class battleGroundDetails extends React.Component<State> {
   };
 }
 
-export default battleGroundDetails;
+export default battleGroundDetailsBeta;
