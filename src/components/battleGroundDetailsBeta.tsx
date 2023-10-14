@@ -621,6 +621,14 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         //   }
         // );
 
+        soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.filter(
+          (item) => item !== null && item !== undefined
+        );
+
+        for (let i = 0; i < soldierUnitsAttackersAsRender.length; i++) {
+          soldierUnitsAttackersAsRender[i].id = i;
+        }
+
         const attIdxArray = this.state.attIdxArray.filter(function (value) {
           return value !== idn;
         });
@@ -672,6 +680,14 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         //     return element !== undefined;
         //   }
         // );
+
+        soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.filter(
+          (item) => item !== null && item !== undefined
+        );
+
+        for (let i = 0; i < soldierUnitsDefendersAsRender.length; i++) {
+          soldierUnitsDefendersAsRender[i].id = i;
+        }
 
         const defIdxArray = this.state.defIdxArray.filter(function (value) {
           return value !== idn;
@@ -800,9 +816,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             this.state.soldierUnitsAttackersAsRender;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-          if (index < 1 || index >= soldierUnitsAttackersAsRender.length) {
+          if (1 >= soldierUnitsAttackersAsRender.length || index === 0) {
             // If the index is out of bounds or at the beginning of the array, no need to move.
-            return soldierUnitsAttackersAsRender;
+            break;
           }
 
           // Swap the element at the specified index with the element to its left.
@@ -824,9 +840,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             this.state.soldierUnitsDefendersAsRender;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          if (index < 1 || index >= soldierUnitsDefendersAsRender.length) {
+          if (1 >= soldierUnitsDefendersAsRender.length || index === 0) {
             // If the index is out of bounds or at the beginning of the array, no need to move.
-            return soldierUnitsDefendersAsRender;
+            break;
           }
 
           // Swap the element at the specified index with the element to its left.
@@ -898,9 +914,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             this.state.soldierUnitsAttackersAsRender;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-          if (index < 0 || index >= soldierUnitsAttackersAsRender.length - 1) {
+          if (
+            1 >= soldierUnitsAttackersAsRender.length ||
+            index === soldierUnitsAttackersAsRender.length - 1
+          ) {
             // If the index is out of bounds or at the end of the array, no need to move.
-            return soldierUnitsAttackersAsRender;
+            break;
           }
 
           // Swap the element at the specified index with the element to its left.
@@ -922,9 +941,13 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             this.state.soldierUnitsDefendersAsRender;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          if (index < 0 || index >= soldierUnitsDefendersAsRender.length - 1) {
+          console.log("index: " + index);
+          if (
+            1 >= soldierUnitsDefendersAsRender.length ||
+            index === soldierUnitsDefendersAsRender.length - 1
+          ) {
             // If the index is out of bounds or at the end of the array, no need to move.
-            return soldierUnitsDefendersAsRender;
+            break;
           }
 
           // Swap the element at the specified index with the element to its right.
