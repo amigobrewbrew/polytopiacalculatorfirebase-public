@@ -143,8 +143,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             {/* <div style={{ float: "left", width: "50%" }}> */}
             <Grid item>
               {this.state.soldierUnitsAttackersAsRender.map(
-                (soldierUnitAtt) => (
+                (soldierUnitAtt, i) => (
                   <Box
+                    key={i}
                     sx={{
                       margin: 0.25,
 
@@ -160,8 +161,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                       width: "fit-content(45%)",
                     }}
                   >
-                    <Box sx={{ margin: 0 }}>
+                    <Box key={i} sx={{ margin: 0 }}>
                       <SoldierUnitAsRenderBeta
+                        key={i}
                         id={soldierUnitAtt.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -198,8 +200,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             {/* <div style={{ float: "right", width: "50%" }}> */}
             <Grid item>
               {this.state.soldierUnitsDefendersAsRender.map(
-                (soldierUnitDef) => (
+                (soldierUnitDef, i) => (
                   <Box
+                    key={i}
                     sx={{
                       margin: 0.25,
 
@@ -215,8 +218,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                       width: "fit-content(45%)",
                     }}
                   >
-                    <Box sx={{ margin: 0 }}>
+                    <Box key={i} sx={{ margin: 0 }}>
                       <SoldierUnitAsRenderBeta
+                        key={i}
                         id={soldierUnitDef.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -808,6 +812,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             soldierUnitsAttackersAsRender[index];
           soldierUnitsAttackersAsRender[index] = tempAttPlus;
 
+          soldierUnitsAttackersAsRender[index - 1].id = index - 1;
+          soldierUnitsAttackersAsRender[index].id = index;
+
           //soldierUnitsAttackersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsAttackersAsRender });
@@ -827,6 +834,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsDefendersAsRender[index - 1] =
             soldierUnitsDefendersAsRender[index];
           soldierUnitsDefendersAsRender[index] = tempDefPlus;
+
+          soldierUnitsDefendersAsRender[index - 1].id = index - 1;
+          soldierUnitsDefendersAsRender[index].id = index;
 
           //soldierUnitsDefendersAsRender[index].healthBefore++;
 
@@ -900,6 +910,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             soldierUnitsAttackersAsRender[index];
           soldierUnitsAttackersAsRender[index] = tempAttMin;
 
+          soldierUnitsAttackersAsRender[index + 1].id = index + 1;
+          soldierUnitsAttackersAsRender[index].id = index;
+
           //soldierUnitsAttackersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsAttackersAsRender });
@@ -919,6 +932,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsDefendersAsRender[index + 1] =
             soldierUnitsDefendersAsRender[index];
           soldierUnitsDefendersAsRender[index] = tempDefMin;
+
+          soldierUnitsDefendersAsRender[index + 1].id = index + 1;
+          soldierUnitsDefendersAsRender[index].id = index;
 
           //soldierUnitsDefendersAsRender[index].healthBefore++;
 
