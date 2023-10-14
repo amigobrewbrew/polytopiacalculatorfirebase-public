@@ -143,8 +143,9 @@ class battleGroundDetails extends React.Component<Props, State> {
             {/* <div style={{ float: "left", width: "50%" }}> */}
             <Grid item>
               {this.state.soldierUnitsAttackersAsRender.map(
-                (soldierUnitAtt) => (
+                (soldierUnitAtt, i) => (
                   <Box
+                    key={i}
                     sx={{
                       margin: 0.25,
 
@@ -160,8 +161,9 @@ class battleGroundDetails extends React.Component<Props, State> {
                       width: "fit-content(45%)",
                     }}
                   >
-                    <Box sx={{ margin: 0 }}>
+                    <Box key={i} sx={{ margin: 0 }}>
                       <SoldierUnitAsRender
+                        key={i}
                         id={soldierUnitAtt.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -198,8 +200,9 @@ class battleGroundDetails extends React.Component<Props, State> {
             {/* <div style={{ float: "right", width: "50%" }}> */}
             <Grid item>
               {this.state.soldierUnitsDefendersAsRender.map(
-                (soldierUnitDef) => (
+                (soldierUnitDef, i) => (
                   <Box
+                    key={i}
                     sx={{
                       margin: 0.25,
 
@@ -215,8 +218,9 @@ class battleGroundDetails extends React.Component<Props, State> {
                       width: "fit-content(45%)",
                     }}
                   >
-                    <Box sx={{ margin: 0 }}>
+                    <Box key={i} sx={{ margin: 0 }}>
                       <SoldierUnitAsRender
+                        key={i}
                         id={soldierUnitDef.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -797,6 +801,8 @@ class battleGroundDetails extends React.Component<Props, State> {
         case "Attackers":
           let soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
+          // let attIdxArray = this.state.attIdxArray;
+
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
           if (index < 1 || index >= soldierUnitsAttackersAsRender.length) {
@@ -811,13 +817,24 @@ class battleGroundDetails extends React.Component<Props, State> {
             soldierUnitsAttackersAsRender[index];
           soldierUnitsAttackersAsRender[index] = tempAttPlus;
 
+          soldierUnitsAttackersAsRender[index - 1].id = index - 1;
+          soldierUnitsAttackersAsRender[index].id = index;
+
+          // const tempAttPlusIdx = attIdxArray[index - 1];
+          // attIdxArray[index - 1] = attIdxArray[index];
+          // attIdxArray[index] = tempAttPlusIdx;
+
           //soldierUnitsAttackersAsRender[index].healthBefore++;
+          // this.state.soldierUnitsAttackersAsRender = [];
 
           this.setState({ soldierUnitsAttackersAsRender });
+          // this.setState({ attIdxArray });
+
           break;
         case "Defenders":
           let soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
+          // let defIdxArray = this.state.defIdxArray;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
           if (index < 1 || index >= soldierUnitsDefendersAsRender.length) {
@@ -831,9 +848,19 @@ class battleGroundDetails extends React.Component<Props, State> {
             soldierUnitsDefendersAsRender[index];
           soldierUnitsDefendersAsRender[index] = tempDefPlus;
 
+          soldierUnitsDefendersAsRender[index - 1].id = index - 1;
+          soldierUnitsDefendersAsRender[index].id = index;
+
+          // const tempDefPlusIdx = defIdxArray[index - 1];
+          // defIdxArray[index - 1] = defIdxArray[index];
+          // defIdxArray[index] = tempDefPlusIdx;
+
           //soldierUnitsDefendersAsRender[index].healthBefore++;
 
+          // this.state.soldierUnitsDefendersAsRender = [];
           this.setState({ soldierUnitsDefendersAsRender });
+          // this.setState({ defIdxArray });
+
           break;
         default:
           console.log(
@@ -866,6 +893,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
           soldierUnitsAttackersAsRender[index].healthBefore--;
 
+          // this.state.soldierUnitsAttackersAsRender = [];
           this.setState({ soldierUnitsAttackersAsRender });
           break;
         case "Defenders":
@@ -875,6 +903,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
           soldierUnitsDefendersAsRender[index].healthBefore--;
 
+          // this.state.soldierUnitsDefendersAsRender = [];
           this.setState({ soldierUnitsDefendersAsRender });
           break;
         default:
@@ -889,6 +918,7 @@ class battleGroundDetails extends React.Component<Props, State> {
         case "Attackers":
           let soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
+          // let attIdxArray = this.state.attIdxArray;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
           if (index < 0 || index >= soldierUnitsAttackersAsRender.length - 1) {
@@ -903,13 +933,22 @@ class battleGroundDetails extends React.Component<Props, State> {
             soldierUnitsAttackersAsRender[index];
           soldierUnitsAttackersAsRender[index] = tempAttMin;
 
+          soldierUnitsAttackersAsRender[index + 1].id = index + 1;
+          soldierUnitsAttackersAsRender[index].id = index;
+
+          // const tempAttMinIdx = attIdxArray[index + 1];
+          // attIdxArray[index + 1] = attIdxArray[index];
+          // attIdxArray[index] = tempAttMinIdx;
+
           //soldierUnitsAttackersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsAttackersAsRender });
+          // this.setState({ attIdxArray });
           break;
         case "Defenders":
           let soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
+          // let defIdxArray = this.state.defIdxArray;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
           if (index < 0 || index >= soldierUnitsDefendersAsRender.length - 1) {
@@ -923,9 +962,17 @@ class battleGroundDetails extends React.Component<Props, State> {
             soldierUnitsDefendersAsRender[index];
           soldierUnitsDefendersAsRender[index] = tempDefMin;
 
+          soldierUnitsDefendersAsRender[index + 1].id = index + 1;
+          soldierUnitsDefendersAsRender[index].id = index;
+
+          // const tempDefMinIdx = defIdxArray[index + 1];
+          // defIdxArray[index + 1] = defIdxArray[index];
+          // defIdxArray[index] = tempDefMinIdx;
+
           //soldierUnitsDefendersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsDefendersAsRender });
+          // this.setState({ defIdxArray });
           break;
         default:
           console.log(
