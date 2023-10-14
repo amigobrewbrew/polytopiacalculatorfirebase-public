@@ -17,6 +17,8 @@ import Box from "@mui/material/Box";
 import Grid from "@material-ui/core/Grid";
 import { analytics } from "../firebase";
 import { logEvent } from "firebase/analytics";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 // import { withAITracking } from "@microsoft/applicationinsights-react-js";
 //import { reactPlugin, appInsights } from "../AppInsights";
@@ -24,6 +26,11 @@ import { logEvent } from "firebase/analytics";
 /**
  * State holds the array of selected soldiers of the attackers and defenders
  */
+
+type Props = {
+  OnChangeCheckbox?: any;
+};
+
 type State = {
   soldierUnitsDefenders: {
     id: number;
@@ -81,6 +88,7 @@ type State = {
   nextIdAttacker: number;
   defIdxArray: number[];
   attIdxArray: number[];
+  checkedPosition: boolean;
 };
 
 //const a = "test";
@@ -92,7 +100,7 @@ type State = {
  * Handles the add attacker and add defender actions of the Attacker and Defenders selection component
  * Calculates the Attackers and defender outcome simulation
  */
-class battleGroundDetailsBeta extends React.Component<State> {
+class battleGroundDetailsBeta extends React.Component<Props, State> {
   state: State = {
     soldierUnitsAttackersAsRender: [],
     soldierUnitsDefenders: [],
@@ -102,6 +110,14 @@ class battleGroundDetailsBeta extends React.Component<State> {
     nextIdAttacker: 0,
     defIdxArray: [],
     attIdxArray: [],
+    checkedPosition: false,
+  };
+
+  handleChangeCheckbox = () => {
+    this.setState((prevState) => ({
+      checkedPosition: !prevState.checkedPosition,
+    }));
+    // this.props.OnChangeCheckbox();
   };
 
   render() {
@@ -235,13 +251,56 @@ class battleGroundDetailsBeta extends React.Component<State> {
             </Grid>
           </Grid>
         </Box>
-
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            border: 1,
+            borderColor: "#F467A9",
+            borderRadius: 1,
+            m: 0.25,
+            alignItems: "center",
+          }}
+          style={{ maxWidth: "25.75em" }}
+        >
+          <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={this.state.checkedPosition}
+                  onChange={this.handleChangeCheckbox}
+                />
+              }
+              label={"Use  + and - to set positions instead of hitpoints"}
+            />{" "}
+          </div>
+        </Box>
         <div style={{ width: "100%", verticalAlign: "bottom", float: "left" }}>
           <AttackersSelectionBeta onAddAttacker={this.handleAddAttacker} />
           <DefendersSelectionBeta OnAddDefender={this.handleAddDefender} />
           {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
         </div>
-        <p> This page holds steam beta stats and units </p>
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            border: 1,
+            borderColor: "#F467A9",
+            borderRadius: 1,
+            m: 0.25,
+            alignItems: "center",
+          }}
+          style={{ maxWidth: "25.75em" }}
+        >
+          <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
+            {" "}
+            This page holds steam beta stats and units
+          </div>
+        </Box>
       </Box>
     );
   }
@@ -698,37 +757,89 @@ class battleGroundDetailsBeta extends React.Component<State> {
   };
 
   handleIncreaseHitpoints = (id: number, team: string) => {
-    console.log(
-      "Increasing hitpoints soldier unit with id: " + id + " of team: " + team
-    );
-
     let index;
-    switch (team) {
-      case "Attackers":
-        let soldierUnitsAttackersAsRender =
-          this.state.soldierUnitsAttackersAsRender;
-        index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+    if (this.state.checkedPosition === false) {
+      console.log(
+        "Increasing hitpoints soldier unit with id: " + id + " of team: " + team
+      );
 
-        soldierUnitsAttackersAsRender[index].healthBefore++;
+      switch (team) {
+        case "Attackers":
+          let soldierUnitsAttackersAsRender =
+            this.state.soldierUnitsAttackersAsRender;
+          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-        this.setState({ soldierUnitsAttackersAsRender });
-        break;
-      case "Defenders":
-        let soldierUnitsDefendersAsRender =
-          this.state.soldierUnitsDefendersAsRender;
-        index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+          soldierUnitsAttackersAsRender[index].healthBefore++;
 
-        soldierUnitsDefendersAsRender[index].healthBefore++;
+          this.setState({ soldierUnitsAttackersAsRender });
+          break;
+        case "Defenders":
+          let soldierUnitsDefendersAsRender =
+            this.state.soldierUnitsDefendersAsRender;
+          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-        this.setState({ soldierUnitsDefendersAsRender });
-        break;
-      default:
-        console.log(
-          "Issue with team selection switch for increasing hitpoints"
-        );
+          soldierUnitsDefendersAsRender[index].healthBefore++;
+
+          this.setState({ soldierUnitsDefendersAsRender });
+          break;
+        default:
+          console.log(
+            "Issue with team selection switch for increasing hitpoints"
+          );
+      }
+
+      logEvent(analytics, "pc_hitpoints_plus_" + team);
+    } else {
+      switch (team) {
+        case "Attackers":
+          let soldierUnitsAttackersAsRender =
+            this.state.soldierUnitsAttackersAsRender;
+          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+
+          if (index < 1 || index >= soldierUnitsAttackersAsRender.length) {
+            // If the index is out of bounds or at the beginning of the array, no need to move.
+            return soldierUnitsAttackersAsRender;
+          }
+
+          // Swap the element at the specified index with the element to its left.
+
+          const tempAttPlus = soldierUnitsAttackersAsRender[index - 1];
+          soldierUnitsAttackersAsRender[index - 1] =
+            soldierUnitsAttackersAsRender[index];
+          soldierUnitsAttackersAsRender[index] = tempAttPlus;
+
+          //soldierUnitsAttackersAsRender[index].healthBefore++;
+
+          this.setState({ soldierUnitsAttackersAsRender });
+          break;
+        case "Defenders":
+          let soldierUnitsDefendersAsRender =
+            this.state.soldierUnitsDefendersAsRender;
+          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+
+          if (index < 1 || index >= soldierUnitsDefendersAsRender.length) {
+            // If the index is out of bounds or at the beginning of the array, no need to move.
+            return soldierUnitsDefendersAsRender;
+          }
+
+          // Swap the element at the specified index with the element to its left.
+          const tempDefPlus = soldierUnitsDefendersAsRender[index - 1];
+          soldierUnitsDefendersAsRender[index - 1] =
+            soldierUnitsDefendersAsRender[index];
+          soldierUnitsDefendersAsRender[index] = tempDefPlus;
+
+          //soldierUnitsDefendersAsRender[index].healthBefore++;
+
+          this.setState({ soldierUnitsDefendersAsRender });
+          break;
+        default:
+          console.log(
+            "Issue with team selection switch for increasing hitpoints"
+          );
+      }
+
+      logEvent(analytics, "pc_changed_position_" + team);
     }
-
-    logEvent(analytics, "pc_hitpoints_plus_" + team);
 
     // this.healthAfterCalculation();
   };
@@ -740,31 +851,87 @@ class battleGroundDetailsBeta extends React.Component<State> {
 
     let index;
 
-    switch (team) {
-      case "Attackers":
-        let soldierUnitsAttackersAsRender =
-          this.state.soldierUnitsAttackersAsRender;
-        index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
-        soldierUnitsAttackersAsRender[index].healthBefore--;
+    if (this.state.checkedPosition === false) {
+      console.log(
+        "Decreasing hitpoints soldier unit with id: " + id + " of team: " + team
+      );
 
-        this.setState({ soldierUnitsAttackersAsRender });
-        break;
-      case "Defenders":
-        let soldierUnitsDefendersAsRender =
-          this.state.soldierUnitsDefendersAsRender;
-        index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+      switch (team) {
+        case "Attackers":
+          let soldierUnitsAttackersAsRender =
+            this.state.soldierUnitsAttackersAsRender;
+          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+          soldierUnitsAttackersAsRender[index].healthBefore--;
 
-        soldierUnitsDefendersAsRender[index].healthBefore--;
+          this.setState({ soldierUnitsAttackersAsRender });
+          break;
+        case "Defenders":
+          let soldierUnitsDefendersAsRender =
+            this.state.soldierUnitsDefendersAsRender;
+          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-        this.setState({ soldierUnitsDefendersAsRender });
-        break;
-      default:
-        console.log(
-          "Issue with team selection switch for increasing hitpoints"
-        );
+          soldierUnitsDefendersAsRender[index].healthBefore--;
+
+          this.setState({ soldierUnitsDefendersAsRender });
+          break;
+        default:
+          console.log(
+            "Issue with team selection switch for increasing hitpoints"
+          );
+      }
+
+      logEvent(analytics, "pc_hitpoints_min_" + team);
+    } else {
+      switch (team) {
+        case "Attackers":
+          let soldierUnitsAttackersAsRender =
+            this.state.soldierUnitsAttackersAsRender;
+          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+
+          if (index < 0 || index >= soldierUnitsAttackersAsRender.length - 1) {
+            // If the index is out of bounds or at the end of the array, no need to move.
+            return soldierUnitsAttackersAsRender;
+          }
+
+          // Swap the element at the specified index with the element to its left.
+
+          const tempAttMin = soldierUnitsAttackersAsRender[index + 1];
+          soldierUnitsAttackersAsRender[index + 1] =
+            soldierUnitsAttackersAsRender[index];
+          soldierUnitsAttackersAsRender[index] = tempAttMin;
+
+          //soldierUnitsAttackersAsRender[index].healthBefore++;
+
+          this.setState({ soldierUnitsAttackersAsRender });
+          break;
+        case "Defenders":
+          let soldierUnitsDefendersAsRender =
+            this.state.soldierUnitsDefendersAsRender;
+          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+
+          if (index < 0 || index >= soldierUnitsDefendersAsRender.length - 1) {
+            // If the index is out of bounds or at the end of the array, no need to move.
+            return soldierUnitsDefendersAsRender;
+          }
+
+          // Swap the element at the specified index with the element to its right.
+          const tempDefMin = soldierUnitsDefendersAsRender[index + 1];
+          soldierUnitsDefendersAsRender[index + 1] =
+            soldierUnitsDefendersAsRender[index];
+          soldierUnitsDefendersAsRender[index] = tempDefMin;
+
+          //soldierUnitsDefendersAsRender[index].healthBefore++;
+
+          this.setState({ soldierUnitsDefendersAsRender });
+          break;
+        default:
+          console.log(
+            "Issue with team selection switch for increasing hitpoints"
+          );
+      }
+
+      logEvent(analytics, "pc_changed_position_" + team);
     }
-
-    logEvent(analytics, "pc_hitpoints_min_" + team);
 
     // this.healthAfterCalculation();
   };

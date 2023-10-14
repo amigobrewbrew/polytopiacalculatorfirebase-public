@@ -387,10 +387,11 @@ class Page3 extends React.Component<Props> {
             onClick={() => this.props.OnAddDefender("BattleSled")}
             ButtonImage={BattleSled}
           />
+
           <DefendersSelectionButtonBeta
-            defenderType="IceFortress"
-            onClick={() => this.props.OnAddDefender("IceFortress")}
-            ButtonImage={IceFortress}
+            defenderType="Gaami"
+            onClick={() => this.props.OnAddDefender("Gaami")}
+            ButtonImage={Gaami}
           />
         </Box>{" "}
       </Box>
@@ -408,9 +409,9 @@ class Page4 extends React.Component<Props> {
       <Box>
         <Box sx={defendersBoxStyle}>
           <DefendersSelectionButtonBeta
-            defenderType="Gaami"
-            onClick={() => this.props.OnAddDefender("Gaami")}
-            ButtonImage={Gaami}
+            defenderType="IceFortress"
+            onClick={() => this.props.OnAddDefender("IceFortress")}
+            ButtonImage={IceFortress}
           />
           <DefendersSelectionButtonBeta
             defenderType="Hexapod"

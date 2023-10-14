@@ -578,16 +578,12 @@ class Page3 extends React.Component<Props> {
             />
           </Button>
           <Button
-            onClick={() => this.props.onAddAttacker("IceFortress")}
+            onClick={() => this.props.onAddAttacker("Gaami")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
-            <img
-              src={IceFortress}
-              alt="IceFortress"
-              style={attackersImageStyle}
-            />
+            <img src={Gaami} alt="Gaami" style={attackersImageStyle} />
           </Button>
         </Box>
       </Box>
@@ -619,12 +615,16 @@ class Page4 extends React.Component<Props> {
       <Box>
         <Box sx={attackersBoxStyle}>
           <Button
-            onClick={() => this.props.onAddAttacker("Gaami")}
+            onClick={() => this.props.onAddAttacker("IceFortress")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
-            <img src={Gaami} alt="Gaami" style={attackersImageStyle} />
+            <img
+              src={IceFortress}
+              alt="IceFortress"
+              style={attackersImageStyle}
+            />
           </Button>
           <Button
             onClick={() => this.props.onAddAttacker("Hexapod")}

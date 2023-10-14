@@ -240,10 +240,27 @@ class battleGroundDetails extends React.Component<State> {
           <DefendersSelection OnAddDefender={this.handleAddDefender} />
           {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
         </div>
-        <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
-          {" "}
-          Find Raft, Scout, Rammer, Bomber and Juggernaut here!
-        </a>{" "}
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            border: 1,
+            borderColor: "#F467A9",
+            borderRadius: 1,
+            m: 0.25,
+            alignItems: "center",
+          }}
+          style={{ maxWidth: "25.75em" }}
+        >
+          <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
+            <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
+              {" "}
+              Find Raft, Scout, Rammer, Bomber and Juggernaut here!
+            </a>{" "}
+          </div>
+        </Box>
       </Box>
     );
   }
