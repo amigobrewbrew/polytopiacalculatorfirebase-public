@@ -136,12 +136,8 @@ class battleGroundDetails extends React.Component<Props, State> {
     ) {
       this.setState({ soldierUnitsDefendersAsRender });
     }
-    // Access props with this.props
 
-    // Access state with this.state
-
-    // prevState contains state before update
-    // prevProps contains props before update
+    console.log("componentDidUpdate for battleGoundDetails");
   }
 
   render() {
@@ -1667,6 +1663,8 @@ class battleGroundDetails extends React.Component<Props, State> {
     // No clue how to fix this else way
     // this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
     // this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
+
+    //this.forceUpdate();
 
     return [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender];
 
