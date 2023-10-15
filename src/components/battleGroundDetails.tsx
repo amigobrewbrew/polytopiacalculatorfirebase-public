@@ -138,11 +138,15 @@ class battleGroundDetails extends React.Component<Props, State> {
     }
 
     console.log("componentDidUpdate for battleGoundDetails");
+    // this.render();
   }
 
   render() {
-    // this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
-    console.log("Battleground details page is rendered");
+    console.log("render battleGroundDetails");
+    console.log("state", this.state);
+    console.log("props", this.props);
+    this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
+
     logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
     //   //display: "flex",
@@ -904,7 +908,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_changed_position_" + team);
+      logEvent(analytics, "pc_changed_position_up_" + team);
     }
 
     // this.healthAfterCalculation();
@@ -1022,7 +1026,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_changed_position_" + team);
+      logEvent(analytics, "pc_changed_position_down_" + team);
     }
 
     // this.healthAfterCalculation();
@@ -1487,7 +1491,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
   healthAfterCalculation = () => {
     console.log("This is where the magic happens. Charge!");
-    logEvent(analytics, "pc_magic_happens");
+    //logEvent(analytics, "pc_health_after_calculation");
 
     let indexDefenderCounter = 0;
     let indexDefender = this.state.defIdxArray[indexDefenderCounter];
@@ -1661,10 +1665,8 @@ class battleGroundDetails extends React.Component<Props, State> {
     );
 
     // No clue how to fix this else way
-    // this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
-    // this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
-
-    //this.forceUpdate();
+    this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
+    this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
 
     return [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender];
 

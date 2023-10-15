@@ -364,9 +364,12 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     // this.makeInvisibleSafeBonus(this.props.team);
 
     console.log("componentDidUpdate for soldierUnitAsRender");
+    // this.render();
   }
 
   render() {
+    console.log("render soldierUnitAsRender");
+    console.log("state", this.state);
     console.log("props", this.props);
 
     return (
