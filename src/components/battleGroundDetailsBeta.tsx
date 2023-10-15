@@ -730,9 +730,9 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     // this.forceUpdate();
   };
 
-  rerender = () => {
-    this.forceUpdate();
-  };
+  // rerender = () => {
+  //   this.forceUpdate();
+  // };
 
   handleUpdateHitpoints = (
     id: number,
