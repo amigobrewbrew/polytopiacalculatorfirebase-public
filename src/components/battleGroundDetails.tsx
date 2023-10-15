@@ -90,6 +90,7 @@ type State = {
   defIdxArray: number[];
   attIdxArray: number[];
   checkedPosition: boolean;
+  randomNumber: number;
 };
 
 //const a = "test";
@@ -112,6 +113,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     defIdxArray: [],
     attIdxArray: [],
     checkedPosition: false,
+    randomNumber: 0,
   };
 
   handleChangeCheckbox = () => {
@@ -186,7 +188,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                   >
                     <Box key={i} sx={{ margin: 0 }}>
                       <SoldierUnitAsRender
-                        key={i}
+                        key={i + this.state.randomNumber}
                         id={soldierUnitAtt.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -804,6 +806,8 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     logEvent(analytics, "pc_unit_deleted_" + team);
 
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
+
     // this.healthAfterCalculation();
     // this.forceUpdate();
   };
@@ -963,6 +967,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     }
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleDecreaseHitpoints = (id: number, team: string) => {
@@ -1081,6 +1086,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     }
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleAddAttacker = (typeUnit: string) => {
@@ -1762,6 +1768,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     // this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
 
     // this.forceUpdate();
+    // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
     return [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender];
 
