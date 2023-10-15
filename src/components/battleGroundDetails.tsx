@@ -124,29 +124,31 @@ class battleGroundDetails extends React.Component<Props, State> {
   };
 
   componentDidUpdate() {
-    const [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender] =
-      this.healthAfterCalculation();
-    if (
-      this.state.soldierUnitsAttackersAsRender !== soldierUnitsAttackersAsRender
-    ) {
-      this.setState({ soldierUnitsAttackersAsRender }, () => {
-        console.log("setState callback for battleGroundDetails");
-      });
-    }
-    if (
-      this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRender
-    ) {
-      this.setState({ soldierUnitsDefendersAsRender }, () => {
-        console.log("setState callback for battleGroundDetails");
-      });
-    }
+    // const [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender] =
+    //   this.healthAfterCalculation();
+    // if (
+    //   this.state.soldierUnitsAttackersAsRender !== soldierUnitsAttackersAsRender
+    // ) {
+    //   this.setState({ soldierUnitsAttackersAsRender }, () => {
+    //     console.log("setState callback for battleGroundDetails");
+    //   });
+    // }
+    // if (
+    //   this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRender
+    // ) {
+    //   this.setState({ soldierUnitsDefendersAsRender }, () => {
+    //     console.log("setState callback for battleGroundDetails");
+    //   });
+    // }
+
+    console.log("componentDidUpdate for battleGroundDetails");
   }
 
   render() {
-    console.log("render battleGroundDetails");
+    console.log("Battleground details page is rendered");
     console.log("state", this.state);
     console.log("props", this.props);
-    // this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
+    this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
 
     logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
@@ -245,7 +247,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                   >
                     <Box key={i} sx={{ margin: 0 }}>
                       <SoldierUnitAsRender
-                        key={i}
+                        key={i + this.state.randomNumber}
                         id={soldierUnitDef.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -675,7 +677,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
         this.setState({ soldierUnitsAttackersAsRender });
 
-        this.healthAfterCalculation();
+        // this.healthAfterCalculation();
 
         // let updatedSoldierUnitsAttackersAsRender = immer.produce(
         //   this.state.soldierUnitsAttackersAsRender,
@@ -1175,11 +1177,11 @@ class battleGroundDetails extends React.Component<Props, State> {
   };
 
   handleAddDefender = (typeUnit: string) => {
-    this.setState({
+    this.setState((prevState) => ({
       soldierUnitsDefendersAsRender: [
-        ...this.state.soldierUnitsDefendersAsRender,
+        ...prevState.soldierUnitsDefendersAsRender,
         {
-          id: this.state.nextIdDefender,
+          id: prevState.soldierUnitsDefendersAsRender.length,
           typeUnit,
           team: "Defenders",
           healthMax: this.healthMax(typeUnit),
@@ -1197,7 +1199,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           shipUnit: this.istypeUnitaShipUnit(typeUnit),
         },
       ],
-    });
+    }));
 
     console.log(
       "New defender added the battleground array with id: " +
@@ -1583,7 +1585,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
   healthAfterCalculation = () => {
     console.log("This is where the magic happens. Charge!");
-    //logEvent(analytics, "pc_health_after_calculation");
+    logEvent(analytics, "pc_health_after_calculation");
 
     let indexDefenderCounter = 0;
     let indexDefender = this.state.defIdxArray[indexDefenderCounter];
