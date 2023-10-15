@@ -133,11 +133,13 @@ type State = {
   isToggleOnBoosted: boolean;
   isToggleOnShipUnit: boolean;
   isToggleOnSplashDamage: boolean;
-  healthMaxShipUnit: number;
-  healthInputField: number;
   isToggleVisibleTypeUnit: string;
   isToggleVisibleTeam: string;
   isToggleVisibleShipUnit: boolean;
+  healthMaxShipUnit: number;
+  healthInputField: number;
+  healthBeforeAsState: number;
+  healthAfterAsState: number;
 };
 
 class soldierUnitAsRender extends React.Component<Props, State> {
@@ -152,11 +154,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
       isToggleOnBoosted: false,
       isToggleOnSplashDamage: false,
       isToggleOnShipUnit: this.props.shipUnit,
-      healthMaxShipUnit: this.props.healthMax,
-      healthInputField: this.props.healthBefore,
       isToggleVisibleTypeUnit: this.props.typeUnit,
       isToggleVisibleTeam: this.props.team,
       isToggleVisibleShipUnit: this.props.shipUnit,
+      healthMaxShipUnit: this.props.healthMax,
+      healthInputField: this.props.healthBefore,
+      healthBeforeAsState: this.props.healthBefore,
+      healthAfterAsState: this.props.healthAfter,
     };
 
     // This binding is necessary to make `this` work in the callback
@@ -307,7 +311,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     // }
 
     // if (
-    //   this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRender
+    //   this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRenderss
     // ) {
     //   this.setState({ soldierUnitsDefendersAsRender });
     // }
@@ -338,12 +342,6 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     if (this.state.isToggleOnSplashDamage !== this.props.splashDamage) {
       this.setState({ isToggleOnSplashDamage: this.props.splashDamage });
     }
-    if (this.state.healthMaxShipUnit !== this.props.healthMax) {
-      this.setState({ healthMaxShipUnit: this.props.healthMax });
-    }
-    if (this.state.healthInputField !== this.props.healthBefore) {
-      this.setState({ healthInputField: this.props.healthBefore });
-    }
     if (this.state.isToggleVisibleShipUnit !== this.props.shipUnit) {
       this.setState({ isToggleVisibleShipUnit: this.props.shipUnit });
     }
@@ -354,14 +352,32 @@ class soldierUnitAsRender extends React.Component<Props, State> {
       this.setState({ isToggleVisibleTypeUnit: this.props.typeUnit });
     }
 
+    if (this.state.healthMaxShipUnit !== this.props.healthMax) {
+      this.setState({ healthMaxShipUnit: this.props.healthMax });
+    }
+
+    if (this.state.healthInputField !== this.props.healthBefore) {
+      this.setState({ healthInputField: this.props.healthBefore });
+    }
+
+    if (this.state.healthBeforeAsState !== this.props.healthBefore) {
+      this.setState({ healthBeforeAsState: this.props.healthBefore });
+    }
+
+    if (this.state.healthAfterAsState !== this.props.healthAfter) {
+      this.setState({ healthAfterAsState: this.props.healthAfter });
+    }
+
     // this.makeInvisibleBoostedBonus(this.props.team);
-    // this.makeInvisibleVeteranBonus(this.props.typeUnit);
+    // this.makeInvisibleVeteranBonus(this.props.typeUnit);sdf
     // this.makeInvisibleShipUnit(this.props.shipUnit);
-    // this.makeInvisibleSplashDamage(this.props.typeUnit, this.props.team);
+    // this.makeInvisibleSplashDamage(this.props.typeUnit, this.props.team);sds
     // this.makeInvisibleDefenceBonus(this.props.team);
-    // this.makeInvisibleWallBonus(this.props.team);
+    // this.makeInvisibleWallBonus(this.props.team);ddsdf g
     // this.makeInvisiblePoisonedBonus(this.props.team);
-    // this.makeInvisibleSafeBonus(this.props.team);
+    // this.makeInvisibleSafeBonus(this.props.team);dsfds
+
+    // this.render();
 
     console.log("componentDidUpdate for soldierUnitAsRender");
     // this.render();
@@ -671,6 +687,8 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   }
 
   makeInvisibleVeteranBonus(unitType: string) {
+    console.log("Setting VET button visibiliy unitType:", unitType);
+    //this.forceUpdate();
     if (
       unitType === "Ship" ||
       unitType === "Boat" ||
@@ -773,16 +791,16 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   handleFocus = (event: any) => event.target.select();
 
   displayhealthBefore() {
-    return this.props.healthBefore;
+    return this.state.healthBeforeAsState;
   }
 
   displayhealthAfter() {
-    return this.props.healthAfter;
+    return this.state.healthAfterAsState;
   }
 
-  displayId() {
-    return this.props.id;
-  }
+  // displayId() {
+  //   return this.props.id;
+  // }
 
   displayIcon(typeUnit: string, team: string) {
     switch (typeUnit + team) {
