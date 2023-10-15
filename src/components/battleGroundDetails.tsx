@@ -19,6 +19,7 @@ import { analytics } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import produce from "immer";
 
 // import { withAITracking } from "@microsoft/applicationinsights-react-js";
 //import { reactPlugin, appInsights } from "../AppInsights";
@@ -120,8 +121,31 @@ class battleGroundDetails extends React.Component<Props, State> {
     // this.props.OnChangeCheckbox();
   };
 
+  componentDidUpdate() {
+    const [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender] =
+      this.healthAfterCalculation();
+
+    if (
+      this.state.soldierUnitsAttackersAsRender !== soldierUnitsAttackersAsRender
+    ) {
+      this.setState({ soldierUnitsAttackersAsRender });
+    }
+
+    if (
+      this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRender
+    ) {
+      this.setState({ soldierUnitsDefendersAsRender });
+    }
+    // Access props with this.props
+
+    // Access state with this.state
+
+    // prevState contains state before update
+    // prevProps contains props before update
+  }
+
   render() {
-    this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
+    // this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
     console.log("Battleground details page is rendered");
     logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
@@ -1059,7 +1083,8 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_attacker_added_" + typeUnit);
     logEvent(analytics, "pc_attacker_id_" + this.state.nextIdAttacker);
 
-    this.healthAfterCalculation();
+    // this.componentDidUpdate();
+    //this.healthAfterCalculation();
   };
 
   handleAddDefender = (typeUnit: string) => {
@@ -1640,8 +1665,10 @@ class battleGroundDetails extends React.Component<Props, State> {
     );
 
     // No clue how to fix this else way
-    this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
-    this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
+    // this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
+    // this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
+
+    return [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender];
 
     // this.setState({
     //   soldierUnitsDefendersAsRender: soldierUnitsDefendersAsRender,

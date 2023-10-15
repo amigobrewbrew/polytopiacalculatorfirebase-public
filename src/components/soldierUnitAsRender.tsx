@@ -138,7 +138,7 @@ type State = {
 };
 
 class soldierUnitAsRender extends React.Component<Props, State> {
-  constructor(props: Props, state: State) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       isToggleOnVeteran: false,
@@ -182,6 +182,8 @@ class soldierUnitAsRender extends React.Component<Props, State> {
 
   handleClickVeteranBonus() {
     let isToggleOnVeteran = this.props.veteran;
+
+    console.log("isToggleOnVeteran: ", isToggleOnVeteran);
 
     if (isToggleOnVeteran === false) {
       isToggleOnVeteran = true;
