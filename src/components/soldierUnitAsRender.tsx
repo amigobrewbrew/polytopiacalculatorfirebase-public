@@ -476,6 +476,12 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     // this.render();
   }
 
+  handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.handleHitpointsChange(e.target.value);
+    }
+  };
+
   render() {
     console.log("render soldierUnitAsRender");
     console.log("state", this.state);
@@ -510,9 +516,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
                 // onChange={(e) => this.handleHitpointsChange(e.target.value)}
                 defaultValue={this.props.healthBefore}
                 onBlur={(e) => this.handleHitpointsChange(e.target.value)}
+                onKeyDown={this.handleKeyDown}
                 style={{ width: 38 }}
                 maxLength={2}
-                //onFocus={this.handleFocus}
+                onFocus={this.handleFocus}
               ></input>
             </label>
           </span>
@@ -875,7 +882,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     return checkboxId;
   }
 
-  handleFocus = (event: any) => event.target.select();
+  handleFocus = (event: any) => event.target.select(); // To select all text when the input field is clicked
 
   displayhealthBefore() {
     return this.state.healthBeforeAsState;
