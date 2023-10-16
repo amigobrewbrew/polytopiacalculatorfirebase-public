@@ -149,6 +149,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     console.log("state", this.state);
     console.log("props", this.props);
     this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
+    // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
     logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
@@ -634,7 +635,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
     logEvent(analytics, "pc_ship_mx_" + team + "_" + typeUnit);
 
-    // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleDelete = (idn: number, team: string) => {
@@ -827,7 +828,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     let index;
     switch (team) {
       case "Attackers":
-        const soldierUnitsAttackersAsRender =
+        let soldierUnitsAttackersAsRender =
           this.state.soldierUnitsAttackersAsRender;
         index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
@@ -837,7 +838,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         this.setState({ soldierUnitsAttackersAsRender });
         break;
       case "Defenders":
-        const soldierUnitsDefendersAsRender =
+        let soldierUnitsDefendersAsRender =
           this.state.soldierUnitsDefendersAsRender;
         index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
@@ -854,7 +855,11 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
     logEvent(analytics, "pc_hitpoints_direct_" + team);
 
-    // this.healthAfterCalculation();
+    // setTimeout(() => {
+    //   this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
+    // }, 1000);
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
+    // this.healthAfterCalculation(); // random number will loose focus on unit hp field
   };
 
   handleIncreaseHitpoints = (id: number, team: string) => {

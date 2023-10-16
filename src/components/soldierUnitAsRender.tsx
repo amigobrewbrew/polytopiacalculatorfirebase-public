@@ -506,19 +506,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
                 type="text" // this type gives the right keyboard
                 inputMode="numeric"
                 pattern="[0-9]*"
-                //type="number"
-                //defaultValue={this.state.healthInputField}
-                value={this.props.healthBefore}
-                //value={this.state.healthInputField}
-                //onChange={() => this.props.OnUpdateHitpoints()}
-                onChange={(e) => this.handleHitpointsChange(e.target.value)}
+                // value={this.props.healthBefore}
+                // onChange={(e) => this.handleHitpointsChange(e.target.value)}
+                defaultValue={this.props.healthBefore}
+                onBlur={(e) => this.handleHitpointsChange(e.target.value)}
                 style={{ width: 38 }}
                 maxLength={2}
-                // size={2}
-                //style={{width:2em }}
-                //size={1}
-                //width={2}
-                onFocus={this.handleFocus}
+                //onFocus={this.handleFocus}
               ></input>
             </label>
           </span>
