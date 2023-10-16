@@ -109,21 +109,21 @@ import { fontSize } from "@mui/system";
 
 type Props = {
   id: number;
-  typeUnit: string;
-  team: string;
+  typeUnit: string; // This must be managed by state because needs to change for set the buttongs when units take another position in the array
+  team: string; // This mustbe managed by state because needs to change for set the buttongs when units take another position in the array
   healthMax: number;
   healthBefore: number;
   healthAfter?: number;
   attack?: number;
   defence?: number;
-  veteran?: boolean;
-  wallBonus?: boolean;
-  defenceBonus?: boolean;
-  safeBonus?: boolean;
-  poisonedBonus?: boolean;
-  boostedBonus?: boolean;
-  splashDamage?: boolean;
-  shipUnit: boolean;
+  veteran: boolean;
+  wallBonus: boolean;
+  defenceBonus: boolean;
+  safeBonus: boolean;
+  poisonedBonus: boolean;
+  boostedBonus: boolean;
+  splashDamage: boolean;
+  shipUnit: boolean; // This must be managed bystate because needs to change for set the buttongs when units take another position in the array
   OnDelete?: any;
   OnUpdateHitpoints?: any;
   OnIncreaseHitpoints?: any;
@@ -147,24 +147,34 @@ type State = {
   isToggleOnBoosted: boolean;
   isToggleOnShipUnit: boolean;
   isToggleOnSplashDamage: boolean;
+  isToggleVisibleTypeUnit: string;
+  isToggleVisibleTeam: string;
+  isToggleVisibleShipUnit: boolean;
   healthMaxShipUnit: number;
   healthInputField: number;
+  healthBeforeAsState: number;
+  healthAfterAsState: number;
 };
 
 class soldierUnitAsRenderBeta extends React.Component<Props, State> {
-  constructor(props: Props, state: State) {
+  constructor(props: Props) {
     super(props);
     this.state = {
-      isToggleOnVeteran: false,
-      isToggleOnSafe: false,
-      isToggleOnDefence: false,
-      isToggleOnWall: false,
-      isToggleOnPoisoned: false,
-      isToggleOnBoosted: false,
-      isToggleOnSplashDamage: false,
+      isToggleOnVeteran: this.props.veteran,
+      isToggleOnSafe: this.props.safeBonus,
+      isToggleOnDefence: this.props.defenceBonus,
+      isToggleOnWall: this.props.wallBonus,
+      isToggleOnPoisoned: this.props.poisonedBonus,
+      isToggleOnBoosted: this.props.boostedBonus,
+      isToggleOnSplashDamage: this.props.splashDamage,
       isToggleOnShipUnit: this.props.shipUnit,
+      isToggleVisibleTypeUnit: this.props.typeUnit,
+      isToggleVisibleTeam: this.props.team,
+      isToggleVisibleShipUnit: this.props.shipUnit,
       healthMaxShipUnit: this.props.healthMax,
       healthInputField: this.props.healthBefore,
+      healthBeforeAsState: this.props.healthBefore,
+      healthAfterAsState: this.props.healthAfter,
     };
 
     // This binding is necessary to make `this` work in the callback
@@ -178,6 +188,99 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
     this.handleClickShipUnit = this.handleClickShipUnit.bind(this);
     this.handleHitpointsChange = this.handleHitpointsChange.bind(this);
     //this.handleHitpointsSubmit = this.handleHitpointsSubmit.bind(this);
+  }
+
+  // componentWillReceiveProps(nextProps: Props) {
+  //   this.setState({ isToggleOnShipUnit: nextProps.shipUnit });
+  //   this.setState({ isToggleVisibleTypeUnit: nextProps.typeUnit });
+  //   this.setState({ isToggleVisibleTeam: nextProps.team });
+  //   this.setState({ isToggleVisibleShipUnit: nextProps.shipUnit });
+  //   this.setState({ healthMaxShipUnit: nextProps.healthMax });
+  //   this.setState({ healthInputField: nextProps.healthBefore });
+  //   this.setState({ healthBeforeAsState: nextProps.healthBefore });
+  //   this.setState({ healthAfterAsState: nextProps.healthAfter });
+  // }
+
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    if (prevState.isToggleOnVeteran !== nextProps.veteran) {
+      return {
+        isToggleOnVeteran: nextProps.veteran,
+      };
+    }
+    if (prevState.isToggleOnSafe !== nextProps.safeBonus) {
+      return {
+        isToggleOnSafe: nextProps.safeBonus,
+      };
+    }
+    if (prevState.isToggleOnDefence !== nextProps.defenceBonus) {
+      return {
+        isToggleOnDefence: nextProps.defenceBonus,
+      };
+    }
+    if (prevState.isToggleOnWall !== nextProps.wallBonus) {
+      return {
+        isToggleOnWall: nextProps.wallBonus,
+      };
+    }
+    if (prevState.isToggleOnPoisoned !== nextProps.poisonedBonus) {
+      return {
+        isToggleOnPoisoned: nextProps.poisonedBonus,
+      };
+    }
+    if (prevState.isToggleOnBoosted !== nextProps.boostedBonus) {
+      return {
+        isToggleOnBoosted: nextProps.boostedBonus,
+      };
+    }
+    if (prevState.isToggleOnShipUnit !== nextProps.shipUnit) {
+      return {
+        isToggleOnShipUnit: nextProps.shipUnit,
+      };
+    }
+    if (prevState.isToggleOnSplashDamage !== nextProps.splashDamage) {
+      return {
+        isToggleOnSplashDamage: nextProps.splashDamage,
+      };
+    }
+
+    if (prevState.isToggleVisibleShipUnit !== nextProps.shipUnit) {
+      return {
+        isToggleVisibleShipUnit: nextProps.shipUnit,
+      };
+    }
+    if (prevState.isToggleVisibleTypeUnit !== nextProps.typeUnit) {
+      return {
+        isToggleVisibleTypeUnit: nextProps.typeUnit,
+      };
+    }
+    if (prevState.isToggleVisibleTeam !== nextProps.team) {
+      return {
+        isToggleVisibleTeam: nextProps.team,
+      };
+    }
+    if (prevState.healthMaxShipUnit !== nextProps.healthMax) {
+      return {
+        healthMaxShipUnit: nextProps.healthMax,
+      };
+    }
+    if (prevState.healthInputField !== nextProps.healthBefore) {
+      return {
+        healthInputField: nextProps.healthBefore,
+      };
+    }
+    if (prevState.healthBeforeAsState !== nextProps.healthBefore) {
+      return {
+        healthBeforeAsState: nextProps.healthBefore,
+      };
+    }
+    if (prevState.healthAfterAsState !== nextProps.healthAfter) {
+      return {
+        healthAfterAsState: nextProps.healthAfter,
+      };
+    }
+
+    // Return null to indicate no change to state.
+    return null;
   }
 
   handleClickSplashDamage() {
@@ -196,6 +299,8 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
 
   handleClickVeteranBonus() {
     let isToggleOnVeteran = this.props.veteran;
+
+    console.log("isToggleOnVeteran: ", isToggleOnVeteran);
 
     if (isToggleOnVeteran === false) {
       isToggleOnVeteran = true;
@@ -302,7 +407,92 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
     console.log("Unit is poisoned");
   }
 
+  componentDidUpdate() {
+    // const [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender] =
+    //   this.healthAfterCalculation();
+
+    // if (
+    //   this.state.soldierUnitsAttackersAsRender !== soldierUnitsAttackersAsRender
+    // ) {
+    //   this.setState({ soldierUnitsAttackersAsRender });
+    // }
+
+    // if (
+    //   this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRenderss
+    // ) {
+    //   this.setState({ soldierUnitsDefendersAsRender });
+    // }
+
+    // nessecarry for updating buttons with location of units!!
+
+    // if (this.state.isToggleOnVeteran !== this.props.veteran) {
+    //   this.setState({ isToggleOnVeteran: this.props.veteran });
+    // }
+    // if (this.state.isToggleOnSafe !== this.props.safeBonus) {
+    //   this.setState({ isToggleOnSafe: this.props.safeBonus });
+    // }
+    // if (this.state.isToggleOnDefence !== this.props.defenceBonus) {
+    //   this.setState({ isToggleOnDefence: this.props.defenceBonus });
+    // }
+    // if (this.state.isToggleOnWall !== this.props.wallBonus) {
+    //   this.setState({ isToggleOnWall: this.props.wallBonus });
+    // }
+    // if (this.state.isToggleOnPoisoned !== this.props.poisonedBonus) {
+    //   this.setState({ isToggleOnPoisoned: this.props.poisonedBonus });
+    // }
+    // if (this.state.isToggleOnBoosted !== this.props.boostedBonus) {
+    //   this.setState({ isToggleOnBoosted: this.props.boostedBonus });
+    // }
+    // if (this.state.isToggleOnShipUnit !== this.props.shipUnit) {
+    //   this.setState({ isToggleOnShipUnit: this.props.shipUnit });
+    // }
+    // if (this.state.isToggleOnSplashDamage !== this.props.splashDamage) {
+    //   this.setState({ isToggleOnSplashDamage: this.props.splashDamage });
+    // }
+    // if (this.state.isToggleVisibleShipUnit !== this.props.shipUnit) {
+    //   this.setState({ isToggleVisibleShipUnit: this.props.shipUnit });
+    // }
+    // if (this.state.isToggleVisibleTeam !== this.props.team) {
+    //   this.setState({ isToggleVisibleTeam: this.props.team });
+    // }
+    // // if (this.state.isToggleVisibleTypeUnit !== this.props.typeUnit) {
+    // //   this.setState({ isToggleVisibleTypeUnit: this.props.typeUnit });
+    // // }
+
+    // if (this.state.healthMaxShipUnit !== this.props.healthMax) {
+    //   this.setState({ healthMaxShipUnit: this.props.healthMax });
+    // }
+
+    // if (this.state.healthInputField !== this.props.healthBefore) {
+    //   this.setState({ healthInputField: this.props.healthBefore });
+    // }
+
+    // if (this.state.healthBeforeAsState !== this.props.healthBefore) {
+    //   this.setState({ healthBeforeAsState: this.props.healthBefore });
+    // }
+
+    // if (this.state.healthAfterAsState !== this.props.healthAfter) {
+    //   this.setState({ healthAfterAsState: this.props.healthAfter });
+    // }
+
+    // this.makeInvisibleBoostedBonus(this.props.team);
+    // this.makeInvisibleVeteranBonus(this.props.typeUnit);sdf
+    // this.makeInvisibleShipUnit(this.props.shipUnit);
+    // this.makeInvisibleSplashDamage(this.props.typeUnit, this.props.team);sds
+    // this.makeInvisibleDefenceBonus(this.props.team);
+    // this.makeInvisibleWallBonus(this.props.team);ddsdf g
+    // this.makeInvisiblePoisonedBonus(this.props.team);
+    // this.makeInvisibleSafeBonus(this.props.team);dsfds
+
+    // this.render();
+
+    console.log("componentDidUpdate for soldierUnitAsRender");
+    // this.render();
+  }
+
   render() {
+    console.log("render soldierUnitAsRender");
+    console.log("state", this.state);
     console.log("props", this.props);
 
     return (
@@ -382,7 +572,9 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickVeteranBonus();
           }}
-          style={this.makeInvisibleVeteranBonus(this.props.typeUnit)}
+          style={this.makeInvisibleVeteranBonus(
+            this.state.isToggleVisibleTypeUnit
+          )}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -419,7 +611,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickShipUnit();
           }}
-          style={this.makeInvisibleShipUnit(this.props.shipUnit)}
+          style={this.makeInvisibleShipUnit(this.state.isToggleVisibleShipUnit)}
           sx={{ marginRight: 0.1 }}
         >
           mx{this.props.healthMax}
@@ -438,8 +630,8 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             this.handleClickSplashDamage();
           }}
           style={this.makeInvisibleSplashDamage(
-            this.props.typeUnit,
-            this.props.team
+            this.state.isToggleVisibleTypeUnit,
+            this.state.isToggleVisibleTeam
           )}
           sx={{
             marginRight: 0.1,
@@ -466,7 +658,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickDefenceBonus();
           }}
-          style={this.makeInvisibleDefenceBonus(this.props.team)}
+          style={this.makeInvisibleDefenceBonus(this.state.isToggleVisibleTeam)}
           // sx={{ marginRight: 0.1, color: grey[500] }}
 
           sx={{
@@ -510,7 +702,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickWallBonus();
           }}
-          style={this.makeInvisibleWallBonus(this.props.team)}
+          style={this.makeInvisibleWallBonus(this.state.isToggleVisibleTeam)}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -534,7 +726,9 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickPoisonedBonus();
           }}
-          style={this.makeInvisiblePoisonedBonus(this.props.team)}
+          style={this.makeInvisiblePoisonedBonus(
+            this.state.isToggleVisibleTeam
+          )}
           // sx={{ marginRight: -0.5 }}
           sx={{
             marginRight: 0.25,
@@ -559,7 +753,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickSafeBonus();
           }}
-          style={this.makeInvisibleSafeBonus(this.props.team)}
+          style={this.makeInvisibleSafeBonus(this.state.isToggleVisibleTeam)}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -583,7 +777,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickBoostedBonus();
           }}
-          style={this.makeInvisibleBoostedBonus(this.props.team)}
+          style={this.makeInvisibleBoostedBonus(this.state.isToggleVisibleTeam)}
           sx={{
             marginRight: 0.25,
             color: "#A9A9A9",
@@ -710,16 +904,16 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
   handleFocus = (event: any) => event.target.select();
 
   displayhealthBefore() {
-    return this.props.healthBefore;
+    return this.state.healthBeforeAsState;
   }
 
   displayhealthAfter() {
-    return this.props.healthAfter;
+    return this.state.healthAfterAsState;
   }
 
-  displayId() {
-    return this.props.id;
-  }
+  // displayId() {
+  //   return this.props.id;
+  // }
 
   displayIcon(typeUnit: string, team: string) {
     switch (typeUnit + team) {

@@ -6,19 +6,20 @@
  */
 
 import * as React from "react";
-import AttackersSelectionBeta from "./attackersSelectionBeta";
-import DefendersSelectionBeta from "./defendersSelectionBeta";
-import SoldierUnitAsRenderBeta from "./soldierUnitAsRenderBeta";
+import AttackersSelection from "./attackersSelectionBeta";
+import DefendersSelection from "./defendersSelectionBeta";
+import SoldierUnitAsRender from "./soldierUnitAsRenderBeta";
 import * as StatsBeta from "./unitStatsBeta";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Grid from "@material-ui/core/Grid";
-import { analytics } from "../firebase";
+import { analytics } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import * as immer from "immer";
 
 // import { withAITracking } from "@microsoft/applicationinsights-react-js";
 //import { reactPlugin, appInsights } from "../AppInsights";
@@ -85,10 +86,11 @@ type State = {
     shipUnit: boolean;
     splashDamage: boolean;
   }[];
-  nextIdAttacker: number;
+  //nextIdAttacker: number;
   defIdxArray: number[];
   attIdxArray: number[];
   checkedPosition: boolean;
+  randomNumber: number;
 };
 
 //const a = "test";
@@ -107,22 +109,47 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     nextIdDefender: 0,
     soldierUnitsDefendersAsRender: [],
     soldierUnitsAttackers: [],
-    nextIdAttacker: 0,
+    //nextIdAttacker: 0,
     defIdxArray: [],
     attIdxArray: [],
     checkedPosition: false,
+    randomNumber: 0,
   };
 
   handleChangeCheckbox = () => {
     this.setState((prevState) => ({
       checkedPosition: !prevState.checkedPosition,
     }));
-    // this.props.OnChangeCheckbox();
+    logEvent(analytics, "pc_checkbox_toggled");
   };
 
+  componentDidUpdate() {
+    // const [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender] =
+    //   this.healthAfterCalculation();
+    // if (
+    //   this.state.soldierUnitsAttackersAsRender !== soldierUnitsAttackersAsRender
+    // ) {
+    //   this.setState({ soldierUnitsAttackersAsRender }, () => {
+    //     console.log("setState callback for battleGroundDetails");
+    //   });
+    // }
+    // if (
+    //   this.state.soldierUnitsDefendersAsRender !== soldierUnitsDefendersAsRender
+    // ) {
+    //   this.setState({ soldierUnitsDefendersAsRender }, () => {
+    //     console.log("setState callback for battleGroundDetails");
+    //   });
+    // }
+
+    console.log("componentDidUpdate for battleGroundDetails");
+  }
+
   render() {
-    this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
     console.log("Battleground details page is rendered");
+    console.log("state", this.state);
+    console.log("props", this.props);
+    this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
+
     logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
     //   //display: "flex",
@@ -162,8 +189,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                     }}
                   >
                     <Box key={i} sx={{ margin: 0 }}>
-                      <SoldierUnitAsRenderBeta
-                        key={i}
+                      <SoldierUnitAsRender
+                        key={i + this.state.randomNumber}
                         id={soldierUnitAtt.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -190,7 +217,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                         boostedBonus={soldierUnitAtt.boostedBonus}
                         shipUnit={soldierUnitAtt.shipUnit}
                         splashDamage={soldierUnitAtt.splashDamage}
-                      ></SoldierUnitAsRenderBeta>
+                      ></SoldierUnitAsRender>
                     </Box>
                   </Box>
                 )
@@ -219,8 +246,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                     }}
                   >
                     <Box key={i} sx={{ margin: 0 }}>
-                      <SoldierUnitAsRenderBeta
-                        key={i}
+                      <SoldierUnitAsRender
+                        key={i + this.state.randomNumber}
                         id={soldierUnitDef.id}
                         OnDelete={this.handleDelete}
                         OnUpdateHitpoints={this.handleUpdateHitpoints}
@@ -247,7 +274,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                         boostedBonus={soldierUnitDef.boostedBonus}
                         shipUnit={soldierUnitDef.shipUnit}
                         splashDamage={soldierUnitDef.splashDamage}
-                      ></SoldierUnitAsRenderBeta>
+                      ></SoldierUnitAsRender>
                     </Box>
                   </Box>
                 )
@@ -282,8 +309,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           </div>
         </Box>
         <div style={{ width: "100%", verticalAlign: "bottom", float: "left" }}>
-          <AttackersSelectionBeta onAddAttacker={this.handleAddAttacker} />
-          <DefendersSelectionBeta OnAddDefender={this.handleAddDefender} />
+          <AttackersSelection onAddAttacker={this.handleAddAttacker} />
+          <DefendersSelection OnAddDefender={this.handleAddDefender} />
           {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
         </div>
         <Box
@@ -308,6 +335,26 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       </Box>
     );
   }
+
+  // // Recursive function to make a deep copy of an object
+  // deepCopy(obj: any): any {
+  //   if (typeof obj !== "object" || obj === null) {
+  //     return obj;
+  //   }
+
+  //   if (Array.isArray(obj)) {
+  //     return obj.map((item) => this.deepCopy(item));
+  //   }
+
+  //   const copiedObject: any = {};
+  //   for (const key in obj) {
+  //     if (obj.hasOwnProperty(key)) {
+  //       copiedObject[key] = this.deepCopy(obj[key]);
+  //     }
+  //   }
+  //   console.log("Deep copy: ", copiedObject);
+  //   return copiedObject;
+  // }
 
   handleDefenceBonus = (
     id: number,
@@ -600,57 +647,71 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         let soldierUnitsAttackersAsRender =
           this.state.soldierUnitsAttackersAsRender;
 
-        // soldierUnitsAttackersAsRender.filter((a) => a.id !== id);
-        // this.setState({
-        //   soldierUnitsAttackersAsRender: soldierUnitsAttackersAsRender,
-        // });
+        let attIdxArray = this.state.attIdxArray;
 
-        delete (
-          // soldierUnitsAttackersAsRender.findIndex((a) => a.id === idn)
-          soldierUnitsAttackersAsRender[idn]
-        );
+        delete soldierUnitsAttackersAsRender[idn];
 
-        // soldierUnitsAttackersAsRender[
-        //   soldierUnitsAttackersAsRender.findIndex((a) => a.id === idn)
-        // ] = null;
-        // null;
-
-        // soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.filter(
-        //   function (element) {
-        //     return element !== undefined;
-        //   }
-        // );
+        delete attIdxArray[idn];
 
         soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.filter(
           (item) => item !== null && item !== undefined
         );
 
-        for (let i = 0; i < soldierUnitsAttackersAsRender.length; i++) {
-          soldierUnitsAttackersAsRender[i].id = i;
-        }
+        soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.map(
+          (unit, i) => {
+            unit.id = i;
+            return unit;
+          }
+        );
 
-        const attIdxArray = this.state.attIdxArray.filter(function (value) {
-          return value !== idn;
-        });
+        attIdxArray = attIdxArray.filter(
+          (item) => item !== null && item !== undefined
+        );
+
+        attIdxArray = attIdxArray.map((_, i) => i);
+
         this.setState({ attIdxArray });
 
         this.setState({ soldierUnitsAttackersAsRender });
 
-        // let soldierUnitsAttackersAsRender =
-        //   this.state.soldierUnitsAttackersAsRender;
-        // soldierUnitsAttackersAsRender.filter((a) => a.id !== id);
-        // this.setState({ soldierUnitsAttackersAsRender });
-        // delete soldierUnitsAttackersAsRender[id];
-        // this.setState({ soldierUnitsAttackersAsRender });
+        // this.healthAfterCalculation();
 
-        // const soldierUnitsAttackersAsRender =
-        //   this.state.soldierUnitsAttackersAsRender.filter((a) => a.id !== id);
-        // this.setState({ soldierUnitsAttackersAsRender });
+        // let updatedSoldierUnitsAttackersAsRender = immer.produce(
+        //   this.state.soldierUnitsAttackersAsRender,
+        //   (draft) => {
+        //     // Use filter to create a new array without the item that matches the idn
+        //     draft = draft.filter((item) => item.id !== idn);
+
+        //     // Reassign new id values to the remaining items
+        //     draft.forEach((unit, i) => {
+        //       unit.id = i;
+        //     });
+        //   }
+        // );
+
+        // let updatedAttIdxArray = immer.produce(
+        //   this.state.attIdxArray,
+        //   (draft) => {
+        //     draft = draft.filter((item) => item !== idn);
+        //   }
+        // );
+
+        // this.setState(
+        //   {
+        //     soldierUnitsAttackersAsRender: updatedSoldierUnitsAttackersAsRender,
+        //     attIdxArray: updatedAttIdxArray,
+        //   },
+        //   () => {
+        //     this.healthAfterCalculation();
+        //   }
+        // );
 
         break;
       case "Defenders":
         let soldierUnitsDefendersAsRender =
           this.state.soldierUnitsDefendersAsRender;
+
+        let defIdxArray = this.state.defIdxArray;
 
         // let soldierUnitsDefendersAsRenderExclUndefined =
         //   soldierUnitsDefendersAsRender;
@@ -675,6 +736,11 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsDefendersAsRender[idn]
         );
 
+        delete (
+          // soldierUnitsAttackersAsRender.findIndex((a) => a.id === idn)
+          defIdxArray[idn]
+        );
+
         // soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.filter(
         //   function (element) {
         //     return element !== undefined;
@@ -685,13 +751,26 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           (item) => item !== null && item !== undefined
         );
 
-        for (let i = 0; i < soldierUnitsDefendersAsRender.length; i++) {
-          soldierUnitsDefendersAsRender[i].id = i;
-        }
+        // for (let i = 0; i < soldierUnitsDefendersAsRender.length; i++) {
+        //   soldierUnitsDefendersAsRender[i].id = i;
+        // }
 
-        const defIdxArray = this.state.defIdxArray.filter(function (value) {
-          return value !== idn;
-        });
+        soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.map(
+          (unit, i) => {
+            unit.id = i;
+            return unit;
+          }
+        );
+
+        defIdxArray = defIdxArray.filter(
+          (item) => item !== null && item !== undefined
+        );
+
+        defIdxArray = defIdxArray.map((_, i) => i);
+
+        // const defIdxArray = this.state.defIdxArray.filter(function (value) {
+        //   return value !== idn;
+        // });
         this.setState({ defIdxArray });
 
         this.setState({ soldierUnitsDefendersAsRender });
@@ -725,6 +804,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     }
 
     logEvent(analytics, "pc_unit_deleted_" + team);
+
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
     // this.healthAfterCalculation();
     // this.forceUpdate();
@@ -814,6 +895,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         case "Attackers":
           let soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
+          // let attIdxArray = this.state.attIdxArray;
+
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
           if (1 >= soldierUnitsAttackersAsRender.length || index === 0) {
@@ -831,13 +914,21 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsAttackersAsRender[index - 1].id = index - 1;
           soldierUnitsAttackersAsRender[index].id = index;
 
+          // const tempAttPlusIdx = attIdxArray[index - 1];
+          // attIdxArray[index - 1] = attIdxArray[index];
+          // attIdxArray[index] = tempAttPlusIdx;
+
           //soldierUnitsAttackersAsRender[index].healthBefore++;
+          // this.state.soldierUnitsAttackersAsRender = [];
 
           this.setState({ soldierUnitsAttackersAsRender });
+          // this.setState({ attIdxArray });
+
           break;
         case "Defenders":
           let soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
+          // let defIdxArray = this.state.defIdxArray;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
           if (1 >= soldierUnitsDefendersAsRender.length || index === 0) {
@@ -854,9 +945,16 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsDefendersAsRender[index - 1].id = index - 1;
           soldierUnitsDefendersAsRender[index].id = index;
 
+          // const tempDefPlusIdx = defIdxArray[index - 1];
+          // defIdxArray[index - 1] = defIdxArray[index];
+          // defIdxArray[index] = tempDefPlusIdx;
+
           //soldierUnitsDefendersAsRender[index].healthBefore++;
 
+          // this.state.soldierUnitsDefendersAsRender = [];
           this.setState({ soldierUnitsDefendersAsRender });
+          // this.setState({ defIdxArray });
+
           break;
         default:
           console.log(
@@ -864,10 +962,11 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_changed_position_" + team);
+      logEvent(analytics, "pc_changed_position_up_" + team);
     }
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleDecreaseHitpoints = (id: number, team: string) => {
@@ -889,6 +988,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
           soldierUnitsAttackersAsRender[index].healthBefore--;
 
+          // this.state.soldierUnitsAttackersAsRender = [];
           this.setState({ soldierUnitsAttackersAsRender });
           break;
         case "Defenders":
@@ -898,6 +998,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
           soldierUnitsDefendersAsRender[index].healthBefore--;
 
+          // this.state.soldierUnitsDefendersAsRender = [];
           this.setState({ soldierUnitsDefendersAsRender });
           break;
         default:
@@ -912,6 +1013,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         case "Attackers":
           let soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
+          // let attIdxArray = this.state.attIdxArray;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
           if (
@@ -932,16 +1034,21 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsAttackersAsRender[index + 1].id = index + 1;
           soldierUnitsAttackersAsRender[index].id = index;
 
+          // const tempAttMinIdx = attIdxArray[index + 1];
+          // attIdxArray[index + 1] = attIdxArray[index];
+          // attIdxArray[index] = tempAttMinIdx;
+
           //soldierUnitsAttackersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsAttackersAsRender });
+          // this.setState({ attIdxArray });
           break;
         case "Defenders":
           let soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
+          // let defIdxArray = this.state.defIdxArray;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          console.log("index: " + index);
           if (
             1 >= soldierUnitsDefendersAsRender.length ||
             index === soldierUnitsDefendersAsRender.length - 1
@@ -959,9 +1066,14 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           soldierUnitsDefendersAsRender[index + 1].id = index + 1;
           soldierUnitsDefendersAsRender[index].id = index;
 
+          // const tempDefMinIdx = defIdxArray[index + 1];
+          // defIdxArray[index + 1] = defIdxArray[index];
+          // defIdxArray[index] = tempDefMinIdx;
+
           //soldierUnitsDefendersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsDefendersAsRender });
+          // this.setState({ defIdxArray });
           break;
         default:
           console.log(
@@ -969,40 +1081,65 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_changed_position_" + team);
+      logEvent(analytics, "pc_changed_position_down_" + team);
     }
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleAddAttacker = (typeUnit: string) => {
-    this.setState({
-      soldierUnitsAttackersAsRender:
-        this.state.soldierUnitsAttackersAsRender.concat([
-          {
-            id: this.state.nextIdAttacker,
-            typeUnit,
-            team: "Attackers",
-            healthMax: this.healthMax(typeUnit),
-            healthBefore: this.healthMax(typeUnit),
-            healthAfter: this.healthMax(typeUnit), //this.healthAfterCalculation(),
-            attack: this.attack(typeUnit),
-            defence: this.defence(typeUnit),
-            veteran: false,
-            defenceBonus: false,
-            wallBonus: false,
-            safeBonus: false,
-            poisonedBonus: false,
-            boostedBonus: false,
-            splashDamage: false,
-            shipUnit: this.istypeUnitaShipUnit(typeUnit),
-          },
-        ]),
-    });
+    // this.setState({
+    //   soldierUnitsAttackersAsRender:
+    //     this.state.soldierUnitsAttackersAsRender.concat([
+    //       {
+    //         id: this.state.nextIdAttacker,
+    //         typeUnit,
+    //         team: "Attackers",
+    //         healthMax: this.healthMax(typeUnit),
+    //         healthBefore: this.healthMax(typeUnit),
+    //         healthAfter: this.healthMax(typeUnit), //this.healthAfterCalculation(),
+    //         attack: this.attack(typeUnit),
+    //         defence: this.defence(typeUnit),
+    //         veteran: false,
+    //         defenceBonus: false,
+    //         wallBonus: false,
+    //         safeBonus: false,
+    //         poisonedBonus: false,
+    //         boostedBonus: false,
+    //         splashDamage: false,
+    //         shipUnit: this.istypeUnitaShipUnit(typeUnit),
+    //       },
+    //     ]),
+    // });
+
+    this.setState((prevState) => ({
+      soldierUnitsAttackersAsRender: [
+        ...prevState.soldierUnitsAttackersAsRender,
+        {
+          id: prevState.soldierUnitsAttackersAsRender.length,
+          typeUnit,
+          team: "Attackers",
+          healthMax: this.healthMax(typeUnit),
+          healthBefore: this.healthMax(typeUnit),
+          healthAfter: this.healthMax(typeUnit), //this.healthAfterCalculation(),
+          attack: this.attack(typeUnit),
+          defence: this.defence(typeUnit),
+          veteran: false,
+          defenceBonus: false,
+          wallBonus: false,
+          safeBonus: false,
+          poisonedBonus: false,
+          boostedBonus: false,
+          splashDamage: false,
+          shipUnit: this.istypeUnitaShipUnit(typeUnit),
+        },
+      ],
+    }));
 
     console.log(
       "New attacker added the battleground array with id: " +
-        this.state.nextIdAttacker +
+        this.state.soldierUnitsAttackersAsRender.length +
         " Type: " +
         typeUnit
     );
@@ -1012,52 +1149,58 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     // });
 
     this.setState({
-      attIdxArray: [...this.state.attIdxArray, this.state.nextIdAttacker],
+      attIdxArray: [
+        ...this.state.attIdxArray,
+        this.state.soldierUnitsAttackersAsRender.length,
+      ],
     });
 
     // console.log(
     //   "These are the attackers ids in use: " + this.state.attIdxArray
     // );
 
-    this.setState(() => {
-      return { nextIdAttacker: this.state.nextIdAttacker + 1 };
-    });
+    // this.setState(() => {
+    //   return { nextIdAttacker: this.state.nextIdAttacker + 1 };
+    // });
 
     logEvent(analytics, "pc_attacker_added_" + typeUnit);
-    logEvent(analytics, "pc_attacker_id_" + this.state.nextIdAttacker);
+    logEvent(
+      analytics,
+      "pc_attacker_id_" + this.state.soldierUnitsAttackersAsRender.length
+    );
 
-    this.healthAfterCalculation();
+    // this.componentDidUpdate();
+    //this.healthAfterCalculation();
   };
 
   handleAddDefender = (typeUnit: string) => {
-    this.setState({
-      soldierUnitsDefendersAsRender:
-        this.state.soldierUnitsDefendersAsRender.concat([
-          {
-            id: this.state.nextIdDefender,
-            typeUnit,
-            team: "Defenders",
-            healthMax: this.healthMax(typeUnit),
-            healthBefore: this.healthMax(typeUnit),
-            healthAfter: this.healthMax(typeUnit), //this.healthAfterCalculation(),
-            attack: this.attack(typeUnit),
-            defence: this.defence(typeUnit),
-            veteran: false,
-            defenceBonus: false,
-            wallBonus: false,
-            safeBonus: false,
-            poisonedBonus: false,
-            boostedBonus: false,
-            splashDamage: false,
-
-            shipUnit: this.istypeUnitaShipUnit(typeUnit),
-          },
-        ]),
-    });
+    this.setState((prevState) => ({
+      soldierUnitsDefendersAsRender: [
+        ...prevState.soldierUnitsDefendersAsRender,
+        {
+          id: prevState.soldierUnitsDefendersAsRender.length,
+          typeUnit,
+          team: "Defenders",
+          healthMax: this.healthMax(typeUnit),
+          healthBefore: this.healthMax(typeUnit),
+          healthAfter: this.healthMax(typeUnit), //this.healthAfterCalculation(),
+          attack: this.attack(typeUnit),
+          defence: this.defence(typeUnit),
+          veteran: false,
+          defenceBonus: false,
+          wallBonus: false,
+          safeBonus: false,
+          poisonedBonus: false,
+          boostedBonus: false,
+          splashDamage: false,
+          shipUnit: this.istypeUnitaShipUnit(typeUnit),
+        },
+      ],
+    }));
 
     console.log(
       "New defender added the battleground array with id: " +
-        this.state.nextIdDefender +
+        this.state.soldierUnitsDefendersAsRender.length +
         " Type: " +
         typeUnit
     );
@@ -1067,17 +1210,23 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     // });
 
     this.setState({
-      defIdxArray: [...this.state.defIdxArray, this.state.nextIdDefender],
+      defIdxArray: [
+        ...this.state.defIdxArray,
+        this.state.soldierUnitsDefendersAsRender.length,
+      ],
     });
 
     // console.log("These are the defender ids in use: " + this.state.defIdxArray);
 
-    this.setState(() => {
-      return { nextIdDefender: this.state.nextIdDefender + 1 };
-    });
+    // this.setState(() => {
+    //   return { nextIdDefender: this.state.nextIdDefender + 1 };
+    // });
 
     logEvent(analytics, "pc_defender_added_" + typeUnit);
-    logEvent(analytics, "pc_defender_id_" + this.state.nextIdDefender);
+    logEvent(
+      analytics,
+      "pc_defender_id_" + this.state.soldierUnitsDefendersAsRender.length
+    );
 
     // this.healthAfterCalculation();
   };
@@ -1510,8 +1659,15 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     console.log(soldierUnitsAttackersAsRender);
     console.log(soldierUnitsDefendersAsRender);
 
-    console.log("These are the defender ids in use: " + this.state.defIdxArray);
-    console.log("These are the attacker ids in use: " + this.state.attIdxArray);
+    console.log(
+      "These are the attacker ids in use (attIdxArray): " +
+        this.state.attIdxArray
+    );
+
+    console.log(
+      "These are the defender ids in use (defIdxArray): " +
+        this.state.defIdxArray
+    );
 
     //remove undefined values from array
 
@@ -1530,10 +1686,10 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     // find undefined values
 
     // first reset all hitpoints
-    soldierUnitsDefendersAsRender.forEach((element) => {
+    soldierUnitsAttackersAsRender.forEach((element) => {
       element.healthAfter = element.healthBefore;
     });
-    soldierUnitsAttackersAsRender.forEach((element) => {
+    soldierUnitsDefendersAsRender.forEach((element) => {
       element.healthAfter = element.healthBefore;
     });
 
@@ -1669,8 +1825,13 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     );
 
     // No clue how to fix this else way
-    this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
-    this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
+    // this.state.soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender;
+    // this.state.soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender;
+
+    // this.forceUpdate();
+    // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
+
+    return [soldierUnitsAttackersAsRender, soldierUnitsDefendersAsRender];
 
     // this.setState({
     //   soldierUnitsDefendersAsRender: soldierUnitsDefendersAsRender,
