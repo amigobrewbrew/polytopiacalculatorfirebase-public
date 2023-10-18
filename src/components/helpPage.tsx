@@ -34,8 +34,12 @@ class helpPage extends React.Component {
                   Second number: Hitpoints of the soldier after the battle{" "}
                 </li>
                 <li>[x]: Delete unit from battlefield</li>
-                <li>[+]: Increase soldier hitpoints by one</li>
-                <li>[-]: Decrease soldier hitpoints by one</li>
+                <li>
+                  [+]: Increase soldier hitpoints or fighting order by one
+                </li>
+                <li>
+                  [-]: Decrease soldier hitpoints or fighting order by one
+                </li>
                 <li>
                   VET: When toggled, unit is veteran (plus 5 maximum hitpoints)
                 </li>
@@ -77,6 +81,8 @@ class helpPage extends React.Component {
                 {" "}
                 Paypal{" "}
               </a>
+              <br></br>
+              Polytopia balance version: 2.7.2; Beta Steam Build ID: 12424002
               <br></br>
             </p>
             <span>
