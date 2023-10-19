@@ -1641,7 +1641,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
   healthAfterCalculation = () => {
     console.log("This is where the magic happens. Charge!");
-    logEvent(analytics, "pc_magic_happens");
+    logEvent(analytics, "pc_magic_happens_beta");
 
     let indexDefenderCounter = 0;
     let indexDefender = this.state.defIdxArray[indexDefenderCounter];
