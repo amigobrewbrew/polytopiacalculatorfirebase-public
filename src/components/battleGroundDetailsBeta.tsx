@@ -591,6 +591,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_veterancy_bonus_" + team + "_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleShipUnit = (
