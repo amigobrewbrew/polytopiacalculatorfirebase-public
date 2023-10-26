@@ -58,6 +58,7 @@ type State = {
     boostedBonus: boolean;
     shipUnit: boolean;
     splashDamage: boolean;
+    explodeDamage: boolean;
   }[];
   nextIdDefender: number;
   soldierUnitsAttackers: {
@@ -85,6 +86,7 @@ type State = {
     boostedBonus: boolean;
     shipUnit: boolean;
     splashDamage: boolean;
+    explodeDamage: boolean;
   }[];
   //nextIdAttacker: number;
   defIdxArray: number[];
@@ -209,6 +211,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                         OnBoostedBonus={this.handleBoostedBonus}
                         OnShipUnit={this.handleShipUnit}
                         OnSplashDamage={this.handleSplashDamage}
+                        OnExplodeDamage={this.handleExplodeDamage}
                         veteran={soldierUnitAtt.veteran}
                         defenceBonus={soldierUnitAtt.defenceBonus}
                         wallBonus={soldierUnitAtt.wallBonus}
@@ -217,6 +220,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                         boostedBonus={soldierUnitAtt.boostedBonus}
                         shipUnit={soldierUnitAtt.shipUnit}
                         splashDamage={soldierUnitAtt.splashDamage}
+                        explodeDamage={soldierUnitAtt.explodeDamage}
                       ></SoldierUnitAsRender>
                     </Box>
                   </Box>
@@ -266,6 +270,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                         OnBoostedBonus={this.handleBoostedBonus}
                         OnShipUnit={this.handleShipUnit}
                         OnSplashDamage={this.handleSplashDamage}
+                        OnExplodeDamage={this.handleExplodeDamage}
                         veteran={soldierUnitDef.veteran}
                         defenceBonus={soldierUnitDef.defenceBonus}
                         wallBonus={soldierUnitDef.wallBonus}
@@ -274,6 +279,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                         boostedBonus={soldierUnitDef.boostedBonus}
                         shipUnit={soldierUnitDef.shipUnit}
                         splashDamage={soldierUnitDef.splashDamage}
+                        explodeDamage={soldierUnitDef.explodeDamage}
                       ></SoldierUnitAsRender>
                     </Box>
                   </Box>
@@ -520,6 +526,32 @@ class battleGroundDetails extends React.Component<Props, State> {
     } else console.log("Error with team and splash damage selection");
 
     logEvent(analytics, "pc_splash_damage_toggled");
+
+    // this.healthAfterCalculation();
+  };
+
+  handleExplodeDamage = (
+    id: number,
+    team: string,
+    typeUnit: string,
+    explodeDamage: boolean
+  ) => {
+    let index;
+    let soldierUnitsAttackersAsRender =
+      this.state.soldierUnitsAttackersAsRender;
+    if (team === "Attackers" && explodeDamage === false) {
+      index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+      soldierUnitsAttackersAsRender[index].explodeDamage = true;
+
+      this.setState({ soldierUnitsAttackersAsRender });
+    } else if (team === "Attackers" && explodeDamage === true) {
+      index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+      soldierUnitsAttackersAsRender[index].explodeDamage = false;
+
+      this.setState({ soldierUnitsAttackersAsRender });
+    } else console.log("Error with team and explode damage selection");
+
+    logEvent(analytics, "pc_explode_damage_toggled");
 
     // this.healthAfterCalculation();
   };
@@ -1141,6 +1173,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           poisonedBonus: false,
           boostedBonus: false,
           splashDamage: false,
+          explodeDamage: false,
           shipUnit: this.istypeUnitaShipUnit(typeUnit),
         },
       ],
@@ -1202,6 +1235,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           poisonedBonus: false,
           boostedBonus: false,
           splashDamage: false,
+          explodeDamage: false,
           shipUnit: this.istypeUnitaShipUnit(typeUnit),
         },
       ],
@@ -1723,6 +1757,16 @@ class battleGroundDetails extends React.Component<Props, State> {
             4.5
         );
 
+        if (
+          attacker.explodeDamage ===
+            (true &&
+              (attacker.typeUnit === "Raychi" ||
+                attacker.typeUnit === "Doomux")) ||
+          attacker.typeUnit === "Segment"
+        ) {
+          attackResult = Math.floor(attackResult * 0.5);
+        }
+
         totalAttackResult += attackResult;
 
         soldierUnitsDefendersAsRender[indexDefender].healthAfter =
@@ -1756,7 +1800,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           element.healthAfter =
             element.healthBefore - defenceResult * safeBonusMultiplier;
         }
-        if (element.typeUnit === "Segment") {
+        if (element.typeUnit === "Segment" || attacker.explodeDamage === true) {
           element.healthAfter = 0;
         }
       } else {

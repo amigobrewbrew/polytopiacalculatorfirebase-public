@@ -44,10 +44,15 @@ class helpPage extends React.Component {
                   VET: When toggled, unit is veteran (plus 5 maximum hitpoints)
                 </li>
                 <li>
-                  SPLS: When toggled, unit is doing splash damage (fire dragon)
+                  SPLSH: When toggled, unit is doing splash damage (Fire Dragon
+                  and Bomber)
+                </li>
+                <li>
+                  XPLD: When toggled, unit explodes (Raychi and Doomux;
+                  Attacking Segment always explodes)
                 </li>
                 <li>SAFE: When toggled, unit is safe from retaliation </li>
-                <li>BST: When toggled, unit is boosted by cymanti shaman</li>
+                <li>BST: When toggled, unit is boosted by Cymanti shaman</li>
                 <li>
                   MX##: Set the maximum health for ships to 10, 15, 20, 25, 35
                   or 40 hitpoints. Maximum hitpoints affects attacking and
@@ -61,10 +66,7 @@ class helpPage extends React.Component {
             <p>
               Contact me for questions, tips, bugs etc. via{" "}
               <a href={`mailto:${process.env.REACT_APP_EMAIL}`}>Email</a> or on{" "}
-              <a href="https://discord.com/channels/1135234648360882297/1135235261777846423">
-                {" "}
-                Discord{" "}
-              </a>
+              <a href="https://discord.gg/dmyMSQ7QfB"> Discord </a>
               <br></br>A big thanks to Programming with Mosh, Midjiwan and the
               Polytopia community!
               <br></br>
@@ -80,6 +82,12 @@ class helpPage extends React.Component {
               <a href="https://www.paypal.com/donate/?business=HEVFJL6C3XXRC&no_recurring=0&item_name=Support+Polytopia+Damage+Calculator+&currency_code=EUR">
                 {" "}
                 Paypal{" "}
+              </a>
+              <br></br>
+              Follow these instructions to install this web app as a local app:{" "}
+              <a href="https://support.google.com/chrome/answer/9658361">
+                {" "}
+                Progressive web apps{" "}
               </a>
               <br></br>
               Polytopia balance version: 2.7.2; Beta Steam Build ID: 12424002

@@ -109,6 +109,7 @@ type Props = {
   poisonedBonus: boolean;
   boostedBonus: boolean;
   splashDamage: boolean;
+  explodeDamage: boolean;
   shipUnit: boolean; // This must be managed bystate because needs to change for set the buttongs when units take another position in the array
   OnDelete?: any;
   OnUpdateHitpoints?: any;
@@ -122,6 +123,7 @@ type Props = {
   OnBoostedBonus?: any;
   OnShipUnit?: any;
   OnSplashDamage: any;
+  OnExplodeDamage: any;
 };
 
 type State = {
@@ -133,6 +135,7 @@ type State = {
   isToggleOnBoosted: boolean;
   isToggleOnShipUnit: boolean;
   isToggleOnSplashDamage: boolean;
+  isToggleOnExplodeDamage: boolean;
   isToggleVisibleTypeUnit: string;
   isToggleVisibleTeam: string;
   isToggleVisibleShipUnit: boolean;
@@ -153,6 +156,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
       isToggleOnPoisoned: this.props.poisonedBonus,
       isToggleOnBoosted: this.props.boostedBonus,
       isToggleOnSplashDamage: this.props.splashDamage,
+      isToggleOnExplodeDamage: this.props.explodeDamage,
       isToggleOnShipUnit: this.props.shipUnit,
       isToggleVisibleTypeUnit: this.props.typeUnit,
       isToggleVisibleTeam: this.props.team,
@@ -171,6 +175,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     this.handleClickPoisonedBonus = this.handleClickPoisonedBonus.bind(this);
     this.handleClickBoostedBonus = this.handleClickBoostedBonus.bind(this);
     this.handleClickSplashDamage = this.handleClickSplashDamage.bind(this);
+    this.handleClickExplodeDamage = this.handleClickExplodeDamage.bind(this);
     this.handleClickShipUnit = this.handleClickShipUnit.bind(this);
     this.handleHitpointsChange = this.handleHitpointsChange.bind(this);
     //this.handleHitpointsSubmit = this.handleHitpointsSubmit.bind(this);
@@ -228,7 +233,11 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         isToggleOnSplashDamage: nextProps.splashDamage,
       };
     }
-
+    if (prevState.isToggleOnExplodeDamage !== nextProps.explodeDamage) {
+      return {
+        isToggleOnExplodeDamage: nextProps.explodeDamage,
+      };
+    }
     if (prevState.isToggleVisibleShipUnit !== nextProps.shipUnit) {
       return {
         isToggleVisibleShipUnit: nextProps.shipUnit,
@@ -281,6 +290,20 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     this.setState({ isToggleOnSplashDamage });
 
     console.log("Unit does splash damage");
+  }
+
+  handleClickExplodeDamage() {
+    let isToggleOnExplodeDamage = this.props.explodeDamage;
+
+    if (isToggleOnExplodeDamage === false) {
+      isToggleOnExplodeDamage = true;
+    } else {
+      isToggleOnExplodeDamage = false;
+    }
+
+    this.setState({ isToggleOnExplodeDamage });
+
+    console.log("Unit does explode damage");
   }
 
   handleClickVeteranBonus() {
@@ -632,6 +655,33 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         </Button>
         <Button
           variant="outlined"
+          color="secondary"
+          size="small"
+          onClick={() => {
+            this.props.OnExplodeDamage(
+              this.props.id,
+              this.props.team,
+              this.props.typeUnit,
+              this.props.explodeDamage
+            );
+            this.handleClickExplodeDamage();
+          }}
+          style={this.makeInvisibleExplodeDamage(
+            this.state.isToggleVisibleTypeUnit,
+            this.state.isToggleVisibleTeam
+          )}
+          sx={{
+            marginRight: 0.1,
+            color: "#A9A9A9",
+            ...(this.state.isToggleOnExplodeDamage === true && {
+              color: "##ce93d8",
+            }),
+          }}
+        >
+          {this.state.isToggleOnExplodeDamage ? <b>xpld</b> : "xpld"}
+        </Button>
+        <Button
+          variant="outlined"
           //variant={this.state.isToggleOnDefence ? "contained" : "outlined"}
           color="secondary"
           //background-color="#4CAF50"
@@ -819,6 +869,17 @@ class soldierUnitAsRender extends React.Component<Props, State> {
 
   makeInvisibleSplashDamage(unitType: string, team: string) {
     if (unitType === "FireDragon" && team === "Attackers") {
+      return { display: "visible" };
+    } else {
+      return { display: "none" };
+    }
+  }
+
+  makeInvisibleExplodeDamage(unitType: string, team: string) {
+    if (
+      (unitType === "Raychi" || unitType === "Doomux") &&
+      team === "Attackers"
+    ) {
       return { display: "visible" };
     } else {
       return { display: "none" };
