@@ -121,6 +121,7 @@ type Props = {
   defenceBonus: boolean;
   safeBonus: boolean;
   poisonedBonus: boolean;
+  becamePoisonedBonus: boolean;
   boostedBonus: boolean;
   splashDamage: boolean;
   explodeDamage: boolean;
@@ -146,6 +147,7 @@ type State = {
   isToggleOnDefence: boolean;
   isToggleOnWall: boolean;
   isToggleOnPoisoned: boolean;
+  isBecamePoisoned: boolean;
   isToggleOnBoosted: boolean;
   isToggleOnShipUnit: boolean;
   isToggleOnSplashDamage: boolean;
@@ -168,6 +170,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
       isToggleOnDefence: this.props.defenceBonus,
       isToggleOnWall: this.props.wallBonus,
       isToggleOnPoisoned: this.props.poisonedBonus,
+      isBecamePoisoned: this.props.becamePoisonedBonus,
       isToggleOnBoosted: this.props.boostedBonus,
       isToggleOnSplashDamage: this.props.splashDamage,
       isToggleOnExplodeDamage: this.props.explodeDamage,
@@ -285,6 +288,11 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
     if (prevState.healthAfterAsState !== nextProps.healthAfter) {
       return {
         healthAfterAsState: nextProps.healthAfter,
+      };
+    }
+    if (prevState.isBecamePoisoned !== nextProps.becamePoisonedBonus) {
+      return {
+        isBecamePoisoned: nextProps.becamePoisonedBonus,
       };
     }
 
@@ -789,10 +797,11 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
           // sx={{ marginRight: -0.5 }}
           sx={{
             marginRight: 0.25,
-            color: "#A9A9A9",
-            ...(this.state.isToggleOnPoisoned === true && {
-              color: "##ce93d8",
-            }),
+            color: this.state.isToggleOnPoisoned
+              ? "##CE93D8" // Set to #ce93d8 when isToggleOnPoisoned is true
+              : this.state.isBecamePoisoned
+              ? "#008000" // Set to green when becamePoisoned is true
+              : "#A9A9A9", // Default color
           }}
         >
           {this.state.isToggleOnPoisoned ? <b>pois</b> : "pois"}
@@ -976,6 +985,10 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
 
   displayhealthAfter() {
     return this.state.healthAfterAsState;
+  }
+
+  displayisBecamePoisoned() {
+    return this.state.isBecamePoisoned;
   }
 
   // displayId() {

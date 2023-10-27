@@ -55,6 +55,7 @@ type State = {
     wallBonus: boolean;
     safeBonus: boolean;
     poisonedBonus: boolean;
+    becamePoisonedBonus: boolean;
     boostedBonus: boolean;
     shipUnit: boolean;
     splashDamage: boolean;
@@ -83,6 +84,7 @@ type State = {
     wallBonus: boolean;
     safeBonus: boolean;
     poisonedBonus: boolean;
+    becamePoisonedBonus: boolean;
     boostedBonus: boolean;
     shipUnit: boolean;
     splashDamage: boolean;
@@ -218,6 +220,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                         wallBonus={soldierUnitAtt.wallBonus}
                         safeBonus={soldierUnitAtt.safeBonus}
                         poisonedBonus={soldierUnitAtt.poisonedBonus}
+                        becamePoisonedBonus={soldierUnitAtt.becamePoisonedBonus}
                         boostedBonus={soldierUnitAtt.boostedBonus}
                         shipUnit={soldierUnitAtt.shipUnit}
                         splashDamage={soldierUnitAtt.splashDamage}
@@ -277,6 +280,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                         wallBonus={soldierUnitDef.wallBonus}
                         safeBonus={soldierUnitDef.safeBonus}
                         poisonedBonus={soldierUnitDef.poisonedBonus}
+                        becamePoisonedBonus={soldierUnitDef.becamePoisonedBonus}
                         boostedBonus={soldierUnitDef.boostedBonus}
                         shipUnit={soldierUnitDef.shipUnit}
                         splashDamage={soldierUnitDef.splashDamage}
@@ -1168,6 +1172,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           wallBonus: false,
           safeBonus: false,
           poisonedBonus: false,
+          becamePoisonedBonus: false,
           boostedBonus: false,
           splashDamage: false,
           explodeDamage: false,
@@ -1210,6 +1215,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
     // this.componentDidUpdate();
     //this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleAddDefender = (typeUnit: string) => {
@@ -1230,6 +1236,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           wallBonus: false,
           safeBonus: false,
           poisonedBonus: false,
+          becamePoisonedBonus: false,
           boostedBonus: false,
           splashDamage: false,
           explodeDamage: false,
@@ -1269,6 +1276,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     );
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   istypeUnitaShipUnit = (typeUnit: string) => {
@@ -1733,15 +1741,13 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       element.healthAfter = element.healthBefore;
     });
 
-    soldierUnitsAttackersAsRender.forEach((element) => {
+    var poisoningAttacker = 9999;
+    var defenderRepeatedAttack = 0;
+
+    soldierUnitsAttackersAsRender.forEach((attacker) => {
       let defender = soldierUnitsDefendersAsRender[indexDefender];
 
-      // while (defender === undefined) {
-      //   indexDefender++;
-      //   defender = soldierUnitsDefendersAsRender[indexDefender];
-      // }
-
-      let attacker = element;
+      //let attacker = element;
 
       let defenceResult = 0;
       let attackResult = 0;
@@ -1752,6 +1758,14 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       let boostedBonusMultiplier: number;
 
       if (attacker !== undefined && defender !== undefined) {
+        if (defenderRepeatedAttack === 0) {
+          defender.becamePoisonedBonus = false;
+        }
+        // soldierUnitsDefendersAsRender[indexDefender].becamePoisonedBonus =
+        //   false;
+
+        defenderRepeatedAttack++;
+
         defender.defenceBonus === true
           ? (defenceBonusMultiplier = 1.5)
           : (defenceBonusMultiplier = 1);
@@ -1766,8 +1780,16 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
         if (defender.poisonedBonus === true) {
           poisonedBonusMultiplier = 0.7;
+          wallBonusMultiplier = 1;
+          defenceBonusMultiplier = 1;
         } else {
           poisonedBonusMultiplier = 1;
+        }
+
+        if (attacker.id > poisoningAttacker) {
+          poisonedBonusMultiplier = 0.7;
+          wallBonusMultiplier = 1;
+          defenceBonusMultiplier = 1;
         }
 
         attacker.boostedBonus === true
@@ -1796,31 +1818,43 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           attacker.attack = 4;
         }
 
-        let attackForce =
-          ((attacker.attack + 0.5 * boostedBonusMultiplier) *
-            attacker.healthBefore) /
-          attacker.healthMax;
+        let attackForce = parseFloat(
+          (
+            ((attacker.attack + 0.5 * boostedBonusMultiplier) *
+              attacker.healthBefore) /
+            attacker.healthMax
+          ).toFixed(10)
+        );
 
-        let defenceForce =
-          ((defender.defence * (defender.healthBefore - totalAttackResult)) /
-            defender.healthMax) *
-          wallBonusMultiplier *
-          defenceBonusMultiplier *
-          poisonedBonusMultiplier;
+        let defenceForce = parseFloat(
+          (
+            ((defender.defence * (defender.healthBefore - totalAttackResult)) /
+              defender.healthMax) *
+            wallBonusMultiplier *
+            defenceBonusMultiplier *
+            poisonedBonusMultiplier
+          ).toFixed(10)
+        );
 
         let totalDamage = attackForce + defenceForce;
 
         attackResult = Math.round(
-          parseFloat((attackForce / totalDamage).toFixed(10)) *
-            (attacker.attack + 0.5 * boostedBonusMultiplier) *
-            4.5
+          parseFloat(
+            (
+              (attackForce / totalDamage) *
+              (attacker.attack + 0.5 * boostedBonusMultiplier) *
+              4.5
+            ).toFixed(10)
+          )
         );
 
+        console.log("this is attackForce: " + attackForce);
+        console.log("this is defenceForce: " + defenceForce);
+        console.log("this is totalDamage: " + totalDamage);
+        console.log("this is attackResult: " + attackResult);
+
         if (
-          attacker.explodeDamage ===
-            (true &&
-              (attacker.typeUnit === "Raychi" ||
-                attacker.typeUnit === "Doomux")) ||
+          attacker.explodeDamage === true ||
           attacker.typeUnit === "Segment"
         ) {
           attackResult = Math.floor(attackResult * 0.5);
@@ -1836,16 +1870,48 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
         if (defender.healthAfter > 0) {
           defenceResult = Math.round(
-            parseFloat((defenceForce / totalDamage).toFixed(10)) *
-              defender.defence *
-              4.5
+            parseFloat(
+              ((defenceForce / totalDamage) * defender.defence * 4.5).toFixed(
+                10
+              )
+            )
           );
+          console.log("this is defenceResult: " + defenceResult);
+          //poison beta
+          if (
+            attacker.typeUnit === "Exida" ||
+            attacker.typeUnit === "Phychi" ||
+            attacker.typeUnit === "Kiton" ||
+            attacker.typeUnit === "Segment" ||
+            attacker.explodeDamage === true
+          ) {
+            //defender.poisonedBonus = true; // this one is wrong
+            // soldierUnitsDefendersAsRender[indexDefender].becamePoisonedBonus =
+            //   true;
+            defender.becamePoisonedBonus = true;
+            poisoningAttacker = attacker.id;
+            console.log(
+              "Defender " +
+                defender.id +
+                " became poisoned, because of attacker " +
+                attacker.id
+            );
+            // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
+          }
+          // if (poisoningAttacker === 9999) {
+          //   soldierUnitsDefendersAsRender[indexDefender].becamePoisonedBonus =
+          //     false;
+          //   // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
+          // }
+          // poison beta
         } else {
           defenceResult = 0;
           //indexDefender++;
           indexDefenderCounter++;
           indexDefender = this.state.defIdxArray[indexDefenderCounter];
           totalAttackResult = 0;
+          poisoningAttacker = 9999;
+          defenderRepeatedAttack = 0;
         }
 
         if (
@@ -1856,14 +1922,17 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
             defender.typeUnit === "Segment"
           )
         ) {
-          element.healthAfter =
-            element.healthBefore - defenceResult * safeBonusMultiplier;
+          attacker.healthAfter =
+            attacker.healthBefore - defenceResult * safeBonusMultiplier;
         }
-        if (element.typeUnit === "Segment" || attacker.explodeDamage === true) {
-          element.healthAfter = 0;
+        if (
+          attacker.typeUnit === "Segment" ||
+          attacker.explodeDamage === true
+        ) {
+          attacker.healthAfter = 0;
         }
       } else {
-        element.healthAfter = element.healthBefore;
+        attacker.healthAfter = attacker.healthBefore;
         console.log("Reset hitpoint on inactive attackers");
       }
     });
