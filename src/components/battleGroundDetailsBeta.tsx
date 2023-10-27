@@ -395,6 +395,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_defence_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleWallBonus = (
@@ -423,6 +424,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_wall_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handlePoisonedBonus = (
@@ -452,6 +454,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_poisoned_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleSafeBonus = (
@@ -478,6 +481,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_safe_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleBoostedBonus = (
@@ -504,6 +508,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_boosted_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleSplashDamage = (
@@ -530,6 +535,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_splash_damage_toggled");
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleExplodeDamage = (
@@ -556,6 +562,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     logEvent(analytics, "pc_explode_damage_toggled");
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleVeteranBonus = (

@@ -397,6 +397,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_defence_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleWallBonus = (
@@ -425,6 +426,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_wall_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handlePoisonedBonus = (
@@ -454,6 +456,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_poisoned_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleSafeBonus = (
@@ -480,6 +483,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_safe_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleBoostedBonus = (
@@ -506,6 +510,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_boosted_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleSplashDamage = (
@@ -532,6 +537,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_splash_damage_toggled");
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleExplodeDamage = (
@@ -558,6 +564,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     logEvent(analytics, "pc_explode_damage_toggled");
 
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleVeteranBonus = (
@@ -628,8 +635,8 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     logEvent(analytics, "pc_veterancy_bonus_" + team + "_" + typeUnit);
 
-    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
     // this.healthAfterCalculation();
+    this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
   handleShipUnit = (
