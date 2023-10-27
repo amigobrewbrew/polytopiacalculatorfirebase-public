@@ -60,7 +60,11 @@ class helpPage extends React.Component {
                 </li>
                 <li>DEF: When toggled, unit gets defensive bonus </li>
                 <li>WALL: When toggled, unit gets walled bonus </li>
-                <li>POIS: When toggled, unit is poisoned</li>
+                <li>POIS: When toggled, unit is poisoned before battle</li>
+                <li>
+                  POIS: When green, unit is poisoned after attack by Raychi,
+                  Exida, Phychi, or exploding unit.
+                </li>
               </ul>
             </span>
             <p>
