@@ -840,8 +840,8 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   }
 
   makeInvisibleVeteranBonus(unitType: string) {
-    console.log("Setting VET button visibiliy unitType:", unitType);
-    //this.forceUpdate();
+    // console.log("Setting VET button visibiliy unitType:", unitType);
+    // this.forceUpdate();
     if (
       unitType === "Ship" ||
       unitType === "Boat" ||
