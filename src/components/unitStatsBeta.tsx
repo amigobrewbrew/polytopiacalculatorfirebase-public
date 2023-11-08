@@ -304,5 +304,5 @@ export abstract class JuggernautStats {
   public static healthMax = 40;
   public static healthMaxVeteran = 40;
   public static attack = 3;
-  public static defence = 3;
+  public static defence = 4;
 }

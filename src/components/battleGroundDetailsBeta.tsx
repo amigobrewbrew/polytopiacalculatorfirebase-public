@@ -95,6 +95,7 @@ type State = {
   attIdxArray: number[];
   checkedPosition: boolean;
   randomNumber: number;
+  userUnderstands: boolean;
 };
 
 //const a = "test";
@@ -118,6 +119,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     attIdxArray: [],
     checkedPosition: false,
     randomNumber: 0,
+    userUnderstands: false,
   };
 
   handleChangeCheckbox = () => {
@@ -145,6 +147,26 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     //   });
     // }
 
+    let soldierUnitsAttackersAsRender =
+      this.state.soldierUnitsAttackersAsRender;
+
+    let soldierUnitsDefendersAsRender =
+      this.state.soldierUnitsDefendersAsRender;
+    let userUnderstands = this.state.userUnderstands;
+
+    if (
+      soldierUnitsAttackersAsRender.length > 0 &&
+      soldierUnitsDefendersAsRender.length > 0 &&
+      userUnderstands === false
+    ) {
+      console.log(
+        "User understands that at least an attacker and a defender are needed for the calculation to work"
+      );
+      logEvent(analytics, "pc_user_understands");
+
+      this.setState({ userUnderstands: true });
+    }
+
     console.log("componentDidUpdate for battleGroundDetails");
   }
 
@@ -155,7 +177,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
     // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
-    logEvent(analytics, "pc_battleground_page_rendered");
+    // logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
     //   //display: "flex",
     //   //flexDirection: "column",
