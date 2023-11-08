@@ -34,16 +34,25 @@ class helpPage extends React.Component {
                   Second number: Hitpoints of the soldier after the battle{" "}
                 </li>
                 <li>[x]: Delete unit from battlefield</li>
-                <li>[+]: Increase soldier hitpoints by one</li>
-                <li>[-]: Decrease soldier hitpoints by one</li>
+                <li>
+                  [+]: Increase soldier hitpoints or fighting order by one
+                </li>
+                <li>
+                  [-]: Decrease soldier hitpoints or fighting order by one
+                </li>
                 <li>
                   VET: When toggled, unit is veteran (plus 5 maximum hitpoints)
                 </li>
                 <li>
-                  SPLS: When toggled, unit is doing splash damage (fire dragon)
+                  SPLSH: When toggled, unit is doing splash damage (Fire Dragon
+                  and Bomber)
+                </li>
+                <li>
+                  XPLD: When toggled, unit explodes (Raychi and Doomux;
+                  Attacking Segment always explodes)
                 </li>
                 <li>SAFE: When toggled, unit is safe from retaliation </li>
-                <li>BST: When toggled, unit is boosted by cymanti shaman</li>
+                <li>BST: When toggled, unit is boosted by Cymanti shaman</li>
                 <li>
                   MX##: Set the maximum health for ships to 10, 15, 20, 25, 35
                   or 40 hitpoints. Maximum hitpoints affects attacking and
@@ -51,16 +60,21 @@ class helpPage extends React.Component {
                 </li>
                 <li>DEF: When toggled, unit gets defensive bonus </li>
                 <li>WALL: When toggled, unit gets walled bonus </li>
-                <li>POIS: When toggled, unit is poisoned</li>
+                <li>POIS: When toggled, unit is poisoned before battle</li>
+                <li>
+                  POIS: When green, unit is poisoned after attack by Raychi,
+                  Exida, Phychi, or exploding unit.
+                </li>
               </ul>
             </span>
             <p>
               Contact me for questions, tips, bugs etc. via{" "}
-              <a href={`mailto:${process.env.REACT_APP_EMAIL}`}>Email</a> or on{" "}
-              <a href="https://discord.com/channels/1135234648360882297/1135235261777846423">
+              <a href={`mailto:${process.env.REACT_APP_EMAIL}`}>Email</a>,{" "}
+              <a href="https://www.reddit.com/r/Polytopia/comments/17m0hn7/updated_polytopia_calculator_now_with_beta_units/">
                 {" "}
-                Discord{" "}
-              </a>
+                Reddit{" "}
+              </a>{" "}
+              or on <a href="https://discord.gg/dmyMSQ7QfB"> Discord </a>
               <br></br>A big thanks to Programming with Mosh, Midjiwan and the
               Polytopia community!
               <br></br>
@@ -77,6 +91,14 @@ class helpPage extends React.Component {
                 {" "}
                 Paypal{" "}
               </a>
+              <br></br>
+              Follow these instructions to install this web app as a local app:{" "}
+              <a href="https://support.google.com/chrome/answer/9658361">
+                {" "}
+                Progressive web apps{" "}
+              </a>
+              <br></br>
+              Polytopia balance version: 2.7.2; Beta Steam Build ID: 2.8.0.11434
               <br></br>
             </p>
             <span>

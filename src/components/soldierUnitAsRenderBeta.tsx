@@ -40,6 +40,13 @@ import NatureBunnyAtt from "../img/Attackers/Nature Bunny.png";
 import DaggerAtt from "../img/Attackers/Dagger.png";
 import DinghyAtt from "../img/Attackers/Dinghy.png";
 import CloakAtt from "../img/Attackers/Cloak.png";
+import PirateAtt from "../img/Attackers/Pirate.png";
+import RaftAtt from "../img/Attackers/Raft.png";
+import ScoutAtt from "../img/Attackers/Scout.png";
+import RammerAtt from "../img/Attackers/Rammer.png";
+import BomberAtt from "../img/Attackers/Bomber.png";
+import JuggernautAtt from "../img/Attackers/Juggernaut.png";
+
 import WarriorDef from "../img/Defenders/Warrior.png";
 import ArcherDef from "../img/Defenders/Archer.png";
 import RiderDef from "../img/Defenders/Rider.png";
@@ -78,6 +85,13 @@ import NatureBunnyDef from "../img/Defenders/Nature Bunny.png";
 import DaggerDef from "../img/Defenders/Dagger.png";
 import DinghyDef from "../img/Defenders/Dinghy.png";
 import CloakDef from "../img/Defenders/Cloak.png";
+import PirateDef from "../img/Defenders/Pirate.png";
+import RaftDef from "../img/Defenders/Raft.png";
+import ScoutDef from "../img/Defenders/Scout.png";
+import RammerDef from "../img/Defenders/Rammer.png";
+import BomberDef from "../img/Defenders/Bomber.png";
+import JuggernautDef from "../img/Defenders/Juggernaut.png";
+
 import SmallSwords from "../img/Other/SmallSwords.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
@@ -147,7 +161,7 @@ type State = {
   healthAfterAsState: number;
 };
 
-class soldierUnitAsRender extends React.Component<Props, State> {
+class soldierUnitAsRenderBeta extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -507,6 +521,12 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     // this.render();
   }
 
+  // _handleKeyDown = (e) => {
+  //   if (e.key === 'Enter') {
+  //     console.log('do validate');
+  //   }
+  // }
+
   handleKeyDown = (e) => {
     if (e.key === "Enter") {
       this.handleHitpointsChange(e.target.value);
@@ -840,8 +860,6 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   }
 
   makeInvisibleVeteranBonus(unitType: string) {
-    // console.log("Setting VET button visibiliy unitType:", unitType);
-    // this.forceUpdate();
     if (
       unitType === "Ship" ||
       unitType === "Boat" ||
@@ -860,7 +878,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
       unitType === "Segment" ||
       unitType === "Cloak" ||
       unitType === "Dinghy" ||
-      unitType === "Battleship"
+      unitType === "Battleship" ||
+      unitType === "Raft" ||
+      unitType === "Scout" ||
+      unitType === "Rammer" ||
+      unitType === "Bomber" ||
+      unitType === "Pirate" ||
+      unitType === "Juggernaut"
     ) {
       return { display: "none " };
     } else {
@@ -879,16 +903,17 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   makeInvisibleSplashDamage(unitType: string, team: string) {
     if (unitType === "FireDragon" && team === "Attackers") {
       return { display: "visible" };
+    } else if (unitType === "Bomber" && team === "Attackers") {
+      return { display: "visible" };
     } else {
       return { display: "none" };
     }
   }
 
   makeInvisibleExplodeDamage(unitType: string, team: string) {
-    if (
-      (unitType === "Raychi" || unitType === "Doomux") &&
-      team === "Attackers"
-    ) {
+    if (unitType === "Doomux" && team === "Attackers") {
+      return { display: "visible" };
+    } else if (unitType === "Raychi" && team === "Attackers") {
       return { display: "visible" };
     } else {
       return { display: "none" };
@@ -952,7 +977,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     return checkboxId;
   }
 
-  handleFocus = (event: any) => event.target.select(); // To select all text when the input field is clicked
+  handleFocus = (event: any) => event.target.select(); // To select all text when the input gets focus
 
   displayhealthBefore() {
     return this.state.healthBeforeAsState;
@@ -1048,6 +1073,19 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         return CloakAtt;
       case "DinghyAttackers":
         return DinghyAtt;
+      case "PirateAttackers":
+        return PirateAtt;
+      case "RaftAttackers":
+        return RaftAtt;
+      case "ScoutAttackers":
+        return ScoutAtt;
+      case "RammerAttackers":
+        return RammerAtt;
+      case "BomberAttackers":
+        return BomberAtt;
+      case "JuggernautAttackers":
+        return JuggernautAtt;
+
       case "WarriorDefenders":
         return WarriorDef;
       case "ArcherDefenders":
@@ -1124,6 +1162,18 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         return CloakDef;
       case "DinghyDefenders":
         return DinghyDef;
+      case "PirateDefenders":
+        return PirateDef;
+      case "RaftDefenders":
+        return RaftDef;
+      case "ScoutDefenders":
+        return ScoutDef;
+      case "RammerDefenders":
+        return RammerDef;
+      case "BomberDefenders":
+        return BomberDef;
+      case "JuggernautDefenders":
+        return JuggernautDef;
       default:
         return SmallSwords;
     }
@@ -1164,4 +1214,4 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     }
   }
 }
-export default soldierUnitAsRender;
+export default soldierUnitAsRenderBeta;

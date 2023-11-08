@@ -5,6 +5,7 @@ import NavBar from "./components/navbar";
 import HelpPage from "./components/helpPage";
 import SecretGame from "./components/secretGame";
 import BattleGroundDetails from "./components/battleGroundDetails";
+import BattleGroundDetailsBeta from "./components/battleGroundDetailsBeta";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/help" component={HelpPage} />
           <Route path="/" exact component={BattleGroundDetails} />
           <Route path="/secretgame" component={SecretGame} />
+          <Route path="/beta" component={BattleGroundDetailsBeta} />
         </div>
       </React.Fragment>
     );
