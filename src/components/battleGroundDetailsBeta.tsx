@@ -147,24 +147,18 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     //   });
     // }
 
-    let soldierUnitsAttackersAsRender =
-      this.state.soldierUnitsAttackersAsRender;
+    if (this.state.userUnderstands === false) {
+      if (
+        this.state.soldierUnitsAttackersAsRender.length > 0 &&
+        this.state.soldierUnitsDefendersAsRender.length > 0
+      ) {
+        console.log(
+          "User understands that at least an attacker and a defender are needed for the calculator to work"
+        );
+        logEvent(analytics, "pc_user_understands");
 
-    let soldierUnitsDefendersAsRender =
-      this.state.soldierUnitsDefendersAsRender;
-    let userUnderstands = this.state.userUnderstands;
-
-    if (
-      soldierUnitsAttackersAsRender.length > 0 &&
-      soldierUnitsDefendersAsRender.length > 0 &&
-      userUnderstands === false
-    ) {
-      console.log(
-        "User understands that at least an attacker and a defender are needed for the calculation to work"
-      );
-      logEvent(analytics, "pc_user_understands");
-
-      this.setState({ userUnderstands: true });
+        this.setState({ userUnderstands: true });
+      }
     }
 
     console.log("componentDidUpdate for battleGroundDetails");
