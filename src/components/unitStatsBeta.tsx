@@ -171,7 +171,7 @@ export abstract class GaamiStats {
   public static healthMax = 30;
   public static healthMaxVeteran = 30;
   public static attack = 4;
-  public static defence = 4;
+  public static defence = 3;
 }
 
 export abstract class HexapodStats {
@@ -303,6 +303,6 @@ export abstract class BomberStats {
 export abstract class JuggernautStats {
   public static healthMax = 40;
   public static healthMaxVeteran = 40;
-  public static attack = 3;
+  public static attack = 4;
   public static defence = 4;
 }

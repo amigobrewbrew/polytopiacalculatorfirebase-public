@@ -330,7 +330,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                   onChange={this.handleChangeCheckbox}
                 />
               }
-              label={"Use  + and - to set positions instead of health"}
+              label={"Use  + and - to set order instead of health"}
             />{" "}
           </div>
         </Box>
