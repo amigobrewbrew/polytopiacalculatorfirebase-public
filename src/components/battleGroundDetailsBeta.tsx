@@ -668,7 +668,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       soldierUnitsAttackersAsRender[index].healthMax =
         soldierUnitsAttackersAsRender[index].healthMax + 5;
 
-      if (soldierUnitsAttackersAsRender[index].healthMax === 45) {
+      if (soldierUnitsAttackersAsRender[index].healthMax === 35) {
         soldierUnitsAttackersAsRender[index].healthMax = 10;
       }
 
@@ -683,7 +683,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       soldierUnitsDefendersAsRender[index].healthMax =
         soldierUnitsDefendersAsRender[index].healthMax + 5;
 
-      if (soldierUnitsDefendersAsRender[index].healthMax === 45) {
+      if (soldierUnitsDefendersAsRender[index].healthMax === 35) {
         soldierUnitsDefendersAsRender[index].healthMax = 10;
       }
 
