@@ -356,8 +356,8 @@ class battleGroundDetails extends React.Component<Props, State> {
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
             <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
               {" "}
-              Find Raft, Scout, Rammer, Bomber, Juggernaut and other beta units
-              here!
+              Find Raft, Scout, Rammer, Bomber, Juggernaut and other Path of the
+              Ocean units here!
             </a>{" "}
           </div>
         </Box>

@@ -356,7 +356,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         >
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
             {" "}
-            This page holds steam beta stats and units
+            This page holds the most current Path of the Ocean stats and units
           </div>
         </Box>
       </Box>

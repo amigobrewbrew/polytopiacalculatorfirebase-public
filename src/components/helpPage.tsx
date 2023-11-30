@@ -98,7 +98,7 @@ class helpPage extends React.Component {
                 Progressive web apps{" "}
               </a>
               <br></br>
-              Polytopia balance version: 2.7.2; Steam beta version: 2.8.0.11434
+              Polytopia balance version: 2.7.2; Path of the Ocean version: 2.8.1
               <br></br>
             </p>
             <span>
