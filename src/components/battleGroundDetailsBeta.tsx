@@ -357,6 +357,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
             {" "}
             This page holds the most current Path of the Ocean stats and units
+            as per patch 2.8.5.11917
           </div>
         </Box>
       </Box>

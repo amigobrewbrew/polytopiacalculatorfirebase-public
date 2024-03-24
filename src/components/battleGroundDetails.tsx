@@ -169,6 +169,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     console.log("state", this.state);
     console.log("props", this.props);
     this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
+    // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
     // logEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
@@ -354,11 +355,9 @@ class battleGroundDetails extends React.Component<Props, State> {
           style={{ maxWidth: "25.75em" }}
         >
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
-            <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
-              {" "}
-              Find Raft, Scout, Rammer, Bomber, Juggernaut and other Path of the
-              Ocean units here!
-            </a>{" "}
+            {" "}
+            This page holds the most current Path of the Ocean stats and units
+            as per patch 2.8.5.11917
           </div>
         </Box>
       </Box>
@@ -670,7 +669,7 @@ class battleGroundDetails extends React.Component<Props, State> {
       soldierUnitsAttackersAsRender[index].healthMax =
         soldierUnitsAttackersAsRender[index].healthMax + 5;
 
-      if (soldierUnitsAttackersAsRender[index].healthMax === 45) {
+      if (soldierUnitsAttackersAsRender[index].healthMax === 35) {
         soldierUnitsAttackersAsRender[index].healthMax = 10;
       }
 
@@ -685,7 +684,7 @@ class battleGroundDetails extends React.Component<Props, State> {
       soldierUnitsDefendersAsRender[index].healthMax =
         soldierUnitsDefendersAsRender[index].healthMax + 5;
 
-      if (soldierUnitsDefendersAsRender[index].healthMax === 45) {
+      if (soldierUnitsDefendersAsRender[index].healthMax === 35) {
         soldierUnitsDefendersAsRender[index].healthMax = 10;
       }
 
@@ -697,7 +696,6 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     logEvent(analytics, "pc_ship_mx_" + team + "_" + typeUnit);
 
-    // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
 
@@ -1307,12 +1305,16 @@ class battleGroundDetails extends React.Component<Props, State> {
 
   istypeUnitaShipUnit = (typeUnit: string) => {
     switch (typeUnit) {
-      case "Boat":
+      case "Raft":
         return true;
-      case "Ship":
+      case "Scout":
         return true;
-      case "Battleship":
+      case "Rammer":
         return true;
+      case "Bomber":
+        return true;
+      case "Juggernaut":
+        return false;
       default:
         return false;
     }
@@ -1336,8 +1338,6 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.KnightStats.healthMax;
       case "Giant":
         return Stats.GiantStats.healthMax;
-      case "Battleship":
-        return Stats.BattleshipStats.healthMax;
       case "MindBender":
         return Stats.MindBenderStats.healthMax;
       case "NatureBunny":
@@ -1346,6 +1346,20 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.BoatStats.healthMax;
       case "Ship":
         return Stats.ShipStats.healthMax;
+      case "Battleship":
+        return Stats.BattleshipStats.healthMax;
+      case "Pirate":
+        return Stats.PirateStats.healthMax;
+      case "Raft":
+        return Stats.RaftStats.healthMax;
+      case "Scout":
+        return Stats.ScoutStats.healthMax;
+      case "Rammer":
+        return Stats.RammerStats.healthMax;
+      case "Bomber":
+        return Stats.BomberStats.healthMax;
+      case "Juggernaut":
+        return Stats.JuggernautStats.healthMax;
       case "Amphibian":
         return Stats.AmphibianStats.healthMax;
       case "Tridention":
@@ -1480,6 +1494,18 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.CloakStats.healthMaxVeteran;
       case "Dinghy":
         return Stats.DinghyStats.healthMaxVeteran;
+      case "Pirate":
+        return Stats.PirateStats.healthMaxVeteran;
+      case "Raft":
+        return Stats.RaftStats.healthMaxVeteran;
+      case "Scout":
+        return Stats.ScoutStats.healthMaxVeteran;
+      case "Rammer":
+        return Stats.RammerStats.healthMaxVeteran;
+      case "Bomber":
+        return Stats.BomberStats.healthMaxVeteran;
+      case "Juggernaut":
+        return Stats.JuggernautStats.healthMaxVeteran;
 
       default:
         return 0;
@@ -1565,6 +1591,19 @@ class battleGroundDetails extends React.Component<Props, State> {
       case "Dinghy":
         return Stats.DinghyStats.attack;
 
+      case "Pirate":
+        return Stats.PirateStats.attack;
+      case "Raft":
+        return Stats.RaftStats.attack;
+      case "Scout":
+        return Stats.ScoutStats.attack;
+      case "Rammer":
+        return Stats.RammerStats.attack;
+      case "Bomber":
+        return Stats.BomberStats.attack;
+      case "Juggernaut":
+        return Stats.JuggernautStats.attack;
+
       default:
         return 0;
     }
@@ -1649,6 +1688,19 @@ class battleGroundDetails extends React.Component<Props, State> {
       case "Dinghy":
         return Stats.DinghyStats.defence;
 
+      case "Pirate":
+        return Stats.PirateStats.defence;
+      case "Raft":
+        return Stats.RaftStats.defence;
+      case "Scout":
+        return Stats.ScoutStats.defence;
+      case "Rammer":
+        return Stats.RammerStats.defence;
+      case "Bomber":
+        return Stats.BomberStats.defence;
+      case "Juggernaut":
+        return Stats.JuggernautStats.defence;
+
       default:
         return 0;
     }
@@ -1656,7 +1708,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
   healthAfterCalculation = () => {
     console.log("This is where the magic happens. Charge!");
-    logEvent(analytics, "pc_magic_happens");
+    logEvent(analytics, "pc_magic_happens_");
 
     let indexDefenderCounter = 0;
     let indexDefender = this.state.defIdxArray[indexDefenderCounter];
@@ -1718,11 +1770,6 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     soldierUnitsAttackersAsRender.forEach((attacker) => {
       let defender = soldierUnitsDefendersAsRender[indexDefender];
-
-      // while (defender === undefined) {
-      //   indexDefender++;
-      //   defender = soldierUnitsDefendersAsRender[indexDefender];
-      // }
 
       //let attacker = element;
 
@@ -1787,6 +1834,14 @@ class battleGroundDetails extends React.Component<Props, State> {
           attacker.attack = 4;
         }
 
+        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+          attacker.attack = 2.33;
+        }
+
+        if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
+          attacker.attack = 4;
+        }
+
         let attackForce = parseFloat(
           (
             ((attacker.attack + 0.5 * boostedBonusMultiplier) *
@@ -1804,6 +1859,7 @@ class battleGroundDetails extends React.Component<Props, State> {
             poisonedBonusMultiplier
           ).toFixed(10)
         );
+
         let totalDamage = attackForce + defenceForce;
 
         attackResult = Math.round(
@@ -1845,6 +1901,7 @@ class battleGroundDetails extends React.Component<Props, State> {
             )
           );
           console.log("this is defenceResult: " + defenceResult);
+          //poison
           if (
             attacker.typeUnit === "Exida" ||
             attacker.typeUnit === "Phychi" ||
@@ -1870,7 +1927,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           //     false;
           //   // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
           // }
-          // poison beta
+          // poison
         } else {
           defenceResult = 0;
           //indexDefender++;

@@ -40,6 +40,12 @@ import NatureBunny from "../img/Attackers/Nature Bunny.png";
 import Dagger from "../img/Attackers/Dagger.png";
 import Dinghy from "../img/Attackers/Dinghy.png";
 import Cloak from "../img/Attackers/Cloak.png";
+import Pirate from "../img/Attackers/Pirate.png";
+import Raft from "../img/Attackers/Raft.png";
+import Scout from "../img/Attackers/Scout.png";
+import Rammer from "../img/Attackers/Rammer.png";
+import Bomber from "../img/Attackers/Bomber.png";
+import Juggernaut from "../img/Attackers/Juggernaut.png";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Button from "@mui/material/Button";
@@ -56,7 +62,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import Container from "@mui/material/Container";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { analytics } from "./../firebase";
+import { analytics } from "../firebase";
 import { logEvent } from "firebase/analytics";
 
 // const theme = createTheme({
@@ -387,64 +393,60 @@ class Page2 extends React.Component<Props> {
             <img src={Dinghy} alt="Dinghy" style={attackersImageStyle} />
           </Button>
           <Button
-            onClick={() => this.props.onAddAttacker("Boat")}
+            onClick={() => this.props.onAddAttacker("Pirate")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
-            <img src={Boat} alt="Boat" style={attackersImageStyle} />
+            <img src={Pirate} alt="Pirate" style={attackersImageStyle} />
           </Button>
           <Button
-            onClick={() => this.props.onAddAttacker("Ship")}
+            onClick={() => this.props.onAddAttacker("Raft")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
-            <img src={Ship} alt="Ship" style={attackersImageStyle} />
+            <img src={Raft} alt="Raft" style={attackersImageStyle} />
           </Button>
         </Box>
         <Box sx={attackersBoxStyle}>
           <Button
-            onClick={() => this.props.onAddAttacker("Battleship")}
+            onClick={() => this.props.onAddAttacker("Scout")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img src={Scout} alt="Scout" style={attackersImageStyle} />
+          </Button>
+          <Button
+            onClick={() => this.props.onAddAttacker("Rammer")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img src={Rammer} alt="Rammer" style={attackersImageStyle} />
+          </Button>
+          <Button
+            onClick={() => this.props.onAddAttacker("Bomber")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img src={Bomber} alt="Bomber" style={attackersImageStyle} />
+          </Button>
+          <Button
+            onClick={() => this.props.onAddAttacker("Juggernaut")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
             <img
-              src={Battleship}
-              alt="Battleship"
+              src={Juggernaut}
+              alt="Juggernaut"
               style={attackersImageStyle}
             />
-          </Button>
-          <Button
-            onClick={() => this.props.onAddAttacker("Amphibian")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img src={Amphibian} alt="Amphibian" style={attackersImageStyle} />
           </Button>
 
-          <Button
-            onClick={() => this.props.onAddAttacker("Tridention")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img
-              src={Tridention}
-              alt="Tridention"
-              style={attackersImageStyle}
-            />
-          </Button>
-          <Button
-            onClick={() => this.props.onAddAttacker("Crab")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img src={Crab} alt="Crab" style={attackersImageStyle} />
-          </Button>
           <Button
             onClick={() => this.props.onAddAttacker("Polytaur")}
             size="small"
@@ -483,13 +485,35 @@ class Page3 extends React.Component<Props> {
       <Box>
         <Box sx={attackersBoxStyle}>
           <Button
-            onClick={() => this.props.onAddAttacker("Navalon")}
+            onClick={() => this.props.onAddAttacker("Amphibian")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
-            <img src={Navalon} alt="Navalon" style={attackersImageStyle} />
+            <img src={Amphibian} alt="Amphibian" style={attackersImageStyle} />
           </Button>
+
+          <Button
+            onClick={() => this.props.onAddAttacker("Tridention")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img
+              src={Tridention}
+              alt="Tridention"
+              style={attackersImageStyle}
+            />
+          </Button>
+          <Button
+            onClick={() => this.props.onAddAttacker("Crab")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img src={Crab} alt="Crab" style={attackersImageStyle} />
+          </Button>
+
           <Button
             onClick={() => this.props.onAddAttacker("DragonEgg")}
             size="small"
@@ -511,6 +535,8 @@ class Page3 extends React.Component<Props> {
               style={attackersImageStyle}
             />
           </Button>
+        </Box>
+        <Box sx={attackersBoxStyle}>
           <Button
             onClick={() => this.props.onAddAttacker("FireDragon")}
             size="small"
@@ -531,8 +557,6 @@ class Page3 extends React.Component<Props> {
           >
             <img src={Mooni} alt="Mooni" style={attackersImageStyle} />
           </Button>
-        </Box>
-        <Box sx={attackersBoxStyle}>
           <Button
             onClick={() => this.props.onAddAttacker("IceArcher")}
             size="small"
@@ -554,32 +578,12 @@ class Page3 extends React.Component<Props> {
             />
           </Button>
           <Button
-            onClick={() => this.props.onAddAttacker("IceFortress")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img
-              src={IceFortress}
-              alt="IceFortress"
-              style={attackersImageStyle}
-            />
-          </Button>
-          <Button
             onClick={() => this.props.onAddAttacker("Gaami")}
             size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
             <img src={Gaami} alt="Gaami" style={attackersImageStyle} />
-          </Button>
-          <Button
-            onClick={() => this.props.onAddAttacker("Hexapod")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img src={Hexapod} alt="Hexapod" style={attackersImageStyle} />
           </Button>
         </Box>
       </Box>
@@ -611,6 +615,26 @@ class Page4 extends React.Component<Props> {
       <Box>
         <Box sx={attackersBoxStyle}>
           <Button
+            onClick={() => this.props.onAddAttacker("IceFortress")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img
+              src={IceFortress}
+              alt="IceFortress"
+              style={attackersImageStyle}
+            />
+          </Button>
+          <Button
+            onClick={() => this.props.onAddAttacker("Hexapod")}
+            size="small"
+            variant="outlined"
+            sx={attackersButtonStyle}
+          >
+            <img src={Hexapod} alt="Hexapod" style={attackersImageStyle} />
+          </Button>
+          <Button
             onClick={() => this.props.onAddAttacker("Kiton")}
             size="small"
             variant="outlined"
@@ -634,6 +658,8 @@ class Page4 extends React.Component<Props> {
           >
             <img src={Raychi} alt="Raychi" style={attackersImageStyle} />
           </Button>
+        </Box>
+        <Box sx={attackersBoxStyle}>
           <Button
             onClick={() => this.props.onAddAttacker("Shaman")}
             size="small"
@@ -651,8 +677,6 @@ class Page4 extends React.Component<Props> {
           >
             <img src={Exida} alt="Exida" style={attackersImageStyle} />
           </Button>
-        </Box>
-        <Box sx={attackersBoxStyle}>
           <Button
             onClick={() => this.props.onAddAttacker("Doomux")}
             size="small"
@@ -661,22 +685,7 @@ class Page4 extends React.Component<Props> {
           >
             <img src={Doomux} alt="Doomux" style={attackersImageStyle} />
           </Button>
-          <Button
-            onClick={() => this.props.onAddAttacker("Segment")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img src={Segment} alt="Segment" style={attackersImageStyle} />
-          </Button>
-          <Button
-            onClick={() => this.props.onAddAttacker("Segment")}
-            size="small"
-            variant="outlined"
-            sx={attackersButtonStyle}
-          >
-            <img src={Segment} alt="Segment" style={attackersImageStyle} />
-          </Button>
+
           <Button
             onClick={() => this.props.onAddAttacker("Segment")}
             size="small"

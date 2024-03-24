@@ -92,8 +92,8 @@ export abstract class AmphibianStats {
 }
 
 export abstract class TridentionStats {
-  public static healthMax = 15;
-  public static healthMaxVeteran = 20;
+  public static healthMax = 10;
+  public static healthMaxVeteran = 15;
   public static attack = 3;
   public static defence = 1;
 }
@@ -102,7 +102,7 @@ export abstract class CrabStats {
   public static healthMax = 40;
   public static healthMaxVeteran = 40;
   public static attack = 4;
-  public static defence = 4;
+  public static defence = 5;
 }
 
 export abstract class PolytaurStats {
@@ -143,7 +143,7 @@ export abstract class MooniStats {
   public static healthMax = 10;
   public static healthMaxVeteran = 10;
   public static attack = 0;
-  public static defence = 2;
+  public static defence = 1;
 }
 
 export abstract class IceArcherStats {
@@ -171,7 +171,7 @@ export abstract class GaamiStats {
   public static healthMax = 30;
   public static healthMaxVeteran = 30;
   public static attack = 4;
-  public static defence = 4;
+  public static defence = 3;
 }
 
 export abstract class HexapodStats {
@@ -263,4 +263,46 @@ export abstract class DinghyStats {
   public static healthMaxVeteran = 5;
   public static attack = 0;
   public static defence = 0.5;
+}
+
+export abstract class PirateStats {
+  public static healthMax = 10;
+  public static healthMaxVeteran = 10;
+  public static attack = 2;
+  public static defence = 2;
+}
+
+export abstract class RaftStats {
+  public static healthMax = 10;
+  public static healthMaxVeteran = 10;
+  public static attack = 0;
+  public static defence = 2;
+}
+
+export abstract class ScoutStats {
+  public static healthMax = 15;
+  public static healthMaxVeteran = 15;
+  public static attack = 2;
+  public static defence = 1;
+}
+
+export abstract class RammerStats {
+  public static healthMax = 15;
+  public static healthMaxVeteran = 15;
+  public static attack = 3;
+  public static defence = 3;
+}
+
+export abstract class BomberStats {
+  public static healthMax = 15;
+  public static healthMaxVeteran = 15;
+  public static attack = 3;
+  public static defence = 2;
+}
+
+export abstract class JuggernautStats {
+  public static healthMax = 40;
+  public static healthMaxVeteran = 40;
+  public static attack = 4;
+  public static defence = 4;
 }

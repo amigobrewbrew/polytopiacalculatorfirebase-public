@@ -296,7 +296,7 @@ export abstract class RammerStats {
 export abstract class BomberStats {
   public static healthMax = 15;
   public static healthMaxVeteran = 15;
-  public static attack = 4;
+  public static attack = 3;
   public static defence = 2;
 }
 
