@@ -905,6 +905,8 @@ class soldierUnitAsRender extends React.Component<Props, State> {
       return { display: "visible" };
     } else if (unitType === "Bomber" && team === "Attackers") {
       return { display: "visible" };
+    } else if (unitType === "Juggernaut" && team === "Attackers") {
+      return { display: "visible" };
     } else {
       return { display: "none" };
     }

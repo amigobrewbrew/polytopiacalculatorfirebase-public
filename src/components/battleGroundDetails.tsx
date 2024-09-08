@@ -1820,27 +1820,27 @@ class battleGroundDetails extends React.Component<Props, State> {
           ? (boostedBonusMultiplier = 1)
           : (boostedBonusMultiplier = 0);
 
-        if (
-          attacker.splashDamage === true &&
-          attacker.typeUnit === "FireDragon"
-        ) {
-          attacker.attack = 2.33;
-        }
+        // if (
+        //   attacker.splashDamage === true &&
+        //   attacker.typeUnit === "FireDragon"
+        // ) {
+        //   attacker.attack = 2.33;
+        // }
 
-        if (
-          attacker.splashDamage === false &&
-          attacker.typeUnit === "FireDragon"
-        ) {
-          attacker.attack = 4;
-        }
+        // if (
+        //   attacker.splashDamage === false &&
+        //   attacker.typeUnit === "FireDragon"
+        // ) {
+        //   attacker.attack = 4;
+        // }
 
-        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
-          attacker.attack = 2.33;
-        }
+        // if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 2.33;
+        // }
 
-        if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
-          attacker.attack = 4;
-        }
+        // if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 4;
+        // }
 
         let attackForce = parseFloat(
           (
@@ -1872,10 +1872,17 @@ class battleGroundDetails extends React.Component<Props, State> {
           )
         );
 
-        console.log("this is attackForce: " + attackForce);
-        console.log("this is defenceForce: " + defenceForce);
-        console.log("this is totalDamage: " + totalDamage);
-        console.log("this is attackResult: " + attackResult);
+        if (
+          attacker.splashDamage === true &&
+          (attacker.typeUnit === "FireDragon" ||
+            attacker.typeUnit === "Juggernaut")
+        ) {
+          attackResult = Math.floor(attackResult * (2.5 / 4));
+        }
+
+        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+          attackResult = Math.floor(attackResult * (2 / 4));
+        }
 
         if (
           attacker.explodeDamage === true ||
@@ -1883,6 +1890,11 @@ class battleGroundDetails extends React.Component<Props, State> {
         ) {
           attackResult = Math.floor(attackResult * 0.5);
         }
+
+        console.log("this is attackForce: " + attackForce);
+        console.log("this is defenceForce: " + defenceForce);
+        console.log("this is totalDamage: " + totalDamage);
+        console.log("this is attackResult: " + attackResult);
 
         totalAttackResult += attackResult;
 
