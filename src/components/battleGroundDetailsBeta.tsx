@@ -1364,6 +1364,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.healthMax;
       case "Tridention":
         return StatsBeta.TridentionStats.healthMax;
+      case "Shark":
+        return StatsBeta.SharkStats.healthMax;
+      case "Puffer":
+        return StatsBeta.PufferStats.healthMax;
+      case "Jelly":
+        return StatsBeta.JellyStats.healthMax;
       case "Crab":
         return StatsBeta.CrabStats.healthMax;
       case "Polytaur":
@@ -1448,6 +1454,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.healthMaxVeteran;
       case "Tridention":
         return StatsBeta.TridentionStats.healthMaxVeteran;
+      case "Shark":
+        return StatsBeta.SharkStats.healthMaxVeteran;
+      case "Puffer":
+        return StatsBeta.PufferStats.healthMaxVeteran;
+      case "Jelly":
+        return StatsBeta.JellyStats.healthMaxVeteran;
       case "Crab":
         return StatsBeta.CrabStats.healthMaxVeteran;
       case "Polytaur":
@@ -1544,6 +1556,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.attack;
       case "Tridention":
         return StatsBeta.TridentionStats.attack;
+      case "Shark":
+        return StatsBeta.SharkStats.attack;
+      case "Puffer":
+        return StatsBeta.PufferStats.attack;
+      case "Jelly":
+        return StatsBeta.JellyStats.attack;
       case "Crab":
         return StatsBeta.CrabStats.attack;
       case "Polytaur":
@@ -1641,6 +1659,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.defence;
       case "Tridention":
         return StatsBeta.TridentionStats.defence;
+      case "Shark":
+        return StatsBeta.SharkStats.defence;
+      case "Puffer":
+        return StatsBeta.PufferStats.defence;
+      case "Jelly":
+        return StatsBeta.JellyStats.defence;
       case "Crab":
         return StatsBeta.CrabStats.defence;
       case "Polytaur":

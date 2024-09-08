@@ -94,7 +94,7 @@ export abstract class AmphibianStats {
 export abstract class TridentionStats {
   public static healthMax = 10;
   public static healthMaxVeteran = 15;
-  public static attack = 3;
+  public static attack = 2.5;
   public static defence = 1;
 }
 
@@ -305,4 +305,25 @@ export abstract class JuggernautStats {
   public static healthMaxVeteran = 40;
   public static attack = 4;
   public static defence = 4;
+}
+
+export abstract class SharkStats {
+  public static healthMax = 10;
+  public static healthMaxVeteran = 15;
+  public static attack = 3;
+  public static defence = 2;
+}
+
+export abstract class PufferStats {
+  public static healthMax = 10;
+  public static healthMaxVeteran = 15;
+  public static attack = 4;
+  public static defence = 0;
+}
+
+export abstract class JellyStats {
+  public static healthMax = 20;
+  public static healthMaxVeteran = 20;
+  public static attack = 2; // seems to be just attack 2 instead of 0
+  public static defence = 2;
 }

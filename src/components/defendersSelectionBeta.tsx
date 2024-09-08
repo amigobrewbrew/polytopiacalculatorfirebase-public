@@ -16,6 +16,9 @@ import Boat from "../img/Defenders/Boat.png";
 import Ship from "../img/Defenders/Ship.png";
 import Amphibian from "../img/Defenders/Amphibian.png";
 import Tridention from "../img/Defenders/Tridention.png";
+import Shark from "../img/Defenders/Shark.png";
+import Puffer from "../img/Defenders/Puffer.png";
+import Jelly from "../img/Defenders/Jelly.png";
 import Crab from "../img/Defenders/Crab.png";
 import Polytaur from "../img/Defenders/Polytaur.png";
 import Navalon from "../img/Defenders/Navalon.png";
@@ -75,6 +78,7 @@ type State = {
   visiblePage2: boolean;
   visiblePage3: boolean;
   visiblePage4: boolean;
+  visiblePage5: boolean;
 };
 
 /**
@@ -90,6 +94,7 @@ class defendersSelectionBeta extends React.Component<Props, State> {
       visiblePage2: false,
       visiblePage3: false,
       visiblePage4: false,
+      visiblePage5: false,
     };
     // this.changeVisible = this.changeVisible.bind(this);
     // this.makeVisibleLandUnits = this.makeVisibleLandUnits.bind(this);
@@ -107,6 +112,7 @@ class defendersSelectionBeta extends React.Component<Props, State> {
       this.setState({ visiblePage2: true });
       this.setState({ visiblePage3: false });
       this.setState({ visiblePage4: false });
+      this.setState({ visiblePage5: false });
       this.setState({ visibleNow: "Page2" });
     } else if (
       (currentSelection === "Page2" && pageDirection === "pageUp") ||
@@ -116,24 +122,37 @@ class defendersSelectionBeta extends React.Component<Props, State> {
       this.setState({ visiblePage2: false });
       this.setState({ visiblePage3: true });
       this.setState({ visiblePage4: false });
+      this.setState({ visiblePage5: false });
       this.setState({ visibleNow: "Page3" });
     } else if (
       (currentSelection === "Page3" && pageDirection === "pageUp") ||
-      (currentSelection === "LandUnits" && pageDirection === "pageDown")
+      (currentSelection === "Page5" && pageDirection === "pageDown")
     ) {
       this.setState({ visibleLandUnits: false });
       this.setState({ visiblePage2: false });
       this.setState({ visiblePage3: false });
       this.setState({ visiblePage4: true });
+      this.setState({ visiblePage5: false });
       this.setState({ visibleNow: "Page4" });
     } else if (
       (currentSelection === "Page4" && pageDirection === "pageUp") ||
+      (currentSelection === "LandUnits" && pageDirection === "pageDown")
+    ) {
+      this.setState({ visibleLandUnits: false });
+      this.setState({ visiblePage2: false });
+      this.setState({ visiblePage3: false });
+      this.setState({ visiblePage4: false });
+      this.setState({ visiblePage5: true });
+      this.setState({ visibleNow: "Page5" });
+    } else if (
+      (currentSelection === "Page5" && pageDirection === "pageUp") ||
       (currentSelection === "Page2" && pageDirection === "pageDown")
     ) {
       this.setState({ visibleLandUnits: true });
       this.setState({ visiblePage2: false });
       this.setState({ visiblePage3: false });
       this.setState({ visiblePage4: false });
+      this.setState({ visiblePage5: false });
       this.setState({ visibleNow: "LandUnits" });
     }
 
@@ -185,6 +204,7 @@ class defendersSelectionBeta extends React.Component<Props, State> {
             {this.state.visiblePage2 && <Page2 {...this.props}> </Page2>}
             {this.state.visiblePage3 && <Page3 {...this.props}> </Page3>}
             {this.state.visiblePage4 && <Page4 {...this.props}> </Page4>}
+            {this.state.visiblePage5 && <Page5 {...this.props}> </Page5>}
 
             {/* <button onClick={() => this.changeVisible(this.state.visibleNow)}>
             <img src={Switch} alt="Switch" style={attackersImageStyle} />
@@ -351,6 +371,23 @@ class Page3 extends React.Component<Props> {
             ButtonImage={Tridention}
           />
           <DefendersSelectionButtonBeta
+            defenderType="Shark"
+            onClick={() => this.props.OnAddDefender("Shark")}
+            ButtonImage={Shark}
+          />
+          <DefendersSelectionButtonBeta
+            defenderType="Puffer"
+            onClick={() => this.props.OnAddDefender("Puffer")}
+            ButtonImage={Puffer}
+          />
+          <DefendersSelectionButtonBeta
+            defenderType="Jelly"
+            onClick={() => this.props.OnAddDefender("Jelly")}
+            ButtonImage={Jelly}
+          />
+        </Box>
+        <Box sx={defendersBoxStyle}>
+          <DefendersSelectionButtonBeta
             defenderType="Crab"
             onClick={() => this.props.OnAddDefender("Crab")}
             ButtonImage={Crab}
@@ -365,8 +402,6 @@ class Page3 extends React.Component<Props> {
             onClick={() => this.props.OnAddDefender("BabyDragon")}
             ButtonImage={BabyDragon}
           />
-        </Box>
-        <Box sx={defendersBoxStyle}>
           <DefendersSelectionButtonBeta
             defenderType="FireDragon"
             onClick={() => this.props.OnAddDefender("FireDragon")}
@@ -376,22 +411,6 @@ class Page3 extends React.Component<Props> {
             defenderType="Mooni"
             onClick={() => this.props.OnAddDefender("Mooni")}
             ButtonImage={Mooni}
-          />
-          <DefendersSelectionButtonBeta
-            defenderType="IceArcher"
-            onClick={() => this.props.OnAddDefender("IceArcher")}
-            ButtonImage={IceArcher}
-          />
-          <DefendersSelectionButtonBeta
-            defenderType="BattleSled"
-            onClick={() => this.props.OnAddDefender("BattleSled")}
-            ButtonImage={BattleSled}
-          />
-
-          <DefendersSelectionButtonBeta
-            defenderType="Gaami"
-            onClick={() => this.props.OnAddDefender("Gaami")}
-            ButtonImage={Gaami}
           />
         </Box>{" "}
       </Box>
@@ -409,6 +428,22 @@ class Page4 extends React.Component<Props> {
       <Box>
         <Box sx={defendersBoxStyle}>
           <DefendersSelectionButtonBeta
+            defenderType="IceArcher"
+            onClick={() => this.props.OnAddDefender("IceArcher")}
+            ButtonImage={IceArcher}
+          />
+          <DefendersSelectionButtonBeta
+            defenderType="BattleSled"
+            onClick={() => this.props.OnAddDefender("BattleSled")}
+            ButtonImage={BattleSled}
+          />
+
+          <DefendersSelectionButtonBeta
+            defenderType="Gaami"
+            onClick={() => this.props.OnAddDefender("Gaami")}
+            ButtonImage={Gaami}
+          />
+          <DefendersSelectionButtonBeta
             defenderType="IceFortress"
             onClick={() => this.props.OnAddDefender("IceFortress")}
             ButtonImage={IceFortress}
@@ -418,6 +453,8 @@ class Page4 extends React.Component<Props> {
             onClick={() => this.props.OnAddDefender("Hexapod")}
             ButtonImage={Hexapod}
           />
+        </Box>
+        <Box sx={defendersBoxStyle}>
           <DefendersSelectionButtonBeta
             defenderType="Kiton"
             onClick={() => this.props.OnAddDefender("Kiton")}
@@ -433,8 +470,6 @@ class Page4 extends React.Component<Props> {
             onClick={() => this.props.OnAddDefender("Raychi")}
             ButtonImage={Raychi}
           />
-        </Box>
-        <Box sx={defendersBoxStyle}>
           <DefendersSelectionButtonBeta
             defenderType="Shaman"
             onClick={() => this.props.OnAddDefender("Shaman")}
@@ -445,15 +480,70 @@ class Page4 extends React.Component<Props> {
             onClick={() => this.props.OnAddDefender("Exida")}
             ButtonImage={Exida}
           />
+        </Box>{" "}
+      </Box>
+    );
+  }
+}
+
+class Page5 extends React.Component<Props> {
+  render() {
+    const defendersBoxStyle = {
+      display: "flex",
+      justifyContent: "space-between",
+    };
+    return (
+      <Box>
+        <Box sx={defendersBoxStyle}>
           <DefendersSelectionButtonBeta
             defenderType="Doomux"
             onClick={() => this.props.OnAddDefender("Doomux")}
             ButtonImage={Doomux}
           />
           <DefendersSelectionButtonBeta
+            defenderType="Doomux"
+            onClick={() => this.props.OnAddDefender("Doomux")}
+            ButtonImage={Doomux}
+          />
+          <DefendersSelectionButtonBeta
+            defenderType="Doomux"
+            onClick={() => this.props.OnAddDefender("Doomux")}
+            ButtonImage={Doomux}
+          />
+          <DefendersSelectionButtonBeta
+            defenderType="Doomux"
+            onClick={() => this.props.OnAddDefender("Doomux")}
+            ButtonImage={Doomux}
+          />
+          <DefendersSelectionButtonBeta
+            defenderType="Doomux"
+            onClick={() => this.props.OnAddDefender("Doomux")}
+            ButtonImage={Doomux}
+          />
+        </Box>
+        <Box sx={defendersBoxStyle}>
+          <DefendersSelectionButtonBeta
             defenderType="Centipede"
             onClick={() => this.props.OnAddDefender("Centipede")}
             ButtonImage={Centipede}
+          />
+
+          <DefendersSelectionButtonBeta
+            defenderType="Segment"
+            onClick={() => this.props.OnAddDefender("Segment")}
+            ButtonImage={Segment}
+          />
+
+          <DefendersSelectionButtonBeta
+            defenderType="Segment"
+            onClick={() => this.props.OnAddDefender("Segment")}
+            ButtonImage={Segment}
+          />
+
+          <DefendersSelectionButtonBeta
+            defenderType="Segment"
+            onClick={() => this.props.OnAddDefender("Segment")}
+            ButtonImage={Segment}
           />
 
           <DefendersSelectionButtonBeta
