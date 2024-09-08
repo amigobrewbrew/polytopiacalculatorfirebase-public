@@ -280,22 +280,22 @@ export abstract class RaftStats {
 }
 
 export abstract class ScoutStats {
-  public static healthMax = 15;
-  public static healthMaxVeteran = 15;
+  public static healthMax = 10;
+  public static healthMaxVeteran = 10;
   public static attack = 2;
   public static defence = 1;
 }
 
 export abstract class RammerStats {
-  public static healthMax = 15;
-  public static healthMaxVeteran = 15;
+  public static healthMax = 10;
+  public static healthMaxVeteran = 10;
   public static attack = 3;
   public static defence = 3;
 }
 
 export abstract class BomberStats {
-  public static healthMax = 15;
-  public static healthMaxVeteran = 15;
+  public static healthMax = 10;
+  public static healthMaxVeteran = 10;
   public static attack = 3;
   public static defence = 2;
 }
