@@ -356,8 +356,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         >
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
             {" "}
-            This page holds the most current Path of the Ocean stats and units
-            as per patch 2.8.5.11917
+            This page is based on Build version 2.10.1.12787 and Game version:
+            105.{" "}
           </div>
         </Box>
       </Box>
@@ -1820,27 +1820,41 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           ? (boostedBonusMultiplier = 1)
           : (boostedBonusMultiplier = 0);
 
-        if (
-          attacker.splashDamage === true &&
-          attacker.typeUnit === "FireDragon"
-        ) {
-          attacker.attack = 2.33;
-        }
+        // if (
+        //   attacker.splashDamage === true &&
+        //   attacker.typeUnit === "FireDragon"
+        // ) {
+        //   attacker.attack = 2.5;
+        // }
 
-        if (
-          attacker.splashDamage === false &&
-          attacker.typeUnit === "FireDragon"
-        ) {
-          attacker.attack = 4;
-        }
+        // if (
+        //   attacker.splashDamage === false &&
+        //   attacker.typeUnit === "FireDragon"
+        // ) {
+        //   attacker.attack = 4;
+        // }
 
-        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
-          attacker.attack = 2.33;
-        }
+        // if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 2.5;
+        // }
 
-        if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
-          attacker.attack = 4;
-        }
+        // if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 4;
+        // }
+
+        // if (
+        //   attacker.splashDamage === true &&
+        //   attacker.typeUnit === "Juggernaut"
+        // ) {
+        //   attacker.attack = 2.67;
+        // }
+
+        // if (
+        //   attacker.splashDamage === false &&
+        //   attacker.typeUnit === "Juggernaut"
+        // ) {
+        //   attacker.attack = 4;
+        // }
 
         let attackForce = parseFloat(
           (
@@ -1872,10 +1886,17 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           )
         );
 
-        console.log("this is attackForce: " + attackForce);
-        console.log("this is defenceForce: " + defenceForce);
-        console.log("this is totalDamage: " + totalDamage);
-        console.log("this is attackResult: " + attackResult);
+        if (
+          attacker.splashDamage === true &&
+          (attacker.typeUnit === "FireDragon" ||
+            attacker.typeUnit === "Juggernaut")
+        ) {
+          attackResult = Math.floor(attackResult * (2.5 / 4));
+        }
+
+        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+          attackResult = Math.floor(attackResult * (2 / 4));
+        }
 
         if (
           attacker.explodeDamage === true ||
@@ -1883,6 +1904,11 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         ) {
           attackResult = Math.floor(attackResult * 0.5);
         }
+
+        console.log("this is attackForce: " + attackForce);
+        console.log("this is defenceForce: " + defenceForce);
+        console.log("this is totalDamage: " + totalDamage);
+        console.log("this is attackResult: " + attackResult);
 
         totalAttackResult += attackResult;
 

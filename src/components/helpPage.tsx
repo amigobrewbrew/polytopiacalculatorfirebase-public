@@ -98,8 +98,6 @@ class helpPage extends React.Component {
                 Progressive web apps{" "}
               </a>
               <br></br>
-              Polytopia balance version: 2.8.5.11917
-              <br></br>
             </p>
             <span>
               Useful links:
