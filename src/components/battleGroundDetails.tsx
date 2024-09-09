@@ -354,10 +354,13 @@ class battleGroundDetails extends React.Component<Props, State> {
           }}
           style={{ maxWidth: "25.75em" }}
         >
-          <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
-            {" "}
-            This page is based on Build version 2.8.5.11917 and Game version:
-            104.{" "}
+          <div>
+            This page is based on Build 2.8.5.11917; Game version: 104. For
+            Shark, Puffer and Jelly click{" "}
+            <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
+              here
+            </a>
+            .{" "}
           </div>
         </Box>
       </Box>
