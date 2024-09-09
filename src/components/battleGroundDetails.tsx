@@ -356,11 +356,7 @@ class battleGroundDetails extends React.Component<Props, State> {
         >
           <div>
             This page is based on Build 2.8.5.11917; Game version: 104. For
-            Shark, Puffer and Jelly click{" "}
-            <a href="https://polytopia-damage-calculator.firebaseapp.com/beta">
-              here
-            </a>
-            .{" "}
+            Shark, Puffer and Jelly click <a href="/beta">here</a>.{" "}
           </div>
         </Box>
       </Box>
