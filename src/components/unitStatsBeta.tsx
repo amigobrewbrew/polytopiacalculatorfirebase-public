@@ -276,7 +276,7 @@ export abstract class RaftStats {
   public static healthMax = 10;
   public static healthMaxVeteran = 10;
   public static attack = 0;
-  public static defence = 2;
+  public static defence = 1;
 }
 
 export abstract class ScoutStats {
