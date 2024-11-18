@@ -1179,6 +1179,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     //     ]),
     // });
 
+    let initialSafeBonus = false;
+
+    if (typeUnit === "Dagger" || typeUnit === "Pirate" || typeUnit === "Shark" || typeUnit === "Phychi") {
+      initialSafeBonus = true;
+    }
+
     this.setState((prevState) => ({
       soldierUnitsAttackersAsRender: [
         ...prevState.soldierUnitsAttackersAsRender,
@@ -1194,7 +1200,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           veteran: false,
           defenceBonus: false,
           wallBonus: false,
-          safeBonus: false,
+          safeBonus: initialSafeBonus,
           poisonedBonus: false,
           becamePoisonedBonus: false,
           boostedBonus: false,
