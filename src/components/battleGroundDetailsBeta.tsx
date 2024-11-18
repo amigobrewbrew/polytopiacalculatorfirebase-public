@@ -421,9 +421,16 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     typeUnit: string,
     wallBonus: boolean
   ) => {
-    let index;
+     let index;
     let soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
+
+    // if (typeUnit === "Swordsman" || typeUnit === "MindBender") {
+    //   console.log("Swordsman and Mindbenders can not be fortified");
+    //   alert(typeUnit + " can not be foritified");
+    //   return;
+    // }
+
     if (team === "Defenders" && wallBonus === false) {
       index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
       soldierUnitsDefendersAsRender[index].wallBonus = true;

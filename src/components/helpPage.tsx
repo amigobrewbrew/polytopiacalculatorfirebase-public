@@ -54,8 +54,8 @@ class helpPage extends React.Component {
                 <li>SAFE: When toggled, unit is safe from retaliation </li>
                 <li>BST: When toggled, unit is boosted by Cymanti shaman</li>
                 <li>
-                  MX##: Set the maximum health for ships to 10, 15, 20, 25, 35
-                  or 40 hitpoints. Maximum hitpoints affects attacking and
+                  MX##: Set the maximum health for ships to 10, 15, 20, 25,
+                  or 30 hitpoints. Maximum hitpoints affects attacking and
                   defensive power
                 </li>
                 <li>DEF: When toggled, unit gets defensive bonus </li>

@@ -773,7 +773,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
             );
             this.handleClickWallBonus();
           }}
-          style={this.makeInvisibleWallBonus(this.state.isToggleVisibleTeam)}
+          style={this.makeInvisibleWallBonus(this.state.isToggleVisibleTeam, this.state.isToggleVisibleTypeUnit)}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -936,11 +936,11 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
     }
   }
 
-  makeInvisibleWallBonus(team: string) {
-    if (team === "Attackers") {
-      return { display: "none" };
-    } else {
+  makeInvisibleWallBonus(team: string, unitType: string) {
+    if (team === "Defenders" && (unitType === "Warrior" || unitType === "Archer" || unitType === "Defender"   || unitType === "Knight" || unitType === "Rider" || unitType === "Tridention"    || unitType === "Polytaur" || unitType === "IceArcher"  )) {
       return { display: "visible" };
+    } else {
+      return { display: "none" };
     }
   }
 
