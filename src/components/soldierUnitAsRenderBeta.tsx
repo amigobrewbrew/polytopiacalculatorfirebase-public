@@ -937,7 +937,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
   }
 
   makeInvisibleWallBonus(team: string, unitType: string) {
-    if (team === "Defenders" && (unitType === "Warrior" || unitType === "Archer" || unitType === "Defender"   || unitType === "Knight" || unitType === "Rider" || unitType === "Tridention"    || unitType === "Polytaur" || unitType === "IceArcher"  )) {
+    if (team === "Defenders" && (unitType === "Warrior" || unitType === "Archer" || unitType === "Defender"   || unitType === "Knight" || unitType === "Rider" || unitType === "Tridention"    || unitType === "Polytaur" || unitType === "IceArcher" || unitType === "Amphibian" )) {
       return { display: "visible" };
     } else {
       return { display: "none" };
