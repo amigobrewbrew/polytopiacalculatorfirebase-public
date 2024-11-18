@@ -102,7 +102,7 @@ export abstract class CrabStats {
   public static healthMax = 40;
   public static healthMaxVeteran = 40;
   public static attack = 4;
-  public static defence = 5;
+  public static defence = 4;
 }
 
 export abstract class PolytaurStats {
@@ -310,7 +310,7 @@ export abstract class JuggernautStats {
 export abstract class SharkStats {
   public static healthMax = 10;
   public static healthMaxVeteran = 15;
-  public static attack = 3;
+  public static attack = 3.5;
   public static defence = 2;
 }
 

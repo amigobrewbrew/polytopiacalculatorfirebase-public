@@ -354,9 +354,8 @@ class battleGroundDetails extends React.Component<Props, State> {
           }}
           style={{ maxWidth: "25.75em" }}
         >
-          <div>
-            This page is based on Build 2.8.5.11917; Game version: 104. For
-            Shark, Puffer and Jelly click <a href="/beta">here</a>.{" "}
+          <div >
+            This page is based on Build version 2.10.1.12787 and Game version: 105. For Forgotten update click <a href="/beta">here</a>.{" "}
           </div>
         </Box>
       </Box>
@@ -1363,6 +1362,12 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.AmphibianStats.healthMax;
       case "Tridention":
         return Stats.TridentionStats.healthMax;
+      case "Shark":
+        return Stats.SharkStats.healthMax;
+      case "Puffer":
+        return Stats.PufferStats.healthMax;
+      case "Jelly":
+        return Stats.JellyStats.healthMax;
       case "Crab":
         return Stats.CrabStats.healthMax;
       case "Polytaur":
@@ -1447,6 +1452,12 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.AmphibianStats.healthMaxVeteran;
       case "Tridention":
         return Stats.TridentionStats.healthMaxVeteran;
+      case "Shark":
+        return Stats.SharkStats.healthMaxVeteran;
+      case "Puffer":
+        return Stats.PufferStats.healthMaxVeteran;
+      case "Jelly":
+        return Stats.JellyStats.healthMaxVeteran;
       case "Crab":
         return Stats.CrabStats.healthMaxVeteran;
       case "Polytaur":
@@ -1543,6 +1554,12 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.AmphibianStats.attack;
       case "Tridention":
         return Stats.TridentionStats.attack;
+      case "Shark":
+        return Stats.SharkStats.attack;
+      case "Puffer":
+        return Stats.PufferStats.attack;
+      case "Jelly":
+        return Stats.JellyStats.attack;
       case "Crab":
         return Stats.CrabStats.attack;
       case "Polytaur":
@@ -1640,6 +1657,12 @@ class battleGroundDetails extends React.Component<Props, State> {
         return Stats.AmphibianStats.defence;
       case "Tridention":
         return Stats.TridentionStats.defence;
+      case "Shark":
+        return Stats.SharkStats.defence;
+      case "Puffer":
+        return Stats.PufferStats.defence;
+      case "Jelly":
+        return Stats.JellyStats.defence;
       case "Crab":
         return Stats.CrabStats.defence;
       case "Polytaur":
@@ -1823,7 +1846,7 @@ class battleGroundDetails extends React.Component<Props, State> {
         //   attacker.splashDamage === true &&
         //   attacker.typeUnit === "FireDragon"
         // ) {
-        //   attacker.attack = 2.33;
+        //   attacker.attack = 2.5;
         // }
 
         // if (
@@ -1834,10 +1857,24 @@ class battleGroundDetails extends React.Component<Props, State> {
         // }
 
         // if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
-        //   attacker.attack = 2.33;
+        //   attacker.attack = 2.5;
         // }
 
         // if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 4;
+        // }
+
+        // if (
+        //   attacker.splashDamage === true &&
+        //   attacker.typeUnit === "Juggernaut"
+        // ) {
+        //   attacker.attack = 2.67;
+        // }
+
+        // if (
+        //   attacker.splashDamage === false &&
+        //   attacker.typeUnit === "Juggernaut"
+        // ) {
         //   attacker.attack = 4;
         // }
 
@@ -1914,7 +1951,7 @@ class battleGroundDetails extends React.Component<Props, State> {
             )
           );
           console.log("this is defenceResult: " + defenceResult);
-          //poison
+          //poison 
           if (
             attacker.typeUnit === "Exida" ||
             attacker.typeUnit === "Phychi" ||
@@ -1940,7 +1977,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           //     false;
           //   // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
           // }
-          // poison
+          // poison 
         } else {
           defenceResult = 0;
           //indexDefender++;

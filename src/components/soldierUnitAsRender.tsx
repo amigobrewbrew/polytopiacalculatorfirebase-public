@@ -15,6 +15,9 @@ import BoatAtt from "../img/Attackers/Boat.png";
 import ShipAtt from "../img/Attackers/Ship.png";
 import AmphibianAtt from "../img/Attackers/Amphibian.png";
 import TridentionAtt from "../img/Attackers/Tridention.png";
+import SharkAtt from "../img/Attackers/Shark.png";
+import PufferAtt from "../img/Attackers/Puffer.png";
+import JellyAtt from "../img/Attackers/Jelly.png";
 import CrabAtt from "../img/Attackers/Crab.png";
 import PolytaurAtt from "../img/Attackers/Polytaur.png";
 import NavalonAtt from "../img/Attackers/Navalon.png";
@@ -60,6 +63,9 @@ import BoatDef from "../img/Defenders/Boat.png";
 import ShipDef from "../img/Defenders/Ship.png";
 import AmphibianDef from "../img/Defenders/Amphibian.png";
 import TridentionDef from "../img/Defenders/Tridention.png";
+import SharkDef from "../img/Defenders/Shark.png";
+import PufferDef from "../img/Defenders/Puffer.png";
+import JellyDef from "../img/Defenders/Jelly.png";
 import CrabDef from "../img/Defenders/Crab.png";
 import PolytaurDef from "../img/Defenders/Polytaur.png";
 import NavalonDef from "../img/Defenders/Navalon.png";
@@ -1029,6 +1035,12 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         return AmphibianAtt;
       case "TridentionAttackers":
         return TridentionAtt;
+      case "SharkAttackers":
+        return SharkAtt;
+      case "PufferAttackers":
+        return PufferAtt;
+      case "JellyAttackers":
+        return JellyAtt;
       case "CrabAttackers":
         return CrabAtt;
       case "PolytaurAttackers":
@@ -1118,6 +1130,12 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         return AmphibianDef;
       case "TridentionDefenders":
         return TridentionDef;
+      case "SharkDefenders":
+        return SharkDef;
+      case "PufferDefenders":
+        return PufferDef;
+      case "JellyDefenders":
+        return JellyDef;
       case "CrabDefenders":
         return CrabDef;
       case "PolytaurDefenders":

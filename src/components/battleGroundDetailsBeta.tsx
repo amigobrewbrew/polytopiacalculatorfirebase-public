@@ -356,8 +356,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         >
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
             {" "}
-            This page is based on Build version 2.10.1.12787 and Game version:
-            105.{" "}
+            This page is based on Build version 2.11.1.13205 and Game version:
+            108.{" "}
           </div>
         </Box>
       </Box>
