@@ -1927,21 +1927,21 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           attacker.splashDamage === true &&
           attacker.typeUnit === "Juggernaut"
         ) {
-          attackResult = Math.floor(attackResult * (2.33 / 4));
+            attackResult = Math.round(attackResult * (2 / 4));
         }
 
         if (
           attacker.splashDamage === true &&
           (attacker.typeUnit === "FireDragon" || attacker.typeUnit === "Bomber")
         ) {
-          attackResult = Math.floor(attackResult * (2 / 4));
+            attackResult = Math.round(attackResult * (2 / 4));
         }
 
         if (
           attacker.explodeDamage === true ||
           attacker.typeUnit === "Segment"
         ) {
-          attackResult = Math.floor(attackResult * 0.5);
+            attackResult = Math.round(attackResult * 0.5);
         }
 
         console.log("this is attackForce: " + attackForce);
