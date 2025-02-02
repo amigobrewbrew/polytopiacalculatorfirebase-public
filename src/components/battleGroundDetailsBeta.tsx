@@ -1927,7 +1927,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           attacker.splashDamage === true &&
           attacker.typeUnit === "Juggernaut"
         ) {
-          attackResult = Math.floor(attackResult * (2.5 / 4));
+          attackResult = Math.floor(attackResult * (2.33 / 4));
         }
 
         if (
