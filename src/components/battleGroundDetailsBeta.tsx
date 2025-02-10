@@ -356,8 +356,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         >
           <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
             {" "}
-            This page holds the most current Path of the Ocean stats and units
-            as per patch 2.8.5.11917
+            This page is based on Build version 2.11.1.13205 and Game version:
+            108.{" "}
           </div>
         </Box>
       </Box>
@@ -421,9 +421,16 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     typeUnit: string,
     wallBonus: boolean
   ) => {
-    let index;
+     let index;
     let soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
+
+    // if (typeUnit === "Swordsman" || typeUnit === "MindBender") {
+    //   console.log("Swordsman and Mindbenders can not be fortified");
+    //   alert(typeUnit + " can not be foritified");
+    //   return;
+    // }
+
     if (team === "Defenders" && wallBonus === false) {
       index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
       soldierUnitsDefendersAsRender[index].wallBonus = true;
@@ -1179,6 +1186,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     //     ]),
     // });
 
+    let initialSafeBonus = false;
+
+    if (typeUnit === "Dagger" || typeUnit === "Pirate" || typeUnit === "Shark" || typeUnit === "Phychi") {
+      initialSafeBonus = true;
+    }
+
     this.setState((prevState) => ({
       soldierUnitsAttackersAsRender: [
         ...prevState.soldierUnitsAttackersAsRender,
@@ -1194,7 +1207,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           veteran: false,
           defenceBonus: false,
           wallBonus: false,
-          safeBonus: false,
+          safeBonus: initialSafeBonus,
           poisonedBonus: false,
           becamePoisonedBonus: false,
           boostedBonus: false,
@@ -1364,6 +1377,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.healthMax;
       case "Tridention":
         return StatsBeta.TridentionStats.healthMax;
+      case "Shark":
+        return StatsBeta.SharkStats.healthMax;
+      case "Puffer":
+        return StatsBeta.PufferStats.healthMax;
+      case "Jelly":
+        return StatsBeta.JellyStats.healthMax;
       case "Crab":
         return StatsBeta.CrabStats.healthMax;
       case "Polytaur":
@@ -1448,6 +1467,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.healthMaxVeteran;
       case "Tridention":
         return StatsBeta.TridentionStats.healthMaxVeteran;
+      case "Shark":
+        return StatsBeta.SharkStats.healthMaxVeteran;
+      case "Puffer":
+        return StatsBeta.PufferStats.healthMaxVeteran;
+      case "Jelly":
+        return StatsBeta.JellyStats.healthMaxVeteran;
       case "Crab":
         return StatsBeta.CrabStats.healthMaxVeteran;
       case "Polytaur":
@@ -1544,6 +1569,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.attack;
       case "Tridention":
         return StatsBeta.TridentionStats.attack;
+      case "Shark":
+        return StatsBeta.SharkStats.attack;
+      case "Puffer":
+        return StatsBeta.PufferStats.attack;
+      case "Jelly":
+        return StatsBeta.JellyStats.attack;
       case "Crab":
         return StatsBeta.CrabStats.attack;
       case "Polytaur":
@@ -1641,6 +1672,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         return StatsBeta.AmphibianStats.defence;
       case "Tridention":
         return StatsBeta.TridentionStats.defence;
+      case "Shark":
+        return StatsBeta.SharkStats.defence;
+      case "Puffer":
+        return StatsBeta.PufferStats.defence;
+      case "Jelly":
+        return StatsBeta.JellyStats.defence;
       case "Crab":
         return StatsBeta.CrabStats.defence;
       case "Polytaur":
@@ -1820,27 +1857,41 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           ? (boostedBonusMultiplier = 1)
           : (boostedBonusMultiplier = 0);
 
-        if (
-          attacker.splashDamage === true &&
-          attacker.typeUnit === "FireDragon"
-        ) {
-          attacker.attack = 2.33;
-        }
+        // if (
+        //   attacker.splashDamage === true &&
+        //   attacker.typeUnit === "FireDragon"
+        // ) {
+        //   attacker.attack = 2.5;
+        // }
 
-        if (
-          attacker.splashDamage === false &&
-          attacker.typeUnit === "FireDragon"
-        ) {
-          attacker.attack = 4;
-        }
+        // if (
+        //   attacker.splashDamage === false &&
+        //   attacker.typeUnit === "FireDragon"
+        // ) {
+        //   attacker.attack = 4;
+        // }
 
-        if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
-          attacker.attack = 2.33;
-        }
+        // if (attacker.splashDamage === true && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 2.5;
+        // }
 
-        if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
-          attacker.attack = 4;
-        }
+        // if (attacker.splashDamage === false && attacker.typeUnit === "Bomber") {
+        //   attacker.attack = 4;
+        // }
+
+        // if (
+        //   attacker.splashDamage === true &&
+        //   attacker.typeUnit === "Juggernaut"
+        // ) {
+        //   attacker.attack = 2.67;
+        // }
+
+        // if (
+        //   attacker.splashDamage === false &&
+        //   attacker.typeUnit === "Juggernaut"
+        // ) {
+        //   attacker.attack = 4;
+        // }
 
         let attackForce = parseFloat(
           (
@@ -1872,17 +1923,31 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           )
         );
 
-        console.log("this is attackForce: " + attackForce);
-        console.log("this is defenceForce: " + defenceForce);
-        console.log("this is totalDamage: " + totalDamage);
-        console.log("this is attackResult: " + attackResult);
+        if (
+          attacker.splashDamage === true &&
+          attacker.typeUnit === "Juggernaut"
+        ) {
+            attackResult = Math.round(attackResult * (2 / 4));
+        }
+
+        if (
+          attacker.splashDamage === true &&
+          (attacker.typeUnit === "FireDragon" || attacker.typeUnit === "Bomber")
+        ) {
+            attackResult = Math.round(attackResult * (2 / 4));
+        }
 
         if (
           attacker.explodeDamage === true ||
           attacker.typeUnit === "Segment"
         ) {
-          attackResult = Math.floor(attackResult * 0.5);
+            attackResult = Math.round(attackResult * 0.5);
         }
+
+        console.log("this is attackForce: " + attackForce);
+        console.log("this is defenceForce: " + defenceForce);
+        console.log("this is totalDamage: " + totalDamage);
+        console.log("this is attackResult: " + attackResult);
 
         totalAttackResult += attackResult;
 
