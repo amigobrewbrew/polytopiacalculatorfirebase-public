@@ -16,8 +16,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import { analytics } from "./../firebase";
+import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
+
+const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
 /**
  * State of secret game holding the secret number, tries and total scores
@@ -47,7 +49,7 @@ class secretGame extends React.Component<State> {
   NewGame = () => {
     console.log("New game started");
 
-    logEvent(analytics, "sg_game_started");
+    analyticsLogEvent(analytics, "sg_game_started");
 
     this.setState({ totalGames: this.state.totalGames + 1 });
 
@@ -64,7 +66,7 @@ class secretGame extends React.Component<State> {
     while (this.state.tentativas > 0) {
       if (unitNumber === this.state.numeroSecreto) {
         this.setState({ totalGamesWon: this.state.totalGamesWon + 1 });
-        logEvent(analytics, "sg_game_won");
+        analyticsLogEvent(analytics, "sg_game_won");
         if (unitNumber === 1) {
           alert("The warrior is correct! Parabéns pra você!");
           this.NewGame();
@@ -112,11 +114,11 @@ class secretGame extends React.Component<State> {
         }
       } else {
         if (unitNumber > this.state.numeroSecreto) {
-          logEvent(analytics, "sg_secret_unit_is_weaker");
+          analyticsLogEvent(analytics, "sg_secret_unit_is_weaker");
           alert("You made the incorrect choice. The secret unit is weaker");
         }
         if (unitNumber < this.state.numeroSecreto) {
-          logEvent(analytics, "sg_secret_unit_is_stronger");
+          analyticsLogEvent(analytics, "sg_secret_unit_is_stronger");
           alert("You made the incorrect choice. The secret unit is stronger");
         }
 
@@ -132,7 +134,7 @@ class secretGame extends React.Component<State> {
             if (this.state.tentativas === 0) {
               console.log("tentativas is zero now :(");
 
-              logEvent(analytics, "sg_game_lost");
+              analyticsLogEvent(analytics, "sg_game_lost");
 
               if (this.state.tentativas === 0) {
                 if (this.state.numeroSecreto === 1) {

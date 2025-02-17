@@ -15,11 +15,13 @@ import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Grid from "@material-ui/core/Grid";
-import { analytics } from "./../firebase";
+import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import * as immer from "immer";
+
+const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
 // import { withAITracking } from "@microsoft/applicationinsights-react-js";
 //import { reactPlugin, appInsights } from "../AppInsights";
@@ -126,7 +128,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     this.setState((prevState) => ({
       checkedPosition: !prevState.checkedPosition,
     }));
-    logEvent(analytics, "pc_checkbox_toggled");
+    analyticsLogEvent(analytics, "pc_checkbox_toggled");
   };
 
   componentDidUpdate() {
@@ -155,7 +157,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         console.log(
           "User understands that at least an attacker and a defender are needed for the calculator to work"
         );
-        logEvent(analytics, "pc_user_understands");
+        analyticsLogEvent(analytics, "pc_user_understands");
 
         this.setState({ userUnderstands: true });
       }
@@ -171,7 +173,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     this.healthAfterCalculation(); // might be redundant > seems to be the only one needed
     // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
-    // logEvent(analytics, "pc_battleground_page_rendered");
+    // analyticsLogEvent(analytics, "pc_battleground_page_rendered");
     // const styleWrapper = {
     //   //display: "flex",
     //   //flexDirection: "column",
@@ -409,7 +411,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsDefendersAsRender });
     } else console.log("Error with team and wall bonus selection");
 
-    logEvent(analytics, "pc_defence_bonus_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_defence_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -445,7 +447,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsDefendersAsRender });
     } else console.log("Error with team and wall bonus selection");
 
-    logEvent(analytics, "pc_wall_bonus_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_wall_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -475,7 +477,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsDefendersAsRender });
     } else console.log("Error with team and poisoned bonus selection");
 
-    logEvent(analytics, "pc_poisoned_bonus_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_poisoned_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -502,7 +504,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsAttackersAsRender });
     } else console.log("Error with team and safe bonus selection");
 
-    logEvent(analytics, "pc_safe_bonus_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_safe_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -529,7 +531,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsAttackersAsRender });
     } else console.log("Error with team and boosted bonus selection");
 
-    logEvent(analytics, "pc_boosted_bonus_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_boosted_bonus_" + typeUnit);
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -556,7 +558,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsAttackersAsRender });
     } else console.log("Error with team and splash damage selection");
 
-    logEvent(analytics, "pc_splash_damage_toggled");
+    analyticsLogEvent(analytics, "pc_splash_damage_toggled");
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -583,7 +585,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsAttackersAsRender });
     } else console.log("Error with team and explode damage selection");
 
-    logEvent(analytics, "pc_explode_damage_toggled");
+    analyticsLogEvent(analytics, "pc_explode_damage_toggled");
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -655,7 +657,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsDefendersAsRender });
     } else console.log("Error with team and veterancy selection");
 
-    logEvent(analytics, "pc_veterancy_bonus_" + team + "_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_veterancy_bonus_" + team + "_" + typeUnit);
 
     // this.healthAfterCalculation();
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -701,7 +703,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       this.setState({ soldierUnitsDefendersAsRender });
     } else console.log("Error with team and shipunit selection");
 
-    logEvent(analytics, "pc_ship_mx_" + team + "_" + typeUnit);
+    analyticsLogEvent(analytics, "pc_ship_mx_" + team + "_" + typeUnit);
 
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
   };
@@ -872,7 +874,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         console.log("Issue with team selection switch for deleting soldier");
     }
 
-    logEvent(analytics, "pc_unit_deleted_" + team);
+    analyticsLogEvent(analytics, "pc_unit_deleted_" + team);
 
     this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
 
@@ -921,7 +923,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         );
     }
 
-    logEvent(analytics, "pc_hitpoints_direct_" + team);
+    analyticsLogEvent(analytics, "pc_hitpoints_direct_" + team);
 
     // setTimeout(() => {
     //   this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
@@ -962,7 +964,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_hitpoints_plus_" + team);
+      analyticsLogEvent(analytics, "pc_hitpoints_plus_" + team);
     } else {
       switch (team) {
         case "Attackers":
@@ -1035,7 +1037,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_changed_position_up_" + team);
+      analyticsLogEvent(analytics, "pc_changed_position_up_" + team);
     }
 
     // this.healthAfterCalculation();
@@ -1080,7 +1082,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_hitpoints_min_" + team);
+      analyticsLogEvent(analytics, "pc_hitpoints_min_" + team);
     } else {
       switch (team) {
         case "Attackers":
@@ -1154,7 +1156,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           );
       }
 
-      logEvent(analytics, "pc_changed_position_down_" + team);
+      analyticsLogEvent(analytics, "pc_changed_position_down_" + team);
     }
 
     // this.healthAfterCalculation();
@@ -1244,8 +1246,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     //   return { nextIdAttacker: this.state.nextIdAttacker + 1 };
     // });
 
-    logEvent(analytics, "pc_attacker_added_" + typeUnit);
-    logEvent(
+    analyticsLogEvent(analytics, "pc_attacker_added_" + typeUnit);
+    analyticsLogEvent(
       analytics,
       "pc_attacker_id_" + this.state.soldierUnitsAttackersAsRender.length
     );
@@ -1306,8 +1308,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     //   return { nextIdDefender: this.state.nextIdDefender + 1 };
     // });
 
-    logEvent(analytics, "pc_defender_added_" + typeUnit);
-    logEvent(
+    analyticsLogEvent(analytics, "pc_defender_added_" + typeUnit);
+    analyticsLogEvent(
       analytics,
       "pc_defender_id_" + this.state.soldierUnitsDefendersAsRender.length
     );
@@ -1745,7 +1747,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
   healthAfterCalculation = () => {
     console.log("This is where the magic happens. Charge!");
-    logEvent(analytics, "pc_magic_happens_beta");
+    analyticsLogEvent(analytics, "pc_magic_happens_beta");
 
     let indexDefenderCounter = 0;
     let indexDefender = this.state.defIdxArray[indexDefenderCounter];
