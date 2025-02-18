@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
+import { isLocal } from "./firebase";
 //import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 //import { ClickAnalyticsPlugin } from "@microsoft/applicationinsights-clickanalytics-js";
 
@@ -16,7 +17,7 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-console.log("Firebase is running");
+console.log("App is running in", isLocal ? "local" : "Firebase", "mode");
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

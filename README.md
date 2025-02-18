@@ -4,6 +4,8 @@ My first project doing Typescript and React.
 
 Use "npm install", "npm run build" & "npm run start" before deploying react app to azure/firebase/hosting
 
+If you would just like to run the app locally without deploying, you can set `isLocal = true` in `src/firebase.js`.
+
 # Setup
 
 For firebase hosting, configure your project API keys for src/firebase.js in .env.local file or disable firebase all together.
