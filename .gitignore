@@ -33,3 +33,4 @@ local.settings.json
 /.firebase
 /.vscode
 .vscode/launch.json
+firebase-debug.log
