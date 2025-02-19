@@ -53,7 +53,7 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
   }
 
   myFunction() {
-    let x = document.getElementById("myTopnav");
+    const x = document.getElementById("myTopnav");
     if (x)
       if (x.className === "topnav") {
         x.className += " responsive";

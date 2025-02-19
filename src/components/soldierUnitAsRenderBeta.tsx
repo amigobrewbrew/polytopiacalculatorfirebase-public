@@ -351,7 +351,7 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
   }
 
   handleClickShipUnit() {
-    let healthMaxShipUnit = this.props.healthMax;
+    const healthMaxShipUnit = this.props.healthMax;
 
     this.setState({ healthMaxShipUnit });
   }
@@ -1200,38 +1200,24 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
   }
 
   soldierUnitImageStyle(team: string) {
-    switch (team) {
-      case "Defenders":
-        const soldierUnitImageStyleDefenders = {
-          height: "40px",
-          width: "30px",
-          objectFit: "contain",
-          WebkitAppearance: "none",
-          marginRight: 5,
-          marginLeft: 5,
-          borderRadius: 5,
-          marginBottom: 5,
-          marginTop: 5,
-          transform: "scaleX(-1)", // make this in an if statement and remove the switch
-        } as React.CSSProperties;
+    const soldierUnitImageStyle = {
+      height: "40px",
+      width: "30px",
+      objectFit: "contain",
+      WebkitAppearance: "none",
+      marginRight: 5,
+      marginLeft: 5,
+      borderRadius: 5,
+      marginBottom: 5,
+      marginTop: 5,
+    } as React.CSSProperties;
 
-        return soldierUnitImageStyleDefenders;
-
-      default:
-        const soldierUnitImageStyleAttackers = {
-          height: "40px",
-          width: "30px",
-          objectFit: "contain",
-          WebkitAppearance: "none",
-          marginRight: 5,
-          marginLeft: 5,
-          borderRadius: 5,
-          marginBottom: 5,
-          marginTop: 5,
-        } as React.CSSProperties;
-
-        return soldierUnitImageStyleAttackers;
+    if (team === "Defenders") {
+      soldierUnitImageStyle.transform = "scaleX(-1)";
     }
+
+    return soldierUnitImageStyle;
+  
   }
 }
 export default soldierUnitAsRenderBeta;

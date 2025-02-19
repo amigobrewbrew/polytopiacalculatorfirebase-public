@@ -278,7 +278,7 @@ class secretGame extends React.Component<State> {
         >
           <Typography component={"span"} variant="body1">
             <Box sx={{ margin: 1 }}>
-              <h3 style={{ marginLeft: 10 }}> Nath's favorite game </h3>
+              <h3 style={{ marginLeft: 10 }}> Nath&apos;s favorite game </h3>
               <Box style={{ marginLeft: 10 }}>
                 Guess the correct unit in 3 turns{" "}
               </Box>

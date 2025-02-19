@@ -392,7 +392,7 @@ class battleGroundDetails extends React.Component<Props, State> {
   ) => {
     let index;
 
-    let soldierUnitsDefendersAsRender =
+    const soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
 
     if (team === "Defenders" && defenceBonus === false) {
@@ -422,7 +422,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     wallBonus: boolean
   ) => {
     let index;
-    let soldierUnitsDefendersAsRender =
+    const soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
     if (team === "Defenders" && wallBonus === false) {
       index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
@@ -452,7 +452,7 @@ class battleGroundDetails extends React.Component<Props, State> {
   ) => {
     let index;
 
-    let soldierUnitsDefendersAsRender =
+    const soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
     if (team === "Defenders" && poisonedBonus === false) {
       index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
@@ -481,7 +481,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     safeBonus: boolean
   ) => {
     let index;
-    let soldierUnitsAttackersAsRender =
+    const soldierUnitsAttackersAsRender =
       this.state.soldierUnitsAttackersAsRender;
     if (team === "Attackers" && safeBonus === false) {
       index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
@@ -508,7 +508,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     boostedBonus: boolean
   ) => {
     let index;
-    let soldierUnitsAttackersAsRender =
+    const soldierUnitsAttackersAsRender =
       this.state.soldierUnitsAttackersAsRender;
     if (team === "Attackers" && boostedBonus === false) {
       index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
@@ -535,7 +535,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     splashDamage: boolean
   ) => {
     let index;
-    let soldierUnitsAttackersAsRender =
+    const soldierUnitsAttackersAsRender =
       this.state.soldierUnitsAttackersAsRender;
     if (team === "Attackers" && splashDamage === false) {
       index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
@@ -562,7 +562,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     explodeDamage: boolean
   ) => {
     let index;
-    let soldierUnitsAttackersAsRender =
+    const soldierUnitsAttackersAsRender =
       this.state.soldierUnitsAttackersAsRender;
     if (team === "Attackers" && explodeDamage === false) {
       index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
@@ -599,9 +599,9 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     let index;
 
-    let soldierUnitsDefendersAsRender =
+    const soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
-    let soldierUnitsAttackersAsRender =
+    const soldierUnitsAttackersAsRender =
       this.state.soldierUnitsAttackersAsRender;
     if (team === "Attackers" && veteran === false) {
       index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
@@ -663,7 +663,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     let index;
 
     if (team === "Attackers" && shipUnit === true) {
-      let soldierUnitsAttackersAsRender =
+      const soldierUnitsAttackersAsRender =
         this.state.soldierUnitsAttackersAsRender;
       index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
       soldierUnitsAttackersAsRender[index].healthMax =
@@ -678,7 +678,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
       this.setState({ soldierUnitsAttackersAsRender });
     } else if (team === "Defenders" && shipUnit === true) {
-      let soldierUnitsDefendersAsRender =
+      const soldierUnitsDefendersAsRender =
         this.state.soldierUnitsDefendersAsRender;
       index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
       soldierUnitsDefendersAsRender[index].healthMax =
@@ -705,7 +705,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     // console.log("einde props");
 
     switch (team) {
-      case "Attackers":
+      case "Attackers":{
         let soldierUnitsAttackersAsRender =
           this.state.soldierUnitsAttackersAsRender;
 
@@ -768,8 +768,8 @@ class battleGroundDetails extends React.Component<Props, State> {
         //   }
         // );
 
-        break;
-      case "Defenders":
+           }     break;
+      case "Defenders":{
         let soldierUnitsDefendersAsRender =
           this.state.soldierUnitsDefendersAsRender;
 
@@ -859,7 +859,7 @@ class battleGroundDetails extends React.Component<Props, State> {
         // const soldierUnitsDefendersAsRender =
         //   this.state.soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
         // this.setState({ soldierUnitsDefendersAsRender });
-
+      }
         break;
       default:
         console.log("Issue with team selection switch for deleting soldier");
@@ -888,8 +888,8 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     let index;
     switch (team) {
-      case "Attackers":
-        let soldierUnitsAttackersAsRender =
+      case "Attackers":{
+        const soldierUnitsAttackersAsRender =
           this.state.soldierUnitsAttackersAsRender;
         index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
@@ -897,9 +897,9 @@ class battleGroundDetails extends React.Component<Props, State> {
           healthBeforeManualInput;
 
         this.setState({ soldierUnitsAttackersAsRender });
-        break;
-      case "Defenders":
-        let soldierUnitsDefendersAsRender =
+          }    break;
+      case "Defenders":{
+        const soldierUnitsDefendersAsRender =
           this.state.soldierUnitsDefendersAsRender;
         index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
@@ -907,7 +907,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           healthBeforeManualInput;
 
         this.setState({ soldierUnitsDefendersAsRender });
-        break;
+          }    break;
       default:
         console.log(
           "Issue with team selection switch for increasing hitpoints"
@@ -931,24 +931,24 @@ class battleGroundDetails extends React.Component<Props, State> {
       );
 
       switch (team) {
-        case "Attackers":
-          let soldierUnitsAttackersAsRender =
+        case "Attackers":{
+          const soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
           soldierUnitsAttackersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsAttackersAsRender });
-          break;
-        case "Defenders":
-          let soldierUnitsDefendersAsRender =
+           }   break;
+        case "Defenders":{
+          const soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
           soldierUnitsDefendersAsRender[index].healthBefore++;
 
           this.setState({ soldierUnitsDefendersAsRender });
-          break;
+             }     break;
         default:
           console.log(
             "Issue with team selection switch for increasing hitpoints"
@@ -958,8 +958,8 @@ class battleGroundDetails extends React.Component<Props, State> {
       analyticsLogEvent(analytics, "pc_hitpoints_plus_" + team);
     } else {
       switch (team) {
-        case "Attackers":
-          let soldierUnitsAttackersAsRender =
+        case "Attackers":{
+          const soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
           // let attIdxArray = this.state.attIdxArray;
 
@@ -990,9 +990,9 @@ class battleGroundDetails extends React.Component<Props, State> {
           this.setState({ soldierUnitsAttackersAsRender });
           // this.setState({ attIdxArray });
 
-          break;
-        case "Defenders":
-          let soldierUnitsDefendersAsRender =
+            }    break;
+        case "Defenders":{
+          const soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
           // let defIdxArray = this.state.defIdxArray;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
@@ -1021,7 +1021,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           this.setState({ soldierUnitsDefendersAsRender });
           // this.setState({ defIdxArray });
 
-          break;
+            }    break;
         default:
           console.log(
             "Issue with team selection switch for increasing hitpoints"
@@ -1048,17 +1048,17 @@ class battleGroundDetails extends React.Component<Props, State> {
       );
 
       switch (team) {
-        case "Attackers":
-          let soldierUnitsAttackersAsRender =
+        case "Attackers":{
+          const soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
           soldierUnitsAttackersAsRender[index].healthBefore--;
 
           // this.state.soldierUnitsAttackersAsRender = [];
           this.setState({ soldierUnitsAttackersAsRender });
-          break;
-        case "Defenders":
-          let soldierUnitsDefendersAsRender =
+         } break;
+        case "Defenders":{
+          const soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
@@ -1066,7 +1066,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
           // this.state.soldierUnitsDefendersAsRender = [];
           this.setState({ soldierUnitsDefendersAsRender });
-          break;
+               }       break;
         default:
           console.log(
             "Issue with team selection switch for increasing hitpoints"
@@ -1076,8 +1076,8 @@ class battleGroundDetails extends React.Component<Props, State> {
       analyticsLogEvent(analytics, "pc_hitpoints_min_" + team);
     } else {
       switch (team) {
-        case "Attackers":
-          let soldierUnitsAttackersAsRender =
+        case "Attackers":{
+          const soldierUnitsAttackersAsRender =
             this.state.soldierUnitsAttackersAsRender;
           // let attIdxArray = this.state.attIdxArray;
           index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
@@ -1108,9 +1108,9 @@ class battleGroundDetails extends React.Component<Props, State> {
 
           this.setState({ soldierUnitsAttackersAsRender });
           // this.setState({ attIdxArray });
-          break;
-        case "Defenders":
-          let soldierUnitsDefendersAsRender =
+           }   break;
+        case "Defenders":{
+          const soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
           // let defIdxArray = this.state.defIdxArray;
           index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
@@ -1140,7 +1140,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
           this.setState({ soldierUnitsDefendersAsRender });
           // this.setState({ defIdxArray });
-          break;
+           }   break;
         default:
           console.log(
             "Issue with team selection switch for increasing hitpoints"
@@ -1745,10 +1745,10 @@ class battleGroundDetails extends React.Component<Props, State> {
     //   ...this.state.soldierUnitsDefendersAsRender,
     // ];
 
-    let soldierUnitsAttackersAsRender =
+    const soldierUnitsAttackersAsRender =
       this.state.soldierUnitsAttackersAsRender;
 
-    let soldierUnitsDefendersAsRender =
+    const soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
 
     console.log("These arrays are on the battlefield");
@@ -1789,11 +1789,11 @@ class battleGroundDetails extends React.Component<Props, State> {
       element.healthAfter = element.healthBefore;
     });
 
-    var poisoningAttacker = 9999;
-    var defenderRepeatedAttack = 0;
+    let poisoningAttacker = 9999;
+    let defenderRepeatedAttack = 0;
 
     soldierUnitsAttackersAsRender.forEach((attacker) => {
-      let defender = soldierUnitsDefendersAsRender[indexDefender];
+      const defender = soldierUnitsDefendersAsRender[indexDefender];
 
       //let attacker = element;
 
@@ -1880,7 +1880,7 @@ class battleGroundDetails extends React.Component<Props, State> {
         //   attacker.attack = 4;
         // }
 
-        let attackForce = parseFloat(
+        const attackForce = parseFloat(
           (
             ((attacker.attack + 0.5 * boostedBonusMultiplier) *
               attacker.healthBefore) /
@@ -1888,7 +1888,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           ).toFixed(10)
         );
 
-        let defenceForce = parseFloat(
+        const defenceForce = parseFloat(
           (
             ((defender.defence * (defender.healthBefore - totalAttackResult)) /
               defender.healthMax) *
@@ -1898,7 +1898,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           ).toFixed(10)
         );
 
-        let totalDamage = attackForce + defenceForce;
+        const totalDamage = attackForce + defenceForce;
 
         attackResult = Math.round(
           parseFloat(
