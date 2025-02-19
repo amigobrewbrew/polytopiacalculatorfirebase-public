@@ -7,13 +7,12 @@ module.exports = {
       'prettier'
     ],
     parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        ecmaFeatures: {
-          jsx: true
-        }
+      ecmaVersion: "latest",
+      sourceType: "module",
+      ecmaFeatures: {
+        jsx: true
       }
-,      
+    },
     settings: {
       react: {
         version: 'detect'
@@ -21,12 +20,13 @@ module.exports = {
     },
     rules: {
       "@typescript-eslint/no-unused-vars": ["warn"],
-      "react/prop-types": "off" // Not needed with TypeScript
-
-      // Add other rules as needed
+      "@typescript-eslint/no-explicit-any": "warn",
+      "react/prop-types": "off",
+      "no-unused-vars": "off"
     },
     plugins: [
       'react',
       '@typescript-eslint'
     ]
   };
+  
