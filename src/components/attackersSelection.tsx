@@ -294,7 +294,7 @@ class LandUnits extends React.Component<Props> {
           </Button>
           <Button
             onClick={() => this.props.onAddAttacker("Defender")}
-            size="small"
+            size='small'
             variant="outlined"
             sx={attackersButtonStyle}
           >
