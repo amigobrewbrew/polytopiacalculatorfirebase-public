@@ -19,7 +19,6 @@ import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import * as immer from "immer";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -745,37 +744,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
         this.setState({ soldierUnitsAttackersAsRender });
 
-        // this.healthAfterCalculation();
-
-        // let updatedSoldierUnitsAttackersAsRender = immer.produce(
-        //   this.state.soldierUnitsAttackersAsRender,
-        //   (draft) => {
-        //     // Use filter to create a new array without the item that matches the idn
-        //     draft = draft.filter((item) => item.id !== idn);
-
-        //     // Reassign new id values to the remaining items
-        //     draft.forEach((unit, i) => {
-        //       unit.id = i;
-        //     });
-        //   }
-        // );
-
-        // let updatedAttIdxArray = immer.produce(
-        //   this.state.attIdxArray,
-        //   (draft) => {
-        //     draft = draft.filter((item) => item !== idn);
-        //   }
-        // );
-
-        // this.setState(
-        //   {
-        //     soldierUnitsAttackersAsRender: updatedSoldierUnitsAttackersAsRender,
-        //     attIdxArray: updatedAttIdxArray,
-        //   },
-        //   () => {
-        //     this.healthAfterCalculation();
-        //   }
-        // );
+ 
       }
         break;
       case "Defenders": {
