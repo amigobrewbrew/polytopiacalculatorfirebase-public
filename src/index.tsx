@@ -7,10 +7,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
 import { isLocal } from "./firebase";
 
-
 console.log("Rendering App...");
-window.process = window.process || {};
-
+window.process = window.process || {}; // Fix for Firebase env vars
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
