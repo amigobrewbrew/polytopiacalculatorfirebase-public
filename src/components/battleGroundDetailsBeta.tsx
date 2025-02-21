@@ -10,11 +10,8 @@ import AttackersSelection from "./attackersSelectionBeta";
 import DefendersSelection from "./defendersSelectionBeta";
 import SoldierUnitAsRender from "./soldierUnitAsRenderBeta";
 import * as StatsBeta from "./unitStatsBeta";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
@@ -22,8 +19,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
-// import { withAITracking } from "@microsoft/applicationinsights-react-js";
-//import { reactPlugin, appInsights } from "../AppInsights";
+
 
 /**
  * State holds the array of selected soldiers of the attackers and defenders

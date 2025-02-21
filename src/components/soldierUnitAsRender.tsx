@@ -187,7 +187,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
       healthMaxShipUnit: this.props.healthMax,
       healthInputField: this.props.healthBefore,
       healthBeforeAsState: this.props.healthBefore,
-      healthAfterAsState: this.props.healthAfter,
+      healthAfterAsState: this.props.healthAfter ?? this.props.healthBefore,
     };
 
     // This binding is necessary to make `this` work in the callback
@@ -533,7 +533,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   //   }
   // }
 
-  handleKeyDown = (e) => {
+  handleKeyDown = (e:any) => {
     if (e.key === "Enter") {
       this.handleHitpointsChange(e.target.value);
     }

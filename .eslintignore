@@ -1,4 +1,5 @@
-/src/firebase.js
+/src/firebase.ts
 /src/components/navbar.tsx
 /src/components/secretGame.tsx
 /.eslintrc.js
+/webpack.config.ts

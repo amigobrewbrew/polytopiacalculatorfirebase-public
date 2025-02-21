@@ -1,21 +1,24 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
 import { isLocal } from "./firebase";
-//import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-//import { ClickAnalyticsPlugin } from "@microsoft/applicationinsights-clickanalytics-js";
 
-ReactDOM.render(
+
+console.log("Rendering App...");
+window.process = window.process || {};
+
+
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 console.log("App is running in", isLocal ? "local" : "Firebase", "mode");
 

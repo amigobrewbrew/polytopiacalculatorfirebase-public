@@ -25,8 +25,9 @@ module.exports = {
       "no-unused-vars": "off"
     },
     plugins: [
-      'react',
-      '@typescript-eslint'
+      "react",
+      "@typescript-eslint",
+      "prettier"
     ]
   };
   

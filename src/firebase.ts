@@ -1,13 +1,13 @@
 // Toggle this for local development
 export const isLocal = false;
 
-let app = null;
-let analytics = null;
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+let app:any  = null;
+let analytics:any = null;
 
 if (!isLocal) {
-  // Import the functions you need from the SDKs you need
-  const { initializeApp } = require("firebase/app");
-  const { getAnalytics } = require("firebase/analytics");
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
@@ -26,7 +26,7 @@ if (!isLocal) {
 } else {
   // Use dummy analytics in local mode
   analytics = {
-    logEvent: (analytics, event) => {
+    logEvent: (analytics:any, event:any) => {
       console.log("local analytics logEvent: ", event);
     },
   };

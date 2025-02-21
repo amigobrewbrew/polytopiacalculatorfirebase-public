@@ -34,3 +34,4 @@ local.settings.json
 /.vscode
 .vscode/launch.json
 firebase-debug.log
+dist
