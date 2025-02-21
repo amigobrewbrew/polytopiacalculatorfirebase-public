@@ -10,6 +10,7 @@ import { isLocal } from "./firebase";
 console.log("Rendering App...");
 window.process = window.process || {}; // Fix for Firebase env vars
 
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
 console.log("App is running in", isLocal ? "local" : "Firebase", "mode");
 
 // If you want to start measuring performance in your app, pass a function
