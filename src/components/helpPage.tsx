@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 class helpPage extends React.Component {
   render() {
+    const email = import.meta.env.VITE_EMAIL || "someone@example.com";
     return (
       <Box>
         <CssBaseline />
@@ -64,7 +65,7 @@ class helpPage extends React.Component {
             </span>
             <p>
               Contact me for questions, tips, bugs etc. via{" "}
-                <a href={`mailto:${import.meta.env.VITE_EMAIL}`}>Email</a>,{" "}
+                <a href={`mailto:${email}`}>Email</a>,{" "}
               <a href="https://www.reddit.com/r/Polytopia/comments/17m0hn7/updated_polytopia_calculator_now_with_beta_units/">
                 {" "}
                 Reddit{" "}
