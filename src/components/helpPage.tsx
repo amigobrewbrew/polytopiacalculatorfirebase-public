@@ -1,11 +1,6 @@
-/** Help page component*/
-
 import * as React from "react";
-//import { withAITracking } from "@microsoft/applicationinsights-react-js";
-// import { reactPlugin, appInsights } from "../AppInsights";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 
 class helpPage extends React.Component {
