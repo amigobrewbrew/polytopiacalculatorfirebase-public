@@ -8,7 +8,7 @@ If you would just like to run the app locally without deploying, you can set `is
 
 # Setup
 
-For firebase hosting, configure your project API keys for src/firebase.js in .env.local file or disable firebase all together.
+For firebase hosting, configure your project API keys for src/firebase.js in the .env file or disable firebase all together. Still you need to create a local .env file by renaming .env.example to .env
 
 More details to get started are here: https://firebase.google.com/docs/web/setup and here: https://reactjs.org/docs/create-a-new-react-app.html.
 
