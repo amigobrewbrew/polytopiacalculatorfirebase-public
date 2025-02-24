@@ -12,14 +12,6 @@ const theme = createTheme({
   typography: {
     fontFamily: "Josefin Sans, Arial, sans-serif",
   },
-
-  palette: {
-    secondary: {
-      main: "#09a2e8",
-      dark: "#ff5baa",
-      light: "#f7cf85",
-    },
-  },
 });
 
 class App extends Component {

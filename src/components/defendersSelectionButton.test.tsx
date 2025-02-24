@@ -18,5 +18,5 @@ describe("DefendersSelectionButton", () => {
     const button = screen.getByRole("button");
     fireEvent.click(button);
     expect(mockOnClick).toHaveBeenCalledTimes(1);
-  }); 
+  });
 });

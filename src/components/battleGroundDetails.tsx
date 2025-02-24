@@ -15,6 +15,7 @@ import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import CardWithShadow from "./cardWithShadow";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 const COLUMN_WIDTH_PERCENTAGE = 48;
@@ -211,17 +212,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           >
             {this.state.soldierUnitsAttackersAsRender.map(
               (soldierUnitAtt, i) => (
-                <Box
-                  key={i}
-                  boxShadow={BOX_SHADOW_AMOUNT}
-                  sx={{
-                    padding: "2%",
-                    backgroundColor: "white",
-                    border: 0,
-                    borderRadius: 3,
-                    mb: 1,
-                  }}
-                >
+                <CardWithShadow key={i}>
                   <SoldierUnitAsRender
                     key={i + this.state.randomNumber}
                     id={soldierUnitAtt.id}
@@ -254,7 +245,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                     splashDamage={soldierUnitAtt.splashDamage}
                     explodeDamage={soldierUnitAtt.explodeDamage}
                   ></SoldierUnitAsRender>
-                </Box>
+                </CardWithShadow>
               )
             )}
           </Box>
@@ -270,17 +261,7 @@ class battleGroundDetails extends React.Component<Props, State> {
           >
             {this.state.soldierUnitsDefendersAsRender.map(
               (soldierUnitDef, i) => (
-                <Box
-                  key={i}
-                  boxShadow={BOX_SHADOW_AMOUNT}
-                  sx={{
-                    padding: "2%",
-                    backgroundColor: "white",
-                    border: 0,
-                    borderRadius: 3,
-                    mb: 1,
-                  }}
-                >
+                <CardWithShadow key={i}>
                   <SoldierUnitAsRender
                     key={i + this.state.randomNumber}
                     id={soldierUnitDef.id}
@@ -313,20 +294,15 @@ class battleGroundDetails extends React.Component<Props, State> {
                     splashDamage={soldierUnitDef.splashDamage}
                     explodeDamage={soldierUnitDef.explodeDamage}
                   ></SoldierUnitAsRender>
-                </Box>
+                </CardWithShadow>
               )
             )}
           </Box>
         </Box>
-        <Box
-          boxShadow={BOX_SHADOW_AMOUNT}
+        <CardWithShadow
           sx={{
-            backgroundColor: "white",
-            border: 0,
-            borderRadius: 3,
             p: "0 2%",
             width: "100%",
-            mb: 1,
             mt: "2px",
           }}
         >
@@ -340,7 +316,7 @@ class battleGroundDetails extends React.Component<Props, State> {
             }
             label="Use + and - to set order instead of health"
           />
-        </Box>
+        </CardWithShadow>
 
         <Box
           sx={{
@@ -355,12 +331,8 @@ class battleGroundDetails extends React.Component<Props, State> {
           <DefendersSelection OnAddDefender={this.handleAddDefender} />
         </Box>
 
-        <Box
-          boxShadow={BOX_SHADOW_AMOUNT}
+        <CardWithShadow
           sx={{
-            backgroundColor: "white",
-            border: 0,
-            borderRadius: 3,
             p: "3px 2%",
             width: "100%",
           }}
@@ -369,7 +341,7 @@ class battleGroundDetails extends React.Component<Props, State> {
             This page is based on Build version 2.10.1.12787 and Game version:
             105. For Forgotten update click <a href="/beta">here</a>.
           </Box>
-        </Box>
+        </CardWithShadow>
       </Box>
     );
   }

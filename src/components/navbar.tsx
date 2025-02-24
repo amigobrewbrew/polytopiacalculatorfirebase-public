@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
+import { BOX_SHADOW_DEFAULT } from "../customStyles";
 
 export interface NavBarProps {}
 
@@ -19,7 +20,7 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
   state = {};
   render() {
     return (
-      <Box boxShadow={3}>
+      <Box boxShadow={BOX_SHADOW_DEFAULT}>
         <CssBaseline />
         <Typography component={"span"} variant="body1">
           <div className="topnav" id="myTopnav">

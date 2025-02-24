@@ -668,7 +668,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickShipUnit();
           }}
-          style={this.makeInvisibleShipUnit(this.state.isToggleVisibleShipUnit)}
+          style={{
+            ...this.makeInvisibleShipUnit(this.state.isToggleVisibleShipUnit),
+            ...this.getSecondaryButtonStyles(),
+          }}
           sx={{ marginRight: 0.1 }}
         >
           mx{this.props.healthMax}
@@ -686,10 +689,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickSplashDamage();
           }}
-          style={this.makeInvisibleSplashDamage(
-            this.state.isToggleVisibleTypeUnit,
-            this.state.isToggleVisibleTeam
-          )}
+          style={{
+            ...this.makeInvisibleSplashDamage(
+              this.state.isToggleVisibleTypeUnit,
+              this.state.isToggleVisibleTeam
+            ),
+            ...this.getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -713,10 +719,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickExplodeDamage();
           }}
-          style={this.makeInvisibleExplodeDamage(
-            this.state.isToggleVisibleTypeUnit,
-            this.state.isToggleVisibleTeam
-          )}
+          style={{
+            ...this.makeInvisibleExplodeDamage(
+              this.state.isToggleVisibleTypeUnit,
+              this.state.isToggleVisibleTeam
+            ),
+            ...this.getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",

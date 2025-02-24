@@ -18,6 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
+import CardWithShadow from "./cardWithShadow";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -258,7 +259,9 @@ class secretGame extends React.Component<State> {
     } as React.CSSProperties;
 
     return (
-      <Box style={{ margin: 1, maxWidth: "20em" }}>
+      <CardWithShadow
+        style={{ margin: "2rem 0", maxWidth: "20em", justifySelf: "center" }}
+      >
         <CssBaseline />
         <Box
           sx={{
@@ -399,7 +402,7 @@ class secretGame extends React.Component<State> {
             </Box>
           </Typography>
         </Box>
-      </Box>
+      </CardWithShadow>
     );
   }
 }
