@@ -164,8 +164,14 @@ class defendersSelection extends React.Component<Props, State> {
 
     return (
       <Box
-        sx={{ border: 1, borderColor: "error.main", borderRadius: 1, m: 0.25 }}
-        style={{ maxWidth: "25.75em" }}
+        boxShadow={3}
+        sx={{
+          backgroundColor: "white",
+          border: 0,
+          borderRadius: 3,
+          mb: 1,
+        }}
+        style={{ maxWidth: "375px", width: "100%" }}
       >
         <Typography component={"span"} variant="h6">
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>

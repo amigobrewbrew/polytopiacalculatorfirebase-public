@@ -1,27 +1,54 @@
 import React, { Component } from "react";
-import { Routes, Route } from "react-router-dom";  // Use Routes, not just Route
+import { Routes, Route } from "react-router-dom"; // Use Routes, not just Route
 import "./App.css";
 import NavBar from "./components/navbar";
 import HelpPage from "./components/helpPage";
 import SecretGame from "./components/secretGame";
 import BattleGroundDetails from "./components/battleGroundDetails";
 import BattleGroundDetailsBeta from "./components/battleGroundDetailsBeta";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Josefin Sans, Arial, sans-serif",
+  },
+
+  palette: {
+    secondary: {
+      main: "#09a2e8",
+      dark: "#ff5baa",
+      light: "#f7cf85",
+    },
+  },
+});
 
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
-        <NavBar />
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          <NavBar />
 
-        <div className="containers">
-          <Routes> 
-            <Route path="/help" element={<HelpPage />} />
-            <Route path="/" element={<BattleGroundDetails />} />
-            <Route path="/secretgame" element={<SecretGame numeroSecreto={0} tentativas={0} totalGames={0} totalGamesWon={0} />} />
-            <Route path="/beta" element={<BattleGroundDetailsBeta />} />
-          </Routes>
-        </div>
-      </React.Fragment>
+          <div className="containers">
+            <Routes>
+              <Route path="/help" element={<HelpPage />} />
+              <Route path="/" element={<BattleGroundDetails />} />
+              <Route
+                path="/secretgame"
+                element={
+                  <SecretGame
+                    numeroSecreto={0}
+                    tentativas={0}
+                    totalGames={0}
+                    totalGamesWon={0}
+                  />
+                }
+              />
+              <Route path="/beta" element={<BattleGroundDetailsBeta />} />
+            </Routes>
+          </div>
+        </React.Fragment>
+      </ThemeProvider>
     );
   }
 }

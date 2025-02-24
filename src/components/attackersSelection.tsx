@@ -181,13 +181,14 @@ class attackersSelection extends React.Component<Props, State> {
 
     return (
       <Box
+        boxShadow={3}
         sx={{
-          border: 1,
-          borderColor: "primary.main",
-          borderRadius: 1,
-          m: 0.25,
+          backgroundColor: "white",
+          border: 0,
+          borderRadius: 3,
+          mb: 1,
         }}
-        style={{ maxWidth: "25.75em" }}
+        style={{ maxWidth: "375px", width: "100%" }}
       >
         <Typography component={"span"} variant="h6">
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -294,7 +295,7 @@ class LandUnits extends React.Component<Props> {
           </Button>
           <Button
             onClick={() => this.props.onAddAttacker("Defender")}
-            size='small'
+            size="small"
             variant="outlined"
             sx={attackersButtonStyle}
           >
