@@ -19,6 +19,7 @@ import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import CardWithShadow from "./cardWithShadow";
+import { SINGLE_COL_MAX_WIDTH_PX } from "../customStyles";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -260,7 +261,11 @@ class secretGame extends React.Component<State> {
 
     return (
       <CardWithShadow
-        style={{ margin: "2rem 0", maxWidth: "20em", justifySelf: "center" }}
+        style={{
+          margin: "2rem 0",
+          maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+          justifySelf: "center",
+        }}
       >
         <CssBaseline />
         <Box
