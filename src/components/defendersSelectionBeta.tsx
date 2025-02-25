@@ -187,7 +187,7 @@ class defendersSelectionBeta extends React.Component<Props, State> {
               {/* <img src={Switch} alt="Switch" style={attackersImageStyle} /> */}
               <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
             </Button>
-            <span>Defenders selection</span>
+            <span className="alignSelfCenter">Defenders selection</span>
             <Button
               color="error"
               variant="contained"
