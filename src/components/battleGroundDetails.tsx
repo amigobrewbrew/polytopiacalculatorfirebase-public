@@ -16,11 +16,13 @@ import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CardWithShadow from "./cardWithShadow";
+import {
+  MAX_WIDTH_PX,
+  SINGLE_COL_MAX_WIDTH_PX,
+  SINGLE_COLUMN_WIDTH_PERCENTAGE,
+} from "../customStyles";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
-const COLUMN_WIDTH_PERCENTAGE = 48;
-const SINGLE_COLUMN_MAX_WIDTH_PX = 375;
-const BOX_SHADOW_AMOUNT = 3;
 
 /**
  * State holds the array of selected soldiers of the attackers and defenders
@@ -184,7 +186,7 @@ class battleGroundDetails extends React.Component<Props, State> {
     return (
       <Box
         sx={{
-          maxWidth: "800px",
+          maxWidth: `${MAX_WIDTH_PX}px`,
           margin: "0 auto",
           display: "flex",
           flexDirection: "column",
@@ -205,8 +207,8 @@ class battleGroundDetails extends React.Component<Props, State> {
           <Box
             sx={{
               display: "block",
-              maxWidth: `${SINGLE_COLUMN_MAX_WIDTH_PX}px`,
-              width: `${COLUMN_WIDTH_PERCENTAGE}%`,
+              maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+              width: `${SINGLE_COLUMN_WIDTH_PERCENTAGE}%`,
               gap: 1,
             }}
           >
@@ -254,8 +256,8 @@ class battleGroundDetails extends React.Component<Props, State> {
           <Box
             sx={{
               display: "block",
-              maxWidth: `${SINGLE_COLUMN_MAX_WIDTH_PX}px`,
-              width: `${COLUMN_WIDTH_PERCENTAGE}%`,
+              maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+              width: `${SINGLE_COLUMN_WIDTH_PERCENTAGE}%`,
               gap: 1,
             }}
           >

@@ -55,7 +55,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CardWithShadow from "./cardWithShadow";
-import { SINGLE_COL_MAX_WIDTH, ONE_HUNDRED_PERCENT } from "../customStyles";
+import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -167,7 +167,10 @@ class defendersSelection extends React.Component<Props, State> {
     return (
       <CardWithShadow
         sx={{ p: "1%" }}
-        style={{ maxWidth: SINGLE_COL_MAX_WIDTH, width: ONE_HUNDRED_PERCENT }}
+        style={{
+          maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+          width: ONE_HUNDRED_PERCENT,
+        }}
       >
         <Typography component={"span"} variant="h6">
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>

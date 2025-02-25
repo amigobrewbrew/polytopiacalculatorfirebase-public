@@ -97,6 +97,7 @@ import ScoutDef from "../img/Defenders/Scout.png";
 import RammerDef from "../img/Defenders/Rammer.png";
 import BomberDef from "../img/Defenders/Bomber.png";
 import JuggernautDef from "../img/Defenders/Juggernaut.png";
+import { getSecondaryButtonStyles } from "../customStyles";
 
 import SmallSwords from "../img/Other/SmallSwords.png";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -630,7 +631,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             ...this.makeInvisibleVeteranBonus(
               this.state.isToggleVisibleTypeUnit
             ),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{
             marginRight: 0.1,
@@ -670,7 +671,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
           style={{
             ...this.makeInvisibleShipUnit(this.state.isToggleVisibleShipUnit),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{ marginRight: 0.1 }}
         >
@@ -694,7 +695,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
               this.state.isToggleVisibleTypeUnit,
               this.state.isToggleVisibleTeam
             ),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{
             marginRight: 0.1,
@@ -724,7 +725,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
               this.state.isToggleVisibleTypeUnit,
               this.state.isToggleVisibleTeam
             ),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{
             marginRight: 0.1,
@@ -753,7 +754,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
           style={{
             ...this.makeInvisibleDefenceBonus(this.state.isToggleVisibleTeam),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           // sx={{ marginRight: 0.1, color: grey[500] }}
 
@@ -800,7 +801,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
           style={{
             ...this.makeInvisibleWallBonus(this.state.isToggleVisibleTeam),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{
             marginRight: 0.1,
@@ -827,7 +828,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
           style={{
             ...this.makeInvisiblePoisonedBonus(this.state.isToggleVisibleTeam),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           // sx={{ marginRight: -0.5 }}
           sx={{
@@ -856,7 +857,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
           style={{
             ...this.makeInvisibleSafeBonus(this.state.isToggleVisibleTeam),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{
             marginRight: 0.1,
@@ -883,7 +884,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
           style={{
             ...this.makeInvisibleBoostedBonus(this.state.isToggleVisibleTeam),
-            ...this.getSecondaryButtonStyles(),
+            ...getSecondaryButtonStyles(),
           }}
           sx={{
             marginRight: 0.25,
@@ -977,14 +978,6 @@ class soldierUnitAsRender extends React.Component<Props, State> {
     } else {
       return { display: "visible" };
     }
-  }
-
-  getSecondaryButtonStyles() {
-    return {
-      minWidth: "55px",
-      padding: "1% 2%",
-      marginRight: "2%",
-    };
   }
 
   makeInvisibleSafeBonus(team: string) {
