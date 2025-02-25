@@ -25,7 +25,6 @@ describe("CardWithShadow", () => {
       </CardWithShadow>
     );
     const element = container.firstChild as HTMLElement;
-    console.log(element);
     expect(element).toHaveStyle({
       padding: "2%",
       backgroundColor: "white",
