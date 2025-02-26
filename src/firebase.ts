@@ -1,14 +1,13 @@
 // Toggle this for local development
-export const isLocal = false;
+export const isLocal = true;
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
-let app:any  = null;
-let analytics:any = null;
+let app: any = null;
+let analytics: any = null;
 
 if (!isLocal) {
-
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -17,7 +16,7 @@ if (!isLocal) {
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
   };
 
   // Initialize Firebase only in non-local mode
@@ -26,7 +25,7 @@ if (!isLocal) {
 } else {
   // Use dummy analytics in local mode
   analytics = {
-    logEvent: (analytics:any, event:any) => {
+    logEvent: (analytics: any, event: any) => {
       console.log("local analytics logEvent: ", event);
     },
   };

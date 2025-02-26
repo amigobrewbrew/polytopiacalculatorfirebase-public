@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
+import CardWithShadow from "./cardWithShadow";
 
 class helpPage extends React.Component {
   render() {
@@ -10,7 +11,7 @@ class helpPage extends React.Component {
       <Box>
         <CssBaseline />
         <Typography component={"span"} variant="body1">
-          <Box sx={{ margin: 2 }}>
+          <CardWithShadow sx={{ margin: 2 }}>
             <p>
               Use the Attacker and Defender selection buttons to add soldiers to
               the battlefield. The attackers target defenders top to bottom,
@@ -50,8 +51,8 @@ class helpPage extends React.Component {
                 <li>SAFE: When toggled, unit is safe from retaliation </li>
                 <li>BST: When toggled, unit is boosted by Cymanti shaman</li>
                 <li>
-                  MX##: Set the maximum health for ships to 10, 15, 20, 25,
-                  or 30 hitpoints. Maximum hitpoints affects attacking and
+                  MX##: Set the maximum health for ships to 10, 15, 20, 25, or
+                  30 hitpoints. Maximum hitpoints affects attacking and
                   defensive power
                 </li>
                 <li>DEF: When toggled, unit gets defensive bonus </li>
@@ -65,7 +66,7 @@ class helpPage extends React.Component {
             </span>
             <p>
               Contact me for questions, tips, bugs etc. via{" "}
-                <a href={`mailto:${email}`}>Email</a>,{" "}
+              <a href={`mailto:${email}`}>Email</a>,{" "}
               <a href="https://www.reddit.com/r/Polytopia/comments/17m0hn7/updated_polytopia_calculator_now_with_beta_units/">
                 {" "}
                 Reddit{" "}
@@ -110,7 +111,7 @@ class helpPage extends React.Component {
               Let me know what you would like to see for this calculator app!
               <br></br>
             </span>
-          </Box>
+          </CardWithShadow>
         </Typography>{" "}
       </Box>
     );

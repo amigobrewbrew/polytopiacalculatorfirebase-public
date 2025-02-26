@@ -16,10 +16,14 @@ import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import CardWithShadow from "./cardWithShadow";
+import {
+  MAX_WIDTH_PX,
+  SINGLE_COL_MAX_WIDTH_PX,
+  SINGLE_COLUMN_WIDTH_PERCENTAGE,
+} from "../customStyles";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
-
-
 
 /**
  * State holds the array of selected soldiers of the attackers and defenders
@@ -181,182 +185,166 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     // };
 
     return (
-      <Box>
-        <Box sx={{ maxWidth: "26em" }}>
-          {/* <div style={styleWrapper}> */}
-          <Grid container justifyContent="space-between">
-            {/* <div style={{ float: "left", width: "50%" }}> */}
-            <Grid item>
-              {this.state.soldierUnitsAttackersAsRender.map(
-                (soldierUnitAtt, i) => (
-                  <Box
-                    key={i}
-                    sx={{
-                      margin: 0.25,
-
-                      //display: "flex",
-                      //flexDirection: "column",
-                      // alignItems: "center",
-
-                      // backgroundColor: "#FFDF00",
-                      border: 1,
-                      // color: "#002776",
-                      borderRadius: "4px",
-                      borderColor: "primary.main",
-                      width: "fit-content(45%)",
-                    }}
-                  >
-                    <Box key={i} sx={{ margin: 0 }}>
-                      <SoldierUnitAsRender
-                        key={i + this.state.randomNumber}
-                        id={soldierUnitAtt.id}
-                        OnDelete={this.handleDelete}
-                        OnUpdateHitpoints={this.handleUpdateHitpoints}
-                        OnIncreaseHitpoints={this.handleIncreaseHitpoints}
-                        OnDecreaseHitpoints={this.handleDecreaseHitpoints}
-                        typeUnit={soldierUnitAtt.typeUnit}
-                        team={soldierUnitAtt.team}
-                        healthMax={soldierUnitAtt.healthMax}
-                        healthBefore={soldierUnitAtt.healthBefore}
-                        healthAfter={soldierUnitAtt.healthAfter}
-                        OnVeteranBonus={this.handleVeteranBonus}
-                        OnDefenceBonus={this.handleDefenceBonus}
-                        OnWallBonus={this.handleWallBonus}
-                        OnSafeBonus={this.handleSafeBonus}
-                        OnPoisonedBonus={this.handlePoisonedBonus}
-                        OnBoostedBonus={this.handleBoostedBonus}
-                        OnShipUnit={this.handleShipUnit}
-                        OnSplashDamage={this.handleSplashDamage}
-                        OnExplodeDamage={this.handleExplodeDamage}
-                        veteran={soldierUnitAtt.veteran}
-                        defenceBonus={soldierUnitAtt.defenceBonus}
-                        wallBonus={soldierUnitAtt.wallBonus}
-                        safeBonus={soldierUnitAtt.safeBonus}
-                        poisonedBonus={soldierUnitAtt.poisonedBonus}
-                        becamePoisonedBonus={soldierUnitAtt.becamePoisonedBonus}
-                        boostedBonus={soldierUnitAtt.boostedBonus}
-                        shipUnit={soldierUnitAtt.shipUnit}
-                        splashDamage={soldierUnitAtt.splashDamage}
-                        explodeDamage={soldierUnitAtt.explodeDamage}
-                      ></SoldierUnitAsRender>
-                    </Box>
-                  </Box>
-                )
-              )}
-            </Grid>
-
-            {/* <div style={{ float: "right", width: "50%" }}> */}
-            <Grid item>
-              {this.state.soldierUnitsDefendersAsRender.map(
-                (soldierUnitDef, i) => (
-                  <Box
-                    key={i}
-                    sx={{
-                      margin: 0.25,
-
-                      // display: "flex",
-                      //flexDirection: "column",
-                      // alignItems: "right",
-
-                      // backgroundColor: "#FFDF00",
-                      border: 1,
-                      // color: "#002776",
-                      borderRadius: "4px",
-                      borderColor: "error.main",
-                      width: "fit-content(45%)",
-                    }}
-                  >
-                    <Box key={i} sx={{ margin: 0 }}>
-                      <SoldierUnitAsRender
-                        key={i + this.state.randomNumber}
-                        id={soldierUnitDef.id}
-                        OnDelete={this.handleDelete}
-                        OnUpdateHitpoints={this.handleUpdateHitpoints}
-                        OnIncreaseHitpoints={this.handleIncreaseHitpoints}
-                        OnDecreaseHitpoints={this.handleDecreaseHitpoints}
-                        typeUnit={soldierUnitDef.typeUnit}
-                        team={soldierUnitDef.team}
-                        healthMax={soldierUnitDef.healthMax}
-                        healthBefore={soldierUnitDef.healthBefore}
-                        healthAfter={soldierUnitDef.healthAfter}
-                        OnVeteranBonus={this.handleVeteranBonus}
-                        OnDefenceBonus={this.handleDefenceBonus}
-                        OnWallBonus={this.handleWallBonus}
-                        OnSafeBonus={this.handleSafeBonus}
-                        OnPoisonedBonus={this.handlePoisonedBonus}
-                        OnBoostedBonus={this.handleBoostedBonus}
-                        OnShipUnit={this.handleShipUnit}
-                        OnSplashDamage={this.handleSplashDamage}
-                        OnExplodeDamage={this.handleExplodeDamage}
-                        veteran={soldierUnitDef.veteran}
-                        defenceBonus={soldierUnitDef.defenceBonus}
-                        wallBonus={soldierUnitDef.wallBonus}
-                        safeBonus={soldierUnitDef.safeBonus}
-                        poisonedBonus={soldierUnitDef.poisonedBonus}
-                        becamePoisonedBonus={soldierUnitDef.becamePoisonedBonus}
-                        boostedBonus={soldierUnitDef.boostedBonus}
-                        shipUnit={soldierUnitDef.shipUnit}
-                        splashDamage={soldierUnitDef.splashDamage}
-                        explodeDamage={soldierUnitDef.explodeDamage}
-                      ></SoldierUnitAsRender>
-                    </Box>
-                  </Box>
-                )
-              )}
-            </Grid>
-          </Grid>
-        </Box>
+      <Box
+        sx={{
+          maxWidth: `${MAX_WIDTH_PX}px`,
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          padding: "1%",
+          gap: "1%",
+        }}
+      >
         <Box
-          display="flex"
-          alignItems="center"
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            border: 1,
-            borderColor: "#F467A9",
-            borderRadius: 1,
-            m: 0.25,
-            alignItems: "center",
+            mb: 0,
+            flexFlow: "wrap",
+            gap: "1%",
           }}
-          style={{ maxWidth: "25.75em" }}
         >
-          <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={this.state.checkedPosition}
-                  onChange={this.handleChangeCheckbox}
-                />
-              }
-              label={"Use  + and - to set order instead of health"}
-            />{" "}
-          </div>
+          {/* Attackers column */}
+          <Box
+            sx={{
+              display: "block",
+              maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+              width: `${SINGLE_COLUMN_WIDTH_PERCENTAGE}%`,
+              gap: 1,
+            }}
+          >
+            {this.state.soldierUnitsAttackersAsRender.map(
+              (soldierUnitAtt, i) => (
+                <CardWithShadow key={i}>
+                  <SoldierUnitAsRender
+                    key={i + this.state.randomNumber}
+                    id={soldierUnitAtt.id}
+                    OnDelete={this.handleDelete}
+                    OnUpdateHitpoints={this.handleUpdateHitpoints}
+                    OnIncreaseHitpoints={this.handleIncreaseHitpoints}
+                    OnDecreaseHitpoints={this.handleDecreaseHitpoints}
+                    typeUnit={soldierUnitAtt.typeUnit}
+                    team={soldierUnitAtt.team}
+                    healthMax={soldierUnitAtt.healthMax}
+                    healthBefore={soldierUnitAtt.healthBefore}
+                    healthAfter={soldierUnitAtt.healthAfter}
+                    OnVeteranBonus={this.handleVeteranBonus}
+                    OnDefenceBonus={this.handleDefenceBonus}
+                    OnWallBonus={this.handleWallBonus}
+                    OnSafeBonus={this.handleSafeBonus}
+                    OnPoisonedBonus={this.handlePoisonedBonus}
+                    OnBoostedBonus={this.handleBoostedBonus}
+                    OnShipUnit={this.handleShipUnit}
+                    OnSplashDamage={this.handleSplashDamage}
+                    OnExplodeDamage={this.handleExplodeDamage}
+                    veteran={soldierUnitAtt.veteran}
+                    defenceBonus={soldierUnitAtt.defenceBonus}
+                    wallBonus={soldierUnitAtt.wallBonus}
+                    safeBonus={soldierUnitAtt.safeBonus}
+                    poisonedBonus={soldierUnitAtt.poisonedBonus}
+                    becamePoisonedBonus={soldierUnitAtt.becamePoisonedBonus}
+                    boostedBonus={soldierUnitAtt.boostedBonus}
+                    shipUnit={soldierUnitAtt.shipUnit}
+                    splashDamage={soldierUnitAtt.splashDamage}
+                    explodeDamage={soldierUnitAtt.explodeDamage}
+                  ></SoldierUnitAsRender>
+                </CardWithShadow>
+              )
+            )}
+          </Box>
+
+          {/* Defenders column */}
+          <Box
+            sx={{
+              display: "block",
+              maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+              width: `${SINGLE_COLUMN_WIDTH_PERCENTAGE}%`,
+              gap: 1,
+            }}
+          >
+            {this.state.soldierUnitsDefendersAsRender.map(
+              (soldierUnitDef, i) => (
+                <CardWithShadow key={i}>
+                  <SoldierUnitAsRender
+                    key={i + this.state.randomNumber}
+                    id={soldierUnitDef.id}
+                    OnDelete={this.handleDelete}
+                    OnUpdateHitpoints={this.handleUpdateHitpoints}
+                    OnIncreaseHitpoints={this.handleIncreaseHitpoints}
+                    OnDecreaseHitpoints={this.handleDecreaseHitpoints}
+                    typeUnit={soldierUnitDef.typeUnit}
+                    team={soldierUnitDef.team}
+                    healthMax={soldierUnitDef.healthMax}
+                    healthBefore={soldierUnitDef.healthBefore}
+                    healthAfter={soldierUnitDef.healthAfter}
+                    OnVeteranBonus={this.handleVeteranBonus}
+                    OnDefenceBonus={this.handleDefenceBonus}
+                    OnWallBonus={this.handleWallBonus}
+                    OnSafeBonus={this.handleSafeBonus}
+                    OnPoisonedBonus={this.handlePoisonedBonus}
+                    OnBoostedBonus={this.handleBoostedBonus}
+                    OnShipUnit={this.handleShipUnit}
+                    OnSplashDamage={this.handleSplashDamage}
+                    OnExplodeDamage={this.handleExplodeDamage}
+                    veteran={soldierUnitDef.veteran}
+                    defenceBonus={soldierUnitDef.defenceBonus}
+                    wallBonus={soldierUnitDef.wallBonus}
+                    safeBonus={soldierUnitDef.safeBonus}
+                    poisonedBonus={soldierUnitDef.poisonedBonus}
+                    becamePoisonedBonus={soldierUnitDef.becamePoisonedBonus}
+                    boostedBonus={soldierUnitDef.boostedBonus}
+                    shipUnit={soldierUnitDef.shipUnit}
+                    splashDamage={soldierUnitDef.splashDamage}
+                    explodeDamage={soldierUnitDef.explodeDamage}
+                  ></SoldierUnitAsRender>
+                </CardWithShadow>
+              )
+            )}
+          </Box>
         </Box>
-        <div style={{ width: "100%", verticalAlign: "bottom", float: "left" }}>
+
+        <CardWithShadow
+          sx={{
+            p: "0 2%",
+            width: "100%",
+            mt: "2px",
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.checkedPosition}
+                onChange={this.handleChangeCheckbox}
+              />
+            }
+            label={"Use  + and - to set order instead of health"}
+          />{" "}
+        </CardWithShadow>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexFlow: "wrap",
+            gap: "1%",
+            mb: 0,
+          }}
+        >
           <AttackersSelection onAddAttacker={this.handleAddAttacker} />
           <DefendersSelection OnAddDefender={this.handleAddDefender} />
           {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
-        </div>
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            border: 1,
-            borderColor: "#F467A9",
-            borderRadius: 1,
-            m: 0.25,
-            alignItems: "center",
-          }}
-          style={{ maxWidth: "25.75em" }}
-        >
-          <div style={{ marginLeft: 5, display: "flex", alignItems: "center" }}>
-            {" "}
-            This page is based on Build version 2.11.1.13205 and Game version:
-            108.{" "}
-          </div>
         </Box>
+
+        <CardWithShadow
+          sx={{
+            p: "3px 2%",
+            width: "100%",
+          }}
+        >
+          <Box component="span" sx={{ typography: "body2" }}>
+            This page is based on Build version 2.11.1.13205 and Game version:
+            108.
+          </Box>
+        </CardWithShadow>
       </Box>
     );
   }
@@ -418,7 +406,7 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
     typeUnit: string,
     wallBonus: boolean
   ) => {
-     let index;
+    let index;
     const soldierUnitsDefendersAsRender =
       this.state.soldierUnitsDefendersAsRender;
 
@@ -710,130 +698,130 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
     switch (team) {
       case "Attackers":
-       { let soldierUnitsAttackersAsRender =
-          this.state.soldierUnitsAttackersAsRender;
+        {
+          let soldierUnitsAttackersAsRender =
+            this.state.soldierUnitsAttackersAsRender;
 
-        let attIdxArray = this.state.attIdxArray;
+          let attIdxArray = this.state.attIdxArray;
 
-        delete soldierUnitsAttackersAsRender[idn];
+          delete soldierUnitsAttackersAsRender[idn];
 
-        delete attIdxArray[idn];
+          delete attIdxArray[idn];
 
-        soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.filter(
-          (item) => item !== null && item !== undefined
-        );
+          soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.filter(
+            (item) => item !== null && item !== undefined
+          );
 
-        soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.map(
-          (unit, i) => {
-            unit.id = i;
-            return unit;
-          }
-        );
+          soldierUnitsAttackersAsRender = soldierUnitsAttackersAsRender.map(
+            (unit, i) => {
+              unit.id = i;
+              return unit;
+            }
+          );
 
-        attIdxArray = attIdxArray.filter(
-          (item) => item !== null && item !== undefined
-        );
+          attIdxArray = attIdxArray.filter(
+            (item) => item !== null && item !== undefined
+          );
 
-        attIdxArray = attIdxArray.map((_, i) => i);
+          attIdxArray = attIdxArray.map((_, i) => i);
 
-        this.setState({ attIdxArray });
+          this.setState({ attIdxArray });
 
-        this.setState({ soldierUnitsAttackersAsRender });
-
- 
-      }
+          this.setState({ soldierUnitsAttackersAsRender });
+        }
         break;
-      case "Defenders": {
-        let soldierUnitsDefendersAsRender =
-          this.state.soldierUnitsDefendersAsRender;
+      case "Defenders":
+        {
+          let soldierUnitsDefendersAsRender =
+            this.state.soldierUnitsDefendersAsRender;
 
-        let defIdxArray = this.state.defIdxArray;
+          let defIdxArray = this.state.defIdxArray;
 
-        // let soldierUnitsDefendersAsRenderExclUndefined =
-        //   soldierUnitsDefendersAsRender;
+          // let soldierUnitsDefendersAsRenderExclUndefined =
+          //   soldierUnitsDefendersAsRender;
 
-        //  soldierUnitsDefendersAsRenderExclUndefined.filter((a) => a.id !== idn);
+          //  soldierUnitsDefendersAsRenderExclUndefined.filter((a) => a.id !== idn);
 
-        // let soldierUnitsDefendersAsRenderExclUndefined =
-        //   soldierUnitsDefendersAsRender.filter(function (element) {
-        //     return element !== undefined;
-        //   });
+          // let soldierUnitsDefendersAsRenderExclUndefined =
+          //   soldierUnitsDefendersAsRender.filter(function (element) {
+          //     return element !== undefined;
+          //   });
 
-        // this.setState({
-        //   soldierUnitsDefendersAsRender: soldierUnitsDefendersAsRender,
-        // });
+          // this.setState({
+          //   soldierUnitsDefendersAsRender: soldierUnitsDefendersAsRender,
+          // });
 
-        // console.log(
-        //   soldierUnitsDefendersAsRender.findIndex((a) => a.id === idn)
-        // );
+          // console.log(
+          //   soldierUnitsDefendersAsRender.findIndex((a) => a.id === idn)
+          // );
 
-        delete (
-          // soldierUnitsDefendersAsRender.findIndex((a) => a.id === idn)
-          soldierUnitsDefendersAsRender[idn]
-        );
+          delete (
+            // soldierUnitsDefendersAsRender.findIndex((a) => a.id === idn)
+            soldierUnitsDefendersAsRender[idn]
+          );
 
-        delete (
-          // soldierUnitsAttackersAsRender.findIndex((a) => a.id === idn)
-          defIdxArray[idn]
-        );
+          delete (
+            // soldierUnitsAttackersAsRender.findIndex((a) => a.id === idn)
+            defIdxArray[idn]
+          );
 
-        // soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.filter(
-        //   function (element) {
-        //     return element !== undefined;
-        //   }
-        // );
+          // soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.filter(
+          //   function (element) {
+          //     return element !== undefined;
+          //   }
+          // );
 
-        soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.filter(
-          (item) => item !== null && item !== undefined
-        );
+          soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.filter(
+            (item) => item !== null && item !== undefined
+          );
 
-        // for (let i = 0; i < soldierUnitsDefendersAsRender.length; i++) {
-        //   soldierUnitsDefendersAsRender[i].id = i;
-        // }
+          // for (let i = 0; i < soldierUnitsDefendersAsRender.length; i++) {
+          //   soldierUnitsDefendersAsRender[i].id = i;
+          // }
 
-        soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.map(
-          (unit, i) => {
-            unit.id = i;
-            return unit;
-          }
-        );
+          soldierUnitsDefendersAsRender = soldierUnitsDefendersAsRender.map(
+            (unit, i) => {
+              unit.id = i;
+              return unit;
+            }
+          );
 
-        defIdxArray = defIdxArray.filter(
-          (item) => item !== null && item !== undefined
-        );
+          defIdxArray = defIdxArray.filter(
+            (item) => item !== null && item !== undefined
+          );
 
-        defIdxArray = defIdxArray.map((_, i) => i);
+          defIdxArray = defIdxArray.map((_, i) => i);
 
-        // const defIdxArray = this.state.defIdxArray.filter(function (value) {
-        //   return value !== idn;
-        // });
-        this.setState({ defIdxArray });
+          // const defIdxArray = this.state.defIdxArray.filter(function (value) {
+          //   return value !== idn;
+          // });
+          this.setState({ defIdxArray });
 
-        this.setState({ soldierUnitsDefendersAsRender });
+          this.setState({ soldierUnitsDefendersAsRender });
 
-        // let soldierUnitsDefendersAsRender =
-        //   this.state.soldierUnitsDefendersAsRender;
-        // soldierUnitsDefendersAsRender.forEach((value, index) => {
-        //   if (value.id === id) soldierUnitsDefendersAsRender.splice(index, 1);
-        // });
-        // this.setState({ soldierUnitsDefendersAsRender });
+          // let soldierUnitsDefendersAsRender =
+          //   this.state.soldierUnitsDefendersAsRender;
+          // soldierUnitsDefendersAsRender.forEach((value, index) => {
+          //   if (value.id === id) soldierUnitsDefendersAsRender.splice(index, 1);
+          // });
+          // this.setState({ soldierUnitsDefendersAsRender });
 
-        // let soldierUnitsDefendersAsRender =
-        //   this.state.soldierUnitsDefendersAsRender;
-        // soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
-        // this.setState({ soldierUnitsDefendersAsRender });
-        // delete soldierUnitsDefendersAsRender[id];
-        // this.setState({ soldierUnitsDefendersAsRender });
+          // let soldierUnitsDefendersAsRender =
+          //   this.state.soldierUnitsDefendersAsRender;
+          // soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
+          // this.setState({ soldierUnitsDefendersAsRender });
+          // delete soldierUnitsDefendersAsRender[id];
+          // this.setState({ soldierUnitsDefendersAsRender });
 
-        // let soldierUnitsDefendersAsRender =
-        //   this.state.soldierUnitsDefendersAsRender;
-        // soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
-        // this.setState({ soldierUnitsDefendersAsRender });
+          // let soldierUnitsDefendersAsRender =
+          //   this.state.soldierUnitsDefendersAsRender;
+          // soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
+          // this.setState({ soldierUnitsDefendersAsRender });
 
-        // const soldierUnitsDefendersAsRender =
-        //   this.state.soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
-        // this.setState({ soldierUnitsDefendersAsRender });
-      }
+          // const soldierUnitsDefendersAsRender =
+          //   this.state.soldierUnitsDefendersAsRender.filter((d) => d.id !== id);
+          // this.setState({ soldierUnitsDefendersAsRender });
+        }
         break;
       default:
         console.log("Issue with team selection switch for deleting soldier");
@@ -862,26 +850,30 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
     let index;
     switch (team) {
-      case "Attackers":{
-        const soldierUnitsAttackersAsRender =
-          this.state.soldierUnitsAttackersAsRender;
-        index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+      case "Attackers":
+        {
+          const soldierUnitsAttackersAsRender =
+            this.state.soldierUnitsAttackersAsRender;
+          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-        soldierUnitsAttackersAsRender[index].healthBefore =
-          healthBeforeManualInput;
+          soldierUnitsAttackersAsRender[index].healthBefore =
+            healthBeforeManualInput;
 
-        this.setState({ soldierUnitsAttackersAsRender });}
+          this.setState({ soldierUnitsAttackersAsRender });
+        }
         break;
-      case "Defenders":{
-        const soldierUnitsDefendersAsRender =
-          this.state.soldierUnitsDefendersAsRender;
-        index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+      case "Defenders":
+        {
+          const soldierUnitsDefendersAsRender =
+            this.state.soldierUnitsDefendersAsRender;
+          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-        soldierUnitsDefendersAsRender[index].healthBefore =
-          healthBeforeManualInput;
+          soldierUnitsDefendersAsRender[index].healthBefore =
+            healthBeforeManualInput;
 
-        this.setState({ soldierUnitsDefendersAsRender });
-       } break;
+          this.setState({ soldierUnitsDefendersAsRender });
+        }
+        break;
       default:
         console.log(
           "Issue with team selection switch for increasing hitpoints"
@@ -905,23 +897,27 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       );
 
       switch (team) {
-        case "Attackers":{
-          const soldierUnitsAttackersAsRender =
-            this.state.soldierUnitsAttackersAsRender;
-          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+        case "Attackers":
+          {
+            const soldierUnitsAttackersAsRender =
+              this.state.soldierUnitsAttackersAsRender;
+            index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-          soldierUnitsAttackersAsRender[index].healthBefore++;
+            soldierUnitsAttackersAsRender[index].healthBefore++;
 
-          this.setState({ soldierUnitsAttackersAsRender });}
+            this.setState({ soldierUnitsAttackersAsRender });
+          }
           break;
-        case "Defenders":{
-          const soldierUnitsDefendersAsRender =
-            this.state.soldierUnitsDefendersAsRender;
-          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+        case "Defenders":
+          {
+            const soldierUnitsDefendersAsRender =
+              this.state.soldierUnitsDefendersAsRender;
+            index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          soldierUnitsDefendersAsRender[index].healthBefore++;
+            soldierUnitsDefendersAsRender[index].healthBefore++;
 
-          this.setState({ soldierUnitsDefendersAsRender });}
+            this.setState({ soldierUnitsDefendersAsRender });
+          }
           break;
         default:
           console.log(
@@ -932,69 +928,71 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       analyticsLogEvent(analytics, "pc_hitpoints_plus_" + team);
     } else {
       switch (team) {
-        case "Attackers":{
-          const soldierUnitsAttackersAsRender =
-            this.state.soldierUnitsAttackersAsRender;
-          // let attIdxArray = this.state.attIdxArray;
+        case "Attackers":
+          {
+            const soldierUnitsAttackersAsRender =
+              this.state.soldierUnitsAttackersAsRender;
+            // let attIdxArray = this.state.attIdxArray;
 
-          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+            index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-          if (1 >= soldierUnitsAttackersAsRender.length || index === 0) {
-            // If the index is out of bounds or at the beginning of the array, no need to move.
-            break;
+            if (1 >= soldierUnitsAttackersAsRender.length || index === 0) {
+              // If the index is out of bounds or at the beginning of the array, no need to move.
+              break;
+            }
+
+            // Swap the element at the specified index with the element to its left.
+
+            const tempAttPlus = soldierUnitsAttackersAsRender[index - 1];
+            soldierUnitsAttackersAsRender[index - 1] =
+              soldierUnitsAttackersAsRender[index];
+            soldierUnitsAttackersAsRender[index] = tempAttPlus;
+
+            soldierUnitsAttackersAsRender[index - 1].id = index - 1;
+            soldierUnitsAttackersAsRender[index].id = index;
+
+            // const tempAttPlusIdx = attIdxArray[index - 1];
+            // attIdxArray[index - 1] = attIdxArray[index];
+            // attIdxArray[index] = tempAttPlusIdx;
+
+            //soldierUnitsAttackersAsRender[index].healthBefore++;
+            // this.state.soldierUnitsAttackersAsRender = [];
+
+            this.setState({ soldierUnitsAttackersAsRender });
+            // this.setState({ attIdxArray });
           }
-
-          // Swap the element at the specified index with the element to its left.
-
-          const tempAttPlus = soldierUnitsAttackersAsRender[index - 1];
-          soldierUnitsAttackersAsRender[index - 1] =
-            soldierUnitsAttackersAsRender[index];
-          soldierUnitsAttackersAsRender[index] = tempAttPlus;
-
-          soldierUnitsAttackersAsRender[index - 1].id = index - 1;
-          soldierUnitsAttackersAsRender[index].id = index;
-
-          // const tempAttPlusIdx = attIdxArray[index - 1];
-          // attIdxArray[index - 1] = attIdxArray[index];
-          // attIdxArray[index] = tempAttPlusIdx;
-
-          //soldierUnitsAttackersAsRender[index].healthBefore++;
-          // this.state.soldierUnitsAttackersAsRender = [];
-
-          this.setState({ soldierUnitsAttackersAsRender });
-          // this.setState({ attIdxArray });
-        }
           break;
-        case "Defenders":{
-          const soldierUnitsDefendersAsRender =
-            this.state.soldierUnitsDefendersAsRender;
-          // let defIdxArray = this.state.defIdxArray;
-          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+        case "Defenders":
+          {
+            const soldierUnitsDefendersAsRender =
+              this.state.soldierUnitsDefendersAsRender;
+            // let defIdxArray = this.state.defIdxArray;
+            index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          if (1 >= soldierUnitsDefendersAsRender.length || index === 0) {
-            // If the index is out of bounds or at the beginning of the array, no need to move.
-            break;
+            if (1 >= soldierUnitsDefendersAsRender.length || index === 0) {
+              // If the index is out of bounds or at the beginning of the array, no need to move.
+              break;
+            }
+
+            // Swap the element at the specified index with the element to its left.
+            const tempDefPlus = soldierUnitsDefendersAsRender[index - 1];
+            soldierUnitsDefendersAsRender[index - 1] =
+              soldierUnitsDefendersAsRender[index];
+            soldierUnitsDefendersAsRender[index] = tempDefPlus;
+
+            soldierUnitsDefendersAsRender[index - 1].id = index - 1;
+            soldierUnitsDefendersAsRender[index].id = index;
+
+            // const tempDefPlusIdx = defIdxArray[index - 1];
+            // defIdxArray[index - 1] = defIdxArray[index];
+            // defIdxArray[index] = tempDefPlusIdx;
+
+            //soldierUnitsDefendersAsRender[index].healthBefore++;
+
+            // this.state.soldierUnitsDefendersAsRender = [];
+            this.setState({ soldierUnitsDefendersAsRender });
+            // this.setState({ defIdxArray });
           }
-
-          // Swap the element at the specified index with the element to its left.
-          const tempDefPlus = soldierUnitsDefendersAsRender[index - 1];
-          soldierUnitsDefendersAsRender[index - 1] =
-            soldierUnitsDefendersAsRender[index];
-          soldierUnitsDefendersAsRender[index] = tempDefPlus;
-
-          soldierUnitsDefendersAsRender[index - 1].id = index - 1;
-          soldierUnitsDefendersAsRender[index].id = index;
-
-          // const tempDefPlusIdx = defIdxArray[index - 1];
-          // defIdxArray[index - 1] = defIdxArray[index];
-          // defIdxArray[index] = tempDefPlusIdx;
-
-          //soldierUnitsDefendersAsRender[index].healthBefore++;
-
-          // this.state.soldierUnitsDefendersAsRender = [];
-          this.setState({ soldierUnitsDefendersAsRender });
-          // this.setState({ defIdxArray });
-        }
           break;
         default:
           console.log(
@@ -1022,25 +1020,29 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       );
 
       switch (team) {
-        case "Attackers":{
-          const soldierUnitsAttackersAsRender =
-            this.state.soldierUnitsAttackersAsRender;
-          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
-          soldierUnitsAttackersAsRender[index].healthBefore--;
+        case "Attackers":
+          {
+            const soldierUnitsAttackersAsRender =
+              this.state.soldierUnitsAttackersAsRender;
+            index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+            soldierUnitsAttackersAsRender[index].healthBefore--;
 
-          // this.state.soldierUnitsAttackersAsRender = [];
-          this.setState({ soldierUnitsAttackersAsRender });}
+            // this.state.soldierUnitsAttackersAsRender = [];
+            this.setState({ soldierUnitsAttackersAsRender });
+          }
           break;
-        case "Defenders":{
-          const soldierUnitsDefendersAsRender =
-            this.state.soldierUnitsDefendersAsRender;
-          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
+        case "Defenders":
+          {
+            const soldierUnitsDefendersAsRender =
+              this.state.soldierUnitsDefendersAsRender;
+            index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          soldierUnitsDefendersAsRender[index].healthBefore--;
+            soldierUnitsDefendersAsRender[index].healthBefore--;
 
-          // this.state.soldierUnitsDefendersAsRender = [];
-          this.setState({ soldierUnitsDefendersAsRender });
-           }   break;
+            // this.state.soldierUnitsDefendersAsRender = [];
+            this.setState({ soldierUnitsDefendersAsRender });
+          }
+          break;
         default:
           console.log(
             "Issue with team selection switch for increasing hitpoints"
@@ -1050,71 +1052,75 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
       analyticsLogEvent(analytics, "pc_hitpoints_min_" + team);
     } else {
       switch (team) {
-        case "Attackers": {
-          const soldierUnitsAttackersAsRender =
-            this.state.soldierUnitsAttackersAsRender;
-          // let attIdxArray = this.state.attIdxArray;
-          index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
+        case "Attackers":
+          {
+            const soldierUnitsAttackersAsRender =
+              this.state.soldierUnitsAttackersAsRender;
+            // let attIdxArray = this.state.attIdxArray;
+            index = soldierUnitsAttackersAsRender.map((e) => e.id).indexOf(id);
 
-          if (
-            1 >= soldierUnitsAttackersAsRender.length ||
-            index === soldierUnitsAttackersAsRender.length - 1
-          ) {
-            // If the index is out of bounds or at the end of the array, no need to move.
-            break;
+            if (
+              1 >= soldierUnitsAttackersAsRender.length ||
+              index === soldierUnitsAttackersAsRender.length - 1
+            ) {
+              // If the index is out of bounds or at the end of the array, no need to move.
+              break;
+            }
+
+            // Swap the element at the specified index with the element to its left.
+
+            const tempAttMin = soldierUnitsAttackersAsRender[index + 1];
+            soldierUnitsAttackersAsRender[index + 1] =
+              soldierUnitsAttackersAsRender[index];
+            soldierUnitsAttackersAsRender[index] = tempAttMin;
+
+            soldierUnitsAttackersAsRender[index + 1].id = index + 1;
+            soldierUnitsAttackersAsRender[index].id = index;
+
+            // const tempAttMinIdx = attIdxArray[index + 1];
+            // attIdxArray[index + 1] = attIdxArray[index];
+            // attIdxArray[index] = tempAttMinIdx;
+
+            //soldierUnitsAttackersAsRender[index].healthBefore++;
+
+            this.setState({ soldierUnitsAttackersAsRender });
+            // this.setState({ attIdxArray });
           }
+          break;
+        case "Defenders":
+          {
+            const soldierUnitsDefendersAsRender =
+              this.state.soldierUnitsDefendersAsRender;
+            // let defIdxArray = this.state.defIdxArray;
+            index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
 
-          // Swap the element at the specified index with the element to its left.
+            if (
+              1 >= soldierUnitsDefendersAsRender.length ||
+              index === soldierUnitsDefendersAsRender.length - 1
+            ) {
+              // If the index is out of bounds or at the end of the array, no need to move.
+              break;
+            }
 
-          const tempAttMin = soldierUnitsAttackersAsRender[index + 1];
-          soldierUnitsAttackersAsRender[index + 1] =
-            soldierUnitsAttackersAsRender[index];
-          soldierUnitsAttackersAsRender[index] = tempAttMin;
+            // Swap the element at the specified index with the element to its right.
+            const tempDefMin = soldierUnitsDefendersAsRender[index + 1];
+            soldierUnitsDefendersAsRender[index + 1] =
+              soldierUnitsDefendersAsRender[index];
+            soldierUnitsDefendersAsRender[index] = tempDefMin;
 
-          soldierUnitsAttackersAsRender[index + 1].id = index + 1;
-          soldierUnitsAttackersAsRender[index].id = index;
+            soldierUnitsDefendersAsRender[index + 1].id = index + 1;
+            soldierUnitsDefendersAsRender[index].id = index;
 
-          // const tempAttMinIdx = attIdxArray[index + 1];
-          // attIdxArray[index + 1] = attIdxArray[index];
-          // attIdxArray[index] = tempAttMinIdx;
+            // const tempDefMinIdx = defIdxArray[index + 1];
+            // defIdxArray[index + 1] = defIdxArray[index];
+            // defIdxArray[index] = tempDefMinIdx;
 
-          //soldierUnitsAttackersAsRender[index].healthBefore++;
+            //soldierUnitsDefendersAsRender[index].healthBefore++;
 
-          this.setState({ soldierUnitsAttackersAsRender });
-          // this.setState({ attIdxArray });
-          }  break;
-        case "Defenders":{
-          const soldierUnitsDefendersAsRender =
-            this.state.soldierUnitsDefendersAsRender;
-          // let defIdxArray = this.state.defIdxArray;
-          index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
-
-          if (
-            1 >= soldierUnitsDefendersAsRender.length ||
-            index === soldierUnitsDefendersAsRender.length - 1
-          ) {
-            // If the index is out of bounds or at the end of the array, no need to move.
-            break;
+            this.setState({ soldierUnitsDefendersAsRender });
+            // this.setState({ defIdxArray });
           }
-
-          // Swap the element at the specified index with the element to its right.
-          const tempDefMin = soldierUnitsDefendersAsRender[index + 1];
-          soldierUnitsDefendersAsRender[index + 1] =
-            soldierUnitsDefendersAsRender[index];
-          soldierUnitsDefendersAsRender[index] = tempDefMin;
-
-          soldierUnitsDefendersAsRender[index + 1].id = index + 1;
-          soldierUnitsDefendersAsRender[index].id = index;
-
-          // const tempDefMinIdx = defIdxArray[index + 1];
-          // defIdxArray[index + 1] = defIdxArray[index];
-          // defIdxArray[index] = tempDefMinIdx;
-
-          //soldierUnitsDefendersAsRender[index].healthBefore++;
-
-          this.setState({ soldierUnitsDefendersAsRender });
-          // this.setState({ defIdxArray });
-             }     break;
+          break;
         default:
           console.log(
             "Issue with team selection switch for increasing hitpoints"
@@ -1155,7 +1161,12 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
 
     let initialSafeBonus = false;
 
-    if (typeUnit === "Dagger" || typeUnit === "Pirate" || typeUnit === "Shark" || typeUnit === "Phychi") {
+    if (
+      typeUnit === "Dagger" ||
+      typeUnit === "Pirate" ||
+      typeUnit === "Shark" ||
+      typeUnit === "Phychi"
+    ) {
       initialSafeBonus = true;
     }
 
@@ -1894,21 +1905,21 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
           attacker.splashDamage === true &&
           attacker.typeUnit === "Juggernaut"
         ) {
-            attackResult = Math.round(attackResult * (2 / 4));
+          attackResult = Math.round(attackResult * (2 / 4));
         }
 
         if (
           attacker.splashDamage === true &&
           (attacker.typeUnit === "FireDragon" || attacker.typeUnit === "Bomber")
         ) {
-            attackResult = Math.round(attackResult * (2 / 4));
+          attackResult = Math.round(attackResult * (2 / 4));
         }
 
         if (
           attacker.explodeDamage === true ||
           attacker.typeUnit === "Segment"
         ) {
-            attackResult = Math.round(attackResult * 0.5);
+          attackResult = Math.round(attackResult * 0.5);
         }
 
         console.log("this is attackForce: " + attackForce);

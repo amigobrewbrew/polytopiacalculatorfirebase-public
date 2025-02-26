@@ -97,6 +97,7 @@ import ScoutDef from "../img/Defenders/Scout.png";
 import RammerDef from "../img/Defenders/Rammer.png";
 import BomberDef from "../img/Defenders/Bomber.png";
 import JuggernautDef from "../img/Defenders/Juggernaut.png";
+import { getSecondaryButtonStyles } from "../customStyles";
 
 import SmallSwords from "../img/Other/SmallSwords.png";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -533,7 +534,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   //   }
   // }
 
-  handleKeyDown = (e:any) => {
+  handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       this.handleHitpointsChange(e.target.value);
     }
@@ -551,7 +552,7 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             display: "flex",
             alignItems: "center",
             flexWrap: "wrap",
-            justifyContent: "space-evenly",
+            justifyContent: "space-between",
             marginBottom: -4,
           }}
         >
@@ -586,7 +587,17 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           </span>
           <IconButton
             onClick={() => this.props.OnDelete(this.props.id, this.props.team)}
-            //className="btn btn-warning btn-sm"
+            style={{
+              padding: "0 5% 0 0",
+              flexGrow: 1,
+              justifyContent: "flex-end",
+            }}
+            disableRipple
+            sx={{
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
           >
             <CancelPresentationIcon
               fontSize="large"
@@ -616,9 +627,12 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickVeteranBonus();
           }}
-          style={this.makeInvisibleVeteranBonus(
-            this.state.isToggleVisibleTypeUnit
-          )}
+          style={{
+            ...this.makeInvisibleVeteranBonus(
+              this.state.isToggleVisibleTypeUnit
+            ),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -655,7 +669,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickShipUnit();
           }}
-          style={this.makeInvisibleShipUnit(this.state.isToggleVisibleShipUnit)}
+          style={{
+            ...this.makeInvisibleShipUnit(this.state.isToggleVisibleShipUnit),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{ marginRight: 0.1 }}
         >
           mx{this.props.healthMax}
@@ -673,10 +690,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickSplashDamage();
           }}
-          style={this.makeInvisibleSplashDamage(
-            this.state.isToggleVisibleTypeUnit,
-            this.state.isToggleVisibleTeam
-          )}
+          style={{
+            ...this.makeInvisibleSplashDamage(
+              this.state.isToggleVisibleTypeUnit,
+              this.state.isToggleVisibleTeam
+            ),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -700,10 +720,13 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickExplodeDamage();
           }}
-          style={this.makeInvisibleExplodeDamage(
-            this.state.isToggleVisibleTypeUnit,
-            this.state.isToggleVisibleTeam
-          )}
+          style={{
+            ...this.makeInvisibleExplodeDamage(
+              this.state.isToggleVisibleTypeUnit,
+              this.state.isToggleVisibleTeam
+            ),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -729,7 +752,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickDefenceBonus();
           }}
-          style={this.makeInvisibleDefenceBonus(this.state.isToggleVisibleTeam)}
+          style={{
+            ...this.makeInvisibleDefenceBonus(this.state.isToggleVisibleTeam),
+            ...getSecondaryButtonStyles(),
+          }}
           // sx={{ marginRight: 0.1, color: grey[500] }}
 
           sx={{
@@ -773,7 +799,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickWallBonus();
           }}
-          style={this.makeInvisibleWallBonus(this.state.isToggleVisibleTeam)}
+          style={{
+            ...this.makeInvisibleWallBonus(this.state.isToggleVisibleTeam),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -797,9 +826,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickPoisonedBonus();
           }}
-          style={this.makeInvisiblePoisonedBonus(
-            this.state.isToggleVisibleTeam
-          )}
+          style={{
+            ...this.makeInvisiblePoisonedBonus(this.state.isToggleVisibleTeam),
+            ...getSecondaryButtonStyles(),
+          }}
           // sx={{ marginRight: -0.5 }}
           sx={{
             marginRight: 0.25,
@@ -825,7 +855,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickSafeBonus();
           }}
-          style={this.makeInvisibleSafeBonus(this.state.isToggleVisibleTeam)}
+          style={{
+            ...this.makeInvisibleSafeBonus(this.state.isToggleVisibleTeam),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.1,
             color: "#A9A9A9",
@@ -849,7 +882,10 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             );
             this.handleClickBoostedBonus();
           }}
-          style={this.makeInvisibleBoostedBonus(this.state.isToggleVisibleTeam)}
+          style={{
+            ...this.makeInvisibleBoostedBonus(this.state.isToggleVisibleTeam),
+            ...getSecondaryButtonStyles(),
+          }}
           sx={{
             marginRight: 0.25,
             color: "#A9A9A9",
@@ -1200,24 +1236,23 @@ class soldierUnitAsRender extends React.Component<Props, State> {
   }
 
   soldierUnitImageStyle(team: string) {
-const soldierUnitImageStyle = {
-  height: "40px",
-  width: "30px",
-  objectFit: "contain",
-  WebkitAppearance: "none",
-  marginRight: 5,
-  marginLeft: 5,
-  borderRadius: 5,
-  marginBottom: 5,
-  marginTop: 5,
-} as React.CSSProperties;
+    const soldierUnitImageStyle = {
+      height: "40px",
+      width: "30px",
+      objectFit: "contain",
+      WebkitAppearance: "none",
+      marginRight: 5,
+      marginLeft: 5,
+      borderRadius: 5,
+      marginBottom: 5,
+      marginTop: 5,
+    } as React.CSSProperties;
 
-if (team === "Defenders") {
-  soldierUnitImageStyle.transform = "scaleX(-1)";
-}
-
-return soldierUnitImageStyle;
+    if (team === "Defenders") {
+      soldierUnitImageStyle.transform = "scaleX(-1)";
     }
 
+    return soldierUnitImageStyle;
+  }
 }
 export default soldierUnitAsRender;
