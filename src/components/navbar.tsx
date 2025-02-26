@@ -5,7 +5,6 @@ import BigSwords from "../img/Other/BigSwords.png";
 import HamburgerMenu from "../img/Other/menu-fill.png";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BOX_SHADOW_DEFAULT } from "../customStyles";
 

@@ -11,7 +11,6 @@ import DefendersSelection from "./defendersSelectionBeta";
 import SoldierUnitAsRender from "./soldierUnitAsRenderBeta";
 import * as StatsBeta from "./unitStatsBeta";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";

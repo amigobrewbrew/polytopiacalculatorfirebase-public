@@ -10,7 +10,6 @@ import CatapultAtt from "../img/Attackers/Catapult.png";
 import KnightAtt from "../img/Attackers/Knight.png";
 import GiantAtt from "../img/Attackers/Giant.png";
 import BattleshipAtt from "../img/Attackers/Battleship.png";
-
 import BoatAtt from "../img/Attackers/Boat.png";
 import ShipAtt from "../img/Attackers/Ship.png";
 import AmphibianAtt from "../img/Attackers/Amphibian.png";
@@ -100,19 +99,13 @@ import JuggernautDef from "../img/Defenders/Juggernaut.png";
 import { getSecondaryButtonStyles } from "../customStyles";
 
 import SmallSwords from "../img/Other/SmallSwords.png";
-import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import Box from "@mui/material/Box";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { pink, grey } from "@mui/material/colors";
-import ToggleButton from "@mui/material/ToggleButton";
+import { pink } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
-import ClearIcon from "@mui/icons-material/Clear";
-import { fontSize } from "@mui/system";
 
 type Props = {
   id: number;

@@ -9,10 +9,10 @@ import Swordsman from "../img/Attackers/Swordsman.png";
 import Catapult from "../img/Attackers/Catapult.png";
 import Knight from "../img/Attackers/Knight.png";
 import Giant from "../img/Attackers/Giant.png";
-import Battleship from "../img/Attackers/Battleship.png";
-//import Switch from "../img/Other/Switch1.png";
-import Boat from "../img/Attackers/Boat.png";
-import Ship from "../img/Attackers/Ship.png";
+// import Battleship from "../img/Attackers/Battleship.png";
+// import Switch from "../img/Other/Switch1.png";
+// import Boat from "../img/Attackers/Boat.png";
+// import Ship from "../img/Attackers/Ship.png";
 import Amphibian from "../img/Attackers/Amphibian.png";
 import Tridention from "../img/Attackers/Tridention.png";
 import Shark from "../img/Attackers/Shark.png";
@@ -20,7 +20,7 @@ import Puffer from "../img/Attackers/Puffer.png";
 import Jelly from "../img/Attackers/Jelly.png";
 import Crab from "../img/Attackers/Crab.png";
 import Polytaur from "../img/Attackers/Polytaur.png";
-import Navalon from "../img/Attackers/Navalon.png";
+// import Navalon from "../img/Attackers/Navalon.png";
 import DragonEgg from "../img/Attackers/Dragon Egg.png";
 import BabyDragon from "../img/Attackers/Baby Dragon.png";
 import FireDragon from "../img/Attackers/Fire Dragon.png";
@@ -55,36 +55,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import Container from "@mui/material/Container";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import { analytics } from "../firebase";
-import { logEvent } from "firebase/analytics";
-
-// const theme = createTheme({
-//   status: {
-//     danger: "#e53e3e",
-//   },
-//   palette: {
-//     primary: {
-//       main: "#002776",
-//       darker: "#fff",
-//     },
-//     secondary: {
-//       main: "#009C3B",
-//       contrastText: "#fff",
-//     },
-//   },
-// });
 
 /** This property is to indicate to the parent component that a soldier needs to be added to the battleground */
 type Props = {

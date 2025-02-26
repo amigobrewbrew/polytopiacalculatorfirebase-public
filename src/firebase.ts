@@ -1,5 +1,5 @@
 // Toggle this for local development
-export const isLocal = true;
+export const isLocal = false;
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
