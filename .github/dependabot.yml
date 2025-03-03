@@ -9,9 +9,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-  #   ignore:
-  #   - dependency-name: "some-package"
-  #     versions: ["1.x", "2.x"]
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
