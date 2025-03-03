@@ -550,39 +550,46 @@ class soldierUnitAsRender extends React.Component<Props, State> {
           }}
         >
           {/* <span>{this.displayId() + "."}</span> */}
-          <img
-            src={this.displayIcon(this.props.typeUnit, this.props.team)}
-            alt="Soldier"
-            style={this.soldierUnitImageStyle(this.props.team)}
-          />
-          <span>
-            <label htmlFor={this.generateCheckboxIdHitpointField()}>
-              <input
-                id={this.generateCheckboxIdHitpointField()}
-                name={this.generateCheckboxIdHitpointField()}
-                type="text" // this type gives the right keyboard
-                inputMode="numeric"
-                pattern="[0-9]*"
-                // value={this.props.healthBefore}
-                // onChange={(e) => this.handleHitpointsChange(e.target.value)}
-                defaultValue={this.props.healthBefore}
-                onBlur={(e) => this.handleHitpointsChange(e.target.value)}
-                onKeyDown={this.handleKeyDown}
-                style={{ width: 38 }}
-                maxLength={2}
-                onFocus={this.handleFocus}
-              ></input>
-            </label>
-          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={this.displayIcon(this.props.typeUnit, this.props.team)}
+              alt="Soldier"
+              style={this.soldierUnitImageStyle(this.props.team)}
+            />
+            <span>
+              <label htmlFor={this.generateCheckboxIdHitpointField()}>
+                <input
+                  id={this.generateCheckboxIdHitpointField()}
+                  name={this.generateCheckboxIdHitpointField()}
+                  type="text" // this type gives the right keyboard
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  // value={this.props.healthBefore}
+                  // onChange={(e) => this.handleHitpointsChange(e.target.value)}
+                  defaultValue={this.props.healthBefore}
+                  onBlur={(e) => this.handleHitpointsChange(e.target.value)}
+                  onKeyDown={this.handleKeyDown}
+                  style={{ width: 38 }}
+                  maxLength={2}
+                  onFocus={this.handleFocus}
+                ></input>
+              </label>
+            </span>
+            <span style={{ fontWeight: "bold" }}>
+              <ArrowForwardIcon /> {this.displayhealthAfter()}
+            </span>
+          </div>
 
-          <span style={{ fontWeight: "bold" }}>
-            <ArrowForwardIcon /> {this.displayhealthAfter()}
-          </span>
           <IconButton
             onClick={() => this.props.OnDelete(this.props.id, this.props.team)}
             style={{
-              padding: "0 5% 0 0",
-              flexGrow: 1,
+              marginRight: "5%",
+              padding: "0",
               justifyContent: "flex-end",
             }}
             disableRipple
