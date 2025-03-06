@@ -836,8 +836,8 @@ class soldierUnitAsRender extends React.Component<Props, State> {
             color: this.state.isToggleOnPoisoned
               ? "##CE93D8" // Set to #ce93d8 when isToggleOnPoisoned is true
               : this.state.isBecamePoisoned
-              ? "#008000" // Set to green when becamePoisoned is true
-              : "#A9A9A9", // Default color
+                ? "#008000" // Set to green when becamePoisoned is true
+                : "#A9A9A9", // Default color
           }}
         >
           {this.state.isToggleOnPoisoned ? <b>pois</b> : "pois"}

@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "prettier": "prettier --write",
+    "prettier": "prettier . --write",
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest",
