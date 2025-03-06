@@ -7,17 +7,17 @@ import Button from "@mui/material/Button";
  * Interface is used so buttons in defender selection components are defined using these properties
  */
 interface Props {
-  defenderType: string;
-  onClick: () => void;
-  ButtonImage: any;
+    defenderType: string;
+    onClick: () => void;
+    ButtonImage: any;
 }
 
 const defendersImageStyle = {
-  height: "40px",
-  width: "30px",
-  objectFit: "contain",
-  WebkitAppearance: "none",
-  transform: "scaleX(-1)",
+    height: "40px",
+    width: "30px",
+    objectFit: "contain",
+    WebkitAppearance: "none",
+    transform: "scaleX(-1)",
 } as React.CSSProperties;
 
 // const defendersButtonStyle = {
@@ -29,32 +29,32 @@ const defendersImageStyle = {
 // } as React.CSSProperties;
 
 const defendersButtonStyle = {
-  m: 1,
-  maxWidth: "4em",
-  minWidth: "4em",
+    m: 1,
+    maxWidth: "4em",
+    minWidth: "4em",
 };
 
 const DefendersSelectionButton: React.FC<Props> = ({
-  defenderType,
-  onClick,
-  ButtonImage,
+    defenderType,
+    onClick,
+    ButtonImage,
 }) => {
-  return (
-    <Button
-      onClick={onClick}
-      className="defendersSelectionButton"
-      size="small"
-      variant="outlined"
-      sx={defendersButtonStyle}
-      color="error"
-    >
-      <img
-        src={ButtonImage}
-        alt="defendersSelectionButton"
-        style={defendersImageStyle}
-      />
-    </Button>
-  );
+    return (
+        <Button
+            onClick={onClick}
+            className="defendersSelectionButton"
+            size="small"
+            variant="outlined"
+            sx={defendersButtonStyle}
+            color="error"
+        >
+            <img
+                src={ButtonImage}
+                alt="defendersSelectionButton"
+                style={defendersImageStyle}
+            />
+        </Button>
+    );
 };
 
 export default DefendersSelectionButton;

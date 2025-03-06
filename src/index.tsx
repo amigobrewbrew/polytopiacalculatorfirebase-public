@@ -11,14 +11,14 @@ console.log("Rendering App...");
 // window.process = window.process || {}; // Fix for Firebase env vars
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+    document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    <React.StrictMode>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>
 );
 
 console.log("App is running in", isLocal ? "local" : "Firebase", "mode");

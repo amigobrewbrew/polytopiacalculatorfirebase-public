@@ -8,7 +8,7 @@ export const ONE_HUNDRED_PERCENT = "100%";
 export const MAX_WIDTH_PX = 900;
 export const SINGLE_COLUMN_WIDTH_PERCENTAGE = 48;
 export const getSecondaryButtonStyles = () => ({
-  minWidth: "55px",
-  padding: "1% 2%",
-  marginRight: "2%",
+    minWidth: "55px",
+    padding: "1% 2%",
+    marginRight: "2%",
 });

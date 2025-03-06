@@ -1,83 +1,83 @@
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
 /* Add a black background color to the top navigation */
 .topnav {
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between;
-  font-size: 17px;
-  padding: 7px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    padding: 7px;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-  color: #f2f2f2;
-  padding: 8px;
-  text-decoration: none;
+    color: #f2f2f2;
+    padding: 8px;
+    text-decoration: none;
 }
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #09a2e8;
-  color: white;
+    background-color: #09a2e8;
+    color: white;
 }
 
 .nav-items {
-  padding-right: 5px;
-  align-content: center;
+    padding-right: 5px;
+    align-content: center;
 }
 
 /* Add an active class to highlight the current page */
 .topnav a.active {
-  background-color: #f467a9;
-  color: white;
+    background-color: #f467a9;
+    color: white;
 }
 
 /* Hide the link that should open and close the topnav on small screens */
 .topnav .icon {
-  display: none;
+    display: none;
 }
 
 /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
 @media screen and (max-width: 600px) {
-  .topnav {
-    display: block;
-    font-size: 15px;
-  }
-  .logo-and-hamburger {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: -webkit-fill-available;
-  }
-  .topnav .nav-items a {
-    display: none;
-  }
-  .topnav a.icon {
-    justify-self: flex-start;
-    display: block;
-  }
+    .topnav {
+        display: block;
+        font-size: 15px;
+    }
+    .logo-and-hamburger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: -webkit-fill-available;
+    }
+    .topnav .nav-items a {
+        display: none;
+    }
+    .topnav a.icon {
+        justify-self: flex-start;
+        display: block;
+    }
 }
 
 .alignSelfCenter {
-  align-self: center;
+    align-self: center;
 }
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
 @media screen and (max-width: 600px) {
-  .topnav.responsive .nav-items a {
-    display: block;
-    text-align: left;
-  }
+    .topnav.responsive .nav-items a {
+        display: block;
+        text-align: left;
+    }
 }
 
 /* 
