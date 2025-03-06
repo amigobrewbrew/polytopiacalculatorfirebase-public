@@ -38,7 +38,7 @@ input[type="number"] {
 
 /* Add an active class to highlight the current page */
 .topnav a.active {
-  background-color: #F467A9;
+  background-color: #f467a9;
   color: white;
 }
 
@@ -53,7 +53,7 @@ input[type="number"] {
     display: block;
     font-size: 15px;
   }
-   .logo-and-hamburger {
+  .logo-and-hamburger {
     display: flex;
     justify-content: space-between;
     align-items: center;
