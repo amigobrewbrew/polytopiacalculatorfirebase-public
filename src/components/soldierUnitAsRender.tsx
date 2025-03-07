@@ -142,7 +142,7 @@ type Props = {
     OnExplodeDamage: any;
 };
 
-function SoldierUnitAsRenderBeta(props: Props) {
+function SoldierUnitAsRender(props: Props) {
     const [isToggleOnVeteran, setIsToggleOnVeteran] = useState(props.veteran);
     const [isToggleOnSafe, setIsToggleOnSafe] = useState(props.safeBonus);
     const [isToggleOnDefence, setIsToggleOnDefence] = useState(
@@ -300,201 +300,111 @@ function SoldierUnitAsRenderBeta(props: Props) {
     function displayHealthAfter() {
         return healthAfterAsState;
     }
+    const unitImages: { [key: string]: { [key: string]: string } } = {
+        Attackers: {
+            Warrior: WarriorAtt,
+            Archer: ArcherAtt,
+            Rider: RiderAtt,
+            Defender: DefenderAtt,
+            Swordsman: SwordsmanAtt,
+            Catapult: CatapultAtt,
+            Knight: KnightAtt,
+            Giant: GiantAtt,
+            Battleship: BattleshipAtt,
+            MindBender: MindBenderAtt,
+            NatureBunny: NatureBunnyAtt,
+            Boat: BoatAtt,
+            Ship: ShipAtt,
+            Amphibian: AmphibianAtt,
+            Tridention: TridentionAtt,
+            Shark: SharkAtt,
+            Puffer: PufferAtt,
+            Jelly: JellyAtt,
+            Crab: CrabAtt,
+            Polytaur: PolytaurAtt,
+            Navalon: NavalonAtt,
+            DragonEgg: DragonEggAtt,
+            BabyDragon: BabyDragonAtt,
+            FireDragon: FireDragonAtt,
+            Mooni: MooniAtt,
+            IceArcher: IceArcherAtt,
+            BattleSled: BattleSledAtt,
+            IceFortress: IceFortressAtt,
+            Gaami: GaamiAtt,
+            Hexapod: HexapodAtt,
+            Kiton: KitonAtt,
+            Phychi: PhychiAtt,
+            Raychi: RaychiAtt,
+            Shaman: ShamanAtt,
+            Exida: ExidaAtt,
+            Doomux: DoomuxAtt,
+            Centipede: CentipedeAtt,
+            Segment: SegmentAtt,
+            Dagger: DaggerAtt,
+            Cloak: CloakAtt,
+            Dinghy: DinghyAtt,
+            Pirate: PirateAtt,
+            Raft: RaftAtt,
+            Scout: ScoutAtt,
+            Rammer: RammerAtt,
+            Bomber: BomberAtt,
+            Juggernaut: JuggernautAtt,
+        },
+        Defenders: {
+            Warrior: WarriorDef,
+            Archer: ArcherDef,
+            Rider: RiderDef,
+            Defender: DefenderDef,
+            Swordsman: SwordsmanDef,
+            Catapult: CatapultDef,
+            Knight: KnightDef,
+            Giant: GiantDef,
+            Battleship: BattleshipDef,
+            MindBender: MindBenderDef,
+            NatureBunny: NatureBunnyDef,
+            Boat: BoatDef,
+            Ship: ShipDef,
+            Amphibian: AmphibianDef,
+            Tridention: TridentionDef,
+            Shark: SharkDef,
+            Puffer: PufferDef,
+            Jelly: JellyDef,
+            Crab: CrabDef,
+            Polytaur: PolytaurDef,
+            Navalon: NavalonDef,
+            DragonEgg: DragonEggDef,
+            BabyDragon: BabyDragonDef,
+            FireDragon: FireDragonDef,
+            Mooni: MooniDef,
+            IceArcher: IceArcherDef,
+            BattleSled: BattleSledDef,
+            IceFortress: IceFortressDef,
+            Gaami: GaamiDef,
+            Hexapod: HexapodDef,
+            Kiton: KitonDef,
+            Phychi: PhychiDef,
+            Raychi: RaychiDef,
+            Shaman: ShamanDef,
+            Exida: ExidaDef,
+            Doomux: DoomuxDef,
+            Centipede: CentipedeDef,
+            Segment: SegmentDef,
+            Dagger: DaggerDef,
+            Cloak: CloakDef,
+            Dinghy: DinghyDef,
+            Pirate: PirateDef,
+            Raft: RaftDef,
+            Scout: ScoutDef,
+            Rammer: RammerDef,
+            Bomber: BomberDef,
+            Juggernaut: JuggernautDef,
+        },
+    };
+
     function displayIcon(typeUnit: string, team: string) {
-        switch (typeUnit + team) {
-            // same switch cases as the original
-            case "WarriorAttackers":
-                return WarriorAtt;
-            case "ArcherAttackers":
-                return ArcherAtt;
-            case "RiderAttackers":
-                return RiderAtt;
-            case "DefenderAttackers":
-                return DefenderAtt;
-            case "SwordsmanAttackers":
-                return SwordsmanAtt;
-            case "CatapultAttackers":
-                return CatapultAtt;
-            case "KnightAttackers":
-                return KnightAtt;
-            case "GiantAttackers":
-                return GiantAtt;
-            case "BattleshipAttackers":
-                return BattleshipAtt;
-            case "MindBenderAttackers":
-                return MindBenderAtt;
-            case "NatureBunnyAttackers":
-                return NatureBunnyAtt;
-            case "BoatAttackers":
-                return BoatAtt;
-            case "ShipAttackers":
-                return ShipAtt;
-            case "AmphibianAttackers":
-                return AmphibianAtt;
-            case "TridentionAttackers":
-                return TridentionAtt;
-            case "SharkAttackers":
-                return SharkAtt;
-            case "PufferAttackers":
-                return PufferAtt;
-            case "JellyAttackers":
-                return JellyAtt;
-            case "CrabAttackers":
-                return CrabAtt;
-            case "PolytaurAttackers":
-                return PolytaurAtt;
-            case "NavalonAttackers":
-                return NavalonAtt;
-            case "DragonEggAttackers":
-                return DragonEggAtt;
-            case "BabyDragonAttackers":
-                return BabyDragonAtt;
-            case "FireDragonAttackers":
-                return FireDragonAtt;
-            case "MooniAttackers":
-                return MooniAtt;
-            case "IceArcherAttackers":
-                return IceArcherAtt;
-            case "BattleSledAttackers":
-                return BattleSledAtt;
-            case "IceFortressAttackers":
-                return IceFortressAtt;
-            case "GaamiAttackers":
-                return GaamiAtt;
-            case "HexapodAttackers":
-                return HexapodAtt;
-            case "KitonAttackers":
-                return KitonAtt;
-            case "PhychiAttackers":
-                return PhychiAtt;
-            case "RaychiAttackers":
-                return RaychiAtt;
-            case "ShamanAttackers":
-                return ShamanAtt;
-            case "ExidaAttackers":
-                return ExidaAtt;
-            case "DoomuxAttackers":
-                return DoomuxAtt;
-            case "CentipedeAttackers":
-                return CentipedeAtt;
-            case "SegmentAttackers":
-                return SegmentAtt;
-            case "DaggerAttackers":
-                return DaggerAtt;
-            case "CloakAttackers":
-                return CloakAtt;
-            case "DinghyAttackers":
-                return DinghyAtt;
-            case "PirateAttackers":
-                return PirateAtt;
-            case "RaftAttackers":
-                return RaftAtt;
-            case "ScoutAttackers":
-                return ScoutAtt;
-            case "RammerAttackers":
-                return RammerAtt;
-            case "BomberAttackers":
-                return BomberAtt;
-            case "JuggernautAttackers":
-                return JuggernautAtt;
-            case "WarriorDefenders":
-                return WarriorDef;
-            case "ArcherDefenders":
-                return ArcherDef;
-            case "RiderDefenders":
-                return RiderDef;
-            case "DefenderDefenders":
-                return DefenderDef;
-            case "SwordsmanDefenders":
-                return SwordsmanDef;
-            case "CatapultDefenders":
-                return CatapultDef;
-            case "KnightDefenders":
-                return KnightDef;
-            case "GiantDefenders":
-                return GiantDef;
-            case "BattleshipDefenders":
-                return BattleshipDef;
-            case "MindBenderDefenders":
-                return MindBenderDef;
-            case "NatureBunnyDefenders":
-                return NatureBunnyDef;
-            case "BoatDefenders":
-                return BoatDef;
-            case "ShipDefenders":
-                return ShipDef;
-            case "AmphibianDefenders":
-                return AmphibianDef;
-            case "TridentionDefenders":
-                return TridentionDef;
-            case "SharkDefenders":
-                return SharkDef;
-            case "PufferDefenders":
-                return PufferDef;
-            case "JellyDefenders":
-                return JellyDef;
-            case "CrabDefenders":
-                return CrabDef;
-            case "PolytaurDefenders":
-                return PolytaurDef;
-            case "NavalonDefenders":
-                return NavalonDef;
-            case "DragonEggDefenders":
-                return DragonEggDef;
-            case "BabyDragonDefenders":
-                return BabyDragonDef;
-            case "FireDragonDefenders":
-                return FireDragonDef;
-            case "MooniDefenders":
-                return MooniDef;
-            case "IceArcherDefenders":
-                return IceArcherDef;
-            case "BattleSledDefenders":
-                return BattleSledDef;
-            case "IceFortressDefenders":
-                return IceFortressDef;
-            case "GaamiDefenders":
-                return GaamiDef;
-            case "HexapodDefenders":
-                return HexapodDef;
-            case "KitonDefenders":
-                return KitonDef;
-            case "PhychiDefenders":
-                return PhychiDef;
-            case "RaychiDefenders":
-                return RaychiDef;
-            case "ShamanDefenders":
-                return ShamanDef;
-            case "ExidaDefenders":
-                return ExidaDef;
-            case "DoomuxDefenders":
-                return DoomuxDef;
-            case "CentipedeDefenders":
-                return CentipedeDef;
-            case "SegmentDefenders":
-                return SegmentDef;
-            case "DaggerDefenders":
-                return DaggerDef;
-            case "CloakDefenders":
-                return CloakDef;
-            case "DinghyDefenders":
-                return DinghyDef;
-            case "PirateDefenders":
-                return PirateDef;
-            case "RaftDefenders":
-                return RaftDef;
-            case "ScoutDefenders":
-                return ScoutDef;
-            case "RammerDefenders":
-                return RammerDef;
-            case "BomberDefenders":
-                return BomberDef;
-            case "JuggernautDefenders":
-                return JuggernautDef;
-            default:
-                return SmallSwords;
-        }
+        return unitImages[team][typeUnit] || SmallSwords;
     }
+
     function soldierUnitImageStyle(team: string) {
         const style = {
             height: "40px",
@@ -916,4 +826,4 @@ function SoldierUnitAsRenderBeta(props: Props) {
         </div>
     );
 }
-export default SoldierUnitAsRenderBeta;
+export default SoldierUnitAsRender;

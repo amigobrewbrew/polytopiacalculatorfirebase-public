@@ -585,7 +585,7 @@ function BattleGroundDetails(_props: Props) {
                     if (idx <= 0) return prev;
                     const arr = [...prev];
                     [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
-                    return arr.map((u, i) => ({ ...u, id: i }));
+                    return arr;
                 });
             } else {
                 setSoldierUnitsDefendersAsRender((prev) => {
@@ -593,7 +593,7 @@ function BattleGroundDetails(_props: Props) {
                     if (idx <= 0) return prev;
                     const arr = [...prev];
                     [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
-                    return arr.map((u, i) => ({ ...u, id: i }));
+                    return arr;
                 });
             }
             analyticsLogEvent(analytics, "pc_changed_position_up_" + team);
@@ -1020,9 +1020,12 @@ function BattleGroundDetails(_props: Props) {
                         gap: 1,
                     }}
                 >
-                    {soldierUnitsAttackersAsRender.map((soldierUnitAtt, i) => (
-                        <CardWithShadow key={i}>
+                    {soldierUnitsAttackersAsRender.map((soldierUnitAtt) => (
+                        <CardWithShadow
+                            key={`attacker-${soldierUnitAtt.id}-${soldierUnitAtt.typeUnit}`}
+                        >
                             <SoldierUnitAsRender
+                                key={`attacker-unit-${soldierUnitAtt.id}-${soldierUnitAtt.typeUnit}`}
                                 id={soldierUnitAtt.id}
                                 OnDelete={handleDelete}
                                 OnUpdateHitpoints={handleUpdateHitpoints}
@@ -1067,9 +1070,12 @@ function BattleGroundDetails(_props: Props) {
                         gap: 1,
                     }}
                 >
-                    {soldierUnitsDefendersAsRender.map((soldierUnitDef, i) => (
-                        <CardWithShadow key={i}>
+                    {soldierUnitsDefendersAsRender.map((soldierUnitDef) => (
+                        <CardWithShadow
+                            key={`defender-${soldierUnitDef.id}-${soldierUnitDef.typeUnit}`}
+                        >
                             <SoldierUnitAsRender
+                                key={`defender-unit-${soldierUnitDef.id}-${soldierUnitDef.typeUnit}`}
                                 id={soldierUnitDef.id}
                                 OnDelete={handleDelete}
                                 OnUpdateHitpoints={handleUpdateHitpoints}
