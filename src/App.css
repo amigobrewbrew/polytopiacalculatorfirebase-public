@@ -12,6 +12,7 @@ input[type="number"] {
 
 /* Add a black background color to the top navigation */
 .topnav {
+    color: #f2f2f2;
     overflow: hidden;
     display: flex;
     justify-content: space-between;

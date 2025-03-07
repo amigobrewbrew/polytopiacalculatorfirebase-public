@@ -393,7 +393,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                     }}
                 >
                     <Box component="span" sx={{ typography: "body2" }}>
-                        Build version: 2.11.1.13205 | Game version: 108.
+                        Build version: 2.11.1.13205 | Game version: 108
                     </Box>
                 </CardWithShadow>
             </Box>

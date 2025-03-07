@@ -47,14 +47,24 @@ class NavBar extends React.Component<NavBarProps, NavBarState> {
                             </a>
                         </div>
                         <div className="nav-items" style={{ paddingRight: 5 }}>
+                            <a
+                                href="/105"
+                                style={{ marginTop: 1, fontSize: "15px" }}
+                            >
+                                v105
+                            </a>
+                            <a
+                                href="/108"
+                                style={{ marginTop: 1, fontSize: "15px" }}
+                            >
+                                v108
+                            </a>
+                            |
                             <a href="/secretgame" style={{ marginTop: 1 }}>
                                 Bonus game
                             </a>
                             <a href="/help" style={{ marginTop: 1 }}>
                                 Help
-                            </a>
-                            <a href="/beta" style={{ marginTop: 1 }}>
-                                Beta
                             </a>
                         </div>
                     </div>

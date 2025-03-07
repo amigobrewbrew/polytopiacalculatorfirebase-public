@@ -18,13 +18,25 @@ class App extends Component {
     render() {
         return (
             <ThemeProvider theme={theme}>
-                <React.Fragment>
+                <>
                     <NavBar />
 
+                    {/* TODO: replace with alternative for routing between versions */}
                     <div className="containers">
                         <Routes>
                             <Route path="/help" element={<HelpPage />} />
-                            <Route path="/" element={<BattleGroundDetails105 />} />
+                            <Route
+                                path="/105"
+                                element={<BattleGroundDetails105 />}
+                            />
+                            <Route
+                                path="/108"
+                                element={<BattleGroundDetails108 />}
+                            />
+                            <Route
+                                path="/"
+                                element={<BattleGroundDetails108 />}
+                            />
                             <Route
                                 path="/secretgame"
                                 element={
@@ -36,13 +48,9 @@ class App extends Component {
                                     />
                                 }
                             />
-                            <Route
-                                path="/beta"
-                                element={<BattleGroundDetails108 />}
-                            />
                         </Routes>
                     </div>
-                </React.Fragment>
+                </>
             </ThemeProvider>
         );
     }
