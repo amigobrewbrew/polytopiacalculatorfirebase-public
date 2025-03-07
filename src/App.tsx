@@ -4,8 +4,8 @@ import "./App.css";
 import NavBar from "./components/navbar";
 import HelpPage from "./components/helpPage";
 import SecretGame from "./components/secretGame";
-import BattleGroundDetails from "./components/battleGroundDetails";
-import BattleGroundDetailsBeta from "./components/battleGroundDetailsBeta";
+import BattleGroundDetails105 from "./components/105.battleGroundDetails";
+import BattleGroundDetails108 from "./components/108.battleGroundDetails";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
@@ -24,7 +24,7 @@ class App extends Component {
                     <div className="containers">
                         <Routes>
                             <Route path="/help" element={<HelpPage />} />
-                            <Route path="/" element={<BattleGroundDetails />} />
+                            <Route path="/" element={<BattleGroundDetails105 />} />
                             <Route
                                 path="/secretgame"
                                 element={
@@ -38,7 +38,7 @@ class App extends Component {
                             />
                             <Route
                                 path="/beta"
-                                element={<BattleGroundDetailsBeta />}
+                                element={<BattleGroundDetails108 />}
                             />
                         </Routes>
                     </div>

@@ -9,10 +9,10 @@ import * as React from "react";
 import AttackersSelection from "./attackersSelection";
 import DefendersSelection from "./defendersSelection";
 import SoldierUnitAsRender from "./soldierUnitAsRender";
-import * as StatsBeta from "./108.unitStats";
-import * as Stats from "./105.unitStats";
+import * as Stats from "./108.unitStats";
+
 import Box from "@mui/material/Box";
-import { analytics, isLocal } from "./../firebase";
+import { analytics, isLocal } from "../firebase";
 import { logEvent } from "firebase/analytics";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -393,14 +393,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                     }}
                 >
                     <Box component="span" sx={{ typography: "body2" }}>
-                        This page is based on Build version 2.10.1.12787 and
-                        Game version: 105. For Forgotten update click{" "}
-                        <a href="/beta">here</a>.
-
-                        <br />
-                        Beta says:
-                        This page is based on Build version 2.11.1.13205 and
-                        Game version: 108.
+                        Build version: 2.11.1.13205 | Game version: 108.
                     </Box>
                 </CardWithShadow>
             </Box>
@@ -1825,7 +1818,7 @@ class battleGroundDetails extends React.Component<Props, State> {
 
     healthAfterCalculation = () => {
         console.log("This is where the magic happens. Charge!");
-        analyticsLogEvent(analytics, "pc_magic_happens");
+        analyticsLogEvent(analytics, "pc_magic_happens_beta");
 
         let indexDefenderCounter = 0;
         let indexDefender = this.state.defIdxArray[indexDefenderCounter];
@@ -2050,7 +2043,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                         )
                     );
                     console.log("this is defenceResult: " + defenceResult);
-                    //poison
+                    //poison beta
                     if (
                         attacker.typeUnit === "Exida" ||
                         attacker.typeUnit === "Phychi" ||
@@ -2076,7 +2069,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                     //     false;
                     //   // this.setState({ randomNumber: Math.random() }); // this rerenders the soldier child component
                     // }
-                    // poison
+                    // poison beta
                 } else {
                     defenceResult = 0;
                     //indexDefender++;
