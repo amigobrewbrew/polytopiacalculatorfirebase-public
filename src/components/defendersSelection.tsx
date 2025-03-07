@@ -172,6 +172,7 @@ const DefenderPage: React.FC<Props & { pageIndex: number }> = ({
                         size="small"
                         variant="outlined"
                         sx={defendersButtonStyle}
+                        color="error"
                     >
                         <img
                             src={def.img}
@@ -191,6 +192,7 @@ const DefenderPage: React.FC<Props & { pageIndex: number }> = ({
                         size="small"
                         variant="outlined"
                         sx={defendersButtonStyle}
+                        color="error"
                     >
                         <img
                             src={def.img}

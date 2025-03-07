@@ -234,7 +234,6 @@ const AttackersSelection: React.FC<Props> = ({ onAddAttacker }) => {
             <Typography component={"span"} variant="h6">
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Button
-                        color="error"
                         variant="contained"
                         size="small"
                         onClick={() => handlePageChange("prev")}
@@ -245,7 +244,6 @@ const AttackersSelection: React.FC<Props> = ({ onAddAttacker }) => {
                     </Button>
                     <span className="alignSelfCenter">Attackers selection</span>
                     <Button
-                        color="error"
                         variant="contained"
                         size="small"
                         onClick={() => handlePageChange("next")}
