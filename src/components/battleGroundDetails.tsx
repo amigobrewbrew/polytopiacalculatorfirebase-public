@@ -474,12 +474,9 @@ function BattleGroundDetails(_props: Props) {
 
     const handleAddAttacker = (typeUnit: string) => {
         const newId = soldierUnitsAttackersAsRender.length;
-        const initialSafeBonus = [
-            "Dagger",
-            "Pirate",
-            "Shark",
-            "Phychi",
-        ].includes(typeUnit);
+        const initialSafeBonus = ["Dagger", "Pirate", "Shark"].includes(
+            typeUnit
+        );
         const newUnit: SoldierUnit = {
             id: newId,
             typeUnit,
