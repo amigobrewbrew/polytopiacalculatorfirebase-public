@@ -52,6 +52,7 @@ function BattleGroundDetails(_props: Props) {
     const [checkedPosition, setCheckedPosition] = useState(false);
 
     const handleChangeCheckbox = () => {
+        // TODO: This doesnt work well! It will only move the first two items in the array
         setCheckedPosition((prev) => !prev);
         analyticsLogEvent(analytics, "pc_checkbox_toggled");
     };
