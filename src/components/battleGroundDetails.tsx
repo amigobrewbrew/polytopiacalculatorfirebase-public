@@ -52,7 +52,6 @@ function BattleGroundDetails(_props: Props) {
     const [checkedPosition, setCheckedPosition] = useState(false);
 
     const handleChangeCheckbox = () => {
-        // TODO: This doesnt work well! It will only move the first two items in the array
         setCheckedPosition((prev) => !prev);
         analyticsLogEvent(analytics, "pc_checkbox_toggled");
     };
@@ -586,9 +585,7 @@ function BattleGroundDetails(_props: Props) {
                     if (idx <= 0) return prev;
                     const arr = [...prev];
                     [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
-                    arr[idx - 1].id = idx - 1;
-                    arr[idx].id = idx;
-                    return arr;
+                    return arr.map((u, i) => ({ ...u, id: i }));
                 });
             } else {
                 setSoldierUnitsDefendersAsRender((prev) => {
@@ -596,9 +593,7 @@ function BattleGroundDetails(_props: Props) {
                     if (idx <= 0) return prev;
                     const arr = [...prev];
                     [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
-                    arr[idx - 1].id = idx - 1;
-                    arr[idx].id = idx;
-                    return arr;
+                    return arr.map((u, i) => ({ ...u, id: i }));
                 });
             }
             analyticsLogEvent(analytics, "pc_changed_position_up_" + team);
@@ -872,7 +867,9 @@ function BattleGroundDetails(_props: Props) {
     };
 
     const healthAfterCalculation = useCallback(() => {
+        console.log("Charge!");
         analyticsLogEvent(analytics, "pc_magic_happens");
+
         const attList = [...soldierUnitsAttackersAsRender];
         const defList = [...soldierUnitsDefendersAsRender];
 
@@ -974,6 +971,11 @@ function BattleGroundDetails(_props: Props) {
                 defenderRepeatedAttack = 0;
             }
         });
+
+        console.log("attList:");
+        console.log(attList);
+        console.log("defList:");
+        console.log(defList);
 
         return [attList, defList];
     }, [

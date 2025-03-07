@@ -633,7 +633,12 @@ function SoldierUnitAsRenderBeta(props: Props) {
                                 type="text"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
-                                defaultValue={props.healthBefore} // TODO: VET and SHIP state should update default value, as well as health up or down
+                                value={healthInputField}
+                                onChange={(e) =>
+                                    setHealthInputField(
+                                        parseInt(e.target.value)
+                                    )
+                                }
                                 onBlur={(e) =>
                                     handleHitpointsChange(e.target.value)
                                 }
