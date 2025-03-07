@@ -51,8 +51,8 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
     const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
     const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
     const [checkedPosition, setCheckedPosition] = useState(false);
-    const [randomNumber, setRandomNumber] = useState(0);
-    const [userUnderstands, setUserUnderstands] = useState(false);
+    // const [randomNumber, setRandomNumber] = useState(0);
+    // const [userUnderstands, setUserUnderstands] = useState(false);
 
     // Helper functions
     const istypeUnitaShipUnit = useCallback((typeUnit: string) => {
@@ -510,7 +510,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_defence_bonus_" + typeUnit);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -548,7 +548,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_wall_bonus_" + typeUnit);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -591,7 +591,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_poisoned_bonus_" + typeUnit);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -620,7 +620,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_safe_bonus_" + typeUnit);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -649,7 +649,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_boosted_bonus_" + typeUnit);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -678,7 +678,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_splash_damage_toggled");
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -712,7 +712,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_explode_damage_toggled");
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -781,7 +781,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                 analytics,
                 "pc_veterancy_bonus_" + team + "_" + typeUnit
             );
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         [healthMax, healthMaxVeteran]
     );
@@ -834,7 +834,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_ship_mx_" + team + "_" + typeUnit);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -876,7 +876,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
         }
 
         analyticsLogEvent(analytics, "pc_unit_deleted_" + team);
-        setRandomNumber(Math.random());
+        // setRandomNumber(Math.random());
     }, []);
 
     // Update hitpoints handler
@@ -924,7 +924,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
 
             analyticsLogEvent(analytics, "pc_hitpoints_direct_" + team);
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         []
     );
@@ -1022,7 +1022,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                 analyticsLogEvent(analytics, "pc_changed_position_up_" + team);
             }
 
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         [checkedPosition]
     );
@@ -1129,7 +1129,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                 );
             }
 
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         [checkedPosition]
     );
@@ -1184,7 +1184,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                 "pc_attacker_id_" + soldierUnitsAttackersAsRender.length
             );
 
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         [
             healthMax,
@@ -1234,7 +1234,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                 "pc_defender_id_" + soldierUnitsDefendersAsRender.length
             );
 
-            setRandomNumber(Math.random());
+            // setRandomNumber(Math.random());
         },
         [
             healthMax,
@@ -1278,6 +1278,11 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
         defenders.forEach((element) => {
             element.healthAfter = element.healthBefore;
         });
+
+        // If there are no attackers, return early with defenders' healthAfter = healthBefore
+        if (attackers.length === 0) {
+            return [attackers, defenders];
+        }
 
         let poisoningAttacker = 9999;
         let defenderRepeatedAttack = 0;
@@ -1458,6 +1463,14 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             }
         });
 
+        // Ensure that defenders that weren't attacked have healthAfter = healthBefore
+        defenders.forEach((defender, idx) => {
+            // If this defender wasn't processed at all (no attackers reached it)
+            if (idx > indexDefender || attackers.length === 0) {
+                defender.healthAfter = defender.healthBefore;
+            }
+        });
+
         console.log(
             "Final defender attacked is on position: " +
                 indexDefender +
@@ -1472,11 +1485,15 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
         defIdxArray,
     ]);
 
+    // Use a separate state to track changes requiring recalculation
+    const [needsRecalculation, setNeedsRecalculation] = useState(true);
+
     // Make sure to use the calculated results
     useEffect(() => {
         if (
-            soldierUnitsAttackersAsRender.length > 0 &&
-            soldierUnitsDefendersAsRender.length > 0
+            needsRecalculation &&
+            (soldierUnitsAttackersAsRender.length > 0 ||
+                soldierUnitsDefendersAsRender.length > 0)
         ) {
             const [calculatedAttackers, calculatedDefenders] =
                 healthAfterCalculation();
@@ -1484,13 +1501,16 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
             // Update with the calculated results - ensures immutability
             setSoldierUnitsAttackersAsRender(calculatedAttackers);
             setSoldierUnitsDefendersAsRender(calculatedDefenders);
+
+            // Prevent recalculation until something changes
+            setNeedsRecalculation(false);
         }
-    }, [
-        soldierUnitsAttackersAsRender,
-        soldierUnitsDefendersAsRender,
-        randomNumber,
-        healthAfterCalculation,
-    ]);
+    }, [needsRecalculation, healthAfterCalculation]);
+
+    // Trigger recalculation when inputs change
+    useEffect(() => {
+        setNeedsRecalculation(true);
+    }, [attIdxArray, defIdxArray]);
 
     // Render the component
     console.log("Battleground details page is rendered");
@@ -1543,7 +1563,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                                     becamePoisonedBonus={
                                         soldierUnitAtt.becamePoisonedBonus
                                     }
-                                    key={i + randomNumber}
+                                    // key={i + randomNumber}
                                     id={soldierUnitAtt.id}
                                     OnDelete={handleDelete}
                                     OnUpdateHitpoints={handleUpdateHitpoints}
@@ -1598,7 +1618,7 @@ const BattleGroundDetails: React.FC<Props> = (props) => {
                                     becamePoisonedBonus={
                                         soldierUnitDef.becamePoisonedBonus
                                     }
-                                    key={i + randomNumber}
+                                    // key={i + randomNumber}
                                     id={soldierUnitDef.id}
                                     OnDelete={handleDelete}
                                     OnUpdateHitpoints={handleUpdateHitpoints}

@@ -18,8 +18,44 @@ import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX } from "../customStyles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
+
+/**
+ * Custom popup component to replace alerts
+ */
+interface PopupProps {
+    open: boolean;
+    message: string;
+    title: string;
+    onClose: () => void;
+}
+
+const Popup: React.FC<PopupProps> = ({ open, message, title, onClose }) => {
+    return (
+        <Dialog
+            open={open}
+            onClose={onClose}
+            aria-labelledby="game-alert-dialog"
+        >
+            <DialogTitle>{title}</DialogTitle>
+            <DialogContent>
+                <DialogContentText>{message}</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose} color="primary" autoFocus>
+                    OK
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
 
 /**
  * Refactored Secret Game component using modern React hooks
@@ -33,6 +69,27 @@ const SecretGame: React.FC = () => {
         totalGames: 0,
         totalGamesWon: 0,
     });
+
+    // Popup state
+    const [popup, setPopup] = useState({
+        open: false,
+        message: "",
+        title: "Game Message",
+    });
+
+    // Show popup message
+    const showPopup = (message: string, title: string = "Game Message") => {
+        setPopup({
+            open: true,
+            message,
+            title,
+        });
+    };
+
+    // Close popup
+    const closePopup = () => {
+        setPopup((prev) => ({ ...prev, open: false }));
+    };
 
     // Helper function to get unit name from number
     const getUnitName = (unitNumber: number): string => {
@@ -62,7 +119,10 @@ const SecretGame: React.FC = () => {
             totalGames: prevState.totalGames + 1,
         }));
 
-        alert("Numero secreto is reset and tentativas set to three");
+        // showPopup(
+        //     "Numero secreto is reset and tentativas set to three",
+        //     "New Game"
+        // );
     }, []);
 
     // Handle unit selection and game logic
@@ -76,13 +136,15 @@ const SecretGame: React.FC = () => {
                     // Correct guess
                     analyticsLogEvent(analytics, "sg_game_won");
 
-                    // Schedule alert to show after state update
+                    // Show success popup
+                    showPopup(
+                        `The ${getUnitName(unitNumber)} is correct! Parabéns pra você!`,
+                        "Correct!"
+                    );
+
                     setTimeout(() => {
-                        alert(
-                            `The ${getUnitName(unitNumber)} is correct! Parabéns pra você!`
-                        );
                         newGame();
-                    }, 0);
+                    }, 500);
 
                     return {
                         ...prevState,
@@ -98,32 +160,32 @@ const SecretGame: React.FC = () => {
                             analytics,
                             "sg_secret_unit_is_weaker"
                         );
-                        setTimeout(() => {
-                            alert(
-                                "You made the incorrect choice. The secret unit is weaker"
-                            );
-                        }, 0);
+                        showPopup(
+                            "You made the incorrect choice. The secret unit is weaker",
+                            "Wrong Choice"
+                        );
                     } else {
                         analyticsLogEvent(
                             analytics,
                             "sg_secret_unit_is_stronger"
                         );
-                        setTimeout(() => {
-                            alert(
-                                "You made the incorrect choice. The secret unit is stronger"
-                            );
-                        }, 0);
+                        showPopup(
+                            "You made the incorrect choice. The secret unit is stronger",
+                            "Wrong Choice"
+                        );
                     }
 
                     // Game over check
                     if (newTentativas === 0) {
                         analyticsLogEvent(analytics, "sg_game_lost");
+                        showPopup(
+                            `You made the incorrect choice three times. Você perdeu! The correct answer was ${getUnitName(prevState.numeroSecreto)}`,
+                            "Game Over"
+                        );
+
                         setTimeout(() => {
-                            alert(
-                                `You made the incorrect choice three times. Você perdeu! The correct answer was ${getUnitName(prevState.numeroSecreto)}`
-                            );
                             newGame();
-                        }, 100); // Slight delay to ensure alerts show in correct order
+                        }, 500);
                     }
 
                     return {
@@ -329,6 +391,14 @@ const SecretGame: React.FC = () => {
                     </Box>
                 </Typography>
             </Box>
+
+            {/* Custom popup dialog */}
+            <Popup
+                open={popup.open}
+                message={popup.message}
+                title={popup.title}
+                onClose={closePopup}
+            />
         </CardWithShadow>
     );
 };
