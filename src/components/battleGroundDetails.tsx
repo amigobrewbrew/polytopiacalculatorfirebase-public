@@ -429,12 +429,7 @@ function BattleGroundDetails(_props: Props) {
             "pc_explode_damage_toggled"
         );
 
-    const handleVeteranBonus = (
-        id: number,
-        team: string,
-        typeUnit: string,
-        value: boolean
-    ) => {
+    const handleVeteranBonus = (id: number, team: string, typeUnit: string) => {
         if (team === "Attackers") {
             setSoldierUnitsAttackersAsRender((prev) =>
                 prev.map((u) => {

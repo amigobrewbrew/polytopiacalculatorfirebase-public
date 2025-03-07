@@ -1,8 +1,16 @@
 /** This component is used to add a defender or attacker unit to the battle ground array and giving the unit the initial stats */
 
-import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
-// Keep all the image imports
+import React, { useState, useEffect } from "react";
+import { getSecondaryButtonStyles } from "../customStyles";
+import SmallSwords from "../img/Other/SmallSwords.png";
+import IconButton from "@mui/material/IconButton";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import { pink } from "@mui/material/colors";
+import Button from "@mui/material/Button";
+import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+
 import WarriorAtt from "../img/Attackers/Warrior.png";
 import ArcherAtt from "../img/Attackers/Archer.png";
 import RiderAtt from "../img/Attackers/Rider.png";
@@ -99,17 +107,7 @@ import RammerDef from "../img/Defenders/Rammer.png";
 import BomberDef from "../img/Defenders/Bomber.png";
 import JuggernautDef from "../img/Defenders/Juggernaut.png";
 
-import { getSecondaryButtonStyles } from "../customStyles";
-
-import SmallSwords from "../img/Other/SmallSwords.png";
-import IconButton from "@mui/material/IconButton";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import { pink } from "@mui/material/colors";
-import Button from "@mui/material/Button";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
-
+// Same Props as before
 type Props = {
     id: number;
     typeUnit: string;
@@ -144,8 +142,7 @@ type Props = {
     OnExplodeDamage: any;
 };
 
-const SoldierUnitAsRender: React.FC<Props> = (props) => {
-    // Convert all state properties to useState hooks
+function SoldierUnitAsRenderBeta(props: Props) {
     const [isToggleOnVeteran, setIsToggleOnVeteran] = useState(props.veteran);
     const [isToggleOnSafe, setIsToggleOnSafe] = useState(props.safeBonus);
     const [isToggleOnDefence, setIsToggleOnDefence] = useState(
@@ -161,14 +158,14 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
     const [isToggleOnBoosted, setIsToggleOnBoosted] = useState(
         props.boostedBonus
     );
+    const [isToggleOnShipUnit, setIsToggleOnShipUnit] = useState(
+        props.shipUnit
+    );
     const [isToggleOnSplashDamage, setIsToggleOnSplashDamage] = useState(
         props.splashDamage
     );
     const [isToggleOnExplodeDamage, setIsToggleOnExplodeDamage] = useState(
         props.explodeDamage
-    );
-    const [isToggleOnShipUnit, setIsToggleOnShipUnit] = useState(
-        props.shipUnit
     );
     const [isToggleVisibleTypeUnit, setIsToggleVisibleTypeUnit] = useState(
         props.typeUnit
@@ -188,271 +185,124 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
         props.healthAfter ?? props.healthBefore
     );
 
-    // Replace getDerivedStateFromProps with useEffect
-    useEffect(() => {
-        setIsToggleOnVeteran(props.veteran);
-        setIsToggleOnSafe(props.safeBonus);
-        setIsToggleOnDefence(props.defenceBonus);
-        setIsToggleOnWall(props.wallBonus);
-        setIsToggleOnPoisoned(props.poisonedBonus);
-        setIsBecamePoisoned(props.becamePoisonedBonus);
-        setIsToggleOnBoosted(props.boostedBonus);
-        setIsToggleOnSplashDamage(props.splashDamage);
-        setIsToggleOnExplodeDamage(props.explodeDamage);
-        setIsToggleOnShipUnit(props.shipUnit);
-        setIsToggleVisibleTypeUnit(props.typeUnit);
-        setIsToggleVisibleTeam(props.team);
-        setIsToggleVisibleShipUnit(props.shipUnit);
-        setHealthMaxShipUnit(props.healthMax);
-        setHealthInputField(props.healthBefore);
-        setHealthBeforeAsState(props.healthBefore);
-        setHealthAfterAsState(props.healthAfter ?? props.healthBefore);
-    }, [
-        props.veteran,
-        props.safeBonus,
-        props.defenceBonus,
-        props.wallBonus,
-        props.poisonedBonus,
-        props.becamePoisonedBonus,
-        props.boostedBonus,
-        props.splashDamage,
-        props.explodeDamage,
-        props.shipUnit,
-        props.typeUnit,
-        props.team,
-        props.healthMax,
-        props.healthBefore,
-        props.healthAfter,
-    ]);
+    useEffect(() => setIsToggleOnVeteran(props.veteran), [props.veteran]);
+    useEffect(() => setIsToggleOnSafe(props.safeBonus), [props.safeBonus]);
+    useEffect(
+        () => setIsToggleOnDefence(props.defenceBonus),
+        [props.defenceBonus]
+    );
+    useEffect(() => setIsToggleOnWall(props.wallBonus), [props.wallBonus]);
+    useEffect(
+        () => setIsToggleOnPoisoned(props.poisonedBonus),
+        [props.poisonedBonus]
+    );
+    useEffect(
+        () => setIsToggleOnBoosted(props.boostedBonus),
+        [props.boostedBonus]
+    );
+    useEffect(
+        () => setIsToggleOnSplashDamage(props.splashDamage),
+        [props.splashDamage]
+    );
+    useEffect(
+        () => setIsToggleOnExplodeDamage(props.explodeDamage),
+        [props.explodeDamage]
+    );
+    useEffect(() => setIsToggleOnShipUnit(props.shipUnit), [props.shipUnit]);
+    useEffect(
+        () => setIsBecamePoisoned(props.becamePoisonedBonus),
+        [props.becamePoisonedBonus]
+    );
+    useEffect(() => setIsToggleVisibleTeam(props.team), [props.team]);
+    useEffect(
+        () => setIsToggleVisibleTypeUnit(props.typeUnit),
+        [props.typeUnit]
+    );
+    useEffect(
+        () => setIsToggleVisibleShipUnit(props.shipUnit),
+        [props.shipUnit]
+    );
+    useEffect(() => setHealthMaxShipUnit(props.healthMax), [props.healthMax]);
+    useEffect(
+        () => setHealthInputField(props.healthBefore),
+        [props.healthBefore]
+    );
+    useEffect(
+        () => setHealthBeforeAsState(props.healthBefore),
+        [props.healthBefore]
+    );
+    useEffect(
+        () => setHealthAfterAsState(props.healthAfter ?? props.healthBefore),
+        [props.healthAfter, props.healthBefore]
+    );
 
-    // Convert class methods to hooks with useCallback
-    const handleClickSplashDamage = useCallback(() => {
-        const newValue = !isToggleOnSplashDamage;
-        setIsToggleOnSplashDamage(newValue);
-        props.OnSplashDamage(
-            props.id,
-            props.team,
-            props.typeUnit,
-            props.splashDamage
-        );
+    function handleClickSplashDamage() {
+        setIsToggleOnSplashDamage(!isToggleOnSplashDamage);
         console.log("Unit does splash damage");
-    }, [isToggleOnSplashDamage, props]);
-
-    const handleClickExplodeDamage = useCallback(() => {
-        const newValue = !isToggleOnExplodeDamage;
-        setIsToggleOnExplodeDamage(newValue);
-        props.OnExplodeDamage(
-            props.id,
-            props.team,
-            props.typeUnit,
-            props.explodeDamage
-        );
+    }
+    function handleClickExplodeDamage() {
+        setIsToggleOnExplodeDamage(!isToggleOnExplodeDamage);
         console.log("Unit does explode damage");
-    }, [isToggleOnExplodeDamage, props]);
-
-    const handleClickVeteranBonus = useCallback(() => {
-        const newValue = !isToggleOnVeteran;
-        setIsToggleOnVeteran(newValue);
-        console.log("isToggleOnVeteran: ", isToggleOnVeteran);
+    }
+    function handleClickVeteranBonus() {
+        setIsToggleOnVeteran(!isToggleOnVeteran);
         console.log("Unit is veteran");
-    }, [isToggleOnVeteran]);
-
-    const handleClickShipUnit = useCallback(() => {
+    }
+    function handleClickShipUnit() {
         setHealthMaxShipUnit(props.healthMax);
-    }, [props.healthMax]);
-
-    const handleClickSafeBonus = useCallback(() => {
-        const newValue = !isToggleOnSafe;
-        setIsToggleOnSafe(newValue);
+    }
+    function handleClickSafeBonus() {
+        setIsToggleOnSafe(!isToggleOnSafe);
         console.log("Unit is safe");
-    }, [isToggleOnSafe]);
-
-    const handleClickBoostedBonus = useCallback(() => {
-        const newValue = !isToggleOnBoosted;
-        setIsToggleOnBoosted(newValue);
+    }
+    function handleClickBoostedBonus() {
+        setIsToggleOnBoosted(!isToggleOnBoosted);
         console.log("Unit is boosted");
-    }, [isToggleOnBoosted]);
-
-    const handleClickDefenceBonus = useCallback(() => {
-        if (!isToggleOnDefence) {
-            setIsToggleOnDefence(true);
+    }
+    function handleClickDefenceBonus() {
+        let defVal = !isToggleOnDefence;
+        setIsToggleOnDefence(defVal);
+        if (defVal) {
             setIsToggleOnPoisoned(false);
             setIsToggleOnWall(false);
-        } else {
-            setIsToggleOnDefence(false);
         }
         console.log("Unit has defence bonus");
-    }, [isToggleOnDefence]);
-
-    const handleClickWallBonus = useCallback(() => {
-        if (!isToggleOnWall) {
-            setIsToggleOnWall(true);
+    }
+    function handleClickWallBonus() {
+        let wallVal = !isToggleOnWall;
+        setIsToggleOnWall(wallVal);
+        if (wallVal) {
             setIsToggleOnPoisoned(false);
             setIsToggleOnDefence(false);
-        } else {
-            setIsToggleOnWall(false);
         }
         console.log("Unit has wall bonus");
-    }, [isToggleOnWall]);
-
-    const handleClickPoisonedBonus = useCallback(() => {
-        if (!isToggleOnPoisoned) {
-            setIsToggleOnPoisoned(true);
+    }
+    function handleClickPoisonedBonus() {
+        let poisVal = !isToggleOnPoisoned;
+        setIsToggleOnPoisoned(poisVal);
+        if (poisVal) {
             setIsToggleOnWall(false);
             setIsToggleOnDefence(false);
-        } else {
-            setIsToggleOnPoisoned(false);
         }
         console.log("Unit is poisoned");
-    }, [isToggleOnPoisoned]);
-
-    const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === "Enter") {
-                handleHitpointsChange(e.currentTarget.value);
-            }
-        },
-        []
-    );
-
-    const handleHitpointsChange = useCallback(
-        (healthBeforeManualInput: string) => {
-            const parsedValue = parseInt(healthBeforeManualInput);
-            setHealthInputField(parsedValue);
-            console.log("Hitpoints are now: " + healthBeforeManualInput);
-            props.OnUpdateHitpoints(
-                props.id,
-                props.team,
-                healthBeforeManualInput
-            );
-        },
-        [props]
-    );
-
-    const generateCheckboxIdHitpointField = useCallback(() => {
-        return props.team + props.id + "HitpointField";
-    }, [props.team, props.id]);
-
-    const handleFocus = useCallback(
-        (event: React.FocusEvent<HTMLInputElement>) => {
-            event.target.select();
-        },
-        []
-    );
-
-    const displayhealthAfter = useCallback(() => {
+    }
+    function handleHitpointsChange(healthBeforeManualInput: any) {
+        setHealthInputField(parseInt(healthBeforeManualInput));
+        console.log("Hitpoints are now: " + healthBeforeManualInput);
+        props.OnUpdateHitpoints(props.id, props.team, healthBeforeManualInput);
+    }
+    function handleKeyDown(e: any) {
+        if (e.key === "Enter") handleHitpointsChange(e.target.value);
+    }
+    function handleFocus(event: any) {
+        event.target.select();
+    }
+    function displayHealthAfter() {
         return healthAfterAsState;
-    }, [healthAfterAsState]);
-
-    // Convert helper methods for UI element visibility
-    const makeInvisibleVeteranBonus = useCallback((unitType: string) => {
-        const nonVeteranUnits = [
-            "Ship",
-            "Boat",
-            "Navalon",
-            "Giant",
-            "MindBender",
-            "NatureBunny",
-            "Crab",
-            "DragonEgg",
-            "BabyDragon",
-            "FireDragon",
-            "Mooni",
-            "Gaami",
-            "Shaman",
-            "Centipede",
-            "Segment",
-            "Cloak",
-            "Dinghy",
-            "Battleship",
-            "Raft",
-            "Scout",
-            "Rammer",
-            "Bomber",
-            "Pirate",
-            "Juggernaut",
-        ];
-        return nonVeteranUnits.includes(unitType)
-            ? { display: "none " }
-            : { display: "visible" };
-    }, []);
-
-    const makeInvisibleShipUnit = useCallback((shipUnit: boolean) => {
-        return shipUnit === false
-            ? { display: "none" }
-            : { display: "visible" };
-    }, []);
-
-    const makeInvisibleSplashDamage = useCallback(
-        (unitType: string, team: string) => {
-            return (unitType === "FireDragon" && team === "Attackers") ||
-                (unitType === "Bomber" && team === "Attackers") ||
-                (unitType === "Juggernaut" && team === "Attackers")
-                ? { display: "visible" }
-                : { display: "none" };
-        },
-        []
-    );
-
-    const makeInvisibleExplodeDamage = useCallback(
-        (unitType: string, team: string) => {
-            return (unitType === "Doomux" && team === "Attackers") ||
-                (unitType === "Raychi" && team === "Attackers")
-                ? { display: "visible" }
-                : { display: "none" };
-        },
-        []
-    );
-
-    const makeInvisibleDefenceBonus = useCallback((team: string) => {
-        return team === "Attackers"
-            ? { display: "none" }
-            : { display: "visible" };
-    }, []);
-
-    const makeInvisibleWallBonus = useCallback(
-        (team: string, unitType: string) => {
-            const wallEligibleUnits = [
-                "Warrior",
-                "Archer",
-                "Defender",
-                "Knight",
-                "Rider",
-                "Tridention",
-                "Polytaur",
-                "IceArcher",
-                "Amphibian",
-            ];
-
-            return team === "Defenders" && wallEligibleUnits.includes(unitType)
-                ? { display: "visible" }
-                : { display: "none" };
-        },
-        []
-    );
-
-    const makeInvisibleSafeBonus = useCallback((team: string) => {
-        return team === "Defenders"
-            ? { display: "none" }
-            : { display: "visible" };
-    }, []);
-
-    const makeInvisibleBoostedBonus = useCallback((team: string) => {
-        return team === "Defenders"
-            ? { display: "none" }
-            : { display: "visible" };
-    }, []);
-
-    const makeInvisiblePoisonedBonus = useCallback((team: string) => {
-        return team === "Attackers"
-            ? { display: "none" }
-            : { display: "visible" };
-    }, []);
-
-    // Convert the icon display method
-    const displayIcon = useCallback((typeUnit: string, team: string) => {
-        // Keep the large switch statement as-is
+    }
+    function displayIcon(typeUnit: string, team: string) {
         switch (typeUnit + team) {
+            // same switch cases as the original
             case "WarriorAttackers":
                 return WarriorAtt;
             case "ArcherAttackers":
@@ -547,7 +397,6 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 return BomberAtt;
             case "JuggernautAttackers":
                 return JuggernautAtt;
-
             case "WarriorDefenders":
                 return WarriorDef;
             case "ArcherDefenders":
@@ -645,10 +494,8 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
             default:
                 return SmallSwords;
         }
-    }, []);
-
-    // Convert the styling method
-    const soldierUnitImageStyle = useCallback((team: string) => {
+    }
+    function soldierUnitImageStyle(team: string) {
         const style = {
             height: "40px",
             width: "30px",
@@ -660,24 +507,105 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
             marginBottom: 5,
             marginTop: 5,
         } as React.CSSProperties;
-
-        if (team === "Defenders") {
-            style.transform = "scaleX(-1)";
-        }
-
+        if (team === "Defenders") style.transform = "scaleX(-1)";
         return style;
-    }, []);
+    }
 
-    console.log("render soldierUnitAsRender");
-    console.log("state", {
-        isToggleOnVeteran,
-        isToggleOnSafe,
-        isToggleOnDefence,
-        // other state variables
-    });
-    console.log("props", props);
+    function makeInvisibleVeteranBonus(unitType: string) {
+        if (
+            [
+                "Ship",
+                "Boat",
+                "Navalon",
+                "Giant",
+                "MindBender",
+                "NatureBunny",
+                "Crab",
+                "DragonEgg",
+                "BabyDragon",
+                "FireDragon",
+                "Mooni",
+                "Gaami",
+                "Shaman",
+                "Centipede",
+                "Segment",
+                "Cloak",
+                "Dinghy",
+                "Battleship",
+                "Raft",
+                "Scout",
+                "Rammer",
+                "Bomber",
+                "Pirate",
+                "Juggernaut",
+            ].includes(unitType)
+        ) {
+            return { display: "none" };
+        }
+        return { display: "visible" };
+    }
+    function makeInvisibleShipUnit(shipUnit: boolean) {
+        return shipUnit ? { display: "visible" } : { display: "none" };
+    }
+    function makeInvisibleSplashDamage(unitType: string, team: string) {
+        if (
+            (unitType === "FireDragon" && team === "Attackers") ||
+            (unitType === "Bomber" && team === "Attackers") ||
+            (unitType === "Juggernaut" && team === "Attackers")
+        ) {
+            return { display: "visible" };
+        }
+        return { display: "none" };
+    }
+    function makeInvisibleExplodeDamage(unitType: string, team: string) {
+        if (
+            (unitType === "Doomux" && team === "Attackers") ||
+            (unitType === "Raychi" && team === "Attackers")
+        ) {
+            return { display: "visible" };
+        }
+        return { display: "none" };
+    }
+    function makeInvisibleDefenceBonus(team: string) {
+        return team === "Attackers"
+            ? { display: "none" }
+            : { display: "visible" };
+    }
+    function makeInvisibleWallBonus(team: string, unitType: string) {
+        if (
+            team === "Defenders" &&
+            [
+                "Warrior",
+                "Archer",
+                "Defender",
+                "Knight",
+                "Rider",
+                "Tridention",
+                "Polytaur",
+                "IceArcher",
+                "Amphibian",
+            ].includes(unitType)
+        ) {
+            return { display: "visible" };
+        }
+        return { display: "none" };
+    }
+    function makeInvisibleSafeBonus(team: string) {
+        return team === "Defenders"
+            ? { display: "none" }
+            : { display: "visible" };
+    }
+    function makeInvisibleBoostedBonus(team: string) {
+        return team === "Defenders"
+            ? { display: "none" }
+            : { display: "visible" };
+    }
+    function makeInvisiblePoisonedBonus(team: string) {
+        return team === "Attackers"
+            ? { display: "none" }
+            : { display: "visible" };
+    }
 
-    // The JSX remains mostly the same, just updating class methods to hooks
     return (
         <div>
             <div
@@ -689,22 +617,19 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                     marginBottom: -4,
                 }}
             >
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
+                <div style={{ display: "flex", alignItems: "center" }}>
                     <img
                         src={displayIcon(props.typeUnit, props.team)}
                         alt="Soldier"
                         style={soldierUnitImageStyle(props.team)}
                     />
                     <span>
-                        <label htmlFor={generateCheckboxIdHitpointField()}>
+                        <label
+                            htmlFor={props.team + props.id + "HitpointField"}
+                        >
                             <input
-                                id={generateCheckboxIdHitpointField()}
-                                name={generateCheckboxIdHitpointField()}
+                                id={props.team + props.id + "HitpointField"}
+                                name={props.team + props.id + "HitpointField"}
                                 type="text"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
@@ -720,10 +645,9 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                         </label>
                     </span>
                     <span style={{ fontWeight: "bold" }}>
-                        <ArrowForwardIcon /> {displayhealthAfter()}
+                        <ArrowForwardIcon /> {displayHealthAfter()}
                     </span>
                 </div>
-
                 <IconButton
                     onClick={() => props.OnDelete(props.id, props.team)}
                     style={{
@@ -732,11 +656,7 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                         justifyContent: "flex-end",
                     }}
                     disableRipple
-                    sx={{
-                        "&:hover": {
-                            backgroundColor: "transparent",
-                        },
-                    }}
+                    sx={{ "&:hover": { backgroundColor: "transparent" } }}
                 >
                     <CancelPresentationIcon
                         fontSize="large"
@@ -744,13 +664,11 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                     />
                 </IconButton>
             </div>
-
             <IconButton
                 onClick={() => props.OnIncreaseHitpoints(props.id, props.team)}
             >
                 <AddBoxIcon color="success" />
             </IconButton>
-
             <Button
                 variant="outlined"
                 size="small"
@@ -771,14 +689,11 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.1,
                     color: "#A9A9A9",
-                    ...(isToggleOnVeteran === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnVeteran && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnVeteran ? <b>vet</b> : "vet"}
             </Button>
-
             <Button
                 variant="outlined"
                 size="small"
@@ -800,7 +715,6 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
             >
                 mx{props.healthMax}
             </Button>
-
             <Button
                 variant="outlined"
                 color="secondary"
@@ -824,14 +738,11 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.1,
                     color: "#A9A9A9",
-                    ...(isToggleOnSplashDamage === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnSplashDamage && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnSplashDamage ? <b>splsh</b> : "splsh"}
             </Button>
-
             <Button
                 variant="outlined"
                 color="secondary"
@@ -855,18 +766,15 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.1,
                     color: "#A9A9A9",
-                    ...(isToggleOnExplodeDamage === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnExplodeDamage && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnExplodeDamage ? <b>xpld</b> : "xpld"}
             </Button>
-
             <Button
                 variant="outlined"
-                color="secondary"
                 size="small"
+                color="secondary"
                 onClick={() => {
                     props.OnDefenceBonus(
                         props.id,
@@ -883,22 +791,17 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.25,
                     color: "#A9A9A9",
-                    ...(isToggleOnDefence === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnDefence && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnDefence ? <b>def</b> : "def"}
             </Button>
-
             <br />
-
             <IconButton
                 onClick={() => props.OnDecreaseHitpoints(props.id, props.team)}
             >
                 <IndeterminateCheckBoxIcon sx={{ color: pink[500] }} />
             </IconButton>
-
             <Button
                 variant="outlined"
                 size="small"
@@ -922,14 +825,11 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.1,
                     color: "#A9A9A9",
-                    ...(isToggleOnWall === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnWall && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnWall ? <b>wall</b> : "wall"}
             </Button>
-
             <Button
                 variant="outlined"
                 size="small"
@@ -950,15 +850,14 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.25,
                     color: isToggleOnPoisoned
-                        ? "#CE93D8" // Fixed color for poisoned
+                        ? "##CE93D8"
                         : isBecamePoisoned
-                          ? "#008000" // Green for became poisoned
-                          : "#A9A9A9", // Default color
+                          ? "#008000"
+                          : "#A9A9A9",
                 }}
             >
                 {isToggleOnPoisoned ? <b>pois</b> : "pois"}
             </Button>
-
             <Button
                 variant="outlined"
                 size="small"
@@ -979,14 +878,11 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.1,
                     color: "#A9A9A9",
-                    ...(isToggleOnSafe === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnSafe && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnSafe ? <b>safe</b> : "safe"}
             </Button>
-
             <Button
                 variant="outlined"
                 size="small"
@@ -1007,16 +903,12 @@ const SoldierUnitAsRender: React.FC<Props> = (props) => {
                 sx={{
                     marginRight: 0.25,
                     color: "#A9A9A9",
-                    ...(isToggleOnBoosted === true && {
-                        color: "#ce93d8", // Fixed double #
-                    }),
+                    ...(isToggleOnBoosted && { color: "##ce93d8" }),
                 }}
             >
                 {isToggleOnBoosted ? <b>bst</b> : "bst"}
             </Button>
         </div>
     );
-};
-
-// Rename export to match PascalCase convention
-export default SoldierUnitAsRender;
+}
+export default SoldierUnitAsRenderBeta;
