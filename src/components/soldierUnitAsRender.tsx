@@ -96,6 +96,7 @@ import ScoutDef from "../img/Defenders/Scout.png";
 import RammerDef from "../img/Defenders/Rammer.png";
 import BomberDef from "../img/Defenders/Bomber.png";
 import JuggernautDef from "../img/Defenders/Juggernaut.png";
+
 import { getSecondaryButtonStyles } from "../customStyles";
 
 import SmallSwords from "../img/Other/SmallSwords.png";
@@ -825,7 +826,8 @@ class soldierUnitAsRender extends React.Component<Props, State> {
                     }}
                     style={{
                         ...this.makeInvisibleWallBonus(
-                            this.state.isToggleVisibleTeam
+                            this.state.isToggleVisibleTeam,
+                            this.state.isToggleVisibleTypeUnit
                         ),
                         ...getSecondaryButtonStyles(),
                     }}
@@ -1004,11 +1006,22 @@ class soldierUnitAsRender extends React.Component<Props, State> {
         }
     }
 
-    makeInvisibleWallBonus(team: string) {
-        if (team === "Attackers") {
-            return { display: "none" };
-        } else {
+    makeInvisibleWallBonus(team: string, unitType: string) {
+        if (
+            team === "Defenders" &&
+            (unitType === "Warrior" ||
+                unitType === "Archer" ||
+                unitType === "Defender" ||
+                unitType === "Knight" ||
+                unitType === "Rider" ||
+                unitType === "Tridention" ||
+                unitType === "Polytaur" ||
+                unitType === "IceArcher" ||
+                unitType === "Amphibian")
+        ) {
             return { display: "visible" };
+        } else {
+            return { display: "none" };
         }
     }
 

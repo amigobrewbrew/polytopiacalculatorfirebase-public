@@ -1,7 +1,9 @@
 /** This component holds all the buttons and functions for the attackers selection */
 
+// SCHEDULED FOR DEMOLITION
+
 import * as React from "react";
-import DefendersSelectionButtonBeta from "./defendersSelectionButtonBeta";
+import DefendersSelectionButton from "./defendersSelectionButton";
 import Warrior from "../img/Defenders/Warrior.png";
 import Archer from "../img/Defenders/Archer.png";
 import Rider from "../img/Defenders/Rider.png";
@@ -76,7 +78,7 @@ type State = {
  * Class for the functions and rendering of attackers selection component
  * The rendering makes use of and interface DefendersSelectionButton
  */
-class defendersSelectionBeta extends React.Component<Props, State> {
+class defendersSelection extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -241,54 +243,54 @@ class LandUnits extends React.Component<Props> {
         return (
             <Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Warrior"
                         onClick={() => this.props.OnAddDefender("Warrior")}
                         ButtonImage={Warrior}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Archer"
                         onClick={() => this.props.OnAddDefender("Archer")}
                         ButtonImage={Archer}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Rider"
                         onClick={() => this.props.OnAddDefender("Rider")}
                         ButtonImage={Rider}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Defender"
                         onClick={() => this.props.OnAddDefender("Defender")}
                         ButtonImage={Defender}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Swordsman"
                         onClick={() => this.props.OnAddDefender("Swordsman")}
                         ButtonImage={Swordsman}
                     />
                 </Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Catapult"
                         onClick={() => this.props.OnAddDefender("Catapult")}
                         ButtonImage={Catapult}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Knight"
                         onClick={() => this.props.OnAddDefender("Knight")}
                         ButtonImage={Knight}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="MindBender"
                         onClick={() => this.props.OnAddDefender("MindBender")}
                         ButtonImage={MindBender}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Giant"
                         onClick={() => this.props.OnAddDefender("Giant")}
                         ButtonImage={Giant}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Dagger"
                         onClick={() => this.props.OnAddDefender("Dagger")}
                         ButtonImage={Dagger}
@@ -308,54 +310,54 @@ class Page2 extends React.Component<Props> {
         return (
             <Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="NatureBunny"
                         onClick={() => this.props.OnAddDefender("NatureBunny")}
                         ButtonImage={NatureBunny}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Cloak"
                         onClick={() => this.props.OnAddDefender("Cloak")}
                         ButtonImage={Cloak}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Dinghy"
                         onClick={() => this.props.OnAddDefender("Dinghy")}
                         ButtonImage={Dinghy}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Pirate"
                         onClick={() => this.props.OnAddDefender("Pirate")}
                         ButtonImage={Pirate}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Raft"
                         onClick={() => this.props.OnAddDefender("Raft")}
                         ButtonImage={Raft}
                     />
                 </Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Scout"
                         onClick={() => this.props.OnAddDefender("Scout")}
                         ButtonImage={Scout}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Rammer"
                         onClick={() => this.props.OnAddDefender("Rammer")}
                         ButtonImage={Rammer}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Bomber"
                         onClick={() => this.props.OnAddDefender("Bomber")}
                         ButtonImage={Bomber}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Juggernaut"
                         onClick={() => this.props.OnAddDefender("Juggernaut")}
                         ButtonImage={Juggernaut}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Polytaur"
                         onClick={() => this.props.OnAddDefender("Polytaur")}
                         ButtonImage={Polytaur}
@@ -375,54 +377,54 @@ class Page3 extends React.Component<Props> {
         return (
             <Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Amphibian"
                         onClick={() => this.props.OnAddDefender("Amphibian")}
                         ButtonImage={Amphibian}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Tridention"
                         onClick={() => this.props.OnAddDefender("Tridention")}
                         ButtonImage={Tridention}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Shark"
                         onClick={() => this.props.OnAddDefender("Shark")}
                         ButtonImage={Shark}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Puffer"
                         onClick={() => this.props.OnAddDefender("Puffer")}
                         ButtonImage={Puffer}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Jelly"
                         onClick={() => this.props.OnAddDefender("Jelly")}
                         ButtonImage={Jelly}
                     />
                 </Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Crab"
                         onClick={() => this.props.OnAddDefender("Crab")}
                         ButtonImage={Crab}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="DragonEgg"
                         onClick={() => this.props.OnAddDefender("DragonEgg")}
                         ButtonImage={DragonEgg}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="BabyDragon"
                         onClick={() => this.props.OnAddDefender("BabyDragon")}
                         ButtonImage={BabyDragon}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="FireDragon"
                         onClick={() => this.props.OnAddDefender("FireDragon")}
                         ButtonImage={FireDragon}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Mooni"
                         onClick={() => this.props.OnAddDefender("Mooni")}
                         ButtonImage={Mooni}
@@ -442,55 +444,55 @@ class Page4 extends React.Component<Props> {
         return (
             <Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="IceArcher"
                         onClick={() => this.props.OnAddDefender("IceArcher")}
                         ButtonImage={IceArcher}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="BattleSled"
                         onClick={() => this.props.OnAddDefender("BattleSled")}
                         ButtonImage={BattleSled}
                     />
 
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Gaami"
                         onClick={() => this.props.OnAddDefender("Gaami")}
                         ButtonImage={Gaami}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="IceFortress"
                         onClick={() => this.props.OnAddDefender("IceFortress")}
                         ButtonImage={IceFortress}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Hexapod"
                         onClick={() => this.props.OnAddDefender("Hexapod")}
                         ButtonImage={Hexapod}
                     />
                 </Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Kiton"
                         onClick={() => this.props.OnAddDefender("Kiton")}
                         ButtonImage={Kiton}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Phychi"
                         onClick={() => this.props.OnAddDefender("Phychi")}
                         ButtonImage={Phychi}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Raychi"
                         onClick={() => this.props.OnAddDefender("Raychi")}
                         ButtonImage={Raychi}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Shaman"
                         onClick={() => this.props.OnAddDefender("Shaman")}
                         ButtonImage={Shaman}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Exida"
                         onClick={() => this.props.OnAddDefender("Exida")}
                         ButtonImage={Exida}
@@ -510,58 +512,58 @@ class Page5 extends React.Component<Props> {
         return (
             <Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Doomux"
                         onClick={() => this.props.OnAddDefender("Doomux")}
                         ButtonImage={Doomux}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Doomux"
                         onClick={() => this.props.OnAddDefender("Doomux")}
                         ButtonImage={Doomux}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Doomux"
                         onClick={() => this.props.OnAddDefender("Doomux")}
                         ButtonImage={Doomux}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Doomux"
                         onClick={() => this.props.OnAddDefender("Doomux")}
                         ButtonImage={Doomux}
                     />
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Doomux"
                         onClick={() => this.props.OnAddDefender("Doomux")}
                         ButtonImage={Doomux}
                     />
                 </Box>
                 <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Centipede"
                         onClick={() => this.props.OnAddDefender("Centipede")}
                         ButtonImage={Centipede}
                     />
 
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Segment"
                         onClick={() => this.props.OnAddDefender("Segment")}
                         ButtonImage={Segment}
                     />
 
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Segment"
                         onClick={() => this.props.OnAddDefender("Segment")}
                         ButtonImage={Segment}
                     />
 
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Segment"
                         onClick={() => this.props.OnAddDefender("Segment")}
                         ButtonImage={Segment}
                     />
 
-                    <DefendersSelectionButtonBeta
+                    <DefendersSelectionButton
                         defenderType="Segment"
                         onClick={() => this.props.OnAddDefender("Segment")}
                         ButtonImage={Segment}
@@ -572,4 +574,4 @@ class Page5 extends React.Component<Props> {
     }
 }
 
-export default defendersSelectionBeta;
+export default defendersSelection;

@@ -1,5 +1,7 @@
 /** This component is used to add a defender or attacker unit to the battle ground array and giving the unit the initial stats */
 
+// SCHEDULED FOR DEMOLITION
+
 import * as React from "react";
 import WarriorAtt from "../img/Attackers/Warrior.png";
 import ArcherAtt from "../img/Attackers/Archer.png";
@@ -162,7 +164,7 @@ type State = {
     healthAfterAsState: number;
 };
 
-class soldierUnitAsRenderBeta extends React.Component<Props, State> {
+class soldierUnitAsRender extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -1300,4 +1302,4 @@ class soldierUnitAsRenderBeta extends React.Component<Props, State> {
         return soldierUnitImageStyle;
     }
 }
-export default soldierUnitAsRenderBeta;
+export default soldierUnitAsRender;

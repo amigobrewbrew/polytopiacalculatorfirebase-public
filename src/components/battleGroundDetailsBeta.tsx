@@ -6,10 +6,11 @@
  */
 
 import * as React from "react";
-import AttackersSelection from "./attackersSelectionBeta";
-import DefendersSelection from "./defendersSelectionBeta";
-import SoldierUnitAsRender from "./soldierUnitAsRenderBeta";
-import * as StatsBeta from "./unitStatsBeta";
+import AttackersSelection from "./attackersSelection";
+import DefendersSelection from "./defendersSelection";
+import SoldierUnitAsRender from "./soldierUnitAsRender";
+import * as StatsBeta from "./108.unitStats";
+
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
@@ -364,8 +365,8 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
                                 onChange={this.handleChangeCheckbox}
                             />
                         }
-                        label={"Use  + and - to set order instead of health"}
-                    />{" "}
+                        label="Use + and - to set order instead of health"
+                    />
                 </CardWithShadow>
                 <Box
                     sx={{
@@ -460,13 +461,6 @@ class battleGroundDetailsBeta extends React.Component<Props, State> {
         let index;
         const soldierUnitsDefendersAsRender =
             this.state.soldierUnitsDefendersAsRender;
-
-        // if (typeUnit === "Swordsman" || typeUnit === "MindBender") {
-        //   console.log("Swordsman and Mindbenders can not be fortified");
-        //   alert(typeUnit + " can not be foritified");
-        //   return;
-        // }
-
         if (team === "Defenders" && wallBonus === false) {
             index = soldierUnitsDefendersAsRender.map((e) => e.id).indexOf(id);
             soldierUnitsDefendersAsRender[index].wallBonus = true;

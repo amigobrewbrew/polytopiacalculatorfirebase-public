@@ -9,7 +9,8 @@ import * as React from "react";
 import AttackersSelection from "./attackersSelection";
 import DefendersSelection from "./defendersSelection";
 import SoldierUnitAsRender from "./soldierUnitAsRender";
-import * as Stats from "./unitStats";
+import * as StatsBeta from "./108.unitStats";
+import * as Stats from "./105.unitStats";
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
@@ -349,6 +350,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                         )}
                     </Box>
                 </Box>
+
                 <CardWithShadow
                     sx={{
                         p: "0 2%",
@@ -357,7 +359,6 @@ class battleGroundDetails extends React.Component<Props, State> {
                     }}
                 >
                     <FormControlLabel
-                        sx={{ mb: 0 }}
                         control={
                             <Checkbox
                                 checked={this.state.checkedPosition}
@@ -367,7 +368,6 @@ class battleGroundDetails extends React.Component<Props, State> {
                         label="Use + and - to set order instead of health"
                     />
                 </CardWithShadow>
-
                 <Box
                     sx={{
                         display: "flex",
@@ -383,6 +383,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                     <DefendersSelection
                         OnAddDefender={this.handleAddDefender}
                     />
+                    {/* These two lines above conflict with the set state of the health after calcultion. There will be a set state loop */}
                 </Box>
 
                 <CardWithShadow
@@ -395,6 +396,11 @@ class battleGroundDetails extends React.Component<Props, State> {
                         This page is based on Build version 2.10.1.12787 and
                         Game version: 105. For Forgotten update click{" "}
                         <a href="/beta">here</a>.
+
+                        <br />
+                        Beta says:
+                        This page is based on Build version 2.11.1.13205 and
+                        Game version: 108.
                     </Box>
                 </CardWithShadow>
             </Box>
@@ -1255,6 +1261,17 @@ class battleGroundDetails extends React.Component<Props, State> {
         //     ]),
         // });
 
+        let initialSafeBonus = false;
+
+        if (
+            typeUnit === "Dagger" ||
+            typeUnit === "Pirate" ||
+            typeUnit === "Shark" ||
+            typeUnit === "Phychi"
+        ) {
+            initialSafeBonus = true;
+        }
+
         this.setState((prevState) => ({
             soldierUnitsAttackersAsRender: [
                 ...prevState.soldierUnitsAttackersAsRender,
@@ -1270,7 +1287,7 @@ class battleGroundDetails extends React.Component<Props, State> {
                     veteran: false,
                     defenceBonus: false,
                     wallBonus: false,
-                    safeBonus: false,
+                    safeBonus: initialSafeBonus,
                     poisonedBonus: false,
                     becamePoisonedBonus: false,
                     boostedBonus: false,
