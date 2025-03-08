@@ -625,8 +625,6 @@ function BattleGroundDetails(_props: Props) {
                     if (idx === prev.length - 1 || idx < 0) return prev;
                     const arr = [...prev];
                     [arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]];
-                    arr[idx + 1].id = idx + 1;
-                    arr[idx].id = idx;
                     return arr;
                 });
             } else {
@@ -635,8 +633,6 @@ function BattleGroundDetails(_props: Props) {
                     if (idx === prev.length - 1 || idx < 0) return prev;
                     const arr = [...prev];
                     [arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]];
-                    arr[idx + 1].id = idx + 1;
-                    arr[idx].id = idx;
                     return arr;
                 });
             }
