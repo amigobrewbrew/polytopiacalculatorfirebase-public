@@ -47,8 +47,8 @@ function BattleGroundDetails(_props: Props) {
         useState<SoldierUnit[]>([]);
     const [soldierUnitsDefendersAsRender, setSoldierUnitsDefendersAsRender] =
         useState<SoldierUnit[]>([]);
-    const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
-    const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
+    // const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
+    // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
     const [checkedPosition, setCheckedPosition] = useState(false);
 
     const handleChangeCheckbox = () => {
@@ -498,7 +498,7 @@ function BattleGroundDetails(_props: Props) {
             explodeDamage: false,
         };
         setSoldierUnitsAttackersAsRender((prev) => [...prev, newUnit]);
-        setAttIdxArray((prev) => [...prev, newId]);
+        // setAttIdxArray((prev) => [...prev, newId]);
         analyticsLogEvent(analytics, "pc_attacker_added_" + typeUnit);
     };
 
@@ -525,7 +525,7 @@ function BattleGroundDetails(_props: Props) {
             explodeDamage: false,
         };
         setSoldierUnitsDefendersAsRender((prev) => [...prev, newUnit]);
-        setDefIdxArray((prev) => [...prev, newId]);
+        // setDefIdxArray((prev) => [...prev, newId]);
         analyticsLogEvent(analytics, "pc_defender_added_" + typeUnit);
     };
 
@@ -663,16 +663,16 @@ function BattleGroundDetails(_props: Props) {
             setSoldierUnitsAttackersAsRender((prev) =>
                 prev.filter((u) => u.id !== id).map((u, i) => ({ ...u, id: i }))
             );
-            setAttIdxArray((prev) =>
-                prev.filter((x) => x !== id).map((_, i) => i)
-            );
+            // setAttIdxArray((prev) =>
+            //     prev.filter((x) => x !== id).map((_, i) => i)
+            // );
         } else {
             setSoldierUnitsDefendersAsRender((prev) =>
                 prev.filter((u) => u.id !== id).map((u, i) => ({ ...u, id: i }))
             );
-            setDefIdxArray((prev) =>
-                prev.filter((x) => x !== id).map((_, i) => i)
-            );
+            // setDefIdxArray((prev) =>
+            //     prev.filter((x) => x !== id).map((_, i) => i)
+            // );
         }
         analyticsLogEvent(analytics, "pc_unit_deleted_" + team);
     };
