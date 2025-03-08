@@ -580,16 +580,30 @@ function BattleGroundDetails(_props: Props) {
                 setSoldierUnitsAttackersAsRender((prev) => {
                     const idx = prev.findIndex((u) => u.id === id);
                     if (idx <= 0) return prev;
+
+                    // Create a new array and swap the elements
                     const arr = [...prev];
                     [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
+
+                    // Update IDs to match array positions
+                    arr[idx - 1].id = idx - 1;
+                    arr[idx].id = idx;
+
                     return arr;
                 });
             } else {
                 setSoldierUnitsDefendersAsRender((prev) => {
                     const idx = prev.findIndex((u) => u.id === id);
                     if (idx <= 0) return prev;
+
+                    // Create a new array and swap the elements
                     const arr = [...prev];
                     [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
+
+                    // Update IDs to match array positions
+                    arr[idx - 1].id = idx - 1;
+                    arr[idx].id = idx;
+
                     return arr;
                 });
             }

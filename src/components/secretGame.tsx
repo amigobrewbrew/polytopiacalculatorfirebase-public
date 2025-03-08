@@ -116,7 +116,7 @@ const SecretGame: React.FC = () => {
             ...prevState,
             numeroSecreto: Math.floor(Math.random() * 9) + 1,
             tentativas: 3,
-            totalGames: prevState.totalGames + 1,
+            totalGames: prevState.totalGames + 1, // During debugging is calculated twice.. but only during debugging?
         }));
 
         // showPopup(

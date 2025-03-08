@@ -153,7 +153,7 @@ const attackerPages = [
 ];
 
 /**
- * Generic attacker page component
+ * Attackers rows component
  */
 const AttackerPage: React.FC<Props & { pageIndex: number }> = ({
     onAddAttacker,
@@ -206,7 +206,7 @@ const AttackerPage: React.FC<Props & { pageIndex: number }> = ({
 };
 
 /**
- * Function for the rendering of attackers selection component
+ * Navigate attackers selection rows
  */
 const AttackersSelection: React.FC<Props> = ({ onAddAttacker }) => {
     const [currentPage, setCurrentPage] = useState(0);

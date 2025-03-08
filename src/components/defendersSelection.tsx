@@ -145,16 +145,16 @@ const defenderPages = [
         { name: "Doomux", img: Doomux },
         { name: "Doomux", img: Doomux },
         { name: "Doomux", img: Doomux },
-        { name: "Segment", img: Segment },
-        { name: "Segment", img: Segment },
-        { name: "Segment", img: Segment },
-        { name: "Segment", img: Segment },
         { name: "Centipede", img: Centipede },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
     ],
 ];
 
 /**
- * Generic defender page component
+ * Defenders rows component
  */
 const DefenderPage: React.FC<Props & { pageIndex: number }> = ({
     onAddDefender,
@@ -209,7 +209,7 @@ const DefenderPage: React.FC<Props & { pageIndex: number }> = ({
 };
 
 /**
- * Function for the rendering of defenders selection component
+ * Navigation component for defenders selection
  */
 const DefendersSelection: React.FC<Props> = ({ onAddDefender }) => {
     const [currentPage, setCurrentPage] = useState(0);
