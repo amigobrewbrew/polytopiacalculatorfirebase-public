@@ -905,23 +905,35 @@ function BattleGroundDetails(_props: Props) {
 
             const boostedBonusMultiplier = attacker.boostedBonus ? 1 : 0;
 
-            const attackForce =
-                ((attacker.attack + 0.5 * boostedBonusMultiplier) *
-                    attacker.healthBefore) /
-                attacker.healthMax;
-            const defenceForce =
-                ((defender.defence *
-                    (defender.healthBefore - totalAttackResult)) /
-                    defender.healthMax) *
-                wallBonusMultiplier *
-                defenceBonusMultiplier *
-                poisonedBonusMultiplier;
+            const attackForce = parseFloat(
+                (
+                    ((attacker.attack + 0.5 * boostedBonusMultiplier) *
+                        attacker.healthBefore) /
+                    attacker.healthMax
+                ).toFixed(10)
+            );
+
+            const defenceForce = parseFloat(
+                (
+                    ((defender.defence *
+                        (defender.healthBefore - totalAttackResult)) /
+                        defender.healthMax) *
+                    wallBonusMultiplier *
+                    defenceBonusMultiplier *
+                    poisonedBonusMultiplier
+                ).toFixed(10)
+            );
 
             const totalDamage = attackForce + defenceForce;
+
             let attackResult = Math.round(
-                (attackForce / totalDamage) *
-                    (attacker.attack + 0.5 * boostedBonusMultiplier) *
-                    4.5
+                parseFloat(
+                    (
+                        (attackForce / totalDamage) *
+                        (attacker.attack + 0.5 * boostedBonusMultiplier) *
+                        4.5
+                    ).toFixed(10)
+                )
             );
 
             if (
@@ -936,13 +948,25 @@ function BattleGroundDetails(_props: Props) {
                 attackResult = Math.round(attackResult * 0.5);
             }
 
+            console.log("This is attackForce:" + attackForce);
+            console.log("This is defenceForce:" + defenceForce);
+            console.log("This is totalDamage:" + totalDamage);
+            console.log("This is attackResult:" + attackResult);
+
             totalAttackResult += attackResult;
             defender.healthAfter = defender.healthBefore - totalAttackResult;
 
             if (defender.healthAfter > 0) {
                 const defenceResult = Math.round(
-                    (defenceForce / totalDamage) * defender.defence * 4.5
+                    parseFloat(
+                        (
+                            (defenceForce / totalDamage) *
+                            defender.defence *
+                            4.5
+                        ).toFixed(10)
+                    )
                 );
+                console.log("This is defenceResult:" + defenceResult);
                 if (
                     ["Exida", "Phychi", "Kiton", "Segment"].includes(
                         attacker.typeUnit
