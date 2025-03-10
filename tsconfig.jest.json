@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "es2020", // Changed from "esnext" to explicitly support import.meta
+        "target": "es2020", // Changed to match module version
+        "moduleResolution": "node",
+        "allowJs": true,
+        "isolatedModules": false,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["dom", "dom.iterable", "es2020"] // Updated to match module/target
+    }
+}

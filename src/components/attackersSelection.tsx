@@ -1,6 +1,7 @@
-/** This component holds all the buttons and functions for the attackers selection. */
+/** This component holds all the buttons and functions for the attackers selection */
 
 import * as React from "react";
+import { useState } from "react";
 import Warrior from "../img/Attackers/Warrior.png";
 import Archer from "../img/Attackers/Archer.png";
 import Rider from "../img/Attackers/Rider.png";
@@ -49,961 +50,216 @@ import Scout from "../img/Attackers/Scout.png";
 import Rammer from "../img/Attackers/Rammer.png";
 import Bomber from "../img/Attackers/Bomber.png";
 import Juggernaut from "../img/Attackers/Juggernaut.png";
+
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
-import Box from "@mui/material/Box";
 
 /** This property is to indicate to the parent component that a soldier needs to be added to the battleground */
-type Props = {
+type AttackerPageProps = {
     onAddAttacker: any;
-    // pageDirection: string;
+    pageIndex: number;
 };
 
-type State = {
-    visibleNow: string;
-    visibleLandUnits: boolean;
-    visiblePage2: boolean;
-    visiblePage3: boolean;
-    visiblePage4: boolean;
-    visiblePage5: boolean;
+// Centralized styles
+const attackersImageStyle = {
+    height: "40px",
+    width: "30px",
+    objectFit: "contain",
+    WebkitAppearance: "none",
+} as React.CSSProperties;
+
+const attackersBoxStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+};
+
+const attackersButtonStyle = {
+    m: 1,
+    maxWidth: "4em",
+    minWidth: "4em",
+};
+
+// Attacker structure organized by pages
+const attackerPages = [
+    // Page 1 - LandUnits
+    [
+        { name: "Warrior", img: Warrior, flipped: true },
+        { name: "Archer", img: Archer, flipped: true },
+        { name: "Rider", img: Rider, flipped: true },
+        { name: "Defender", img: Defender, flipped: true },
+        { name: "Swordsman", img: Swordsman, flipped: true },
+        { name: "Catapult", img: Catapult, flipped: true },
+        { name: "Knight", img: Knight, flipped: true },
+        { name: "MindBender", img: MindBender, flipped: true },
+        { name: "Giant", img: Giant, flipped: true },
+        { name: "Dagger", img: Dagger, flipped: true },
+    ],
+    // Page 2
+    [
+        { name: "NatureBunny", img: NatureBunny },
+        { name: "Cloak", img: Cloak },
+        { name: "Dinghy", img: Dinghy },
+        { name: "Pirate", img: Pirate },
+        { name: "Raft", img: Raft },
+        { name: "Scout", img: Scout },
+        { name: "Rammer", img: Rammer },
+        { name: "Bomber", img: Bomber },
+        { name: "Juggernaut", img: Juggernaut },
+        { name: "Polytaur", img: Polytaur },
+    ],
+    // Page 3
+    [
+        { name: "Amphibian", img: Amphibian },
+        { name: "Tridention", img: Tridention },
+        { name: "Shark", img: Shark },
+        { name: "Puffer", img: Puffer },
+        { name: "Jelly", img: Jelly },
+        { name: "Crab", img: Crab },
+        { name: "DragonEgg", img: DragonEgg },
+        { name: "BabyDragon", img: BabyDragon },
+        { name: "FireDragon", img: FireDragon },
+        { name: "Mooni", img: Mooni },
+    ],
+    // Page 4
+    [
+        { name: "IceArcher", img: IceArcher },
+        { name: "BattleSled", img: BattleSled },
+        { name: "Gaami", img: Gaami },
+        { name: "IceFortress", img: IceFortress },
+        { name: "Hexapod", img: Hexapod },
+        { name: "Kiton", img: Kiton },
+        { name: "Phychi", img: Phychi },
+        { name: "Raychi", img: Raychi },
+        { name: "Shaman", img: Shaman },
+        { name: "Exida", img: Exida },
+    ],
+    // Page 5
+    [
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Centipede", img: Centipede },
+    ],
+];
+
+/**
+ * Attackers rows component
+ */
+const AttackerPage = ({ onAddAttacker, pageIndex }: AttackerPageProps) => {
+    const attackers = attackerPages[pageIndex];
+
+    return (
+        <Box>
+            <Box sx={attackersBoxStyle}>
+                {attackers.slice(0, 5).map((def, index) => (
+                    <Button
+                        key={`${def.name}-${index}`}
+                        onClick={() => onAddAttacker(def.name)}
+                        size="small"
+                        variant="outlined"
+                        sx={attackersButtonStyle}
+                    >
+                        <img
+                            src={def.img}
+                            alt={def.name}
+                            style={{
+                                ...attackersImageStyle,
+                            }}
+                        />
+                    </Button>
+                ))}
+            </Box>
+            <Box sx={attackersBoxStyle}>
+                {attackers.slice(5, 10).map((def, index) => (
+                    <Button
+                        key={`${def.name}-${index + 5}`}
+                        onClick={() => onAddAttacker(def.name)}
+                        size="small"
+                        variant="outlined"
+                        sx={attackersButtonStyle}
+                    >
+                        <img
+                            src={def.img}
+                            alt={def.name}
+                            style={{
+                                ...attackersImageStyle,
+                            }}
+                        />
+                    </Button>
+                ))}
+            </Box>
+        </Box>
+    );
 };
 
 /**
- * Class for the functions and rendering of attackers selection component
+ * Navigate attackers selection rows
  */
-class attackersSelection extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            visibleNow: "LandUnits",
-            visibleLandUnits: true,
-            visiblePage2: false,
-            visiblePage3: false,
-            visiblePage4: false,
-            visiblePage5: false,
-        };
-        // this.changeVisible = this.changeVisible.bind(this);
-        // this.makeVisibleLandUnits = this.makeVisibleLandUnits.bind(this);
-        // this.makeVisibleShips = this.makeVisibleShips.bind(this);
-    }
+const AttackersSelection = ({ onAddAttacker }: AttackerPageProps) => {
+    const [currentPage, setCurrentPage] = useState(0);
 
-    changeVisible = (currentSelection: string, pageDirection: string) => {
-        console.log("CurrentSelection before is: " + currentSelection);
-
-        if (
-            (currentSelection === "LandUnits" && pageDirection === "pageUp") ||
-            (currentSelection === "Page3" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: true });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "Page2" });
-        } else if (
-            (currentSelection === "Page2" && pageDirection === "pageUp") ||
-            (currentSelection === "Page4" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: true });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "Page3" });
-        } else if (
-            (currentSelection === "Page3" && pageDirection === "pageUp") ||
-            (currentSelection === "Page5" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: true });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "Page4" });
-        } else if (
-            (currentSelection === "Page4" && pageDirection === "pageUp") ||
-            (currentSelection === "LandUnits" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: true });
-            this.setState({ visibleNow: "Page5" });
-        } else if (
-            (currentSelection === "Page5" && pageDirection === "pageUp") ||
-            (currentSelection === "Page2" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: true });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "LandUnits" });
+    const handlePageChange = (direction: "prev" | "next") => {
+        if (direction === "prev") {
+            setCurrentPage((prevPage) =>
+                prevPage === 0 ? attackerPages.length - 1 : prevPage - 1
+            );
+        } else {
+            setCurrentPage((prevPage) =>
+                prevPage === attackerPages.length - 1 ? 0 : prevPage + 1
+            );
         }
-
-        console.log("CurrentSelection after is: " + currentSelection);
     };
 
-    render() {
-        console.log("Render attackers selection component");
-
-        return (
-            <CardWithShadow
-                sx={{ p: "1%" }}
-                style={{
-                    maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
-                    width: ONE_HUNDRED_PERCENT,
-                }}
-            >
-                <Typography component={"span"} variant="h6">
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Button
-                            variant="contained"
-                            size="small"
-                            onClick={() =>
-                                this.changeVisible(
-                                    this.state.visibleNow,
-                                    "pageDown"
-                                )
-                            }
-                            sx={{ m: 1 }}
-                            style={{ maxWidth: "4em", minWidth: "4em" }}
-                        >
-                            {/* <img src={Switch} alt="Switch" style={attackersImageStyle} /> */}
-                            <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
-                        </Button>
-                        <span className="alignSelfCenter">
-                            Attackers selection
-                        </span>
-                        <Button
-                            variant="contained"
-                            size="small"
-                            onClick={() =>
-                                this.changeVisible(
-                                    this.state.visibleNow,
-                                    "pageUp"
-                                )
-                            }
-                            sx={{ m: 1 }}
-                            style={{ maxWidth: "4em", minWidth: "4em" }}
-                        >
-                            {/* <img src={Switch} alt="Switch" style={attackersImageStyle} /> */}
-                            <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
-                        </Button>
-                    </Box>
-                    <Box>
-                        {this.state.visibleLandUnits && (
-                            <LandUnits {...this.props}> </LandUnits>
-                        )}
-                        {this.state.visiblePage2 && (
-                            <Page2 {...this.props}> </Page2>
-                        )}
-                        {this.state.visiblePage3 && (
-                            <Page3 {...this.props}> </Page3>
-                        )}
-                        {this.state.visiblePage4 && (
-                            <Page4 {...this.props}> </Page4>
-                        )}
-                        {this.state.visiblePage5 && (
-                            <Page5 {...this.props}> </Page5>
-                        )}
-
-                        {/* <button onClick={() => this.changeVisible(this.state.visibleNow)}>
-            <img src={Switch} alt="Switch" style={attackersImageStyle} />
-          </button> */}
-                    </Box>
-                </Typography>
-            </CardWithShadow>
-        );
-    }
-}
-
-class LandUnits extends React.Component<Props> {
-    render() {
-        const attackersImageStyle = {
-            height: "40px",
-            width: "30px",
-            objectFit: "contain",
-            WebkitAppearance: "none",
-        } as React.CSSProperties;
-
-        // const attackersButtonStyleOld = {
-        //   marginRight: 5,
-        //   marginLeft: 5,
-        //   borderRadius: 5,
-        //   marginBottom: 5,
-        //   marginTop: 5,
-        // } as React.CSSProperties;
-
-        const attackersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-
-        const attackersButtonStyle = {
-            m: 1,
-            maxWidth: "4em",
-            minWidth: "4em",
-        };
-
-        return (
-            <Box>
-                <Box sx={attackersBoxStyle}>
-                    {" "}
+    return (
+        <CardWithShadow
+            sx={{ p: "1%" }}
+            style={{
+                maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+                width: ONE_HUNDRED_PERCENT,
+            }}
+        >
+            <Typography component={"span"} variant="h6">
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Button
+                        variant="contained"
                         size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                        onClick={() => this.props.onAddAttacker("Warrior")}
+                        onClick={() => handlePageChange("prev")}
+                        sx={{ m: 1 }}
+                        style={{ maxWidth: "4em", minWidth: "4em" }}
                     >
-                        <img
-                            src={Warrior}
-                            alt="Warrior"
-                            style={attackersImageStyle}
-                        />
+                        <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
                     </Button>
+                    <span className="alignSelfCenter">Attackers selection</span>
                     <Button
+                        variant="contained"
                         size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                        onClick={() => this.props.onAddAttacker("Archer")}
+                        onClick={() => handlePageChange("next")}
+                        sx={{ m: 1 }}
+                        style={{ maxWidth: "4em", minWidth: "4em" }}
                     >
-                        <img
-                            src={Archer}
-                            alt="Archer"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Rider")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Rider}
-                            alt="Rider"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Defender")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Defender}
-                            alt="Defender"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Swordsman")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Swordsman}
-                            alt="Swordsman"
-                            style={attackersImageStyle}
-                        />
+                        <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
                     </Button>
                 </Box>
-
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Catapult")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Catapult}
-                            alt="Catapult"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Knight")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Knight}
-                            alt="Knight"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("MindBender")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={MindBender}
-                            alt="MindBender"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Giant")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Giant}
-                            alt="Giant"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Dagger")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Dagger}
-                            alt="Dagger"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
+                <Box>
+                    <AttackerPage
+                        pageIndex={currentPage}
+                        onAddAttacker={onAddAttacker}
+                    />
                 </Box>
-            </Box>
-        );
-    }
-}
+            </Typography>
+        </CardWithShadow>
+    );
+};
 
-class Page2 extends React.Component<Props> {
-    render() {
-        const attackersImageStyle = {
-            height: "40px",
-            width: "30px",
-            objectFit: "contain",
-            WebkitAppearance: "none",
-        } as React.CSSProperties;
-
-        const attackersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-
-        const attackersButtonStyle = {
-            m: 1,
-            maxWidth: "4em",
-            minWidth: "4em",
-        };
-
-        return (
-            <Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("NatureBunny")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={NatureBunny}
-                            alt="NatureBunny"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Cloak")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Cloak}
-                            alt="Cloak"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Dinghy")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Dinghy}
-                            alt="Dinghy"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Pirate")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Pirate}
-                            alt="Pirate"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Raft")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Raft}
-                            alt="Raft"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Scout")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Scout}
-                            alt="Scout"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Rammer")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Rammer}
-                            alt="Rammer"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Bomber")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Bomber}
-                            alt="Bomber"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Juggernaut")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Juggernaut}
-                            alt="Juggernaut"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Polytaur")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Polytaur}
-                            alt="Polytaur"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-class Page3 extends React.Component<Props> {
-    render() {
-        const attackersImageStyle = {
-            height: "40px",
-            width: "30px",
-            objectFit: "contain",
-            WebkitAppearance: "none",
-        } as React.CSSProperties;
-
-        const attackersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-
-        const attackersButtonStyle = {
-            m: 1,
-            maxWidth: "4em",
-            minWidth: "4em",
-        };
-
-        return (
-            <Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Amphibian")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Amphibian}
-                            alt="Amphibian"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Tridention")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Tridention}
-                            alt="Tridention"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Shark")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Shark}
-                            alt="Shark"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Puffer")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Puffer}
-                            alt="Puffer"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Jelly")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Jelly}
-                            alt="Jelly"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Crab")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Crab}
-                            alt="Crab"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("DragonEgg")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={DragonEgg}
-                            alt="DragonEgg"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("BabyDragon")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={BabyDragon}
-                            alt="BabyDragon"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("FireDragon")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={FireDragon}
-                            alt="FireDragon"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Mooni")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Mooni}
-                            alt="Mooni"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>
-            </Box>
-        );
-    }
-}
-
-class Page4 extends React.Component<Props> {
-    render() {
-        const attackersImageStyle = {
-            height: "40px",
-            width: "30px",
-            objectFit: "contain",
-            WebkitAppearance: "none",
-        } as React.CSSProperties;
-
-        const attackersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-
-        const attackersButtonStyle = {
-            m: 1,
-            maxWidth: "4em",
-            minWidth: "4em",
-        };
-
-        return (
-            <Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("IceArcher")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={IceArcher}
-                            alt="IceArcher"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("BattleSled")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={BattleSled}
-                            alt="BattleSled"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Gaami")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Gaami}
-                            alt="Gaami"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("IceFortress")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={IceFortress}
-                            alt="IceFortress"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Hexapod")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Hexapod}
-                            alt="Hexapod"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Kiton")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Kiton}
-                            alt="Kiton"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Phychi")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Phychi}
-                            alt="Phychi"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Raychi")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Raychi}
-                            alt="Raychi"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Shaman")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Shaman}
-                            alt="Shaman"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Exida")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Exida}
-                            alt="Exida"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-class Page5 extends React.Component<Props> {
-    render() {
-        const attackersImageStyle = {
-            height: "40px",
-            width: "30px",
-            objectFit: "contain",
-            WebkitAppearance: "none",
-        } as React.CSSProperties;
-
-        const attackersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-
-        const attackersButtonStyle = {
-            m: 1,
-            maxWidth: "4em",
-            minWidth: "4em",
-        };
-
-        return (
-            <Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Doomux")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Doomux}
-                            alt="Doomux"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Doomux")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Doomux}
-                            alt="Doomux"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Doomux")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Doomux}
-                            alt="Doomux"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Doomux")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Doomux}
-                            alt="Doomux"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Doomux")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Doomux}
-                            alt="Doomux"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>
-                <Box sx={attackersBoxStyle}>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Segment")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Segment}
-                            alt="Segment"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Segment")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Segment}
-                            alt="Segment"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Segment")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Segment}
-                            alt="Segment"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Segment")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Segment}
-                            alt="Segment"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                    <Button
-                        onClick={() => this.props.onAddAttacker("Centipede")}
-                        size="small"
-                        variant="outlined"
-                        sx={attackersButtonStyle}
-                    >
-                        <img
-                            src={Centipede}
-                            alt="Centipede"
-                            style={attackersImageStyle}
-                        />
-                    </Button>
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-export default attackersSelection;
+export default AttackersSelection;

@@ -1,7 +1,7 @@
-/** This component holds all the buttons and functions for the attackers selection */
+/** This component holds all the buttons and functions for the defenders selection */
 
 import * as React from "react";
-import DefendersSelectionButton from "./defendersSelectionButton";
+import { useState } from "react";
 import Warrior from "../img/Defenders/Warrior.png";
 import Archer from "../img/Defenders/Archer.png";
 import Rider from "../img/Defenders/Rider.png";
@@ -42,534 +42,232 @@ import Segment from "../img/Defenders/Segment.png";
 import MindBender from "../img/Defenders/Mind Bender.png";
 import NatureBunny from "../img/Defenders/Nature Bunny.png";
 import Dagger from "../img/Defenders/Dagger.png";
-import Cloak from "../img/Defenders/Cloak.png";
 import Dinghy from "../img/Defenders/Dinghy.png";
+import Cloak from "../img/Defenders/Cloak.png";
 import Pirate from "../img/Defenders/Pirate.png";
 import Raft from "../img/Defenders/Raft.png";
 import Scout from "../img/Defenders/Scout.png";
 import Rammer from "../img/Defenders/Rammer.png";
 import Bomber from "../img/Defenders/Bomber.png";
 import Juggernaut from "../img/Defenders/Juggernaut.png";
+
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
-import Box from "@mui/material/Box";
 
 /** This property is to indicate to the parent component that a soldier needs to be added to the battleground */
-type Props = {
-    OnAddDefender: any;
+type DefenderPageProps = {
+    onAddDefender: any;
+    pageIndex: number;
 };
 
-type State = {
-    visibleNow: string;
-    visibleLandUnits: boolean;
-    visiblePage2: boolean;
-    visiblePage3: boolean;
-    visiblePage4: boolean;
-    visiblePage5: boolean;
+// Centralized styles
+const defendersImageStyle = {
+    height: "40px",
+    width: "30px",
+    objectFit: "contain",
+    WebkitAppearance: "none",
+    transform: "scaleX(-1)",
+} as React.CSSProperties;
+
+const defendersBoxStyle = {
+    display: "flex",
+    justifyContent: "space-between",
+};
+
+const defendersButtonStyle = {
+    m: 1,
+    maxWidth: "4em",
+    minWidth: "4em",
+};
+
+// Defender structure organized by pages
+const defenderPages = [
+    // Page 1 - LandUnits
+    [
+        { name: "Warrior", img: Warrior, flipped: true },
+        { name: "Archer", img: Archer, flipped: true },
+        { name: "Rider", img: Rider, flipped: true },
+        { name: "Defender", img: Defender, flipped: true },
+        { name: "Swordsman", img: Swordsman, flipped: true },
+        { name: "Catapult", img: Catapult, flipped: true },
+        { name: "Knight", img: Knight, flipped: true },
+        { name: "MindBender", img: MindBender, flipped: true },
+        { name: "Giant", img: Giant, flipped: true },
+        { name: "Dagger", img: Dagger, flipped: true },
+    ],
+    // Page 2
+    [
+        { name: "NatureBunny", img: NatureBunny },
+        { name: "Cloak", img: Cloak },
+        { name: "Dinghy", img: Dinghy },
+        { name: "Pirate", img: Pirate },
+        { name: "Raft", img: Raft },
+        { name: "Scout", img: Scout },
+        { name: "Rammer", img: Rammer },
+        { name: "Bomber", img: Bomber },
+        { name: "Juggernaut", img: Juggernaut },
+        { name: "Polytaur", img: Polytaur },
+    ],
+    // Page 3
+    [
+        { name: "Amphibian", img: Amphibian },
+        { name: "Tridention", img: Tridention },
+        { name: "Shark", img: Shark },
+        { name: "Puffer", img: Puffer },
+        { name: "Jelly", img: Jelly },
+        { name: "Crab", img: Crab },
+        { name: "DragonEgg", img: DragonEgg },
+        { name: "BabyDragon", img: BabyDragon },
+        { name: "FireDragon", img: FireDragon },
+        { name: "Mooni", img: Mooni },
+    ],
+    // Page 4
+    [
+        { name: "IceArcher", img: IceArcher },
+        { name: "BattleSled", img: BattleSled },
+        { name: "Gaami", img: Gaami },
+        { name: "IceFortress", img: IceFortress },
+        { name: "Hexapod", img: Hexapod },
+        { name: "Kiton", img: Kiton },
+        { name: "Phychi", img: Phychi },
+        { name: "Raychi", img: Raychi },
+        { name: "Shaman", img: Shaman },
+        { name: "Exida", img: Exida },
+    ],
+    // Page 5
+    [
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Doomux", img: Doomux },
+        { name: "Centipede", img: Centipede },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+        { name: "Segment", img: Segment },
+    ],
+];
+
+/**
+ * Defenders rows component
+ */
+/**
+ * Defenders page component
+ */
+const DefenderPage = ({ onAddDefender, pageIndex }: DefenderPageProps) => {
+    const defenders = defenderPages[pageIndex];
+
+    return (
+        <Box>
+            <Box sx={defendersBoxStyle}>
+                {defenders.slice(0, 5).map((def, index) => (
+                    <Button
+                        key={`${def.name}-${index}`}
+                        onClick={() => onAddDefender(def.name)}
+                        size="small"
+                        variant="outlined"
+                        sx={defendersButtonStyle}
+                        color="error"
+                    >
+                        <img
+                            src={def.img}
+                            alt={def.name}
+                            style={{
+                                ...defendersImageStyle,
+                            }}
+                        />
+                    </Button>
+                ))}
+            </Box>
+            <Box sx={defendersBoxStyle}>
+                {defenders.slice(5, 10).map((def, index) => (
+                    <Button
+                        key={`${def.name}-${index + 5}`}
+                        onClick={() => onAddDefender(def.name)}
+                        size="small"
+                        variant="outlined"
+                        sx={defendersButtonStyle}
+                        color="error"
+                    >
+                        <img
+                            src={def.img}
+                            alt={def.name}
+                            style={{
+                                ...defendersImageStyle,
+                            }}
+                        />
+                    </Button>
+                ))}
+            </Box>
+        </Box>
+    );
 };
 
 /**
- * Class for the functions and rendering of attackers selection component
- * The rendering makes use of and interface DefendersSelectionButton
+ * Navigation component for defenders selection
  */
-class defendersSelection extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            visibleNow: "LandUnits",
-            visibleLandUnits: true,
-            visiblePage2: false,
-            visiblePage3: false,
-            visiblePage4: false,
-            visiblePage5: false,
-        };
-        // this.changeVisible = this.changeVisible.bind(this);
-        // this.makeVisibleLandUnits = this.makeVisibleLandUnits.bind(this);
-        // this.makeVisibleShips = this.makeVisibleShips.bind(this);
-    }
+const DefendersSelection = ({ onAddDefender }: DefenderPageProps) => {
+    const [currentPage, setCurrentPage] = useState(0);
 
-    changeVisible = (currentSelection: string, pageDirection: string) => {
-        console.log("CurrentSelection before is: " + currentSelection);
-
-        if (
-            (currentSelection === "LandUnits" && pageDirection === "pageUp") ||
-            (currentSelection === "Page3" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: true });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "Page2" });
-        } else if (
-            (currentSelection === "Page2" && pageDirection === "pageUp") ||
-            (currentSelection === "Page4" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: true });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "Page3" });
-        } else if (
-            (currentSelection === "Page3" && pageDirection === "pageUp") ||
-            (currentSelection === "Page5" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: true });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "Page4" });
-        } else if (
-            (currentSelection === "Page4" && pageDirection === "pageUp") ||
-            (currentSelection === "LandUnits" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: false });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: true });
-            this.setState({ visibleNow: "Page5" });
-        } else if (
-            (currentSelection === "Page5" && pageDirection === "pageUp") ||
-            (currentSelection === "Page2" && pageDirection === "pageDown")
-        ) {
-            this.setState({ visibleLandUnits: true });
-            this.setState({ visiblePage2: false });
-            this.setState({ visiblePage3: false });
-            this.setState({ visiblePage4: false });
-            this.setState({ visiblePage5: false });
-            this.setState({ visibleNow: "LandUnits" });
+    const handlePageChange = (direction: "prev" | "next") => {
+        if (direction === "prev") {
+            setCurrentPage((prevPage) =>
+                prevPage === 0 ? defenderPages.length - 1 : prevPage - 1
+            );
+        } else {
+            setCurrentPage((prevPage) =>
+                prevPage === defenderPages.length - 1 ? 0 : prevPage + 1
+            );
         }
-
-        console.log("CurrentSelection after is: " + currentSelection);
     };
 
-    render() {
-        console.log("Render defenders selection component");
-
-        return (
-            <CardWithShadow
-                sx={{ p: "1%" }}
-                style={{
-                    maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
-                    width: ONE_HUNDRED_PERCENT,
-                }}
-            >
-                <Typography component={"span"} variant="h6">
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
+    return (
+        <CardWithShadow
+            sx={{ p: "1%" }}
+            style={{
+                maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+                width: ONE_HUNDRED_PERCENT,
+            }}
+        >
+            <Typography component={"span"} variant="h6">
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Button
+                        color="error"
+                        variant="contained"
+                        size="small"
+                        onClick={() => handlePageChange("prev")}
+                        sx={{ m: 1 }}
+                        style={{ maxWidth: "4em", minWidth: "4em" }}
                     >
-                        <Button
-                            color="error"
-                            variant="contained"
-                            size="small"
-                            onClick={() =>
-                                this.changeVisible(
-                                    this.state.visibleNow,
-                                    "pageDown"
-                                )
-                            }
-                            sx={{ m: 1 }}
-                            style={{ maxWidth: "4em", minWidth: "4em" }}
-                        >
-                            {/* <img src={Switch} alt="Switch" style={attackersImageStyle} /> */}
-                            <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
-                        </Button>
-                        <span className="alignSelfCenter">
-                            Defenders selection
-                        </span>
-                        <Button
-                            color="error"
-                            variant="contained"
-                            size="small"
-                            onClick={() =>
-                                this.changeVisible(
-                                    this.state.visibleNow,
-                                    "pageUp"
-                                )
-                            }
-                            sx={{ m: 1 }}
-                            style={{ maxWidth: "4em", minWidth: "4em" }}
-                        >
-                            {/* <img src={Switch} alt="Switch" style={attackersImageStyle} /> */}
-                            <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
-                        </Button>
-                    </Box>
-                    <Box>
-                        {this.state.visibleLandUnits && (
-                            <LandUnits {...this.props}> </LandUnits>
-                        )}
-                        {this.state.visiblePage2 && (
-                            <Page2 {...this.props}> </Page2>
-                        )}
-                        {this.state.visiblePage3 && (
-                            <Page3 {...this.props}> </Page3>
-                        )}
-                        {this.state.visiblePage4 && (
-                            <Page4 {...this.props}> </Page4>
-                        )}
-                        {this.state.visiblePage5 && (
-                            <Page5 {...this.props}> </Page5>
-                        )}
-
-                        {/* <button onClick={() => this.changeVisible(this.state.visibleNow)}>
-            <img src={Switch} alt="Switch" style={attackersImageStyle} />
-          </button> */}
-                    </Box>
-                </Typography>
-            </CardWithShadow>
-        );
-    }
-}
-
-class LandUnits extends React.Component<Props> {
-    render() {
-        const defendersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-
-        return (
-            <Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Warrior"
-                        onClick={() => this.props.OnAddDefender("Warrior")}
-                        ButtonImage={Warrior}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Archer"
-                        onClick={() => this.props.OnAddDefender("Archer")}
-                        ButtonImage={Archer}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Rider"
-                        onClick={() => this.props.OnAddDefender("Rider")}
-                        ButtonImage={Rider}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Defender"
-                        onClick={() => this.props.OnAddDefender("Defender")}
-                        ButtonImage={Defender}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Swordsman"
-                        onClick={() => this.props.OnAddDefender("Swordsman")}
-                        ButtonImage={Swordsman}
+                        <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
+                    </Button>
+                    <span className="alignSelfCenter">Defenders selection</span>
+                    <Button
+                        color="error"
+                        variant="contained"
+                        size="small"
+                        onClick={() => handlePageChange("next")}
+                        sx={{ m: 1 }}
+                        style={{ maxWidth: "4em", minWidth: "4em" }}
+                    >
+                        <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
+                    </Button>
+                </Box>
+                <Box>
+                    <DefenderPage
+                        pageIndex={currentPage}
+                        onAddDefender={onAddDefender}
                     />
                 </Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Catapult"
-                        onClick={() => this.props.OnAddDefender("Catapult")}
-                        ButtonImage={Catapult}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Knight"
-                        onClick={() => this.props.OnAddDefender("Knight")}
-                        ButtonImage={Knight}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="MindBender"
-                        onClick={() => this.props.OnAddDefender("MindBender")}
-                        ButtonImage={MindBender}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Giant"
-                        onClick={() => this.props.OnAddDefender("Giant")}
-                        ButtonImage={Giant}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Dagger"
-                        onClick={() => this.props.OnAddDefender("Dagger")}
-                        ButtonImage={Dagger}
-                    />
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
+            </Typography>
+        </CardWithShadow>
+    );
+};
 
-class Page2 extends React.Component<Props> {
-    render() {
-        const defendersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-        return (
-            <Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="NatureBunny"
-                        onClick={() => this.props.OnAddDefender("NatureBunny")}
-                        ButtonImage={NatureBunny}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Cloak"
-                        onClick={() => this.props.OnAddDefender("Cloak")}
-                        ButtonImage={Cloak}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Dinghy"
-                        onClick={() => this.props.OnAddDefender("Dinghy")}
-                        ButtonImage={Dinghy}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Pirate"
-                        onClick={() => this.props.OnAddDefender("Pirate")}
-                        ButtonImage={Pirate}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Raft"
-                        onClick={() => this.props.OnAddDefender("Raft")}
-                        ButtonImage={Raft}
-                    />
-                </Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Scout"
-                        onClick={() => this.props.OnAddDefender("Scout")}
-                        ButtonImage={Scout}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Rammer"
-                        onClick={() => this.props.OnAddDefender("Rammer")}
-                        ButtonImage={Rammer}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Bomber"
-                        onClick={() => this.props.OnAddDefender("Bomber")}
-                        ButtonImage={Bomber}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Juggernaut"
-                        onClick={() => this.props.OnAddDefender("Juggernaut")}
-                        ButtonImage={Juggernaut}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Polytaur"
-                        onClick={() => this.props.OnAddDefender("Polytaur")}
-                        ButtonImage={Polytaur}
-                    />
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-class Page3 extends React.Component<Props> {
-    render() {
-        const defendersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-        return (
-            <Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Amphibian"
-                        onClick={() => this.props.OnAddDefender("Amphibian")}
-                        ButtonImage={Amphibian}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Tridention"
-                        onClick={() => this.props.OnAddDefender("Tridention")}
-                        ButtonImage={Tridention}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Shark"
-                        onClick={() => this.props.OnAddDefender("Shark")}
-                        ButtonImage={Shark}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Puffer"
-                        onClick={() => this.props.OnAddDefender("Puffer")}
-                        ButtonImage={Puffer}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Jelly"
-                        onClick={() => this.props.OnAddDefender("Jelly")}
-                        ButtonImage={Jelly}
-                    />
-                </Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Crab"
-                        onClick={() => this.props.OnAddDefender("Crab")}
-                        ButtonImage={Crab}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="DragonEgg"
-                        onClick={() => this.props.OnAddDefender("DragonEgg")}
-                        ButtonImage={DragonEgg}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="BabyDragon"
-                        onClick={() => this.props.OnAddDefender("BabyDragon")}
-                        ButtonImage={BabyDragon}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="FireDragon"
-                        onClick={() => this.props.OnAddDefender("FireDragon")}
-                        ButtonImage={FireDragon}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Mooni"
-                        onClick={() => this.props.OnAddDefender("Mooni")}
-                        ButtonImage={Mooni}
-                    />
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-class Page4 extends React.Component<Props> {
-    render() {
-        const defendersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-        return (
-            <Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="IceArcher"
-                        onClick={() => this.props.OnAddDefender("IceArcher")}
-                        ButtonImage={IceArcher}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="BattleSled"
-                        onClick={() => this.props.OnAddDefender("BattleSled")}
-                        ButtonImage={BattleSled}
-                    />
-
-                    <DefendersSelectionButton
-                        defenderType="Gaami"
-                        onClick={() => this.props.OnAddDefender("Gaami")}
-                        ButtonImage={Gaami}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="IceFortress"
-                        onClick={() => this.props.OnAddDefender("IceFortress")}
-                        ButtonImage={IceFortress}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Hexapod"
-                        onClick={() => this.props.OnAddDefender("Hexapod")}
-                        ButtonImage={Hexapod}
-                    />
-                </Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Kiton"
-                        onClick={() => this.props.OnAddDefender("Kiton")}
-                        ButtonImage={Kiton}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Phychi"
-                        onClick={() => this.props.OnAddDefender("Phychi")}
-                        ButtonImage={Phychi}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Raychi"
-                        onClick={() => this.props.OnAddDefender("Raychi")}
-                        ButtonImage={Raychi}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Shaman"
-                        onClick={() => this.props.OnAddDefender("Shaman")}
-                        ButtonImage={Shaman}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Exida"
-                        onClick={() => this.props.OnAddDefender("Exida")}
-                        ButtonImage={Exida}
-                    />
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-class Page5 extends React.Component<Props> {
-    render() {
-        const defendersBoxStyle = {
-            display: "flex",
-            justifyContent: "space-between",
-        };
-        return (
-            <Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Doomux"
-                        onClick={() => this.props.OnAddDefender("Doomux")}
-                        ButtonImage={Doomux}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Doomux"
-                        onClick={() => this.props.OnAddDefender("Doomux")}
-                        ButtonImage={Doomux}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Doomux"
-                        onClick={() => this.props.OnAddDefender("Doomux")}
-                        ButtonImage={Doomux}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Doomux"
-                        onClick={() => this.props.OnAddDefender("Doomux")}
-                        ButtonImage={Doomux}
-                    />
-                    <DefendersSelectionButton
-                        defenderType="Doomux"
-                        onClick={() => this.props.OnAddDefender("Doomux")}
-                        ButtonImage={Doomux}
-                    />
-                </Box>
-                <Box sx={defendersBoxStyle}>
-                    <DefendersSelectionButton
-                        defenderType="Centipede"
-                        onClick={() => this.props.OnAddDefender("Centipede")}
-                        ButtonImage={Centipede}
-                    />
-
-                    <DefendersSelectionButton
-                        defenderType="Segment"
-                        onClick={() => this.props.OnAddDefender("Segment")}
-                        ButtonImage={Segment}
-                    />
-
-                    <DefendersSelectionButton
-                        defenderType="Segment"
-                        onClick={() => this.props.OnAddDefender("Segment")}
-                        ButtonImage={Segment}
-                    />
-
-                    <DefendersSelectionButton
-                        defenderType="Segment"
-                        onClick={() => this.props.OnAddDefender("Segment")}
-                        ButtonImage={Segment}
-                    />
-
-                    <DefendersSelectionButton
-                        defenderType="Segment"
-                        onClick={() => this.props.OnAddDefender("Segment")}
-                        ButtonImage={Segment}
-                    />
-                </Box>{" "}
-            </Box>
-        );
-    }
-}
-
-export default defendersSelection;
+export default DefendersSelection;

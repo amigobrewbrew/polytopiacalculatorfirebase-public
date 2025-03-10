@@ -1,6 +1,7 @@
 /** Secret game  */
 
 import * as React from "react";
+import { useState, useCallback } from "react";
 import Warrior from "../img/Attackers/Warrior.png";
 import Archer from "../img/Attackers/Archer.png";
 import Rider from "../img/Attackers/Rider.png";
@@ -10,8 +11,6 @@ import Catapult from "../img/Attackers/Catapult.png";
 import Knight from "../img/Attackers/Knight.png";
 import Giant from "../img/Attackers/Giant.png";
 import Battleship from "../img/Attackers/Battleship.png";
-// import { withAITracking } from "@microsoft/applicationinsights-react-js";
-// import { reactPlugin, appInsights } from "../AppInsights";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -19,441 +18,387 @@ import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
 import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX } from "../customStyles";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
-/**
- * State of secret game holding the secret number, tries and total scores
- */
-type State = {
-    numeroSecreto: number;
-    tentativas: number;
-    totalGames: number;
-    totalGamesWon: number;
+// Popup component
+interface PopupProps {
+    open: boolean;
+    message: string;
+    title: string;
+    onClose: () => void;
+}
+
+const Popup = ({ open, message, title, onClose }: PopupProps) => {
+    return (
+        <Dialog
+            open={open}
+            onClose={onClose}
+            aria-labelledby="game-alert-dialog"
+        >
+            <DialogTitle>{title}</DialogTitle>
+            <DialogContent>
+                <DialogContentText>{message}</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose} color="primary" autoFocus>
+                    OK
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 };
 
-/** Class that,
- * uses the component state
- * enables starting a new game
- * calculates game's progress
- * calculates game's score
- * renders the game's UI
+/**
+ * Refactored Secret Game component using modern React hooks
+ * This game asks the player to guess the correct unit in 3 attempts
  */
-class secretGame extends React.Component<State> {
-    state: State = {
+const SecretGame = () => {
+    // State management with hooks
+    const [gameState, setGameState] = useState({
         numeroSecreto: Math.floor(Math.random() * 9) + 1,
         tentativas: 3,
         totalGames: 0,
         totalGamesWon: 0,
+    });
+
+    // Popup state
+    const [popup, setPopup] = useState({
+        open: false,
+        message: "",
+        title: "Game Message",
+    });
+
+    // Show popup message
+    const showPopup = (message: string, title: string = "Game Message") => {
+        setPopup({
+            open: true,
+            message,
+            title,
+        });
     };
 
-    NewGame = () => {
-        console.log("New game started");
+    // Close popup
+    const closePopup = () => {
+        setPopup((prev) => ({ ...prev, open: false }));
+    };
 
+    // Helper function to get unit name from number
+    const getUnitName = (unitNumber: number): string => {
+        const unitNames = [
+            "Warrior",
+            "Archer",
+            "Rider",
+            "Defender",
+            "Swordsman",
+            "Catapult",
+            "Knight",
+            "Giant",
+            "Battleship",
+        ];
+        return unitNames[unitNumber - 1];
+    };
+
+    // Start a new game
+    const newGame = useCallback(() => {
+        console.log("New game started");
         analyticsLogEvent(analytics, "sg_game_started");
 
-        this.setState({ totalGames: this.state.totalGames + 1 });
+        setGameState((prevState) => ({
+            ...prevState,
+            numeroSecreto: Math.floor(Math.random() * 9) + 1,
+            tentativas: 3,
+            totalGames: prevState.totalGames + 1, // During debugging is calculated twice.. but only during debugging?
+        }));
 
-        this.setState({ numeroSecreto: Math.floor(Math.random() * 9) + 1 });
-        this.setState({ tentativas: 3 });
+        // showPopup(
+        //     "Numero secreto is reset and tentativas set to three",
+        //     "New Game"
+        // );
+    }, []);
 
-        console.log("NumeroSecreto is reset to: " + this.state.numeroSecreto);
-        console.log("Tentativas set to: " + this.state.tentativas);
+    // Handle unit selection and game logic
+    const handleUnitSelection = useCallback(
+        (unitNumber: number) => {
+            console.log(`${getUnitName(unitNumber)} clicked`);
 
-        alert("Numero secreto is reset and tentativas set to three");
-    };
+            setGameState((prevState) => {
+                // Game logic
+                if (unitNumber === prevState.numeroSecreto) {
+                    // Correct guess
+                    analyticsLogEvent(analytics, "sg_game_won");
 
-    SecretGameCalculator = (unitNumber: number) => {
-        while (this.state.tentativas > 0) {
-            if (unitNumber === this.state.numeroSecreto) {
-                this.setState({ totalGamesWon: this.state.totalGamesWon + 1 });
-                analyticsLogEvent(analytics, "sg_game_won");
-                if (unitNumber === 1) {
-                    alert("The warrior is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 2) {
-                    alert("The archer is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 3) {
-                    alert("The rider is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 4) {
-                    alert("The defender is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 5) {
-                    alert("The swordsman is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 6) {
-                    alert("The catapult is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 7) {
-                    alert("The knight is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 8) {
-                    alert("The giant is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-                if (unitNumber === 9) {
-                    alert("The battleship is correct! Parabéns pra você!");
-                    this.NewGame();
-                    break;
-                }
-            } else {
-                if (unitNumber > this.state.numeroSecreto) {
-                    analyticsLogEvent(analytics, "sg_secret_unit_is_weaker");
-                    alert(
-                        "You made the incorrect choice. The secret unit is weaker"
+                    // Show success popup
+                    showPopup(
+                        `The ${getUnitName(unitNumber)} is correct! Parabéns pra você!`,
+                        "Correct!"
                     );
-                }
-                if (unitNumber < this.state.numeroSecreto) {
-                    analyticsLogEvent(analytics, "sg_secret_unit_is_stronger");
-                    alert(
-                        "You made the incorrect choice. The secret unit is stronger"
-                    );
-                }
 
-                this.setState(
-                    () => {
-                        return { tentativas: this.state.tentativas - 1 };
-                    },
-                    () => {
-                        console.log(
-                            "The tentativas is now set to: " +
-                                this.state.tentativas
+                    setTimeout(() => {
+                        newGame();
+                    }, 500);
+
+                    return {
+                        ...prevState,
+                        totalGamesWon: prevState.totalGamesWon + 1,
+                    };
+                } else {
+                    // Wrong guess
+                    const newTentativas = prevState.tentativas - 1;
+
+                    // Give hint
+                    if (unitNumber > prevState.numeroSecreto) {
+                        analyticsLogEvent(
+                            analytics,
+                            "sg_secret_unit_is_weaker"
+                        );
+                        showPopup(
+                            "You made the incorrect choice. The secret unit is weaker",
+                            "Wrong Choice"
+                        );
+                    } else {
+                        analyticsLogEvent(
+                            analytics,
+                            "sg_secret_unit_is_stronger"
+                        );
+                        showPopup(
+                            "You made the incorrect choice. The secret unit is stronger",
+                            "Wrong Choice"
+                        );
+                    }
+
+                    // Game over check
+                    if (newTentativas === 0) {
+                        analyticsLogEvent(analytics, "sg_game_lost");
+                        showPopup(
+                            `You made the incorrect choice three times. Você perdeu! The correct answer was ${getUnitName(prevState.numeroSecreto)}`,
+                            "Game Over"
                         );
 
-                        if (this.state.tentativas === 0) {
-                            console.log("tentativas is zero now :(");
-
-                            analyticsLogEvent(analytics, "sg_game_lost");
-
-                            if (this.state.tentativas === 0) {
-                                if (this.state.numeroSecreto === 1) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Warrior"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 2) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Archer"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 3) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Rider"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 4) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Defender"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 5) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Swordsman"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 6) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Catapult"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 7) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Knight"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 8) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Giant"
-                                    );
-                                }
-                                if (this.state.numeroSecreto === 9) {
-                                    alert(
-                                        "You made the incorrect choice three times. Você perdeu! The correct answer was Battleship"
-                                    );
-                                }
-
-                                this.NewGame();
-                            }
-                        }
+                        setTimeout(() => {
+                            newGame();
+                        }, 500);
                     }
-                );
 
-                break;
-            }
-        }
-    };
+                    return {
+                        ...prevState,
+                        tentativas: newTentativas,
+                    };
+                }
+            });
+        },
+        [newGame]
+    );
 
-    Warrior = () => {
-        console.log("Warrior clicked");
-        this.SecretGameCalculator(1);
-    };
+    // Unit button click handlers
+    const unitHandlers = Array.from(
+        { length: 9 },
+        (_, i) => () => handleUnitSelection(i + 1)
+    );
 
-    Archer = () => {
-        console.log("Archer clicked");
-        this.SecretGameCalculator(2);
-    };
+    // Styles
+    const attackersImageStyle = {
+        height: "80px",
+        width: "60px",
+        objectFit: "contain",
+        WebkitAppearance: "none",
+    } as React.CSSProperties;
 
-    Rider = () => {
-        console.log("Rider clicked");
-        this.SecretGameCalculator(3);
-    };
+    const attackersButtonStyle = {
+        marginRight: 10,
+        marginLeft: 10,
+        borderRadius: 10,
+        marginBottom: 10,
+        marginTop: 10,
+    } as React.CSSProperties;
 
-    Defender = () => {
-        console.log("Defender clicked");
-        this.SecretGameCalculator(4);
-    };
+    return (
+        <CardWithShadow
+            style={{
+                margin: "2rem 0",
+                maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
+                justifySelf: "center",
+            }}
+        >
+            <CssBaseline />
+            <Box sx={{ alignItems: "center" }}>
+                <Typography component={"span"} variant="body1">
+                    <Box sx={{ margin: 1 }}>
+                        <h3 style={{ marginLeft: 10 }}>
+                            {" "}
+                            Nath&apos;s favorite game{" "}
+                        </h3>
+                        <Box style={{ marginLeft: 10 }}>
+                            Guess the correct unit in 3 turns{" "}
+                        </Box>
 
-    Swordsman = () => {
-        console.log("Swordsman clicked");
-        this.SecretGameCalculator(5);
-    };
-
-    Catapult = () => {
-        console.log("Catapult clicked");
-        this.SecretGameCalculator(6);
-    };
-
-    Knight = () => {
-        console.log("Knight clicked");
-        this.SecretGameCalculator(7);
-    };
-
-    Giant = () => {
-        console.log("Giant clicked");
-        this.SecretGameCalculator(8);
-    };
-
-    Battleship = () => {
-        console.log("Battleship clicked");
-        this.SecretGameCalculator(9);
-    };
-
-    render() {
-        console.log("Secret game page is rendered");
-
-        const attackersImageStyle = {
-            height: "80px",
-            width: "60px",
-            objectFit: "contain",
-            WebkitAppearance: "none",
-        } as React.CSSProperties;
-
-        const attackersButtonStyle = {
-            marginRight: 10,
-            marginLeft: 10,
-            borderRadius: 10,
-            marginBottom: 10,
-            marginTop: 10,
-        } as React.CSSProperties;
-
-        return (
-            <CardWithShadow
-                style={{
-                    margin: "2rem 0",
-                    maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
-                    justifySelf: "center",
-                }}
-            >
-                <CssBaseline />
-                <Box
-                    sx={{
-                        // marginTop: 0,
-
-                        //display: "flex",
-                        //flexDirection: "column",
-                        alignItems: "center",
-
-                        // backgroundColor: "#FFDF00",
-                        // border: 1,
-                        // color: "#002776",
-                        // borderRadius: "4px",
-                        // borderColor: "secondary.main",
-                        // width: "fit-content",
-                    }}
-                >
-                    <Typography component={"span"} variant="body1">
-                        <Box sx={{ margin: 1 }}>
-                            <h3 style={{ marginLeft: 10 }}>
-                                {" "}
-                                Nath&apos;s favorite game{" "}
-                            </h3>
-                            <Box style={{ marginLeft: 10 }}>
-                                Guess the correct unit in 3 turns{" "}
-                            </Box>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
+                        {/* First row of units */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <button
+                                onClick={unitHandlers[0]}
+                                className="Warrior"
+                                style={attackersButtonStyle}
                             >
-                                <button
-                                    onClick={this.Warrior}
-                                    className="Warrior"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Warrior}
-                                        alt="Warrior"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
-
-                                <button
-                                    onClick={this.Archer}
-                                    className="Archer"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Archer}
-                                        alt="Archer"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
-
-                                <button
-                                    onClick={this.Rider}
-                                    className="Rider"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Rider}
-                                        alt="Rider"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
+                                <img
+                                    src={Warrior}
+                                    alt="Warrior"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                            <button
+                                onClick={unitHandlers[1]}
+                                className="Archer"
+                                style={attackersButtonStyle}
                             >
-                                <button
-                                    onClick={this.Defender}
-                                    className="Defender"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Defender}
-                                        alt="Defender"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
-
-                                <button
-                                    onClick={this.Swordsman}
-                                    className="Swordsman"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Swordsman}
-                                        alt="Swordsman"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
-
-                                <button
-                                    onClick={this.Catapult}
-                                    className="Catapult"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Catapult}
-                                        alt="Catapult"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
+                                <img
+                                    src={Archer}
+                                    alt="Archer"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                            <button
+                                onClick={unitHandlers[2]}
+                                className="Rider"
+                                style={attackersButtonStyle}
                             >
-                                <button
-                                    onClick={this.Knight}
-                                    className="Knight"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Knight}
-                                        alt="Knight"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
+                                <img
+                                    src={Rider}
+                                    alt="Rider"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                        </Box>
 
-                                <button
-                                    onClick={this.Giant}
-                                    className="Giant"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Giant}
-                                        alt="Giant"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
+                        {/* Second row of units */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <button
+                                onClick={unitHandlers[3]}
+                                className="Defender"
+                                style={attackersButtonStyle}
+                            >
+                                <img
+                                    src={Defender}
+                                    alt="Defender"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                            <button
+                                onClick={unitHandlers[4]}
+                                className="Swordsman"
+                                style={attackersButtonStyle}
+                            >
+                                <img
+                                    src={Swordsman}
+                                    alt="Swordsman"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                            <button
+                                onClick={unitHandlers[5]}
+                                className="Catapult"
+                                style={attackersButtonStyle}
+                            >
+                                <img
+                                    src={Catapult}
+                                    alt="Catapult"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                        </Box>
 
-                                <button
-                                    onClick={this.Battleship}
-                                    className="Battleship"
-                                    style={attackersButtonStyle}
-                                >
-                                    <img
-                                        src={Battleship}
-                                        alt="Battleship"
-                                        style={attackersImageStyle}
-                                    />
-                                </button>
+                        {/* Third row of units */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <button
+                                onClick={unitHandlers[6]}
+                                className="Knight"
+                                style={attackersButtonStyle}
+                            >
+                                <img
+                                    src={Knight}
+                                    alt="Knight"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                            <button
+                                onClick={unitHandlers[7]}
+                                className="Giant"
+                                style={attackersButtonStyle}
+                            >
+                                <img
+                                    src={Giant}
+                                    alt="Giant"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                            <button
+                                onClick={unitHandlers[8]}
+                                className="Battleship"
+                                style={attackersButtonStyle}
+                            >
+                                <img
+                                    src={Battleship}
+                                    alt="Battleship"
+                                    style={attackersImageStyle}
+                                />
+                            </button>
+                        </Box>
+
+                        {/* New Game button */}
+                        <Box style={{ margin: 0 }}>
+                            <button
+                                className="btn btn-success btn-lg m-2"
+                                onClick={newGame}
+                                style={{ alignContent: "center" }}
+                            >
+                                New game
+                            </button>
+                        </Box>
+
+                        {/* Game stats */}
+                        <Box>
+                            <Box style={{ margin: 10 }}>
+                                <b>
+                                    Total games played: {gameState.totalGames}
+                                </b>
                             </Box>
-                            <Box style={{ margin: 0 }}>
-                                <button
-                                    className="btn btn-success btn-lg m-2"
-                                    onClick={this.NewGame}
-                                    style={{ alignContent: "center" }}
-                                >
-                                    New game
-                                </button>
-                            </Box>
-                            <Box>
-                                <Box style={{ margin: 10 }}>
-                                    <b>
-                                        Total games played:{" "}
-                                        {this.state.totalGames}
-                                    </b>
-                                </Box>
-                                <Box style={{ margin: 10 }}>
-                                    <b>
-                                        Games won:{" "}
-                                        {this.state.totalGamesWon}{" "}
-                                    </b>
-                                </Box>
+                            <Box style={{ margin: 10 }}>
+                                <b>Games won: {gameState.totalGamesWon} </b>
                             </Box>
                         </Box>
-                    </Typography>
-                </Box>
-            </CardWithShadow>
-        );
-    }
-}
+                    </Box>
+                </Typography>
+            </Box>
 
-export default secretGame;
+            {/* Custom popup dialog */}
+            <Popup
+                open={popup.open}
+                message={popup.message}
+                title={popup.title}
+                onClose={closePopup}
+            />
+        </CardWithShadow>
+    );
+};
+
+export default SecretGame;
