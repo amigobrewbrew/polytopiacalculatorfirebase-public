@@ -38,11 +38,7 @@ type SoldierUnit = {
     explodeDamage: boolean;
 };
 
-type Props = {
-    OnChangeCheckbox?: any;
-};
-
-function BattleGroundDetails(_props: Props) {
+const BattleGroundDetails = () => {
     const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
         useState<SoldierUnit[]>([]);
     const [soldierUnitsDefendersAsRender, setSoldierUnitsDefendersAsRender] =
@@ -1151,8 +1147,14 @@ function BattleGroundDetails(_props: Props) {
                     mb: 0,
                 }}
             >
-                <AttackersSelection onAddAttacker={handleAddAttacker} />
-                <DefendersSelection onAddDefender={handleAddDefender} />
+                <AttackersSelection
+                    onAddAttacker={handleAddAttacker}
+                    pageIndex={0}
+                />
+                <DefendersSelection
+                    onAddDefender={handleAddDefender}
+                    pageIndex={0}
+                />
             </Box>
 
             <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
@@ -1163,6 +1165,6 @@ function BattleGroundDetails(_props: Props) {
             </CardWithShadow>
         </Box>
     );
-}
+};
 
 export default BattleGroundDetails;

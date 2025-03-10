@@ -60,8 +60,9 @@ import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
 
 /** This property is to indicate to the parent component that a soldier needs to be added to the battleground */
-type Props = {
+type AttackerPageProps = {
     onAddAttacker: any;
+    pageIndex: number;
 };
 
 // Centralized styles
@@ -155,10 +156,7 @@ const attackerPages = [
 /**
  * Attackers rows component
  */
-const AttackerPage: React.FC<Props & { pageIndex: number }> = ({
-    onAddAttacker,
-    pageIndex,
-}) => {
+const AttackerPage = ({ onAddAttacker, pageIndex }: AttackerPageProps) => {
     const attackers = attackerPages[pageIndex];
 
     return (
@@ -208,7 +206,7 @@ const AttackerPage: React.FC<Props & { pageIndex: number }> = ({
 /**
  * Navigate attackers selection rows
  */
-const AttackersSelection: React.FC<Props> = ({ onAddAttacker }) => {
+const AttackersSelection = ({ onAddAttacker }: AttackerPageProps) => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const handlePageChange = (direction: "prev" | "next") => {

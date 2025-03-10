@@ -27,9 +27,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
-/**
- * Custom popup component to replace alerts
- */
+// Popup component
 interface PopupProps {
     open: boolean;
     message: string;
@@ -37,7 +35,7 @@ interface PopupProps {
     onClose: () => void;
 }
 
-const Popup: React.FC<PopupProps> = ({ open, message, title, onClose }) => {
+const Popup = ({ open, message, title, onClose }: PopupProps) => {
     return (
         <Dialog
             open={open}
@@ -61,7 +59,7 @@ const Popup: React.FC<PopupProps> = ({ open, message, title, onClose }) => {
  * Refactored Secret Game component using modern React hooks
  * This game asks the player to guess the correct unit in 3 attempts
  */
-const SecretGame: React.FC = () => {
+const SecretGame = () => {
     // State management with hooks
     const [gameState, setGameState] = useState({
         numeroSecreto: Math.floor(Math.random() * 9) + 1,

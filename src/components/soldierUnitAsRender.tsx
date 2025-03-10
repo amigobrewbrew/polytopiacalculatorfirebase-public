@@ -108,7 +108,7 @@ import BomberDef from "../img/Defenders/Bomber.png";
 import JuggernautDef from "../img/Defenders/Juggernaut.png";
 
 // Same Props as before
-type Props = {
+type SoldierUnitAsRenderProps = {
     id: number;
     typeUnit: string;
     team: string;
@@ -142,7 +142,7 @@ type Props = {
     OnExplodeDamage: any;
 };
 
-function SoldierUnitAsRender(props: Props) {
+const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
     const [isToggleOnVeteran, setIsToggleOnVeteran] = useState(props.veteran);
     const [isToggleOnSafe, setIsToggleOnSafe] = useState(props.safeBonus);
     const [isToggleOnDefence, setIsToggleOnDefence] = useState(
@@ -236,30 +236,30 @@ function SoldierUnitAsRender(props: Props) {
         [props.healthAfter, props.healthBefore]
     );
 
-    function handleClickSplashDamage() {
+    const handleClickSplashDamage = () => {
         setIsToggleOnSplashDamage(!isToggleOnSplashDamage);
         console.log("Unit does splash damage");
-    }
-    function handleClickExplodeDamage() {
+    };
+    const handleClickExplodeDamage = () => {
         setIsToggleOnExplodeDamage(!isToggleOnExplodeDamage);
         console.log("Unit does explode damage");
-    }
-    function handleClickVeteranBonus() {
+    };
+    const handleClickVeteranBonus = () => {
         setIsToggleOnVeteran(!isToggleOnVeteran);
         console.log("Unit is veteran");
-    }
-    function handleClickShipUnit() {
+    };
+    const handleClickShipUnit = () => {
         setHealthMaxShipUnit(props.healthMax);
-    }
-    function handleClickSafeBonus() {
+    };
+    const handleClickSafeBonus = () => {
         setIsToggleOnSafe(!isToggleOnSafe);
         console.log("Unit is safe");
-    }
-    function handleClickBoostedBonus() {
+    };
+    const handleClickBoostedBonus = () => {
         setIsToggleOnBoosted(!isToggleOnBoosted);
         console.log("Unit is boosted");
-    }
-    function handleClickDefenceBonus() {
+    };
+    const handleClickDefenceBonus = () => {
         let defVal = !isToggleOnDefence;
         setIsToggleOnDefence(defVal);
         if (defVal) {
@@ -267,8 +267,8 @@ function SoldierUnitAsRender(props: Props) {
             setIsToggleOnWall(false);
         }
         console.log("Unit has defence bonus");
-    }
-    function handleClickWallBonus() {
+    };
+    const handleClickWallBonus = () => {
         let wallVal = !isToggleOnWall;
         setIsToggleOnWall(wallVal);
         if (wallVal) {
@@ -276,8 +276,8 @@ function SoldierUnitAsRender(props: Props) {
             setIsToggleOnDefence(false);
         }
         console.log("Unit has wall bonus");
-    }
-    function handleClickPoisonedBonus() {
+    };
+    const handleClickPoisonedBonus = () => {
         let poisVal = !isToggleOnPoisoned;
         setIsToggleOnPoisoned(poisVal);
         if (poisVal) {
@@ -285,21 +285,21 @@ function SoldierUnitAsRender(props: Props) {
             setIsToggleOnDefence(false);
         }
         console.log("Unit is poisoned");
-    }
-    function handleHitpointsChange(healthBeforeManualInput: any) {
+    };
+    const handleHitpointsChange = (healthBeforeManualInput: any) => {
         setHealthInputField(parseInt(healthBeforeManualInput));
         console.log("Hitpoints are now: " + healthBeforeManualInput);
         props.OnUpdateHitpoints(props.id, props.team, healthBeforeManualInput);
-    }
-    function handleKeyDown(e: any) {
+    };
+    const handleKeyDown = (e: any) => {
         if (e.key === "Enter") handleHitpointsChange(e.target.value);
-    }
-    function handleFocus(event: any) {
+    };
+    const handleFocus = (event: any) => {
         event.target.select();
-    }
-    function displayHealthAfter() {
+    };
+    const displayHealthAfter = () => {
         return healthAfterAsState;
-    }
+    };
     const unitImages: { [key: string]: { [key: string]: string } } = {
         Attackers: {
             Warrior: WarriorAtt,
@@ -401,11 +401,11 @@ function SoldierUnitAsRender(props: Props) {
         },
     };
 
-    function displayIcon(typeUnit: string, team: string) {
+    const displayIcon = (typeUnit: string, team: string) => {
         return unitImages[team][typeUnit] || SmallSwords;
-    }
+    };
 
-    function soldierUnitImageStyle(team: string) {
+    const soldierUnitImageStyle = (team: string) => {
         const style = {
             height: "40px",
             width: "30px",
@@ -419,9 +419,9 @@ function SoldierUnitAsRender(props: Props) {
         } as React.CSSProperties;
         if (team === "Defenders") style.transform = "scaleX(-1)";
         return style;
-    }
+    };
 
-    function makeInvisibleVeteranBonus(unitType: string) {
+    const makeInvisibleVeteranBonus = (unitType: string) => {
         if (
             [
                 "Ship",
@@ -453,11 +453,11 @@ function SoldierUnitAsRender(props: Props) {
             return { display: "none" };
         }
         return { display: "visible" };
-    }
-    function makeInvisibleShipUnit(shipUnit: boolean) {
+    };
+    const makeInvisibleShipUnit = (shipUnit: boolean) => {
         return shipUnit ? { display: "visible" } : { display: "none" };
-    }
-    function makeInvisibleSplashDamage(unitType: string, team: string) {
+    };
+    const makeInvisibleSplashDamage = (unitType: string, team: string) => {
         if (
             (unitType === "FireDragon" && team === "Attackers") ||
             (unitType === "Bomber" && team === "Attackers") ||
@@ -466,8 +466,8 @@ function SoldierUnitAsRender(props: Props) {
             return { display: "visible" };
         }
         return { display: "none" };
-    }
-    function makeInvisibleExplodeDamage(unitType: string, team: string) {
+    };
+    const makeInvisibleExplodeDamage = (unitType: string, team: string) => {
         if (
             (unitType === "Doomux" && team === "Attackers") ||
             (unitType === "Raychi" && team === "Attackers")
@@ -475,13 +475,13 @@ function SoldierUnitAsRender(props: Props) {
             return { display: "visible" };
         }
         return { display: "none" };
-    }
-    function makeInvisibleDefenceBonus(team: string) {
+    };
+    const makeInvisibleDefenceBonus = (team: string) => {
         return team === "Attackers"
             ? { display: "none" }
             : { display: "visible" };
-    }
-    function makeInvisibleWallBonus(team: string, unitType: string) {
+    };
+    const makeInvisibleWallBonus = (team: string, unitType: string) => {
         if (
             team === "Defenders" &&
             [
@@ -499,22 +499,22 @@ function SoldierUnitAsRender(props: Props) {
             return { display: "visible" };
         }
         return { display: "none" };
-    }
-    function makeInvisibleSafeBonus(team: string) {
+    };
+    const makeInvisibleSafeBonus = (team: string) => {
         return team === "Defenders"
             ? { display: "none" }
             : { display: "visible" };
-    }
-    function makeInvisibleBoostedBonus(team: string) {
+    };
+    const makeInvisibleBoostedBonus = (team: string) => {
         return team === "Defenders"
             ? { display: "none" }
             : { display: "visible" };
-    }
-    function makeInvisiblePoisonedBonus(team: string) {
+    };
+    const makeInvisiblePoisonedBonus = (team: string) => {
         return team === "Attackers"
             ? { display: "none" }
             : { display: "visible" };
-    }
+    };
 
     return (
         <div>
@@ -825,5 +825,5 @@ function SoldierUnitAsRender(props: Props) {
             </Button>
         </div>
     );
-}
+};
 export default SoldierUnitAsRender;

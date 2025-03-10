@@ -9,14 +9,10 @@ import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BOX_SHADOW_DEFAULT } from "../customStyles";
 
-interface NavBarProps {
-    // Add any props if needed
-}
-
 /**
  * Navigation component for different URLs: calculator, secret game and help page
  */
-const NavBar: React.FC<NavBarProps> = () => {
+const NavBar = () => {
     // Use ref to avoid re-querying DOM element
     const myTopnavRef = React.useRef<HTMLDivElement>(null);
 

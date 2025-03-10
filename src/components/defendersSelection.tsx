@@ -60,8 +60,9 @@ import CardWithShadow from "./cardWithShadow";
 import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
 
 /** This property is to indicate to the parent component that a soldier needs to be added to the battleground */
-type Props = {
+type DefenderPageProps = {
     onAddDefender: any;
+    pageIndex: number;
 };
 
 // Centralized styles
@@ -156,10 +157,10 @@ const defenderPages = [
 /**
  * Defenders rows component
  */
-const DefenderPage: React.FC<Props & { pageIndex: number }> = ({
-    onAddDefender,
-    pageIndex,
-}) => {
+/**
+ * Defenders page component
+ */
+const DefenderPage = ({ onAddDefender, pageIndex }: DefenderPageProps) => {
     const defenders = defenderPages[pageIndex];
 
     return (
@@ -211,7 +212,7 @@ const DefenderPage: React.FC<Props & { pageIndex: number }> = ({
 /**
  * Navigation component for defenders selection
  */
-const DefendersSelection: React.FC<Props> = ({ onAddDefender }) => {
+const DefendersSelection = ({ onAddDefender }: DefenderPageProps) => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const handlePageChange = (direction: "prev" | "next") => {

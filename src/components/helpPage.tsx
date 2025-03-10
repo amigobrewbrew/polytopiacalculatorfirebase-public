@@ -4,11 +4,7 @@ import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import CardWithShadow from "./cardWithShadow";
 
-interface HelpPageProps {
-    // Add any props if needed in the future
-}
-
-const HelpPage: React.FC<HelpPageProps> = () => {
+const HelpPage = () => {
     const email = import.meta.env.VITE_EMAIL || "someone@example.com";
 
     return (
