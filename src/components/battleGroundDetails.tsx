@@ -14,6 +14,13 @@ import {
     SINGLE_COL_MAX_WIDTH_PX,
     SINGLE_COLUMN_WIDTH_PERCENTAGE,
 } from "../customStyles";
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from "@mui/material";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -39,6 +46,8 @@ type SoldierUnit = {
 };
 
 const BattleGroundDetails = () => {
+    const [gameVersion, setGameVersion] = useState("108");
+
     const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
         useState<SoldierUnit[]>([]);
     const [soldierUnitsDefendersAsRender, setSoldierUnitsDefendersAsRender] =
@@ -46,6 +55,11 @@ const BattleGroundDetails = () => {
     // const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
     // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
     const [checkedPosition, setCheckedPosition] = useState(false);
+
+    const handleGameVersionChange = (event: SelectChangeEvent) => {
+        setGameVersion(event.target.value);
+        console.log("Game version changed!");
+    };
 
     const handleChangeCheckbox = () => {
         setCheckedPosition((prev) => !prev);
@@ -1158,9 +1172,27 @@ const BattleGroundDetails = () => {
             </Box>
 
             <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
-                <Box component="span" sx={{ typography: "body2" }}>
-                    This page is based on Build version 2.11.1.13205 and Game
-                    version: 108.
+                <Box component="span" sx={{ display: "flex", flexDirection: "column", typography: "body2" }}>
+                    <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
+                        <InputLabel id="version-select-label">
+                            Game version
+                        </InputLabel>
+                        <Select
+                            labelId="version-select-label"
+                            id="version-select"
+                            value={gameVersion}
+                            label="Game version"
+                            onChange={handleGameVersionChange}
+                        >
+                            <MenuItem value={108}>
+                                108 - The Forgotten + Aquarion Rework Patch
+                            </MenuItem>
+                            <MenuItem value={105}>
+                                105 - Aquarion Rework
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
+                    <span>Build version: 2.11.1.13205</span>
                 </Box>
             </CardWithShadow>
         </Box>
