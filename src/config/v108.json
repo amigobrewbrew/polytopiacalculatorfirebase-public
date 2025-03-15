@@ -97,7 +97,7 @@
             "maxHealth": 10,
             "attack": 1,
             "defence": 0,
-            "skills": ["static", "stiff"]
+            "skills": ["static", "stiff", "variableHp"]
         },
         {
             "name": "Scout",
@@ -105,7 +105,7 @@
             "maxHealth": 10,
             "attack": 2,
             "defence": 1,
-            "skills": ["static"]
+            "skills": ["static", "variableHp"]
         },
         {
             "name": "Rammer",
@@ -113,7 +113,7 @@
             "maxHealth": 10,
             "attack": 3,
             "defence": 3,
-            "skills": ["static"]
+            "skills": ["static", "variableHp"]
         },
         {
             "name": "Bomber",
@@ -121,7 +121,7 @@
             "maxHealth": 10,
             "attack": 3,
             "defence": 2,
-            "skills": ["splash", "static", "stiff"]
+            "skills": ["splash", "static", "stiff", "variableHp"]
         },
         {
             "name": "Juggernaut",

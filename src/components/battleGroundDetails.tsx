@@ -83,18 +83,6 @@ const BattleGroundDetails = () => {
         return unit;
     }, []);
 
-    const istypeUnitaShipUnit = useCallback((typeUnit: string) => {
-        switch (typeUnit) {
-            case "Raft":
-            case "Scout":
-            case "Rammer":
-            case "Bomber":
-                return true;
-            default:
-                return false;
-        }
-    }, []);
-
     const handleAddAttacker = (typeUnit: string) => {
         const newId = soldierUnitsAttackersAsRender.length;
 
@@ -117,7 +105,7 @@ const BattleGroundDetails = () => {
                 poisonedBonus: false,
                 becamePoisonedBonus: false,
                 boostedBonus: false,
-                shipUnit: istypeUnitaShipUnit(typeUnit),
+                shipUnit: unitConfig.skills.includes("variableHp"),
                 splashDamage: false,
                 explodeDamage: false,
             };
@@ -151,7 +139,7 @@ const BattleGroundDetails = () => {
                 poisonedBonus: false,
                 becamePoisonedBonus: false,
                 boostedBonus: false,
-                shipUnit: istypeUnitaShipUnit(typeUnit),
+                shipUnit: unitConfig.skills.includes("variableHp"),
                 splashDamage: false,
                 explodeDamage: false,
             };
