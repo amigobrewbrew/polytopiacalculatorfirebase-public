@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AttackersSelection from "./attackersSelection";
 import DefendersSelection from "./defendersSelection";
 import SoldierUnitAsRender from "./soldierUnitAsRender";
 import * as Stats from "./unitStats";
+import v108Config from "../config/v108.json";
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
@@ -46,7 +47,7 @@ type SoldierUnit = {
 };
 
 const BattleGroundDetails = () => {
-    const [gameVersion, setGameVersion] = useState("108");
+    const [versionConfig, setVersionConfig] = useState(v108Config); // TODO make this a type
 
     const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
         useState<SoldierUnit[]>([]);
@@ -57,8 +58,13 @@ const BattleGroundDetails = () => {
     const [checkedPosition, setCheckedPosition] = useState(false);
 
     const handleGameVersionChange = (event: SelectChangeEvent) => {
-        setGameVersion(event.target.value);
-        console.log("Game version changed!");
+        const version = event.target.value;
+
+        // TODO improve method of switching between versions.
+        switch (version) {
+            case "108":
+                setVersionConfig(v108Config);
+        }
     };
 
     const handleChangeCheckbox = () => {
@@ -66,28 +72,19 @@ const BattleGroundDetails = () => {
         analyticsLogEvent(analytics, "pc_checkbox_toggled");
     };
 
-    const healthMax = useCallback((typeUnit: string) => {
+    const getMaxHealth = useCallback((typeUnit: string) => {
+        const unit = versionConfig.unitStats.find(
+            (unit) => unit.name === typeUnit
+        );
+
+        if (unit) {
+            return unit.maxHealth;
+        }
+
+        //TODO replace entirely with version config
         switch (typeUnit) {
-            case "Warrior":
-                return Stats.WarriorStats.healthMax;
-            case "Archer":
-                return Stats.ArcherStats.healthMax;
-            case "Rider":
-                return Stats.RiderStats.healthMax;
-            case "Defender":
-                return Stats.DefenderStats.healthMax;
-            case "Swordsman":
-                return Stats.SwordsmanStats.healthMax;
-            case "Catapult":
-                return Stats.CatapultStats.healthMax;
-            case "Knight":
-                return Stats.KnightStats.healthMax;
-            case "Giant":
-                return Stats.GiantStats.healthMax;
             case "Battleship":
                 return Stats.BattleshipStats.healthMax;
-            case "MindBender":
-                return Stats.MindBenderStats.healthMax;
             case "NatureBunny":
                 return Stats.NatureBunnyStats.healthMax;
             case "Boat":
@@ -144,24 +141,6 @@ const BattleGroundDetails = () => {
                 return Stats.CentipedeStats.healthMax;
             case "Segment":
                 return Stats.SegmentStats.healthMax;
-            case "Dagger":
-                return Stats.DaggerStats.healthMax;
-            case "Cloak":
-                return Stats.CloakStats.healthMax;
-            case "Dinghy":
-                return Stats.DinghyStats.healthMax;
-            case "Pirate":
-                return Stats.PirateStats.healthMax;
-            case "Raft":
-                return Stats.RaftStats.healthMax;
-            case "Scout":
-                return Stats.ScoutStats.healthMax;
-            case "Rammer":
-                return Stats.RammerStats.healthMax;
-            case "Bomber":
-                return Stats.BomberStats.healthMax;
-            case "Juggernaut":
-                return Stats.JuggernautStats.healthMax;
             default:
                 return 0;
         }
@@ -484,16 +463,18 @@ const BattleGroundDetails = () => {
 
     const handleAddAttacker = (typeUnit: string) => {
         const newId = soldierUnitsAttackersAsRender.length;
+        const maxHealth = getMaxHealth(typeUnit);
         const initialSafeBonus = ["Dagger", "Pirate", "Shark"].includes(
             typeUnit
         );
+
         const newUnit: SoldierUnit = {
             id: newId,
             typeUnit,
             team: "Attackers",
-            healthMax: healthMax(typeUnit),
-            healthBefore: healthMax(typeUnit),
-            healthAfter: healthMax(typeUnit),
+            healthMax: maxHealth,
+            healthBefore: maxHealth,
+            healthAfter: maxHealth,
             attack: attack(typeUnit),
             defence: defence(typeUnit),
             veteran: false,
@@ -514,13 +495,14 @@ const BattleGroundDetails = () => {
 
     const handleAddDefender = (typeUnit: string) => {
         const newId = soldierUnitsDefendersAsRender.length;
+        const maxHealth = getMaxHealth(typeUnit);
         const newUnit: SoldierUnit = {
             id: newId,
             typeUnit,
             team: "Defenders",
-            healthMax: healthMax(typeUnit),
-            healthBefore: healthMax(typeUnit),
-            healthAfter: healthMax(typeUnit),
+            healthMax: maxHealth,
+            healthBefore: maxHealth,
+            healthAfter: maxHealth,
             attack: attack(typeUnit),
             defence: defence(typeUnit),
             veteran: false,
@@ -791,7 +773,7 @@ const BattleGroundDetails = () => {
                     if (u.id === id) {
                         const wasVet = u.veteran;
                         const newMax = wasVet
-                            ? healthMax(u.typeUnit)
+                            ? getMaxHealth(u.typeUnit)
                             : healthMaxVeteran(u.typeUnit);
                         return {
                             ...u,
@@ -809,7 +791,7 @@ const BattleGroundDetails = () => {
                     if (u.id === id) {
                         const wasVet = u.veteran;
                         const newMax = wasVet
-                            ? healthMax(u.typeUnit)
+                            ? getMaxHealth(u.typeUnit)
                             : healthMaxVeteran(u.typeUnit);
                         return {
                             ...u,
@@ -1172,7 +1154,14 @@ const BattleGroundDetails = () => {
             </Box>
 
             <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
-                <Box component="span" sx={{ display: "flex", flexDirection: "column", typography: "body2" }}>
+                <Box
+                    component="span"
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        typography: "body2",
+                    }}
+                >
                     <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
                         <InputLabel id="version-select-label">
                             Game version
@@ -1180,7 +1169,7 @@ const BattleGroundDetails = () => {
                         <Select
                             labelId="version-select-label"
                             id="version-select"
-                            value={gameVersion}
+                            value={versionConfig.version}
                             label="Game version"
                             onChange={handleGameVersionChange}
                         >
