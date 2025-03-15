@@ -79,71 +79,73 @@ const BattleGroundDetails = () => {
 
         if (unit) {
             return unit.maxHealth;
+        } else {
+            return 0;
         }
 
         //TODO replace entirely with version config
-        switch (typeUnit) {
-            case "Battleship":
-                return Stats.BattleshipStats.healthMax;
-            case "NatureBunny":
-                return Stats.NatureBunnyStats.healthMax;
-            case "Boat":
-                return Stats.BoatStats.healthMax;
-            case "Ship":
-                return Stats.ShipStats.healthMax;
-            case "Amphibian":
-                return Stats.AmphibianStats.healthMax;
-            case "Tridention":
-                return Stats.TridentionStats.healthMax;
-            case "Shark":
-                return Stats.SharkStats.healthMax;
-            case "Puffer":
-                return Stats.PufferStats.healthMax;
-            case "Jelly":
-                return Stats.JellyStats.healthMax;
-            case "Crab":
-                return Stats.CrabStats.healthMax;
-            case "Polytaur":
-                return Stats.PolytaurStats.healthMax;
-            case "Navalon":
-                return Stats.NavalonStats.healthMax;
-            case "DragonEgg":
-                return Stats.DragonEggStats.healthMax;
-            case "BabyDragon":
-                return Stats.BabyDragonStats.healthMax;
-            case "FireDragon":
-                return Stats.FireDragonStats.healthMax;
-            case "Mooni":
-                return Stats.MooniStats.healthMax;
-            case "IceArcher":
-                return Stats.IceArcherStats.healthMax;
-            case "BattleSled":
-                return Stats.BattleSledStats.healthMax;
-            case "IceFortress":
-                return Stats.IceFortressStats.healthMax;
-            case "Gaami":
-                return Stats.GaamiStats.healthMax;
-            case "Hexapod":
-                return Stats.HexapodStats.healthMax;
-            case "Kiton":
-                return Stats.KitonStats.healthMax;
-            case "Phychi":
-                return Stats.PhychiStats.healthMax;
-            case "Raychi":
-                return Stats.RaychiStats.healthMax;
-            case "Shaman":
-                return Stats.ShamanStats.healthMax;
-            case "Exida":
-                return Stats.ExidaStats.healthMax;
-            case "Doomux":
-                return Stats.DoomuxStats.healthMax;
-            case "Centipede":
-                return Stats.CentipedeStats.healthMax;
-            case "Segment":
-                return Stats.SegmentStats.healthMax;
-            default:
-                return 0;
-        }
+        // switch (typeUnit) {
+        //     case "Battleship":
+        //         return Stats.BattleshipStats.healthMax;
+        //     case "NatureBunny":
+        //         return Stats.NatureBunnyStats.healthMax;
+        //     case "Boat":
+        //         return Stats.BoatStats.healthMax;
+        //     case "Ship":
+        //         return Stats.ShipStats.healthMax;
+        //     case "Amphibian":
+        //         return Stats.AmphibianStats.healthMax;
+        //     case "Tridention":
+        //         return Stats.TridentionStats.healthMax;
+        //     case "Shark":
+        //         return Stats.SharkStats.healthMax;
+        //     case "Puffer":
+        //         return Stats.PufferStats.healthMax;
+        //     case "Jelly":
+        //         return Stats.JellyStats.healthMax;
+        //     case "Crab":
+        //         return Stats.CrabStats.healthMax;
+        //     case "Polytaur":
+        //         return Stats.PolytaurStats.healthMax;
+        //     case "Navalon":
+        //         return Stats.NavalonStats.healthMax;
+        //     case "DragonEgg":
+        //         return Stats.DragonEggStats.healthMax;
+        //     case "BabyDragon":
+        //         return Stats.BabyDragonStats.healthMax;
+        //     case "FireDragon":
+        //         return Stats.FireDragonStats.healthMax;
+        //     case "Mooni":
+        //         return Stats.MooniStats.healthMax;
+        //     case "IceArcher":
+        //         return Stats.IceArcherStats.healthMax;
+        //     case "BattleSled":
+        //         return Stats.BattleSledStats.healthMax;
+        //     case "IceFortress":
+        //         return Stats.IceFortressStats.healthMax;
+        //     case "Gaami":
+        //         return Stats.GaamiStats.healthMax;
+        //     case "Hexapod":
+        //         return Stats.HexapodStats.healthMax;
+        //     case "Kiton":
+        //         return Stats.KitonStats.healthMax;
+        //     case "Phychi":
+        //         return Stats.PhychiStats.healthMax;
+        //     case "Raychi":
+        //         return Stats.RaychiStats.healthMax;
+        //     case "Shaman":
+        //         return Stats.ShamanStats.healthMax;
+        //     case "Exida":
+        //         return Stats.ExidaStats.healthMax;
+        //     case "Doomux":
+        //         return Stats.DoomuxStats.healthMax;
+        //     case "Centipede":
+        //         return Stats.CentipedeStats.healthMax;
+        //     case "Segment":
+        //         return Stats.SegmentStats.healthMax;
+        //     default:
+        //         return 0;
+        // }
     }, []);
 
     const healthMaxVeteran = useCallback((typeUnit: string) => {

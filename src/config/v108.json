@@ -148,68 +148,204 @@
             "skills": ["surprise", "static"]
         },
         {
+            "name": "Amphibian",
+            "movementAbility": "amphibious",
+            "maxHealth": 10,
+            "attack": 2,
+            "defence": 1,
+            "skills": []
+        },
+        {
+            "name": "Tridention",
+            "movementAbility": "amphibious",
+            "maxHealth": 10,
+            "attack": 2.5,
+            "defence": 1,
+            "skills": []
+        },
+        {
+            "name": "Shark",
+            "movementAbility": "water",
+            "maxHealth": 10,
+            "attack": 3.5,
+            "defence": 2,
+            "skills": ["surprise"]
+        },
+        {
+            "name": "Puffer",
+            "movementAbility": "water",
+            "maxHealth": 10,
+            "attack": 4,
+            "defence": 0,
+            "skills": ["stiff"]
+        },
+        {
+            "name": "Jelly",
+            "movementAbility": "water",
+            "maxHealth": 20,
+            "attack": 2,
+            "defence": 2,
+            "skills": ["stiff", "tentacles", "static"]
+        },
+        {
+            "name": "Crab",
+            "movementAbility": "amphibious",
+            "maxHealth": 40,
+            "attack": 4,
+            "defence": 4,
+            "skills": ["static"]
+        },
+        {
             "name": "Polytaur",
-            "movementAbility": "",
-            "maxHealth": 0,
+            "movementAbility": "land",
+            "maxHealth": 15,
+            "attack": 3,
+            "defence": 1,
+            "skills": ["fortify", "static"]
+        },
+        {
+            "name": "DragonEgg",
+            "movementAbility": "land",
+            "maxHealth": 10,
             "attack": 0,
-            "defence": 0,
+            "defence": 2,
+            "skills": ["fortify", "static", "stiff"]
+        },
+        {
+            "name": "BabyDragon",
+            "movementAbility": "air",
+            "maxHealth": 15,
+            "attack": 3,
+            "defence": 3,
+            "skills": ["static"]
+        },
+        {
+            "name": "FireDragon",
+            "movementAbility": "air",
+            "maxHealth": 20,
+            "attack": 4,
+            "defence": 3,
+            "skills": ["splash", "static"]
+        },
+        {
+            "name": "Mooni",
+            "movementAbility": "land",
+            "maxHealth": 10,
+            "attack": 0,
+            "defence": 1,
+            "skills": ["stiff"]
+        },
+        {
+            "name": "IceArcher",
+            "movementAbility": "land",
+            "maxHealth": 10,
+            "attack": 0.1,
+            "defence": 1,
+            "skills": ["freeze", "fortify", "stiff"]
+        },
+        {
+            "name": "BattleSled",
+            "movementAbility": "land",
+            "maxHealth": 15,
+            "attack": 3,
+            "defence": 2,
             "skills": []
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
+            "name": "IceFortress",
+            "movementAbility": "land",
+            "maxHealth": 20,
+            "attack": 4,
+            "defence": 3,
             "skills": []
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
+            "name": "Gaami",
+            "movementAbility": "land",
+            "maxHealth": 30,
+            "attack": 4,
+            "defence": 3,
+            "skills": ["static"]
+        },
+        {
+            "name": "Hexapod",
+            "movementAbility": "land",
+            "maxHealth": 5,
+            "attack": 3,
+            "defence": 1,
             "skills": []
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
-            "skills": []
+            "name": "Kiton",
+            "movementAbility": "land",
+            "maxHealth": 15,
+            "attack": 1,
+            "defence": 3,
+            "skills": ["poison"]
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
-            "skills": []
+            "name": "Phychi",
+            "movementAbility": "air",
+            "maxHealth": 5,
+            "attack": 1,
+            "defence": 1,
+            "skills": ["poison", "surprise"]
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
-            "skills": []
+            "name": "Raychi",
+            "movementAbility": "water",
+            "maxHealth": 15,
+            "attack": 3,
+            "defence": 2,
+            "skills": ["explode"]
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
-            "skills": []
+            "name": "Shaman",
+            "movementAbility": "land",
+            "maxHealth": 10,
+            "attack": 1,
+            "defence": 1,
+            "skills": ["static"]
         },
         {
-            "name": "",
-            "movementAbility": "",
-            "maxHealth": 0,
-            "attack": 0,
-            "defence": 0,
-            "skills": []
+            "name": "Exida",
+            "movementAbility": "land",
+            "maxHealth": 10,
+            "attack": 3,
+            "defence": 1,
+            "skills": ["poison", "splash"]
+        },
+        {
+            "name": "Doomux",
+            "movementAbility": "land",
+            "maxHealth": 20,
+            "attack": 4,
+            "defence": 2,
+            "skills": ["explode"]
+        },
+        {
+            "name": "Centipede",
+            "movementAbility": "land",
+            "maxHealth": 20,
+            "attack": 4,
+            "defence": 3,
+            "skills": ["static"]
+        },
+        {
+            "name": "Segment",
+            "movementAbility": "land",
+            "maxHealth": 10,
+            "attack": 2,
+            "defence": 2,
+            "skills": ["explode", "static", "stiff"]
+        },
+        {
+            "name": "NatureBunny",
+            "movementAbility": "land",
+            "maxHealth": 20,
+            "attack": 5,
+            "defence": 1,
+            "skills": ["static"]
         }
     ]
 }
