@@ -21,32 +21,14 @@ import {
     Select,
     SelectChangeEvent,
 } from "@mui/material";
+import { SoldierUnit } from "../types/SoldierUnit";
+import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
-type SoldierUnit = {
-    id: number;
-    typeUnit: string;
-    team: string;
-    healthMax: number;
-    healthBefore: number;
-    healthAfter: number;
-    attack: number;
-    defence: number;
-    veteran: boolean;
-    defenceBonus: boolean;
-    wallBonus: boolean;
-    safeBonus: boolean;
-    poisonedBonus: boolean;
-    becamePoisonedBonus: boolean;
-    boostedBonus: boolean;
-    shipUnit: boolean;
-    splashDamage: boolean;
-    explodeDamage: boolean;
-};
-
 const BattleGroundDetails = () => {
-    const [versionConfig, setVersionConfig] = useState(v108Config); // TODO make this a type
+    const [versionConfig, setVersionConfig] =
+        useState<VersionConfig>(v108Config);
 
     const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
         useState<SoldierUnit[]>([]);
@@ -66,12 +48,12 @@ const BattleGroundDetails = () => {
         }
     };
 
-    const handleChangeCheckbox = () => {
+    const handleChangeCheckbox = (): void => {
         setCheckedPosition((prev) => !prev);
         analyticsLogEvent(analytics, "pc_checkbox_toggled");
     };
 
-    const getUnitConfig = useCallback((typeUnit: string) => {
+    const getUnitConfig = useCallback((typeUnit: string): UnitConfig => {
         const unit = versionConfig.unitStats.find(
             (unit) => unit.name === typeUnit
         );
@@ -83,7 +65,7 @@ const BattleGroundDetails = () => {
         return unit;
     }, []);
 
-    const handleAddAttacker = (typeUnit: string) => {
+    const handleAddAttacker = (typeUnit: string): void => {
         const newId = soldierUnitsAttackersAsRender.length;
 
         try {
@@ -91,13 +73,11 @@ const BattleGroundDetails = () => {
 
             const newUnit: SoldierUnit = {
                 id: newId,
+                config: unitConfig,
                 typeUnit,
                 team: "Attackers",
-                healthMax: unitConfig.maxHealth,
                 healthBefore: unitConfig.maxHealth,
                 healthAfter: unitConfig.maxHealth,
-                attack: unitConfig.attack,
-                defence: unitConfig.defence,
                 veteran: false,
                 defenceBonus: false,
                 wallBonus: false,
@@ -117,7 +97,7 @@ const BattleGroundDetails = () => {
         }
     };
 
-    const handleAddDefender = (typeUnit: string) => {
+    const handleAddDefender = (typeUnit: string): void => {
         const newId = soldierUnitsDefendersAsRender.length;
 
         try {
@@ -125,13 +105,11 @@ const BattleGroundDetails = () => {
 
             const newUnit: SoldierUnit = {
                 id: newId,
+                config: unitConfig,
                 typeUnit,
                 team: "Defenders",
-                healthMax: unitConfig.maxHealth,
                 healthBefore: unitConfig.maxHealth,
                 healthAfter: unitConfig.maxHealth,
-                attack: unitConfig.attack,
-                defence: unitConfig.defence,
                 veteran: false,
                 defenceBonus: false,
                 wallBonus: false,
@@ -402,7 +380,9 @@ const BattleGroundDetails = () => {
                 prev.map((u) => {
                     if (u.id === id) {
                         const wasVet = u.veteran;
-                        const newMax = wasVet ? u.healthMax : u.healthMax + 5;
+                        const newMax = wasVet
+                            ? u.config.maxHealth
+                            : u.config.maxHealth + 5;
                         return {
                             ...u,
                             veteran: !wasVet,
@@ -418,7 +398,9 @@ const BattleGroundDetails = () => {
                 prev.map((u) => {
                     if (u.id === id) {
                         const wasVet = u.veteran;
-                        const newMax = wasVet ? u.healthMax : u.healthMax + 5;
+                        const newMax = wasVet
+                            ? u.config.maxHealth
+                            : u.config.maxHealth + 5;
                         return {
                             ...u,
                             veteran: !wasVet,
@@ -447,12 +429,14 @@ const BattleGroundDetails = () => {
             setSoldierUnitsAttackersAsRender((prev) =>
                 prev.map((u) => {
                     if (u.id === id) {
+                        const maxHealth =
+                            u.config.maxHealth + 5 > 35
+                                ? 10
+                                : u.config.maxHealth + 5;
                         return {
                             ...u,
-                            healthMax:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
-                            healthBefore:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
+                            healthMax: maxHealth,
+                            healthBefore: maxHealth,
                         };
                     }
                     return u;
@@ -462,12 +446,14 @@ const BattleGroundDetails = () => {
             setSoldierUnitsDefendersAsRender((prev) =>
                 prev.map((u) => {
                     if (u.id === id) {
+                        const maxHealth =
+                            u.config.maxHealth + 5 > 35
+                                ? 10
+                                : u.config.maxHealth + 5;
                         return {
                             ...u,
-                            healthMax:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
-                            healthBefore:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
+                            healthMax: maxHealth,
+                            healthBefore: maxHealth,
                         };
                     }
                     return u;
@@ -525,17 +511,17 @@ const BattleGroundDetails = () => {
 
             const attackForce = parseFloat(
                 (
-                    ((attacker.attack + 0.5 * boostedBonusMultiplier) *
+                    ((attacker.config.attack + 0.5 * boostedBonusMultiplier) *
                         attacker.healthBefore) /
-                    attacker.healthMax
+                    attacker.config.maxHealth
                 ).toFixed(10)
             );
 
             const defenceForce = parseFloat(
                 (
-                    ((defender.defence *
+                    ((defender.config.defence *
                         (defender.healthBefore - totalAttackResult)) /
-                        defender.healthMax) *
+                        defender.config.maxHealth) *
                     wallBonusMultiplier *
                     defenceBonusMultiplier *
                     poisonedBonusMultiplier
@@ -548,7 +534,8 @@ const BattleGroundDetails = () => {
                 parseFloat(
                     (
                         (attackForce / totalDamage) *
-                        (attacker.attack + 0.5 * boostedBonusMultiplier) *
+                        (attacker.config.attack +
+                            0.5 * boostedBonusMultiplier) *
                         4.5
                     ).toFixed(10)
                 )
@@ -579,7 +566,7 @@ const BattleGroundDetails = () => {
                     parseFloat(
                         (
                             (defenceForce / totalDamage) *
-                            defender.defence *
+                            defender.config.defence *
                             4.5
                         ).toFixed(10)
                     )
@@ -668,7 +655,7 @@ const BattleGroundDetails = () => {
                                 OnDecreaseHitpoints={handleDecreaseHitpoints}
                                 typeUnit={soldierUnitAtt.typeUnit}
                                 team={soldierUnitAtt.team}
-                                healthMax={soldierUnitAtt.healthMax}
+                                healthMax={soldierUnitAtt.config.maxHealth}
                                 healthBefore={soldierUnitAtt.healthBefore}
                                 healthAfter={soldierUnitAtt.healthAfter}
                                 OnVeteranBonus={handleVeteranBonus}
@@ -718,7 +705,7 @@ const BattleGroundDetails = () => {
                                 OnDecreaseHitpoints={handleDecreaseHitpoints}
                                 typeUnit={soldierUnitDef.typeUnit}
                                 team={soldierUnitDef.team}
-                                healthMax={soldierUnitDef.healthMax}
+                                healthMax={soldierUnitDef.config.maxHealth}
                                 healthBefore={soldierUnitDef.healthBefore}
                                 healthAfter={soldierUnitDef.healthAfter}
                                 OnVeteranBonus={handleVeteranBonus}
