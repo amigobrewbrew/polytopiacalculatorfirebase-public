@@ -650,37 +650,20 @@ const BattleGroundDetails = () => {
                         >
                             <SoldierUnitAsRender
                                 key={`attacker-unit-${soldierUnitAtt.id}-${soldierUnitAtt.typeUnit}`}
-                                id={soldierUnitAtt.id}
-                                OnDelete={handleDelete}
-                                OnUpdateHitpoints={handleUpdateHitpoints}
-                                OnIncreaseHitpoints={handleIncreaseHitpoints}
-                                OnDecreaseHitpoints={handleDecreaseHitpoints}
-                                typeUnit={soldierUnitAtt.typeUnit}
-                                team={soldierUnitAtt.team}
-                                healthMax={soldierUnitAtt.healthMax}
-                                healthBefore={soldierUnitAtt.healthBefore}
-                                healthAfter={soldierUnitAtt.healthAfter}
-                                OnVeteranBonus={handleVeteranBonus}
-                                OnDefenceBonus={handleDefenceBonus}
-                                OnWallBonus={handleWallBonus}
-                                OnSafeBonus={handleSafeBonus}
-                                OnPoisonedBonus={handlePoisonedBonus}
-                                OnBoostedBonus={handleBoostedBonus}
-                                OnShipUnit={handleShipUnit}
-                                OnSplashDamage={handleSplashDamage}
-                                OnExplodeDamage={handleExplodeDamage}
-                                veteran={soldierUnitAtt.veteran}
-                                defenceBonus={soldierUnitAtt.defenceBonus}
-                                wallBonus={soldierUnitAtt.wallBonus}
-                                safeBonus={soldierUnitAtt.safeBonus}
-                                poisonedBonus={soldierUnitAtt.poisonedBonus}
-                                becamePoisonedBonus={
-                                    soldierUnitAtt.becamePoisonedBonus
-                                }
-                                boostedBonus={soldierUnitAtt.boostedBonus}
-                                shipUnit={soldierUnitAtt.shipUnit}
-                                splashDamage={soldierUnitAtt.splashDamage}
-                                explodeDamage={soldierUnitAtt.explodeDamage}
+                                soldierUnit={soldierUnitAtt}
+                                onDelete={handleDelete}
+                                onUpdateHitpoints={handleUpdateHitpoints}
+                                onIncreaseHitpoints={handleIncreaseHitpoints}
+                                onDecreaseHitpoints={handleDecreaseHitpoints}
+                                onVeteranBonus={handleVeteranBonus}
+                                onDefenceBonus={handleDefenceBonus}
+                                onWallBonus={handleWallBonus}
+                                onSafeBonus={handleSafeBonus}
+                                onPoisonedBonus={handlePoisonedBonus}
+                                onBoostedBonus={handleBoostedBonus}
+                                onShipUnit={handleShipUnit}
+                                onSplashDamage={handleSplashDamage}
+                                onExplodeDamage={handleExplodeDamage}
                             />
                         </CardWithShadow>
                     ))}
@@ -700,37 +683,20 @@ const BattleGroundDetails = () => {
                         >
                             <SoldierUnitAsRender
                                 key={`defender-unit-${soldierUnitDef.id}-${soldierUnitDef.typeUnit}`}
-                                id={soldierUnitDef.id}
-                                OnDelete={handleDelete}
-                                OnUpdateHitpoints={handleUpdateHitpoints}
-                                OnIncreaseHitpoints={handleIncreaseHitpoints}
-                                OnDecreaseHitpoints={handleDecreaseHitpoints}
-                                typeUnit={soldierUnitDef.typeUnit}
-                                team={soldierUnitDef.team}
-                                healthMax={soldierUnitDef.config.maxHealth}
-                                healthBefore={soldierUnitDef.healthBefore}
-                                healthAfter={soldierUnitDef.healthAfter}
-                                OnVeteranBonus={handleVeteranBonus}
-                                OnDefenceBonus={handleDefenceBonus}
-                                OnWallBonus={handleWallBonus}
-                                OnSafeBonus={handleSafeBonus}
-                                OnPoisonedBonus={handlePoisonedBonus}
-                                OnBoostedBonus={handleBoostedBonus}
-                                OnShipUnit={handleShipUnit}
-                                OnSplashDamage={handleSplashDamage}
-                                OnExplodeDamage={handleExplodeDamage}
-                                veteran={soldierUnitDef.veteran}
-                                defenceBonus={soldierUnitDef.defenceBonus}
-                                wallBonus={soldierUnitDef.wallBonus}
-                                safeBonus={soldierUnitDef.safeBonus}
-                                poisonedBonus={soldierUnitDef.poisonedBonus}
-                                becamePoisonedBonus={
-                                    soldierUnitDef.becamePoisonedBonus
-                                }
-                                boostedBonus={soldierUnitDef.boostedBonus}
-                                shipUnit={soldierUnitDef.shipUnit}
-                                splashDamage={soldierUnitDef.splashDamage}
-                                explodeDamage={soldierUnitDef.explodeDamage}
+                                soldierUnit={soldierUnitDef}
+                                onDelete={handleDelete}
+                                onUpdateHitpoints={handleUpdateHitpoints}
+                                onIncreaseHitpoints={handleIncreaseHitpoints}
+                                onDecreaseHitpoints={handleDecreaseHitpoints}
+                                onVeteranBonus={handleVeteranBonus}
+                                onDefenceBonus={handleDefenceBonus}
+                                onWallBonus={handleWallBonus}
+                                onSafeBonus={handleSafeBonus}
+                                onPoisonedBonus={handlePoisonedBonus}
+                                onBoostedBonus={handleBoostedBonus}
+                                onShipUnit={handleShipUnit}
+                                onSplashDamage={handleSplashDamage}
+                                onExplodeDamage={handleExplodeDamage}
                             />
                         </CardWithShadow>
                     ))}
