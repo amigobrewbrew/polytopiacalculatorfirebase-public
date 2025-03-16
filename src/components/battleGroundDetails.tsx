@@ -76,6 +76,7 @@ const BattleGroundDetails = () => {
                 config: unitConfig,
                 typeUnit,
                 team: "Attackers",
+                healthMax: unitConfig.maxHealth,
                 healthBefore: unitConfig.maxHealth,
                 healthAfter: unitConfig.maxHealth,
                 veteran: false,
@@ -108,6 +109,7 @@ const BattleGroundDetails = () => {
                 config: unitConfig,
                 typeUnit,
                 team: "Defenders",
+                healthMax: unitConfig.maxHealth,
                 healthBefore: unitConfig.maxHealth,
                 healthAfter: unitConfig.maxHealth,
                 veteran: false,
@@ -430,9 +432,9 @@ const BattleGroundDetails = () => {
                 prev.map((u) => {
                     if (u.id === id) {
                         const maxHealth =
-                            u.config.maxHealth + 5 > 35
+                            u.healthMax + 5 > 35
                                 ? 10
-                                : u.config.maxHealth + 5;
+                                : u.healthMax + 5;
                         return {
                             ...u,
                             healthMax: maxHealth,
@@ -447,9 +449,9 @@ const BattleGroundDetails = () => {
                 prev.map((u) => {
                     if (u.id === id) {
                         const maxHealth =
-                            u.config.maxHealth + 5 > 35
+                            u.healthMax + 5 > 35
                                 ? 10
-                                : u.config.maxHealth + 5;
+                                : u.healthMax + 5;
                         return {
                             ...u,
                             healthMax: maxHealth,
@@ -513,7 +515,7 @@ const BattleGroundDetails = () => {
                 (
                     ((attacker.config.attack + 0.5 * boostedBonusMultiplier) *
                         attacker.healthBefore) /
-                    attacker.config.maxHealth
+                    attacker.healthMax
                 ).toFixed(10)
             );
 
@@ -521,7 +523,7 @@ const BattleGroundDetails = () => {
                 (
                     ((defender.config.defence *
                         (defender.healthBefore - totalAttackResult)) /
-                        defender.config.maxHealth) *
+                        defender.healthMax) *
                     wallBonusMultiplier *
                     defenceBonusMultiplier *
                     poisonedBonusMultiplier
@@ -655,7 +657,7 @@ const BattleGroundDetails = () => {
                                 OnDecreaseHitpoints={handleDecreaseHitpoints}
                                 typeUnit={soldierUnitAtt.typeUnit}
                                 team={soldierUnitAtt.team}
-                                healthMax={soldierUnitAtt.config.maxHealth}
+                                healthMax={soldierUnitAtt.healthMax}
                                 healthBefore={soldierUnitAtt.healthBefore}
                                 healthAfter={soldierUnitAtt.healthAfter}
                                 OnVeteranBonus={handleVeteranBonus}

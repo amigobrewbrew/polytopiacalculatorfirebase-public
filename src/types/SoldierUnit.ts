@@ -5,7 +5,7 @@ export type SoldierUnit = {
     config: UnitConfig;
     typeUnit: string; // TODO replace with unitConfig
     team: string;
-    // healthMax: number; // TODO replace with unitConfig
+    healthMax: number;
     healthBefore: number;
     healthAfter: number;
     // attack: number; // TODO replace with unitConfig
