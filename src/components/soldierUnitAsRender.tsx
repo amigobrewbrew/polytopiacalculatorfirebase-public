@@ -451,101 +451,6 @@ const SoldierUnitAsRender = ({
         return style;
     };
 
-    const makeInvisibleVeteranBonus = (unitType: string) => {
-        if (
-            [
-                "Ship",
-                "Boat",
-                "Navalon",
-                "Giant",
-                "MindBender",
-                "NatureBunny",
-                "Crab",
-                "DragonEgg",
-                "BabyDragon",
-                "FireDragon",
-                "Mooni",
-                "Gaami",
-                "Shaman",
-                "Centipede",
-                "Segment",
-                "Cloak",
-                "Dinghy",
-                "Battleship",
-                "Raft",
-                "Scout",
-                "Rammer",
-                "Bomber",
-                "Pirate",
-                "Juggernaut",
-            ].includes(unitType)
-        ) {
-            return { display: "none" };
-        }
-        return { display: "visible" };
-    };
-    const makeInvisibleShipUnit = (shipUnit: boolean) => {
-        return shipUnit ? { display: "visible" } : { display: "none" };
-    };
-    const makeInvisibleSplashDamage = (unitType: string, team: string) => {
-        if (
-            (unitType === "FireDragon" && team === "Attackers") ||
-            (unitType === "Bomber" && team === "Attackers") ||
-            (unitType === "Juggernaut" && team === "Attackers")
-        ) {
-            return { display: "visible" };
-        }
-        return { display: "none" };
-    };
-    const makeInvisibleExplodeDamage = (unitType: string, team: string) => {
-        if (
-            (unitType === "Doomux" && team === "Attackers") ||
-            (unitType === "Raychi" && team === "Attackers")
-        ) {
-            return { display: "visible" };
-        }
-        return { display: "none" };
-    };
-    const makeInvisibleDefenceBonus = (team: string) => {
-        return team === "Attackers"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-    const makeInvisibleWallBonus = (team: string, unitType: string) => {
-        if (
-            team === "Defenders" &&
-            [
-                "Warrior",
-                "Archer",
-                "Defender",
-                "Knight",
-                "Rider",
-                "Tridention",
-                "Polytaur",
-                "IceArcher",
-                "Amphibian",
-            ].includes(unitType)
-        ) {
-            return { display: "visible" };
-        }
-        return { display: "none" };
-    };
-    const makeInvisibleSafeBonus = (team: string) => {
-        return team === "Defenders"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-    const makeInvisibleBoostedBonus = (team: string) => {
-        return team === "Defenders"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-    const makeInvisiblePoisonedBonus = (team: string) => {
-        return team === "Attackers"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-
     return (
         <div>
             <div
@@ -647,7 +552,9 @@ const SoldierUnitAsRender = ({
                     handleClickVeteranBonus();
                 }}
                 style={{
-                    ...makeInvisibleVeteranBonus(isToggleVisibleTypeUnit),
+                    display: soldierUnit.config.skills.includes("static")
+                        ? "none"
+                        : "visible",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -672,7 +579,7 @@ const SoldierUnitAsRender = ({
                     handleClickShipUnit();
                 }}
                 style={{
-                    ...makeInvisibleShipUnit(isToggleVisibleShipUnit),
+                    display: soldierUnit.shipUnit ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{ marginRight: 0.1 }}
@@ -693,10 +600,12 @@ const SoldierUnitAsRender = ({
                     handleClickSplashDamage();
                 }}
                 style={{
-                    ...makeInvisibleSplashDamage(
-                        isToggleVisibleTypeUnit,
-                        isToggleVisibleTeam
-                    ),
+                    display:
+                        soldierUnit.team === "Attackers" &&
+                        (soldierUnit.config.skills.includes("splash") ||
+                            soldierUnit.config.skills.includes("stomp"))
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -721,10 +630,11 @@ const SoldierUnitAsRender = ({
                     handleClickExplodeDamage();
                 }}
                 style={{
-                    ...makeInvisibleExplodeDamage(
-                        isToggleVisibleTypeUnit,
-                        isToggleVisibleTeam
-                    ),
+                    display:
+                        soldierUnit.team === "Attackers" &&
+                        soldierUnit.config.skills.includes("explode")
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -749,7 +659,8 @@ const SoldierUnitAsRender = ({
                     handleClickDefenceBonus();
                 }}
                 style={{
-                    ...makeInvisibleDefenceBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Defenders" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -782,10 +693,11 @@ const SoldierUnitAsRender = ({
                     handleClickWallBonus();
                 }}
                 style={{
-                    ...makeInvisibleWallBonus(
-                        isToggleVisibleTeam,
-                        isToggleVisibleTypeUnit
-                    ),
+                    display:
+                        soldierUnit.team === "Defenders" &&
+                        soldierUnit.config.skills.includes("fortify")
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -810,7 +722,8 @@ const SoldierUnitAsRender = ({
                     handleClickPoisonedBonus();
                 }}
                 style={{
-                    ...makeInvisiblePoisonedBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Defenders" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -838,7 +751,8 @@ const SoldierUnitAsRender = ({
                     handleClickSafeBonus();
                 }}
                 style={{
-                    ...makeInvisibleSafeBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Attackers" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -863,7 +777,8 @@ const SoldierUnitAsRender = ({
                     handleClickBoostedBonus();
                 }}
                 style={{
-                    ...makeInvisibleBoostedBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Attackers" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{

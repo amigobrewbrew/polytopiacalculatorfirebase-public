@@ -432,9 +432,7 @@ const BattleGroundDetails = () => {
                 prev.map((u) => {
                     if (u.id === id) {
                         const maxHealth =
-                            u.healthMax + 5 > 35
-                                ? 10
-                                : u.healthMax + 5;
+                            u.healthMax + 5 > 35 ? 10 : u.healthMax + 5;
                         return {
                             ...u,
                             healthMax: maxHealth,
@@ -449,9 +447,7 @@ const BattleGroundDetails = () => {
                 prev.map((u) => {
                     if (u.id === id) {
                         const maxHealth =
-                            u.healthMax + 5 > 35
-                                ? 10
-                                : u.healthMax + 5;
+                            u.healthMax + 5 > 35 ? 10 : u.healthMax + 5;
                         return {
                             ...u,
                             healthMax: maxHealth,
@@ -544,10 +540,9 @@ const BattleGroundDetails = () => {
             );
 
             if (
-                attacker.splashDamage &&
-                (attacker.typeUnit === "Juggernaut" ||
-                    attacker.typeUnit === "FireDragon" ||
-                    attacker.typeUnit === "Bomber")
+                (attacker.splashDamage &&
+                    attacker.config.skills.includes("splash")) ||
+                attacker.config.skills.includes("stomp")
             ) {
                 attackResult = Math.round(attackResult * 0.5);
             }
