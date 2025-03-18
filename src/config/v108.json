@@ -95,8 +95,8 @@
             "name": "Raft",
             "movementAbility": "water",
             "maxHealth": 10,
-            "attack": 1,
-            "defence": 0,
+            "attack": 0,
+            "defence": 1,
             "skills": ["static", "stiff", "variableHp"]
         },
         {
