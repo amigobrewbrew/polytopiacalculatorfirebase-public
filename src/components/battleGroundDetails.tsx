@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import AttackersSelection from "./attackersSelection";
 import DefendersSelection from "./defendersSelection";
 import SoldierUnitAsRender from "./soldierUnitAsRender";
-import v108Config from "../config/v108.json";
+// import v108Config from "../config/v108.json";
+import { loadAllConfigs } from "../utils/configLoader";
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
@@ -27,8 +28,25 @@ import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
 const BattleGroundDetails = () => {
-    const [versionConfig, setVersionConfig] =
-        useState<VersionConfig>(v108Config);
+    const [versionConfigs, setVersionConfigs] = useState<Record<string, any>>(
+        {}
+    );
+    const [versionConfig, setVersionConfig] = useState<VersionConfig>();
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        loadAllConfigs().then((configs) => {
+            setVersionConfigs(configs);
+            // Set v108 as default version
+            setVersionConfig(configs["108"]);
+            setIsLoading(false);
+        });
+    }, []);
+
+    const handleGameVersionChange = (event: SelectChangeEvent) => {
+        const version = event.target.value;
+        setVersionConfig(versionConfigs[version]);
+    };
 
     const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
         useState<SoldierUnit[]>([]);
@@ -38,32 +56,39 @@ const BattleGroundDetails = () => {
     // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
     const [checkedPosition, setCheckedPosition] = useState(false);
 
-    const handleGameVersionChange = (event: SelectChangeEvent) => {
-        const version = event.target.value;
+    // const handleGameVersionChange = (event: SelectChangeEvent) => {
+    //     const version = event.target.value;
 
-        // TODO improve method of switching between versions.
-        switch (version) {
-            case "108":
-                setVersionConfig(v108Config);
-        }
-    };
+    //     // TODO improve method of switching between versions.
+    //     switch (version) {
+    //         case "108":
+    //             setVersionConfig(v108Config);
+    //     }
+    // };
 
     const handleChangeCheckbox = (): void => {
         setCheckedPosition((prev) => !prev);
         analyticsLogEvent(analytics, "pc_checkbox_toggled");
     };
 
-    const getUnitConfig = useCallback((typeUnit: string): UnitConfig => {
-        const unit = versionConfig.unitStats.find(
-            (unit) => unit.name === typeUnit
-        );
+    const getUnitConfig = useCallback(
+        (typeUnit: string): UnitConfig => {
+            if (!versionConfig) {
+                throw new Error("Version config not loaded yet.");
+            }
 
-        if (!unit) {
-            throw new Error("Unit type not found.");
-        }
+            const unit = versionConfig.unitStats.find(
+                (unit) => unit.name === typeUnit
+            );
 
-        return unit;
-    }, []);
+            if (!unit) {
+                throw new Error("Unit type not found.");
+            }
+
+            return unit;
+        },
+        [versionConfig]
+    ); // Add versionConfig to dependencies
 
     const handleAddAttacker = (typeUnit: string): void => {
         const newId = soldierUnitsAttackersAsRender.length;
@@ -722,10 +747,12 @@ const BattleGroundDetails = () => {
                 <AttackersSelection
                     onAddAttacker={handleAddAttacker}
                     pageIndex={0}
+                    disabled={isLoading}
                 />
                 <DefendersSelection
                     onAddDefender={handleAddDefender}
                     pageIndex={0}
+                    disabled={isLoading}
                 />
             </Box>
 
@@ -745,7 +772,7 @@ const BattleGroundDetails = () => {
                         <Select
                             labelId="version-select-label"
                             id="version-select"
-                            value={versionConfig.version}
+                            value={versionConfig?.version}
                             label="Game version"
                             onChange={handleGameVersionChange}
                         >

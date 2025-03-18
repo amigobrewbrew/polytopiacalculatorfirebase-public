@@ -63,6 +63,7 @@ import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
 type AttackerPageProps = {
     onAddAttacker: any;
     pageIndex: number;
+    disabled?: boolean;
 };
 
 // Centralized styles
@@ -156,7 +157,11 @@ const attackerPages = [
 /**
  * Attackers rows component
  */
-const AttackerPage = ({ onAddAttacker, pageIndex }: AttackerPageProps) => {
+const AttackerPage = ({
+    onAddAttacker,
+    pageIndex,
+    disabled = false,
+}: AttackerPageProps) => {
     const attackers = attackerPages[pageIndex];
 
     return (
@@ -169,6 +174,7 @@ const AttackerPage = ({ onAddAttacker, pageIndex }: AttackerPageProps) => {
                         size="small"
                         variant="outlined"
                         sx={attackersButtonStyle}
+                        disabled={disabled}
                     >
                         <img
                             src={def.img}
@@ -188,6 +194,7 @@ const AttackerPage = ({ onAddAttacker, pageIndex }: AttackerPageProps) => {
                         size="small"
                         variant="outlined"
                         sx={attackersButtonStyle}
+                        disabled={disabled}
                     >
                         <img
                             src={def.img}
@@ -206,7 +213,10 @@ const AttackerPage = ({ onAddAttacker, pageIndex }: AttackerPageProps) => {
 /**
  * Navigate attackers selection rows
  */
-const AttackersSelection = ({ onAddAttacker }: AttackerPageProps) => {
+const AttackersSelection = ({
+    onAddAttacker,
+    disabled = false,
+}: AttackerPageProps) => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const handlePageChange = (direction: "prev" | "next") => {
@@ -237,6 +247,7 @@ const AttackersSelection = ({ onAddAttacker }: AttackerPageProps) => {
                         onClick={() => handlePageChange("prev")}
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
+                        disabled={disabled}
                     >
                         <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
                     </Button>
@@ -247,6 +258,7 @@ const AttackersSelection = ({ onAddAttacker }: AttackerPageProps) => {
                         onClick={() => handlePageChange("next")}
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
+                        disabled={disabled}
                     >
                         <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
                     </Button>
@@ -255,6 +267,7 @@ const AttackersSelection = ({ onAddAttacker }: AttackerPageProps) => {
                     <AttackerPage
                         pageIndex={currentPage}
                         onAddAttacker={onAddAttacker}
+                        disabled={disabled}
                     />
                 </Box>
             </Typography>
