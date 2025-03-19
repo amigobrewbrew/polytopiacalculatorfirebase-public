@@ -36,7 +36,6 @@ const BattleGroundDetails = () => {
     useEffect(() => {
         loadAllConfigs().then((configs) => {
             setVersionConfigs(configs);
-            // Set v108 as default version
             setVersionConfig(configs["108"]);
             setIsLoading(false);
         });
@@ -54,16 +53,6 @@ const BattleGroundDetails = () => {
     // const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
     // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
     const [checkedPosition, setCheckedPosition] = useState(false);
-
-    // const handleGameVersionChange = (event: SelectChangeEvent) => {
-    //     const version = event.target.value;
-
-    //     // TODO improve method of switching between versions.
-    //     switch (version) {
-    //         case "108":
-    //             setVersionConfig(v108Config);
-    //     }
-    // };
 
     const handleChangeCheckbox = (): void => {
         setCheckedPosition((prev) => !prev);
@@ -87,7 +76,7 @@ const BattleGroundDetails = () => {
             return unit;
         },
         [versionConfig]
-    ); // Add versionConfig to dependencies
+    );
 
     const handleAddAttacker = (typeUnit: string): void => {
         const newId = soldierUnitsAttackersAsRender.length;
@@ -755,16 +744,16 @@ const BattleGroundDetails = () => {
                 />
             </Box>
 
-            <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
-                <Box
-                    component="span"
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        typography: "body2",
-                    }}
-                >
-                    {versionConfig && (
+            {versionConfig && (
+                <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
+                    <Box
+                        component="span"
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            typography: "body2",
+                        }}
+                    >
                         <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
                             <InputLabel id="version-select-label">
                                 Game version
@@ -776,18 +765,25 @@ const BattleGroundDetails = () => {
                                 label="Game version"
                                 onChange={handleGameVersionChange}
                             >
-                                <MenuItem value={108}>
-                                    108 - The Forgotten + Aquarion Rework Patch
-                                </MenuItem>
-                                <MenuItem value={105}>
-                                    105 - Aquarion Rework
-                                </MenuItem>
+                                {Object.entries(versionConfigs)
+                                    .sort(([a], [b]) =>
+                                        b.localeCompare(a, undefined, {
+                                            numeric: true,
+                                        })
+                                    )
+                                    .map(([version, config]) => (
+                                        <MenuItem value={version}>
+                                            {version} - {config.title}
+                                        </MenuItem>
+                                    ))}
                             </Select>
                         </FormControl>
-                    )}
-                    <span>Build version: {versionConfig?.buildVersion}</span>
-                </Box>
-            </CardWithShadow>
+                        <span>
+                            Build version: {versionConfig?.buildVersion}
+                        </span>
+                    </Box>
+                </CardWithShadow>
+            )}
         </Box>
     );
 };
