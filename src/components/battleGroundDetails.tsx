@@ -23,10 +23,13 @@ import {
 } from "@mui/material";
 import { SoldierUnit } from "../types/SoldierUnit";
 import { UnitConfig, VersionConfig } from "../types/VersionConfig";
+import { useSearchParams } from "react-router-dom";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
 const BattleGroundDetails = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [versionConfigs, setVersionConfigs] = useState<
         Record<string, VersionConfig>
     >({});
@@ -36,13 +39,17 @@ const BattleGroundDetails = () => {
     useEffect(() => {
         loadAllConfigs().then((configs) => {
             setVersionConfigs(configs);
-            setVersionConfig(configs["108"]);
+            setVersionConfig(configs[searchParams.get("version") ?? "108"]);
             setIsLoading(false);
         });
     }, []);
 
     const handleGameVersionChange = (event: SelectChangeEvent) => {
+        setSoldierUnitsAttackersAsRender([]);
+        setSoldierUnitsDefendersAsRender([]);
+
         const version = event.target.value;
+        setSearchParams({ version: version });
         setVersionConfig(versionConfigs[version]);
     };
 
