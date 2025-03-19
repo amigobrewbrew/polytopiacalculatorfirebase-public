@@ -24,6 +24,7 @@ import {
 import { SoldierUnit } from "../types/SoldierUnit";
 import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 import { useSearchParams } from "react-router-dom";
+import { LATEST_VERSION } from "../config/version.global";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -39,7 +40,9 @@ const BattleGroundDetails = () => {
     useEffect(() => {
         loadAllConfigs().then((configs) => {
             setVersionConfigs(configs);
-            setVersionConfig(configs[searchParams.get("version") ?? "108"]);
+            setVersionConfig(
+                configs[searchParams.get("version") ?? LATEST_VERSION]
+            );
             setIsLoading(false);
         });
     }, []);
