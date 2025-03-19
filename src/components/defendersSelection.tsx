@@ -63,6 +63,7 @@ import { SINGLE_COL_MAX_WIDTH_PX, ONE_HUNDRED_PERCENT } from "../customStyles";
 type DefenderPageProps = {
     onAddDefender: any;
     pageIndex: number;
+    disabled?: boolean;
 };
 
 // Centralized styles
@@ -160,7 +161,11 @@ const defenderPages = [
 /**
  * Defenders page component
  */
-const DefenderPage = ({ onAddDefender, pageIndex }: DefenderPageProps) => {
+const DefenderPage = ({
+    onAddDefender,
+    pageIndex,
+    disabled = false,
+}: DefenderPageProps) => {
     const defenders = defenderPages[pageIndex];
 
     return (
@@ -174,6 +179,7 @@ const DefenderPage = ({ onAddDefender, pageIndex }: DefenderPageProps) => {
                         variant="outlined"
                         sx={defendersButtonStyle}
                         color="error"
+                        disabled={disabled}
                     >
                         <img
                             src={def.img}
@@ -194,6 +200,7 @@ const DefenderPage = ({ onAddDefender, pageIndex }: DefenderPageProps) => {
                         variant="outlined"
                         sx={defendersButtonStyle}
                         color="error"
+                        disabled={disabled}
                     >
                         <img
                             src={def.img}
@@ -212,7 +219,10 @@ const DefenderPage = ({ onAddDefender, pageIndex }: DefenderPageProps) => {
 /**
  * Navigation component for defenders selection
  */
-const DefendersSelection = ({ onAddDefender }: DefenderPageProps) => {
+const DefendersSelection = ({
+    onAddDefender,
+    disabled = false,
+}: DefenderPageProps) => {
     const [currentPage, setCurrentPage] = useState(0);
 
     const handlePageChange = (direction: "prev" | "next") => {
@@ -244,6 +254,7 @@ const DefendersSelection = ({ onAddDefender }: DefenderPageProps) => {
                         onClick={() => handlePageChange("prev")}
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
+                        disabled={disabled}
                     >
                         <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
                     </Button>
@@ -255,6 +266,7 @@ const DefendersSelection = ({ onAddDefender }: DefenderPageProps) => {
                         onClick={() => handlePageChange("next")}
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
+                        disabled={disabled}
                     >
                         <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
                     </Button>
@@ -263,6 +275,7 @@ const DefendersSelection = ({ onAddDefender }: DefenderPageProps) => {
                     <DefenderPage
                         pageIndex={currentPage}
                         onAddDefender={onAddDefender}
+                        disabled={disabled}
                     />
                 </Box>
             </Typography>

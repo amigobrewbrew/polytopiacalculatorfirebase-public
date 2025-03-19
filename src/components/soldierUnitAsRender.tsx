@@ -10,6 +10,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import { pink } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import { SoldierUnit } from "../types/SoldierUnit";
 
 import WarriorAtt from "../img/Attackers/Warrior.png";
 import ArcherAtt from "../img/Attackers/Archer.png";
@@ -109,131 +110,156 @@ import JuggernautDef from "../img/Defenders/Juggernaut.png";
 
 // Same Props as before
 type SoldierUnitAsRenderProps = {
-    id: number;
-    typeUnit: string;
-    team: string;
-    healthMax: number;
-    healthBefore: number;
-    healthAfter?: number;
-    attack?: number;
-    defence?: number;
-    veteran: boolean;
-    wallBonus: boolean;
-    defenceBonus: boolean;
-    safeBonus: boolean;
-    poisonedBonus: boolean;
-    becamePoisonedBonus: boolean;
-    boostedBonus: boolean;
-    splashDamage: boolean;
-    explodeDamage: boolean;
-    shipUnit: boolean;
-    OnDelete?: any;
-    OnUpdateHitpoints?: any;
-    OnIncreaseHitpoints?: any;
-    OnDecreaseHitpoints?: any;
-    OnVeteranBonus?: any;
-    OnDefenceBonus?: any;
-    OnWallBonus?: any;
-    OnSafeBonus?: any;
-    OnPoisonedBonus?: any;
-    OnBoostedBonus?: any;
-    OnShipUnit?: any;
-    OnSplashDamage: any;
-    OnExplodeDamage: any;
+    soldierUnit: SoldierUnit;
+    onDelete?: any;
+    onUpdateHitpoints?: any;
+    onIncreaseHitpoints?: any;
+    onDecreaseHitpoints?: any;
+    onVeteranBonus?: any;
+    onDefenceBonus?: any;
+    onWallBonus?: any;
+    onSafeBonus?: any;
+    onPoisonedBonus?: any;
+    onBoostedBonus?: any;
+    onShipUnit?: any;
+    onSplashDamage: any;
+    onExplodeDamage: any;
 };
 
-const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
-    const [isToggleOnVeteran, setIsToggleOnVeteran] = useState(props.veteran);
-    const [isToggleOnSafe, setIsToggleOnSafe] = useState(props.safeBonus);
-    const [isToggleOnDefence, setIsToggleOnDefence] = useState(
-        props.defenceBonus
+const SoldierUnitAsRender = ({
+    soldierUnit,
+    onDelete,
+    onUpdateHitpoints,
+    onIncreaseHitpoints,
+    onDecreaseHitpoints,
+    onVeteranBonus,
+    onDefenceBonus,
+    onWallBonus,
+    onSafeBonus,
+    onPoisonedBonus,
+    onBoostedBonus,
+    onShipUnit,
+    onSplashDamage,
+    onExplodeDamage,
+}: SoldierUnitAsRenderProps) => {
+    const [isToggleOnVeteran, setIsToggleOnVeteran] = useState(
+        soldierUnit.veteran
     );
-    const [isToggleOnWall, setIsToggleOnWall] = useState(props.wallBonus);
+    const [isToggleOnSafe, setIsToggleOnSafe] = useState(soldierUnit.safeBonus);
+    const [isToggleOnDefence, setIsToggleOnDefence] = useState(
+        soldierUnit.defenceBonus
+    );
+    const [isToggleOnWall, setIsToggleOnWall] = useState(soldierUnit.wallBonus);
     const [isToggleOnPoisoned, setIsToggleOnPoisoned] = useState(
-        props.poisonedBonus
+        soldierUnit.poisonedBonus
     );
     const [isBecamePoisoned, setIsBecamePoisoned] = useState(
-        props.becamePoisonedBonus
+        soldierUnit.becamePoisonedBonus
     );
     const [isToggleOnBoosted, setIsToggleOnBoosted] = useState(
-        props.boostedBonus
+        soldierUnit.boostedBonus
     );
     const [isToggleOnShipUnit, setIsToggleOnShipUnit] = useState(
-        props.shipUnit
+        soldierUnit.shipUnit
     );
     const [isToggleOnSplashDamage, setIsToggleOnSplashDamage] = useState(
-        props.splashDamage
+        soldierUnit.splashDamage
     );
     const [isToggleOnExplodeDamage, setIsToggleOnExplodeDamage] = useState(
-        props.explodeDamage
+        soldierUnit.explodeDamage
     );
     const [isToggleVisibleTypeUnit, setIsToggleVisibleTypeUnit] = useState(
-        props.typeUnit
+        soldierUnit.typeUnit
     );
-    const [isToggleVisibleTeam, setIsToggleVisibleTeam] = useState(props.team);
+    const [isToggleVisibleTeam, setIsToggleVisibleTeam] = useState(
+        soldierUnit.team
+    );
     const [isToggleVisibleShipUnit, setIsToggleVisibleShipUnit] = useState(
-        props.shipUnit
+        soldierUnit.shipUnit
     );
-    const [healthMaxShipUnit, setHealthMaxShipUnit] = useState(props.healthMax);
+    const [healthMaxShipUnit, setHealthMaxShipUnit] = useState(
+        soldierUnit.healthMax
+    );
     const [healthInputField, setHealthInputField] = useState(
-        props.healthBefore
+        soldierUnit.healthBefore
     );
     const [healthBeforeAsState, setHealthBeforeAsState] = useState(
-        props.healthBefore
+        soldierUnit.healthBefore
     );
     const [healthAfterAsState, setHealthAfterAsState] = useState(
-        props.healthAfter ?? props.healthBefore
+        soldierUnit.healthAfter ?? soldierUnit.healthBefore
     );
 
-    useEffect(() => setIsToggleOnVeteran(props.veteran), [props.veteran]);
-    useEffect(() => setIsToggleOnSafe(props.safeBonus), [props.safeBonus]);
     useEffect(
-        () => setIsToggleOnDefence(props.defenceBonus),
-        [props.defenceBonus]
-    );
-    useEffect(() => setIsToggleOnWall(props.wallBonus), [props.wallBonus]);
-    useEffect(
-        () => setIsToggleOnPoisoned(props.poisonedBonus),
-        [props.poisonedBonus]
+        () => setIsToggleOnVeteran(soldierUnit.veteran),
+        [soldierUnit.veteran]
     );
     useEffect(
-        () => setIsToggleOnBoosted(props.boostedBonus),
-        [props.boostedBonus]
+        () => setIsToggleOnSafe(soldierUnit.safeBonus),
+        [soldierUnit.safeBonus]
     );
     useEffect(
-        () => setIsToggleOnSplashDamage(props.splashDamage),
-        [props.splashDamage]
+        () => setIsToggleOnDefence(soldierUnit.defenceBonus),
+        [soldierUnit.defenceBonus]
     );
     useEffect(
-        () => setIsToggleOnExplodeDamage(props.explodeDamage),
-        [props.explodeDamage]
-    );
-    useEffect(() => setIsToggleOnShipUnit(props.shipUnit), [props.shipUnit]);
-    useEffect(
-        () => setIsBecamePoisoned(props.becamePoisonedBonus),
-        [props.becamePoisonedBonus]
-    );
-    useEffect(() => setIsToggleVisibleTeam(props.team), [props.team]);
-    useEffect(
-        () => setIsToggleVisibleTypeUnit(props.typeUnit),
-        [props.typeUnit]
+        () => setIsToggleOnWall(soldierUnit.wallBonus),
+        [soldierUnit.wallBonus]
     );
     useEffect(
-        () => setIsToggleVisibleShipUnit(props.shipUnit),
-        [props.shipUnit]
-    );
-    useEffect(() => setHealthMaxShipUnit(props.healthMax), [props.healthMax]);
-    useEffect(
-        () => setHealthInputField(props.healthBefore),
-        [props.healthBefore]
+        () => setIsToggleOnPoisoned(soldierUnit.poisonedBonus),
+        [soldierUnit.poisonedBonus]
     );
     useEffect(
-        () => setHealthBeforeAsState(props.healthBefore),
-        [props.healthBefore]
+        () => setIsToggleOnBoosted(soldierUnit.boostedBonus),
+        [soldierUnit.boostedBonus]
     );
     useEffect(
-        () => setHealthAfterAsState(props.healthAfter ?? props.healthBefore),
-        [props.healthAfter, props.healthBefore]
+        () => setIsToggleOnSplashDamage(soldierUnit.splashDamage),
+        [soldierUnit.splashDamage]
+    );
+    useEffect(
+        () => setIsToggleOnExplodeDamage(soldierUnit.explodeDamage),
+        [soldierUnit.explodeDamage]
+    );
+    useEffect(
+        () => setIsToggleOnShipUnit(soldierUnit.shipUnit),
+        [soldierUnit.shipUnit]
+    );
+    useEffect(
+        () => setIsBecamePoisoned(soldierUnit.becamePoisonedBonus),
+        [soldierUnit.becamePoisonedBonus]
+    );
+    useEffect(
+        () => setIsToggleVisibleTeam(soldierUnit.team),
+        [soldierUnit.team]
+    );
+    useEffect(
+        () => setIsToggleVisibleTypeUnit(soldierUnit.typeUnit),
+        [soldierUnit.typeUnit]
+    );
+    useEffect(
+        () => setIsToggleVisibleShipUnit(soldierUnit.shipUnit),
+        [soldierUnit.shipUnit]
+    );
+    useEffect(
+        () => setHealthMaxShipUnit(soldierUnit.healthMax),
+        [soldierUnit.healthMax]
+    );
+    useEffect(
+        () => setHealthInputField(soldierUnit.healthBefore),
+        [soldierUnit.healthBefore]
+    );
+    useEffect(
+        () => setHealthBeforeAsState(soldierUnit.healthBefore),
+        [soldierUnit.healthBefore]
+    );
+    useEffect(
+        () =>
+            setHealthAfterAsState(
+                soldierUnit.healthAfter ?? soldierUnit.healthBefore
+            ),
+        [soldierUnit.healthAfter, soldierUnit.healthBefore]
     );
 
     const handleClickSplashDamage = () => {
@@ -249,7 +275,7 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
         console.log("Unit is veteran");
     };
     const handleClickShipUnit = () => {
-        setHealthMaxShipUnit(props.healthMax);
+        setHealthMaxShipUnit(soldierUnit.healthMax);
     };
     const handleClickSafeBonus = () => {
         setIsToggleOnSafe(!isToggleOnSafe);
@@ -289,7 +315,11 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
     const handleHitpointsChange = (healthBeforeManualInput: any) => {
         setHealthInputField(parseInt(healthBeforeManualInput));
         console.log("Hitpoints are now: " + healthBeforeManualInput);
-        props.OnUpdateHitpoints(props.id, props.team, healthBeforeManualInput);
+        onUpdateHitpoints(
+            soldierUnit.id,
+            soldierUnit.team,
+            healthBeforeManualInput
+        );
     };
     const handleKeyDown = (e: any) => {
         if (e.key === "Enter") handleHitpointsChange(e.target.value);
@@ -421,101 +451,6 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
         return style;
     };
 
-    const makeInvisibleVeteranBonus = (unitType: string) => {
-        if (
-            [
-                "Ship",
-                "Boat",
-                "Navalon",
-                "Giant",
-                "MindBender",
-                "NatureBunny",
-                "Crab",
-                "DragonEgg",
-                "BabyDragon",
-                "FireDragon",
-                "Mooni",
-                "Gaami",
-                "Shaman",
-                "Centipede",
-                "Segment",
-                "Cloak",
-                "Dinghy",
-                "Battleship",
-                "Raft",
-                "Scout",
-                "Rammer",
-                "Bomber",
-                "Pirate",
-                "Juggernaut",
-            ].includes(unitType)
-        ) {
-            return { display: "none" };
-        }
-        return { display: "visible" };
-    };
-    const makeInvisibleShipUnit = (shipUnit: boolean) => {
-        return shipUnit ? { display: "visible" } : { display: "none" };
-    };
-    const makeInvisibleSplashDamage = (unitType: string, team: string) => {
-        if (
-            (unitType === "FireDragon" && team === "Attackers") ||
-            (unitType === "Bomber" && team === "Attackers") ||
-            (unitType === "Juggernaut" && team === "Attackers")
-        ) {
-            return { display: "visible" };
-        }
-        return { display: "none" };
-    };
-    const makeInvisibleExplodeDamage = (unitType: string, team: string) => {
-        if (
-            (unitType === "Doomux" && team === "Attackers") ||
-            (unitType === "Raychi" && team === "Attackers")
-        ) {
-            return { display: "visible" };
-        }
-        return { display: "none" };
-    };
-    const makeInvisibleDefenceBonus = (team: string) => {
-        return team === "Attackers"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-    const makeInvisibleWallBonus = (team: string, unitType: string) => {
-        if (
-            team === "Defenders" &&
-            [
-                "Warrior",
-                "Archer",
-                "Defender",
-                "Knight",
-                "Rider",
-                "Tridention",
-                "Polytaur",
-                "IceArcher",
-                "Amphibian",
-            ].includes(unitType)
-        ) {
-            return { display: "visible" };
-        }
-        return { display: "none" };
-    };
-    const makeInvisibleSafeBonus = (team: string) => {
-        return team === "Defenders"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-    const makeInvisibleBoostedBonus = (team: string) => {
-        return team === "Defenders"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-    const makeInvisiblePoisonedBonus = (team: string) => {
-        return team === "Attackers"
-            ? { display: "none" }
-            : { display: "visible" };
-    };
-
     return (
         <div>
             <div
@@ -529,21 +464,38 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
             >
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <img
-                        src={displayIcon(props.typeUnit, props.team)}
+                        src={displayIcon(
+                            soldierUnit.typeUnit,
+                            soldierUnit.team
+                        )}
                         alt="Soldier"
-                        style={soldierUnitImageStyle(props.team)}
+                        style={soldierUnitImageStyle(soldierUnit.team)}
                     />
                     <span>
                         <label
-                            htmlFor={props.team + props.id + "HitpointField"}
+                            htmlFor={
+                                soldierUnit.team +
+                                soldierUnit.id +
+                                "HitpointField"
+                            }
                         >
                             <input
-                                id={props.team + props.id + "HitpointField"}
-                                name={props.team + props.id + "HitpointField"}
+                                id={
+                                    soldierUnit.team +
+                                    soldierUnit.id +
+                                    "HitpointField"
+                                }
+                                name={
+                                    soldierUnit.team +
+                                    soldierUnit.id +
+                                    "HitpointField"
+                                }
                                 type="text"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
-                                value={healthInputField}
+                                value={
+                                    healthInputField ? healthInputField : "0"
+                                }
                                 onChange={(e) =>
                                     setHealthInputField(
                                         parseInt(e.target.value)
@@ -564,7 +516,7 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                     </span>
                 </div>
                 <IconButton
-                    onClick={() => props.OnDelete(props.id, props.team)}
+                    onClick={() => onDelete(soldierUnit.id, soldierUnit.team)}
                     style={{
                         marginRight: "5%",
                         padding: "0",
@@ -580,7 +532,9 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 </IconButton>
             </div>
             <IconButton
-                onClick={() => props.OnIncreaseHitpoints(props.id, props.team)}
+                onClick={() =>
+                    onIncreaseHitpoints(soldierUnit.id, soldierUnit.team)
+                }
             >
                 <AddBoxIcon color="success" />
             </IconButton>
@@ -589,16 +543,18 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnVeteranBonus(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.veteran
+                    onVeteranBonus(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.veteran
                     );
                     handleClickVeteranBonus();
                 }}
                 style={{
-                    ...makeInvisibleVeteranBonus(isToggleVisibleTypeUnit),
+                    display: soldierUnit.config.skills.includes("static")
+                        ? "none"
+                        : "visible",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -614,40 +570,42 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnShipUnit(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.shipUnit
+                    onShipUnit(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.shipUnit
                     );
                     handleClickShipUnit();
                 }}
                 style={{
-                    ...makeInvisibleShipUnit(isToggleVisibleShipUnit),
+                    display: soldierUnit.shipUnit ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{ marginRight: 0.1 }}
             >
-                mx{props.healthMax}
+                mx{soldierUnit.healthMax}
             </Button>
             <Button
                 variant="outlined"
                 color="secondary"
                 size="small"
                 onClick={() => {
-                    props.OnSplashDamage(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.splashDamage
+                    onSplashDamage(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.splashDamage
                     );
                     handleClickSplashDamage();
                 }}
                 style={{
-                    ...makeInvisibleSplashDamage(
-                        isToggleVisibleTypeUnit,
-                        isToggleVisibleTeam
-                    ),
+                    display:
+                        soldierUnit.team === "Attackers" &&
+                        (soldierUnit.config.skills.includes("splash") ||
+                            soldierUnit.config.skills.includes("stomp"))
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -663,19 +621,20 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 color="secondary"
                 size="small"
                 onClick={() => {
-                    props.OnExplodeDamage(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.explodeDamage
+                    onExplodeDamage(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.explodeDamage
                     );
                     handleClickExplodeDamage();
                 }}
                 style={{
-                    ...makeInvisibleExplodeDamage(
-                        isToggleVisibleTypeUnit,
-                        isToggleVisibleTeam
-                    ),
+                    display:
+                        soldierUnit.team === "Attackers" &&
+                        soldierUnit.config.skills.includes("explode")
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -691,16 +650,17 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnDefenceBonus(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.defenceBonus
+                    onDefenceBonus(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.defenceBonus
                     );
                     handleClickDefenceBonus();
                 }}
                 style={{
-                    ...makeInvisibleDefenceBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Defenders" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -713,7 +673,9 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
             </Button>
             <br />
             <IconButton
-                onClick={() => props.OnDecreaseHitpoints(props.id, props.team)}
+                onClick={() =>
+                    onDecreaseHitpoints(soldierUnit.id, soldierUnit.team)
+                }
             >
                 <IndeterminateCheckBoxIcon sx={{ color: pink[500] }} />
             </IconButton>
@@ -722,19 +684,20 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnWallBonus(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.wallBonus
+                    onWallBonus(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.wallBonus
                     );
                     handleClickWallBonus();
                 }}
                 style={{
-                    ...makeInvisibleWallBonus(
-                        isToggleVisibleTeam,
-                        isToggleVisibleTypeUnit
-                    ),
+                    display:
+                        soldierUnit.team === "Defenders" &&
+                        soldierUnit.config.skills.includes("fortify")
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -750,16 +713,17 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnPoisonedBonus(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.poisonedBonus
+                    onPoisonedBonus(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.poisonedBonus
                     );
                     handleClickPoisonedBonus();
                 }}
                 style={{
-                    ...makeInvisiblePoisonedBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Defenders" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -778,16 +742,17 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnSafeBonus(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.safeBonus
+                    onSafeBonus(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.safeBonus
                     );
                     handleClickSafeBonus();
                 }}
                 style={{
-                    ...makeInvisibleSafeBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Attackers" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
@@ -803,16 +768,17 @@ const SoldierUnitAsRender = (props: SoldierUnitAsRenderProps) => {
                 size="small"
                 color="secondary"
                 onClick={() => {
-                    props.OnBoostedBonus(
-                        props.id,
-                        props.team,
-                        props.typeUnit,
-                        props.boostedBonus
+                    onBoostedBonus(
+                        soldierUnit.id,
+                        soldierUnit.team,
+                        soldierUnit.typeUnit,
+                        soldierUnit.boostedBonus
                     );
                     handleClickBoostedBonus();
                 }}
                 style={{
-                    ...makeInvisibleBoostedBonus(isToggleVisibleTeam),
+                    display:
+                        soldierUnit.team === "Attackers" ? "visible" : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{

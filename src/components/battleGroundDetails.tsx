@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AttackersSelection from "./attackersSelection";
 import DefendersSelection from "./defendersSelection";
 import SoldierUnitAsRender from "./soldierUnitAsRender";
-import * as Stats from "./unitStats";
+import { loadAllConfigs } from "../utils/configLoader";
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
 import { logEvent } from "firebase/analytics";
@@ -14,31 +14,29 @@ import {
     SINGLE_COL_MAX_WIDTH_PX,
     SINGLE_COLUMN_WIDTH_PERCENTAGE,
 } from "../customStyles";
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from "@mui/material";
+import { SoldierUnit } from "../types/SoldierUnit";
+import { UnitConfig, VersionConfig } from "../types/VersionConfig";
+import { useSearchParams } from "react-router-dom";
+import { LATEST_VERSION } from "../config/version.global";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
-type SoldierUnit = {
-    id: number;
-    typeUnit: string;
-    team: string;
-    healthMax: number;
-    healthBefore: number;
-    healthAfter: number;
-    attack: number;
-    defence: number;
-    veteran: boolean;
-    defenceBonus: boolean;
-    wallBonus: boolean;
-    safeBonus: boolean;
-    poisonedBonus: boolean;
-    becamePoisonedBonus: boolean;
-    boostedBonus: boolean;
-    shipUnit: boolean;
-    splashDamage: boolean;
-    explodeDamage: boolean;
-};
-
 const BattleGroundDetails = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [versionConfigs, setVersionConfigs] = useState<
+        Record<string, VersionConfig>
+    >({});
+    const [versionConfig, setVersionConfig] = useState<VersionConfig>();
+    const [isLoading, setIsLoading] = useState(true);
+
     const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
         useState<SoldierUnit[]>([]);
     const [soldierUnitsDefendersAsRender, setSoldierUnitsDefendersAsRender] =
@@ -47,482 +45,113 @@ const BattleGroundDetails = () => {
     // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
     const [checkedPosition, setCheckedPosition] = useState(false);
 
-    const handleChangeCheckbox = () => {
+    useEffect(() => {
+        loadAllConfigs().then((configs) => {
+            setVersionConfigs(configs);
+            setVersionConfig(
+                configs[searchParams.get("version") ?? LATEST_VERSION]
+            );
+            setIsLoading(false);
+        });
+    }, []);
+
+    const getUnitConfig = useCallback(
+        (typeUnit: string): UnitConfig => {
+            if (!versionConfig) {
+                throw new Error("Version config not loaded yet.");
+            }
+
+            const unit = versionConfig.unitStats.find(
+                (unit) => unit.name === typeUnit
+            );
+
+            if (!unit) {
+                throw new Error("Unit type not found.");
+            }
+
+            return unit;
+        },
+        [versionConfig]
+    );
+
+    const handleGameVersionChange = (event: SelectChangeEvent) => {
+        setSoldierUnitsAttackersAsRender([]);
+        setSoldierUnitsDefendersAsRender([]);
+
+        const version = event.target.value;
+        setSearchParams({ version: version });
+        setVersionConfig(versionConfigs[version]);
+    };
+
+    const handleChangeCheckbox = (): void => {
         setCheckedPosition((prev) => !prev);
         analyticsLogEvent(analytics, "pc_checkbox_toggled");
     };
 
-    const healthMax = useCallback((typeUnit: string) => {
-        switch (typeUnit) {
-            case "Warrior":
-                return Stats.WarriorStats.healthMax;
-            case "Archer":
-                return Stats.ArcherStats.healthMax;
-            case "Rider":
-                return Stats.RiderStats.healthMax;
-            case "Defender":
-                return Stats.DefenderStats.healthMax;
-            case "Swordsman":
-                return Stats.SwordsmanStats.healthMax;
-            case "Catapult":
-                return Stats.CatapultStats.healthMax;
-            case "Knight":
-                return Stats.KnightStats.healthMax;
-            case "Giant":
-                return Stats.GiantStats.healthMax;
-            case "Battleship":
-                return Stats.BattleshipStats.healthMax;
-            case "MindBender":
-                return Stats.MindBenderStats.healthMax;
-            case "NatureBunny":
-                return Stats.NatureBunnyStats.healthMax;
-            case "Boat":
-                return Stats.BoatStats.healthMax;
-            case "Ship":
-                return Stats.ShipStats.healthMax;
-            case "Amphibian":
-                return Stats.AmphibianStats.healthMax;
-            case "Tridention":
-                return Stats.TridentionStats.healthMax;
-            case "Shark":
-                return Stats.SharkStats.healthMax;
-            case "Puffer":
-                return Stats.PufferStats.healthMax;
-            case "Jelly":
-                return Stats.JellyStats.healthMax;
-            case "Crab":
-                return Stats.CrabStats.healthMax;
-            case "Polytaur":
-                return Stats.PolytaurStats.healthMax;
-            case "Navalon":
-                return Stats.NavalonStats.healthMax;
-            case "DragonEgg":
-                return Stats.DragonEggStats.healthMax;
-            case "BabyDragon":
-                return Stats.BabyDragonStats.healthMax;
-            case "FireDragon":
-                return Stats.FireDragonStats.healthMax;
-            case "Mooni":
-                return Stats.MooniStats.healthMax;
-            case "IceArcher":
-                return Stats.IceArcherStats.healthMax;
-            case "BattleSled":
-                return Stats.BattleSledStats.healthMax;
-            case "IceFortress":
-                return Stats.IceFortressStats.healthMax;
-            case "Gaami":
-                return Stats.GaamiStats.healthMax;
-            case "Hexapod":
-                return Stats.HexapodStats.healthMax;
-            case "Kiton":
-                return Stats.KitonStats.healthMax;
-            case "Phychi":
-                return Stats.PhychiStats.healthMax;
-            case "Raychi":
-                return Stats.RaychiStats.healthMax;
-            case "Shaman":
-                return Stats.ShamanStats.healthMax;
-            case "Exida":
-                return Stats.ExidaStats.healthMax;
-            case "Doomux":
-                return Stats.DoomuxStats.healthMax;
-            case "Centipede":
-                return Stats.CentipedeStats.healthMax;
-            case "Segment":
-                return Stats.SegmentStats.healthMax;
-            case "Dagger":
-                return Stats.DaggerStats.healthMax;
-            case "Cloak":
-                return Stats.CloakStats.healthMax;
-            case "Dinghy":
-                return Stats.DinghyStats.healthMax;
-            case "Pirate":
-                return Stats.PirateStats.healthMax;
-            case "Raft":
-                return Stats.RaftStats.healthMax;
-            case "Scout":
-                return Stats.ScoutStats.healthMax;
-            case "Rammer":
-                return Stats.RammerStats.healthMax;
-            case "Bomber":
-                return Stats.BomberStats.healthMax;
-            case "Juggernaut":
-                return Stats.JuggernautStats.healthMax;
-            default:
-                return 0;
-        }
-    }, []);
-
-    const healthMaxVeteran = useCallback((typeUnit: string) => {
-        switch (typeUnit) {
-            case "Warrior":
-                return Stats.WarriorStats.healthMaxVeteran;
-            case "Archer":
-                return Stats.ArcherStats.healthMaxVeteran;
-            case "Rider":
-                return Stats.RiderStats.healthMaxVeteran;
-            case "Defender":
-                return Stats.DefenderStats.healthMaxVeteran;
-            case "Swordsman":
-                return Stats.SwordsmanStats.healthMaxVeteran;
-            case "Catapult":
-                return Stats.CatapultStats.healthMaxVeteran;
-            case "Knight":
-                return Stats.KnightStats.healthMaxVeteran;
-            case "Giant":
-                return Stats.GiantStats.healthMaxVeteran;
-            case "Battleship":
-                return Stats.BattleshipStats.healthMaxVeteran;
-            case "MindBender":
-                return Stats.MindBenderStats.healthMaxVeteran;
-            case "NatureBunny":
-                return Stats.NatureBunnyStats.healthMaxVeteran;
-            case "Boat":
-                return Stats.BoatStats.healthMaxVeteran;
-            case "Ship":
-                return Stats.ShipStats.healthMaxVeteran;
-            case "Amphibian":
-                return Stats.AmphibianStats.healthMaxVeteran;
-            case "Tridention":
-                return Stats.TridentionStats.healthMaxVeteran;
-            case "Shark":
-                return Stats.SharkStats.healthMaxVeteran;
-            case "Puffer":
-                return Stats.PufferStats.healthMaxVeteran;
-            case "Jelly":
-                return Stats.JellyStats.healthMaxVeteran;
-            case "Crab":
-                return Stats.CrabStats.healthMaxVeteran;
-            case "Polytaur":
-                return Stats.PolytaurStats.healthMaxVeteran;
-            case "Navalon":
-                return Stats.NavalonStats.healthMaxVeteran;
-            case "DragonEgg":
-                return Stats.DragonEggStats.healthMaxVeteran;
-            case "BabyDragon":
-                return Stats.BabyDragonStats.healthMaxVeteran;
-            case "FireDragon":
-                return Stats.FireDragonStats.healthMaxVeteran;
-            case "Mooni":
-                return Stats.MooniStats.healthMaxVeteran;
-            case "IceArcher":
-                return Stats.IceArcherStats.healthMaxVeteran;
-            case "BattleSled":
-                return Stats.BattleSledStats.healthMaxVeteran;
-            case "IceFortress":
-                return Stats.IceFortressStats.healthMaxVeteran;
-            case "Gaami":
-                return Stats.GaamiStats.healthMaxVeteran;
-            case "Hexapod":
-                return Stats.HexapodStats.healthMaxVeteran;
-            case "Kiton":
-                return Stats.KitonStats.healthMaxVeteran;
-            case "Phychi":
-                return Stats.PhychiStats.healthMaxVeteran;
-            case "Raychi":
-                return Stats.RaychiStats.healthMaxVeteran;
-            case "Shaman":
-                return Stats.ShamanStats.healthMaxVeteran;
-            case "Exida":
-                return Stats.ExidaStats.healthMaxVeteran;
-            case "Doomux":
-                return Stats.DoomuxStats.healthMaxVeteran;
-            case "Centipede":
-                return Stats.CentipedeStats.healthMaxVeteran;
-            case "Segment":
-                return Stats.SegmentStats.healthMaxVeteran;
-            case "Dagger":
-                return Stats.DaggerStats.healthMaxVeteran;
-            case "Cloak":
-                return Stats.CloakStats.healthMaxVeteran;
-            case "Dinghy":
-                return Stats.DinghyStats.healthMaxVeteran;
-            case "Pirate":
-                return Stats.PirateStats.healthMaxVeteran;
-            case "Raft":
-                return Stats.RaftStats.healthMaxVeteran;
-            case "Scout":
-                return Stats.ScoutStats.healthMaxVeteran;
-            case "Rammer":
-                return Stats.RammerStats.healthMaxVeteran;
-            case "Bomber":
-                return Stats.BomberStats.healthMaxVeteran;
-            case "Juggernaut":
-                return Stats.JuggernautStats.healthMaxVeteran;
-            default:
-                return 0;
-        }
-    }, []);
-
-    const attack = useCallback((typeUnit: string) => {
-        switch (typeUnit) {
-            case "Warrior":
-                return Stats.WarriorStats.attack;
-            case "Archer":
-                return Stats.ArcherStats.attack;
-            case "Rider":
-                return Stats.RiderStats.attack;
-            case "Defender":
-                return Stats.DefenderStats.attack;
-            case "Swordsman":
-                return Stats.SwordsmanStats.attack;
-            case "Catapult":
-                return Stats.CatapultStats.attack;
-            case "Knight":
-                return Stats.KnightStats.attack;
-            case "Giant":
-                return Stats.GiantStats.attack;
-            case "Battleship":
-                return Stats.BattleshipStats.attack;
-            case "MindBender":
-                return Stats.MindBenderStats.attack;
-            case "NatureBunny":
-                return Stats.NatureBunnyStats.attack;
-            case "Boat":
-                return Stats.BoatStats.attack;
-            case "Ship":
-                return Stats.ShipStats.attack;
-            case "Amphibian":
-                return Stats.AmphibianStats.attack;
-            case "Tridention":
-                return Stats.TridentionStats.attack;
-            case "Shark":
-                return Stats.SharkStats.attack;
-            case "Puffer":
-                return Stats.PufferStats.attack;
-            case "Jelly":
-                return Stats.JellyStats.attack;
-            case "Crab":
-                return Stats.CrabStats.attack;
-            case "Polytaur":
-                return Stats.PolytaurStats.attack;
-            case "Navalon":
-                return Stats.NavalonStats.attack;
-            case "DragonEgg":
-                return Stats.DragonEggStats.attack;
-            case "BabyDragon":
-                return Stats.BabyDragonStats.attack;
-            case "FireDragon":
-                return Stats.FireDragonStats.attack;
-            case "Mooni":
-                return Stats.MooniStats.attack;
-            case "IceArcher":
-                return Stats.IceArcherStats.attack;
-            case "BattleSled":
-                return Stats.BattleSledStats.attack;
-            case "IceFortress":
-                return Stats.IceFortressStats.attack;
-            case "Gaami":
-                return Stats.GaamiStats.attack;
-            case "Hexapod":
-                return Stats.HexapodStats.attack;
-            case "Kiton":
-                return Stats.KitonStats.attack;
-            case "Phychi":
-                return Stats.PhychiStats.attack;
-            case "Raychi":
-                return Stats.RaychiStats.attack;
-            case "Shaman":
-                return Stats.ShamanStats.attack;
-            case "Exida":
-                return Stats.ExidaStats.attack;
-            case "Doomux":
-                return Stats.DoomuxStats.attack;
-            case "Centipede":
-                return Stats.CentipedeStats.attack;
-            case "Segment":
-                return Stats.SegmentStats.attack;
-            case "Dagger":
-                return Stats.DaggerStats.attack;
-            case "Cloak":
-                return Stats.CloakStats.attack;
-            case "Dinghy":
-                return Stats.DinghyStats.attack;
-            case "Pirate":
-                return Stats.PirateStats.attack;
-            case "Raft":
-                return Stats.RaftStats.attack;
-            case "Scout":
-                return Stats.ScoutStats.attack;
-            case "Rammer":
-                return Stats.RammerStats.attack;
-            case "Bomber":
-                return Stats.BomberStats.attack;
-            case "Juggernaut":
-                return Stats.JuggernautStats.attack;
-            default:
-                return 0;
-        }
-    }, []);
-
-    const defence = useCallback((typeUnit: string) => {
-        switch (typeUnit) {
-            case "Warrior":
-                return Stats.WarriorStats.defence;
-            case "Archer":
-                return Stats.ArcherStats.defence;
-            case "Rider":
-                return Stats.RiderStats.defence;
-            case "Defender":
-                return Stats.DefenderStats.defence;
-            case "Swordsman":
-                return Stats.SwordsmanStats.defence;
-            case "Catapult":
-                return Stats.CatapultStats.defence;
-            case "Knight":
-                return Stats.KnightStats.defence;
-            case "Giant":
-                return Stats.GiantStats.defence;
-            case "Battleship":
-                return Stats.BattleshipStats.defence;
-            case "MindBender":
-                return Stats.MindBenderStats.defence;
-            case "NatureBunny":
-                return Stats.NatureBunnyStats.defence;
-            case "Boat":
-                return Stats.BoatStats.defence;
-            case "Ship":
-                return Stats.ShipStats.defence;
-            case "Amphibian":
-                return Stats.AmphibianStats.defence;
-            case "Tridention":
-                return Stats.TridentionStats.defence;
-            case "Shark":
-                return Stats.SharkStats.defence;
-            case "Puffer":
-                return Stats.PufferStats.defence;
-            case "Jelly":
-                return Stats.JellyStats.defence;
-            case "Crab":
-                return Stats.CrabStats.defence;
-            case "Polytaur":
-                return Stats.PolytaurStats.defence;
-            case "Navalon":
-                return Stats.NavalonStats.defence;
-            case "DragonEgg":
-                return Stats.DragonEggStats.defence;
-            case "BabyDragon":
-                return Stats.BabyDragonStats.defence;
-            case "FireDragon":
-                return Stats.FireDragonStats.defence;
-            case "Mooni":
-                return Stats.MooniStats.defence;
-            case "IceArcher":
-                return Stats.IceArcherStats.defence;
-            case "BattleSled":
-                return Stats.BattleSledStats.defence;
-            case "IceFortress":
-                return Stats.IceFortressStats.defence;
-            case "Gaami":
-                return Stats.GaamiStats.defence;
-            case "Hexapod":
-                return Stats.HexapodStats.defence;
-            case "Kiton":
-                return Stats.KitonStats.defence;
-            case "Phychi":
-                return Stats.PhychiStats.defence;
-            case "Raychi":
-                return Stats.RaychiStats.defence;
-            case "Shaman":
-                return Stats.ShamanStats.defence;
-            case "Exida":
-                return Stats.ExidaStats.defence;
-            case "Doomux":
-                return Stats.DoomuxStats.defence;
-            case "Centipede":
-                return Stats.CentipedeStats.defence;
-            case "Segment":
-                return Stats.SegmentStats.defence;
-            case "Dagger":
-                return Stats.DaggerStats.defence;
-            case "Cloak":
-                return Stats.CloakStats.defence;
-            case "Dinghy":
-                return Stats.DinghyStats.defence;
-            case "Pirate":
-                return Stats.PirateStats.defence;
-            case "Raft":
-                return Stats.RaftStats.defence;
-            case "Scout":
-                return Stats.ScoutStats.defence;
-            case "Rammer":
-                return Stats.RammerStats.defence;
-            case "Bomber":
-                return Stats.BomberStats.defence;
-            case "Juggernaut":
-                return Stats.JuggernautStats.defence;
-            default:
-                return 0;
-        }
-    }, []);
-
-    const istypeUnitaShipUnit = useCallback((typeUnit: string) => {
-        switch (typeUnit) {
-            case "Raft":
-            case "Scout":
-            case "Rammer":
-            case "Bomber":
-                return true;
-            default:
-                return false;
-        }
-    }, []);
-
-    const handleAddAttacker = (typeUnit: string) => {
+    const handleAddAttacker = (typeUnit: string): void => {
         const newId = soldierUnitsAttackersAsRender.length;
-        const initialSafeBonus = ["Dagger", "Pirate", "Shark"].includes(
-            typeUnit
-        );
-        const newUnit: SoldierUnit = {
-            id: newId,
-            typeUnit,
-            team: "Attackers",
-            healthMax: healthMax(typeUnit),
-            healthBefore: healthMax(typeUnit),
-            healthAfter: healthMax(typeUnit),
-            attack: attack(typeUnit),
-            defence: defence(typeUnit),
-            veteran: false,
-            defenceBonus: false,
-            wallBonus: false,
-            safeBonus: initialSafeBonus,
-            poisonedBonus: false,
-            becamePoisonedBonus: false,
-            boostedBonus: false,
-            shipUnit: istypeUnitaShipUnit(typeUnit),
-            splashDamage: false,
-            explodeDamage: false,
-        };
-        setSoldierUnitsAttackersAsRender((prev) => [...prev, newUnit]);
-        // setAttIdxArray((prev) => [...prev, newId]);
-        analyticsLogEvent(analytics, "pc_attacker_added_" + typeUnit);
+
+        try {
+            const unitConfig = getUnitConfig(typeUnit);
+
+            const newUnit: SoldierUnit = {
+                id: newId,
+                config: unitConfig,
+                typeUnit,
+                team: "Attackers",
+                healthMax: unitConfig.maxHealth,
+                healthBefore: unitConfig.maxHealth,
+                healthAfter: unitConfig.maxHealth,
+                veteran: false,
+                defenceBonus: false,
+                wallBonus: false,
+                safeBonus: unitConfig.skills.includes("surprise"),
+                poisonedBonus: false,
+                becamePoisonedBonus: false,
+                boostedBonus: false,
+                shipUnit: unitConfig.skills.includes("variableHp"),
+                splashDamage: false,
+                explodeDamage: false,
+            };
+            setSoldierUnitsAttackersAsRender((prev) => [...prev, newUnit]);
+            // setAttIdxArray((prev) => [...prev, newId]);
+            analyticsLogEvent(analytics, "pc_attacker_added_" + typeUnit);
+        } catch (e: any) {
+            alert("Error: failed to add attacker.");
+        }
     };
 
-    const handleAddDefender = (typeUnit: string) => {
+    const handleAddDefender = (typeUnit: string): void => {
         const newId = soldierUnitsDefendersAsRender.length;
-        const newUnit: SoldierUnit = {
-            id: newId,
-            typeUnit,
-            team: "Defenders",
-            healthMax: healthMax(typeUnit),
-            healthBefore: healthMax(typeUnit),
-            healthAfter: healthMax(typeUnit),
-            attack: attack(typeUnit),
-            defence: defence(typeUnit),
-            veteran: false,
-            defenceBonus: false,
-            wallBonus: false,
-            safeBonus: false,
-            poisonedBonus: false,
-            becamePoisonedBonus: false,
-            boostedBonus: false,
-            shipUnit: istypeUnitaShipUnit(typeUnit),
-            splashDamage: false,
-            explodeDamage: false,
-        };
-        setSoldierUnitsDefendersAsRender((prev) => [...prev, newUnit]);
-        // setDefIdxArray((prev) => [...prev, newId]);
-        analyticsLogEvent(analytics, "pc_defender_added_" + typeUnit);
+
+        try {
+            const unitConfig = getUnitConfig(typeUnit);
+
+            const newUnit: SoldierUnit = {
+                id: newId,
+                config: unitConfig,
+                typeUnit,
+                team: "Defenders",
+                healthMax: unitConfig.maxHealth,
+                healthBefore: unitConfig.maxHealth,
+                healthAfter: unitConfig.maxHealth,
+                veteran: false,
+                defenceBonus: false,
+                wallBonus: false,
+                safeBonus: false,
+                poisonedBonus: false,
+                becamePoisonedBonus: false,
+                boostedBonus: false,
+                shipUnit: unitConfig.skills.includes("variableHp"),
+                splashDamage: false,
+                explodeDamage: false,
+            };
+            setSoldierUnitsDefendersAsRender((prev) => [...prev, newUnit]);
+            // setDefIdxArray((prev) => [...prev, newId]);
+            analyticsLogEvent(analytics, "pc_defender_added_" + typeUnit);
+        } catch (e) {
+            alert("Error: failed to add defender.");
+        }
     };
 
     const handleUpdateHitpoints = (
@@ -777,8 +406,8 @@ const BattleGroundDetails = () => {
                     if (u.id === id) {
                         const wasVet = u.veteran;
                         const newMax = wasVet
-                            ? healthMax(u.typeUnit)
-                            : healthMaxVeteran(u.typeUnit);
+                            ? u.config.maxHealth
+                            : u.config.maxHealth + 5;
                         return {
                             ...u,
                             veteran: !wasVet,
@@ -795,8 +424,8 @@ const BattleGroundDetails = () => {
                     if (u.id === id) {
                         const wasVet = u.veteran;
                         const newMax = wasVet
-                            ? healthMax(u.typeUnit)
-                            : healthMaxVeteran(u.typeUnit);
+                            ? u.config.maxHealth
+                            : u.config.maxHealth + 5;
                         return {
                             ...u,
                             veteran: !wasVet,
@@ -825,12 +454,12 @@ const BattleGroundDetails = () => {
             setSoldierUnitsAttackersAsRender((prev) =>
                 prev.map((u) => {
                     if (u.id === id) {
+                        const maxHealth =
+                            u.healthMax + 5 > 35 ? 10 : u.healthMax + 5;
                         return {
                             ...u,
-                            healthMax:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
-                            healthBefore:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
+                            healthMax: maxHealth,
+                            healthBefore: maxHealth,
                         };
                     }
                     return u;
@@ -840,12 +469,12 @@ const BattleGroundDetails = () => {
             setSoldierUnitsDefendersAsRender((prev) =>
                 prev.map((u) => {
                     if (u.id === id) {
+                        const maxHealth =
+                            u.healthMax + 5 > 35 ? 10 : u.healthMax + 5;
                         return {
                             ...u,
-                            healthMax:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
-                            healthBefore:
-                                u.healthMax + 5 > 35 ? 10 : u.healthMax + 5,
+                            healthMax: maxHealth,
+                            healthBefore: maxHealth,
                         };
                     }
                     return u;
@@ -903,7 +532,7 @@ const BattleGroundDetails = () => {
 
             const attackForce = parseFloat(
                 (
-                    ((attacker.attack + 0.5 * boostedBonusMultiplier) *
+                    ((attacker.config.attack + 0.5 * boostedBonusMultiplier) *
                         attacker.healthBefore) /
                     attacker.healthMax
                 ).toFixed(10)
@@ -911,7 +540,7 @@ const BattleGroundDetails = () => {
 
             const defenceForce = parseFloat(
                 (
-                    ((defender.defence *
+                    ((defender.config.defence *
                         (defender.healthBefore - totalAttackResult)) /
                         defender.healthMax) *
                     wallBonusMultiplier *
@@ -926,17 +555,17 @@ const BattleGroundDetails = () => {
                 parseFloat(
                     (
                         (attackForce / totalDamage) *
-                        (attacker.attack + 0.5 * boostedBonusMultiplier) *
+                        (attacker.config.attack +
+                            0.5 * boostedBonusMultiplier) *
                         4.5
                     ).toFixed(10)
                 )
             );
 
             if (
-                attacker.splashDamage &&
-                (attacker.typeUnit === "Juggernaut" ||
-                    attacker.typeUnit === "FireDragon" ||
-                    attacker.typeUnit === "Bomber")
+                (attacker.splashDamage &&
+                    attacker.config.skills.includes("splash")) ||
+                attacker.config.skills.includes("stomp")
             ) {
                 attackResult = Math.round(attackResult * 0.5);
             }
@@ -957,7 +586,7 @@ const BattleGroundDetails = () => {
                     parseFloat(
                         (
                             (defenceForce / totalDamage) *
-                            defender.defence *
+                            defender.config.defence *
                             4.5
                         ).toFixed(10)
                     )
@@ -1039,37 +668,20 @@ const BattleGroundDetails = () => {
                         >
                             <SoldierUnitAsRender
                                 key={`attacker-unit-${soldierUnitAtt.id}-${soldierUnitAtt.typeUnit}`}
-                                id={soldierUnitAtt.id}
-                                OnDelete={handleDelete}
-                                OnUpdateHitpoints={handleUpdateHitpoints}
-                                OnIncreaseHitpoints={handleIncreaseHitpoints}
-                                OnDecreaseHitpoints={handleDecreaseHitpoints}
-                                typeUnit={soldierUnitAtt.typeUnit}
-                                team={soldierUnitAtt.team}
-                                healthMax={soldierUnitAtt.healthMax}
-                                healthBefore={soldierUnitAtt.healthBefore}
-                                healthAfter={soldierUnitAtt.healthAfter}
-                                OnVeteranBonus={handleVeteranBonus}
-                                OnDefenceBonus={handleDefenceBonus}
-                                OnWallBonus={handleWallBonus}
-                                OnSafeBonus={handleSafeBonus}
-                                OnPoisonedBonus={handlePoisonedBonus}
-                                OnBoostedBonus={handleBoostedBonus}
-                                OnShipUnit={handleShipUnit}
-                                OnSplashDamage={handleSplashDamage}
-                                OnExplodeDamage={handleExplodeDamage}
-                                veteran={soldierUnitAtt.veteran}
-                                defenceBonus={soldierUnitAtt.defenceBonus}
-                                wallBonus={soldierUnitAtt.wallBonus}
-                                safeBonus={soldierUnitAtt.safeBonus}
-                                poisonedBonus={soldierUnitAtt.poisonedBonus}
-                                becamePoisonedBonus={
-                                    soldierUnitAtt.becamePoisonedBonus
-                                }
-                                boostedBonus={soldierUnitAtt.boostedBonus}
-                                shipUnit={soldierUnitAtt.shipUnit}
-                                splashDamage={soldierUnitAtt.splashDamage}
-                                explodeDamage={soldierUnitAtt.explodeDamage}
+                                soldierUnit={soldierUnitAtt}
+                                onDelete={handleDelete}
+                                onUpdateHitpoints={handleUpdateHitpoints}
+                                onIncreaseHitpoints={handleIncreaseHitpoints}
+                                onDecreaseHitpoints={handleDecreaseHitpoints}
+                                onVeteranBonus={handleVeteranBonus}
+                                onDefenceBonus={handleDefenceBonus}
+                                onWallBonus={handleWallBonus}
+                                onSafeBonus={handleSafeBonus}
+                                onPoisonedBonus={handlePoisonedBonus}
+                                onBoostedBonus={handleBoostedBonus}
+                                onShipUnit={handleShipUnit}
+                                onSplashDamage={handleSplashDamage}
+                                onExplodeDamage={handleExplodeDamage}
                             />
                         </CardWithShadow>
                     ))}
@@ -1089,37 +701,20 @@ const BattleGroundDetails = () => {
                         >
                             <SoldierUnitAsRender
                                 key={`defender-unit-${soldierUnitDef.id}-${soldierUnitDef.typeUnit}`}
-                                id={soldierUnitDef.id}
-                                OnDelete={handleDelete}
-                                OnUpdateHitpoints={handleUpdateHitpoints}
-                                OnIncreaseHitpoints={handleIncreaseHitpoints}
-                                OnDecreaseHitpoints={handleDecreaseHitpoints}
-                                typeUnit={soldierUnitDef.typeUnit}
-                                team={soldierUnitDef.team}
-                                healthMax={soldierUnitDef.healthMax}
-                                healthBefore={soldierUnitDef.healthBefore}
-                                healthAfter={soldierUnitDef.healthAfter}
-                                OnVeteranBonus={handleVeteranBonus}
-                                OnDefenceBonus={handleDefenceBonus}
-                                OnWallBonus={handleWallBonus}
-                                OnSafeBonus={handleSafeBonus}
-                                OnPoisonedBonus={handlePoisonedBonus}
-                                OnBoostedBonus={handleBoostedBonus}
-                                OnShipUnit={handleShipUnit}
-                                OnSplashDamage={handleSplashDamage}
-                                OnExplodeDamage={handleExplodeDamage}
-                                veteran={soldierUnitDef.veteran}
-                                defenceBonus={soldierUnitDef.defenceBonus}
-                                wallBonus={soldierUnitDef.wallBonus}
-                                safeBonus={soldierUnitDef.safeBonus}
-                                poisonedBonus={soldierUnitDef.poisonedBonus}
-                                becamePoisonedBonus={
-                                    soldierUnitDef.becamePoisonedBonus
-                                }
-                                boostedBonus={soldierUnitDef.boostedBonus}
-                                shipUnit={soldierUnitDef.shipUnit}
-                                splashDamage={soldierUnitDef.splashDamage}
-                                explodeDamage={soldierUnitDef.explodeDamage}
+                                soldierUnit={soldierUnitDef}
+                                onDelete={handleDelete}
+                                onUpdateHitpoints={handleUpdateHitpoints}
+                                onIncreaseHitpoints={handleIncreaseHitpoints}
+                                onDecreaseHitpoints={handleDecreaseHitpoints}
+                                onVeteranBonus={handleVeteranBonus}
+                                onDefenceBonus={handleDefenceBonus}
+                                onWallBonus={handleWallBonus}
+                                onSafeBonus={handleSafeBonus}
+                                onPoisonedBonus={handlePoisonedBonus}
+                                onBoostedBonus={handleBoostedBonus}
+                                onShipUnit={handleShipUnit}
+                                onSplashDamage={handleSplashDamage}
+                                onExplodeDamage={handleExplodeDamage}
                             />
                         </CardWithShadow>
                     ))}
@@ -1150,19 +745,53 @@ const BattleGroundDetails = () => {
                 <AttackersSelection
                     onAddAttacker={handleAddAttacker}
                     pageIndex={0}
+                    disabled={isLoading}
                 />
                 <DefendersSelection
                     onAddDefender={handleAddDefender}
                     pageIndex={0}
+                    disabled={isLoading}
                 />
             </Box>
 
-            <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
-                <Box component="span" sx={{ typography: "body2" }}>
-                    This page is based on Build version 2.11.1.13205 and Game
-                    version: 108.
-                </Box>
-            </CardWithShadow>
+            {versionConfig && (
+                <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
+                    <Box
+                        component="span"
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            typography: "body2",
+                        }}
+                    >
+                        <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
+                            <InputLabel id="version-select-label">
+                                Game version
+                            </InputLabel>
+                            <Select
+                                labelId="version-select-label"
+                                id="version-select"
+                                value={versionConfig.version}
+                                label="Game version"
+                                onChange={handleGameVersionChange}
+                            >
+                                {Object.entries(versionConfigs)
+                                    .sort(([a], [b]) =>
+                                        b.localeCompare(a)
+                                    )
+                                    .map(([version, config]) => (
+                                        <MenuItem value={version}>
+                                            {version} - {config.title}
+                                        </MenuItem>
+                                    ))}
+                            </Select>
+                        </FormControl>
+                        <span>
+                            Build version: {versionConfig?.buildVersion}
+                        </span>
+                    </Box>
+                </CardWithShadow>
+            )}
         </Box>
     );
 };
