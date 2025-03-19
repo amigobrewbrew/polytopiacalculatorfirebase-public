@@ -37,6 +37,14 @@ const BattleGroundDetails = () => {
     const [versionConfig, setVersionConfig] = useState<VersionConfig>();
     const [isLoading, setIsLoading] = useState(true);
 
+    const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
+        useState<SoldierUnit[]>([]);
+    const [soldierUnitsDefendersAsRender, setSoldierUnitsDefendersAsRender] =
+        useState<SoldierUnit[]>([]);
+    // const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
+    // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
+    const [checkedPosition, setCheckedPosition] = useState(false);
+
     useEffect(() => {
         loadAllConfigs().then((configs) => {
             setVersionConfigs(configs);
@@ -46,28 +54,6 @@ const BattleGroundDetails = () => {
             setIsLoading(false);
         });
     }, []);
-
-    const handleGameVersionChange = (event: SelectChangeEvent) => {
-        setSoldierUnitsAttackersAsRender([]);
-        setSoldierUnitsDefendersAsRender([]);
-
-        const version = event.target.value;
-        setSearchParams({ version: version });
-        setVersionConfig(versionConfigs[version]);
-    };
-
-    const [soldierUnitsAttackersAsRender, setSoldierUnitsAttackersAsRender] =
-        useState<SoldierUnit[]>([]);
-    const [soldierUnitsDefendersAsRender, setSoldierUnitsDefendersAsRender] =
-        useState<SoldierUnit[]>([]);
-    // const [defIdxArray, setDefIdxArray] = useState<number[]>([]);
-    // const [attIdxArray, setAttIdxArray] = useState<number[]>([]);
-    const [checkedPosition, setCheckedPosition] = useState(false);
-
-    const handleChangeCheckbox = (): void => {
-        setCheckedPosition((prev) => !prev);
-        analyticsLogEvent(analytics, "pc_checkbox_toggled");
-    };
 
     const getUnitConfig = useCallback(
         (typeUnit: string): UnitConfig => {
@@ -87,6 +73,20 @@ const BattleGroundDetails = () => {
         },
         [versionConfig]
     );
+
+    const handleGameVersionChange = (event: SelectChangeEvent) => {
+        setSoldierUnitsAttackersAsRender([]);
+        setSoldierUnitsDefendersAsRender([]);
+
+        const version = event.target.value;
+        setSearchParams({ version: version });
+        setVersionConfig(versionConfigs[version]);
+    };
+
+    const handleChangeCheckbox = (): void => {
+        setCheckedPosition((prev) => !prev);
+        analyticsLogEvent(analytics, "pc_checkbox_toggled");
+    };
 
     const handleAddAttacker = (typeUnit: string): void => {
         const newId = soldierUnitsAttackersAsRender.length;
@@ -777,9 +777,7 @@ const BattleGroundDetails = () => {
                             >
                                 {Object.entries(versionConfigs)
                                     .sort(([a], [b]) =>
-                                        b.localeCompare(a, undefined, {
-                                            numeric: true,
-                                        })
+                                        b.localeCompare(a)
                                     )
                                     .map(([version, config]) => (
                                         <MenuItem value={version}>
