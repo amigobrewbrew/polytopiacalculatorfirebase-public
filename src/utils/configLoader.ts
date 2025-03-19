@@ -1,6 +1,8 @@
+import { VersionConfig } from "../types/VersionConfig";
+
 export async function loadAllConfigs() {
     const configModules = import.meta.glob("../config/*.json", { eager: true });
-    const configs: Record<string, any> = {};
+    const configs: Record<string, VersionConfig> = {};
 
     for (const path in configModules) {
         // Extract version number from filename (e.g., "v108" -> "108")

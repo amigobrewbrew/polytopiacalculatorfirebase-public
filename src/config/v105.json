@@ -1,12 +1,12 @@
 {
     "version": "105",
-    "buildVersion": "TODO",
+    "buildVersion": "2.10.1.12787",
     "title": "Aquarion Rework",
     "unitStats": [
         {
             "name": "Warrior",
             "movementAbility": "land",
-            "maxHealth": 5,
+            "maxHealth": 10,
             "attack": 2,
             "defence": 2,
             "skills": ["fortify"]
@@ -167,7 +167,7 @@
             "name": "Shark",
             "movementAbility": "water",
             "maxHealth": 10,
-            "attack": 3.5,
+            "attack": 3,
             "defence": 2,
             "skills": ["surprise"]
         },
@@ -192,7 +192,7 @@
             "movementAbility": "amphibious",
             "maxHealth": 40,
             "attack": 4,
-            "defence": 4,
+            "defence": 5,
             "skills": ["static"]
         },
         {

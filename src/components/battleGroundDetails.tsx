@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import AttackersSelection from "./attackersSelection";
 import DefendersSelection from "./defendersSelection";
 import SoldierUnitAsRender from "./soldierUnitAsRender";
-// import v108Config from "../config/v108.json";
 import { loadAllConfigs } from "../utils/configLoader";
 import Box from "@mui/material/Box";
 import { analytics, isLocal } from "./../firebase";
@@ -28,9 +27,9 @@ import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
 const BattleGroundDetails = () => {
-    const [versionConfigs, setVersionConfigs] = useState<Record<string, any>>(
-        {}
-    );
+    const [versionConfigs, setVersionConfigs] = useState<
+        Record<string, VersionConfig>
+    >({});
     const [versionConfig, setVersionConfig] = useState<VersionConfig>();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -765,26 +764,28 @@ const BattleGroundDetails = () => {
                         typography: "body2",
                     }}
                 >
-                    <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
-                        <InputLabel id="version-select-label">
-                            Game version
-                        </InputLabel>
-                        <Select
-                            labelId="version-select-label"
-                            id="version-select"
-                            value={versionConfig?.version}
-                            label="Game version"
-                            onChange={handleGameVersionChange}
-                        >
-                            <MenuItem value={108}>
-                                108 - The Forgotten + Aquarion Rework Patch
-                            </MenuItem>
-                            <MenuItem value={105}>
-                                105 - Aquarion Rework
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                    <span>Build version: 2.11.1.13205</span>
+                    {versionConfig && (
+                        <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
+                            <InputLabel id="version-select-label">
+                                Game version
+                            </InputLabel>
+                            <Select
+                                labelId="version-select-label"
+                                id="version-select"
+                                value={versionConfig.version}
+                                label="Game version"
+                                onChange={handleGameVersionChange}
+                            >
+                                <MenuItem value={108}>
+                                    108 - The Forgotten + Aquarion Rework Patch
+                                </MenuItem>
+                                <MenuItem value={105}>
+                                    105 - Aquarion Rework
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                    )}
+                    <span>Build version: {versionConfig?.buildVersion}</span>
                 </Box>
             </CardWithShadow>
         </Box>
