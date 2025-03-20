@@ -563,9 +563,9 @@ const BattleGroundDetails = () => {
             );
 
             if (
-                (attacker.splashDamage &&
-                    attacker.config.skills.includes("splash")) ||
-                attacker.config.skills.includes("stomp")
+                attacker.splashDamage &&
+                (attacker.config.skills.includes("splash") ||
+                    attacker.config.skills.includes("stomp"))
             ) {
                 attackResult = Math.round(attackResult * 0.5);
             }
@@ -776,9 +776,7 @@ const BattleGroundDetails = () => {
                                 onChange={handleGameVersionChange}
                             >
                                 {Object.entries(versionConfigs)
-                                    .sort(([a], [b]) =>
-                                        b.localeCompare(a)
-                                    )
+                                    .sort(([a], [b]) => b.localeCompare(a))
                                     .map(([version, config]) => (
                                         <MenuItem value={version}>
                                             {version} - {config.title}
