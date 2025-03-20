@@ -601,8 +601,15 @@ const BattleGroundDetails = () => {
                     defender.becamePoisonedBonus = true;
                     poisoningAttacker = attacker.id;
                 }
-                attacker.healthAfter =
-                    attacker.healthBefore - defenceResult * safeBonusMultiplier;
+
+                if (
+                    !attacker.config.skills.includes("surprise") &&
+                    !defender.config.skills.includes("stiff")
+                ) {
+                    attacker.healthAfter =
+                        attacker.healthBefore - defenceResult;
+                }
+
                 if (attacker.typeUnit === "Segment" || attacker.explodeDamage) {
                     attacker.healthAfter = 0;
                 }
