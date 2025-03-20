@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar";
 import HelpPage from "./components/helpPage";
@@ -23,6 +23,7 @@ const App = () => {
                     <Route path="/help" element={<HelpPage />} />
                     <Route path="/" element={<BattleGroundDetails />} />
                     <Route path="/secretgame" element={<SecretGame />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </div>
         </ThemeProvider>
