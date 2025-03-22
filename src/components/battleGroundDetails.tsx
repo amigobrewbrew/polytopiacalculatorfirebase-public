@@ -79,6 +79,7 @@ const BattleGroundDetails = () => {
         setSoldierUnitsDefendersAsRender([]);
 
         const version = event.target.value;
+        analyticsLogEvent(analytics, "pc_version_changed_" + version);
         setSearchParams({ version: version });
         setVersionConfig(versionConfigs[version]);
     };
