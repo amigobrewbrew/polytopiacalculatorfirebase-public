@@ -1,5 +1,9 @@
 // Toggle this for local development
 export const isLocal = false;
+console.log(
+    "isLocal needs to be - true - for local development. Current value: ",
+    isLocal
+);
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";

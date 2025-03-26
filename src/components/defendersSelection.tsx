@@ -180,6 +180,7 @@ const DefenderPage = ({
                         sx={defendersButtonStyle}
                         color="error"
                         disabled={disabled}
+                        data-testid={`defender-${def.name.toLowerCase()}`}
                     >
                         <img
                             src={def.img}
@@ -201,6 +202,7 @@ const DefenderPage = ({
                         sx={defendersButtonStyle}
                         color="error"
                         disabled={disabled}
+                        data-testid={`defender-${def.name.toLowerCase()}`}
                     >
                         <img
                             src={def.img}
