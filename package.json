@@ -27,7 +27,10 @@
         "build": "vite build",
         "preview": "vite preview",
         "test": "jest",
-        "eject": "echo 'eject script not supported'"
+        "eject": "echo 'eject script not supported'",
+        "test:robot": "robot -d results tests/robot/",
+        "test:robot:ci": "robot --outputdir results tests/robot/",
+        "test:robot:init": "rfbrowser init"
     },
     "eslintConfig": {
         "extends": [

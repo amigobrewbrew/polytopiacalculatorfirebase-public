@@ -35,3 +35,13 @@ local.settings.json
 .vscode/launch.json
 firebase-debug.log
 dist
+
+# Robot Framework
+results/
+reports/
+log.html
+output.xml
+report.html
+*.png
+browser/
+playwright-log.txt
