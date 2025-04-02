@@ -25,6 +25,7 @@ import { SoldierUnit } from "../types/SoldierUnit";
 import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 import { useSearchParams } from "react-router-dom";
 import { LATEST_VERSION } from "../config/version.global";
+import { calculateAttackForce } from "../utils/damageFormulae";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -530,12 +531,15 @@ const BattleGroundDetails = () => {
 
             const boostedBonusMultiplier = attacker.boostedBonus ? 1 : 0;
 
-            const attackForce = parseFloat(
-                (
-                    ((attacker.config.attack + 0.5 * boostedBonusMultiplier) *
-                        attacker.healthBefore) /
-                    attacker.healthMax
-                ).toFixed(10)
+            const attackerAttack =
+                attacker.config.attack + (attacker.boostedBonus ? 0.5 : 0);
+            const attackerHealth = attacker.healthBefore;
+            const attackerMaxHealth = attacker.healthMax;
+
+            const attackForce = calculateAttackForce(
+                attackerAttack,
+                attackerHealth,
+                attackerMaxHealth
             );
 
             const defenceForce = parseFloat(
