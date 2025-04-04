@@ -27,8 +27,8 @@ export const calculateAttackResult = (
     totalDamage: number,
     attack: number
 ): number => {
-    const attackRatio = Math.round(attackForce / totalDamage);
-    return attackRatio * attack * 4.5;
+    const attackRatio = attackForce / totalDamage;
+    return Math.round(attackRatio * attack * 4.5);
 };
 
 export const calculateAttackSplash = (
@@ -36,7 +36,7 @@ export const calculateAttackSplash = (
     totalDamage: number,
     attack: number
 ): number => {
-    return calculateAttackResult(attackForce, totalDamage, attack) / 2;
+    return Math.round(calculateAttackResult(attackForce, totalDamage, attack) / 2);
 };
 
 export const calculateDefenseResult = (
