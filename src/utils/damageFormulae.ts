@@ -44,6 +44,6 @@ export const calculateDefenseResult = (
     totalDamage: number,
     defense: number
 ): number => {
-    const defenseRatio = Math.round(defenseForce / totalDamage);
-    return defenseRatio * defense * 4.5;
+    const defenseRatio = defenseForce / totalDamage;
+    return Math.round(defenseRatio * defense * 4.5);
 };

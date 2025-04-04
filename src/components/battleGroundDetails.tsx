@@ -30,6 +30,7 @@ import {
     calculateAttackResult,
     calculateAttackSplash,
     calculateDefenceForce,
+    calculateDefenseResult,
     calculateTotalDamage,
 } from "../utils/damageFormulae";
 
@@ -581,21 +582,16 @@ const BattleGroundDetails = () => {
             defender.healthAfter = defender.healthBefore - totalAttackResult;
 
             if (defender.healthAfter > 0) {
-                const defenceResult = Math.round(
-                    parseFloat(
-                        (
-                            (defenseForce / totalDamage) *
-                            defender.config.defence *
-                            4.5
-                        ).toFixed(10)
-                    )
+                const defenceResult = calculateDefenseResult(
+                    defenseForce,
+                    totalDamage,
+                    defender.config.defence
                 );
                 console.log("This is defenceResult:" + defenceResult);
+
                 if (
-                    ["Exida", "Phychi", "Kiton", "Segment"].includes(
-                        attacker.typeUnit
-                    ) ||
-                    attacker.explodeDamage
+                    attacker.config.skills.includes("poison") ||
+                    attacker.typeUnit === "Segment"
                 ) {
                     defender.becamePoisonedBonus = true;
                     poisoningAttacker = attacker.id;
@@ -603,13 +599,15 @@ const BattleGroundDetails = () => {
 
                 if (
                     !attacker.config.skills.includes("surprise") &&
-                    !defender.config.skills.includes("stiff")
+                    !defender.config.skills.includes("stiff") &&
+                    !attacker.safeBonus
                 ) {
                     attacker.healthAfter =
                         attacker.healthBefore - defenceResult;
-                }
-
-                if (attacker.typeUnit === "Segment" || attacker.explodeDamage) {
+                } else if (
+                    attacker.explodeDamage ||
+                    attacker.typeUnit === "Segment"
+                ) {
                     attacker.healthAfter = 0;
                 }
             } else {
