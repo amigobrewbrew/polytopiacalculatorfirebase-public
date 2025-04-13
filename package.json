@@ -26,11 +26,12 @@
         "format": "npm run prettier",
         "build": "vite build",
         "preview": "vite preview",
-        "test": "jest",
-        "eject": "echo 'eject script not supported'",
-        "test:robot": "robot -d results tests/robot/",
+        "test": "npm run test:jest && npm run test:robot",
+        "test:jest": "jest",
+        "test:robot": "robot tests/robot",
         "test:robot:ci": "robot --outputdir results tests/robot/",
-        "test:robot:init": "rfbrowser init"
+        "test:robot:init": "rfbrowser init",
+        "eject": "echo 'eject script not supported'"
     },
     "eslintConfig": {
         "extends": [
