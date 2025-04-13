@@ -5,7 +5,7 @@ on:
         branches: ["master"]
     pull_request:
         branches: ["master"]
-    workflow_dispatch: # Allow manual triggering
+    workflow_dispatch:
 
 permissions:
     contents: read
@@ -17,24 +17,26 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Use Node.js
+            - name: Use Node.js 20.x
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.x"
+                  node-version: 20.x
                   cache: "npm"
 
-            - name: Install Node.js dependencies
+            - name: Install dependencies
               run: npm ci
 
-            - name: Verify dependencies
-              run: |
-                  npm list react-scripts || npm install react-scripts --save-dev
-
-            - name: Build app
+            - name: Build application
               run: npm run build
 
             - name: Run Jest tests
               run: npm run test:jest
+
+            - name: Archive build artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: build-artifacts
+                  path: build/
 
     robot-tests:
         needs: build
@@ -46,57 +48,53 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: "20.x"
-                  cache: "npm"
 
-            - name: Install dependencies
-              run: npm ci
-
-            - name: Verify dependencies
-              run: |
-                  npm list react-scripts || npm install react-scripts --save-dev
-
-            - name: Build app
-              run: npm run build
+            - name: Download build artifacts
+              uses: actions/download-artifact@v3
+              with:
+                  name: build-artifacts
+                  path: build/
 
             - name: Set up Python
               uses: actions/setup-python@v4
               with:
                   python-version: "3.10"
 
-            - name: Install Robot Framework and Browser Library
+            - name: Install Robot Framework
               run: |
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
                   rfbrowser init
 
-            - name: Start server and run Robot tests
+            - name: Run tests with server
               run: |
                   npx serve -s build -l 3000 &
                   SERVER_PID=$!
 
-                  # Wait for server to be ready
+                  # Wait for server with retry
                   for i in {1..10}; do
                     if curl --silent --fail http://localhost:3000 > /dev/null; then
-                      echo "Server is ready!"
+                      echo "Server started successfully"
                       break
                     fi
-                    echo "Waiting for server to start... (attempt $i/10)"
+                    echo "Waiting for server (attempt $i)..."
                     sleep 3
                     if [ $i -eq 10 ]; then
-                      echo "Server failed to start after 30 seconds"
+                      echo "Server failed to start"
+                      kill $SERVER_PID
                       exit 1
                     fi
                   done
 
-                  # Run tests
+                  # Run tests and capture exit code
                   robot --outputdir results tests/robot/
-                  TEST_EXIT_CODE=$?
+                  TEST_EXIT=$?
 
-                  # Kill the server
+                  # Cleanup server
                   kill $SERVER_PID
 
-                  # Return the test exit code
-                  exit $TEST_EXIT_CODE
+                  # Return test result
+                  exit $TEST_EXIT
 
             - name: Upload test results
               uses: actions/upload-artifact@v3
