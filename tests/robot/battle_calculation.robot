@@ -92,11 +92,11 @@ The defenders selection should be visible
     Wait For Elements State    ${defenders_battleground_selector}    visible
 
 The first defender health should be ${expected}
-    ${actual_damage}=    Get Text    [data-testid="Defenders-0-health-after"]
+    ${actual_damage}=    Get Text    [data-testid="defenders-0-health-after"]
     Should Be Equal As Numbers    ${actual_damage}    ${expected}
 
 The first attacker health should be ${expected}
-    ${actual_damage}=    Get Text    [data-testid="Attackers-0-health-after"]
+    ${actual_damage}=    Get Text    [data-testid="attackers-0-health-after"]
     Should Be Equal As Numbers    ${actual_damage}    ${expected}
 
 I go to the next attackers selection page

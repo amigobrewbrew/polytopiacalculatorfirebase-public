@@ -330,7 +330,7 @@ const SoldierUnitAsRender = ({
     const displayHealthAfter = () => {
         return (
             <span
-                data-testid={`${soldierUnit.team}-${soldierUnit.id}-health-after`}
+                data-testid={`${soldierUnit.team.toLowerCase()}-${soldierUnit.id}-health-after`}
             >
                 {healthAfterAsState}
             </span>
