@@ -28,7 +28,7 @@
         "preview": "vite preview",
         "test": "npm run test:jest && npm run test:robot",
         "test:jest": "jest",
-        "test:robot": "python -m robot tests/robot",
+        "test:robot": "robot tests/robot",
         "test:robot:ci": "robot --outputdir results tests/robot/",
         "test:robot:init": "rfbrowser init",
         "eject": "echo 'eject script not supported'"
