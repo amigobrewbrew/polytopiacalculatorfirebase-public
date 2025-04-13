@@ -89,7 +89,15 @@ jobs:
               run: npx serve -s build -l 3000 &
 
             - name: Wait for server to start
-              run: sleep 5
+              run: |
+                  for i in {1..10}; do
+                      curl --fail http://localhost:3000 && break
+                      echo "Waiting for server to start..."
+                      sleep 3
+                  done
+
+            - name: Verify Server is Running
+              run: curl --fail http://localhost:3000 || exit 1
 
             - name: Run Robot Framework Tests
               run: robot --outputdir results tests/robot/
