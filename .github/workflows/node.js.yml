@@ -26,13 +26,15 @@ jobs:
             - name: Install Node.js dependencies
               run: npm ci
 
+            - name: Verify dependencies
+              run: |
+                  npm list react-scripts || npm install react-scripts --save-dev
+
             - name: Build app
               run: npm run build
 
             - name: Run Jest tests
               run: npm run test:jest
-
-            # We split the Robot tests into a separate job
 
     robot-tests:
         needs: build
@@ -48,6 +50,10 @@ jobs:
 
             - name: Install dependencies
               run: npm ci
+
+            - name: Verify dependencies
+              run: |
+                  npm list react-scripts || npm install react-scripts --save-dev
 
             - name: Build app
               run: npm run build
