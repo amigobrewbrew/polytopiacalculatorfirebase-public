@@ -45,3 +45,4 @@ report.html
 *.png
 browser/
 playwright-log.txt
+.venv
