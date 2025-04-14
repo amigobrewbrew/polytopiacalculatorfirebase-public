@@ -328,7 +328,13 @@ const SoldierUnitAsRender = ({
         event.target.select();
     };
     const displayHealthAfter = () => {
-        return healthAfterAsState;
+        return (
+            <span
+                data-testid={`${soldierUnit.team.toLowerCase()}-${soldierUnit.id}-health-after`}
+            >
+                {healthAfterAsState}
+            </span>
+        );
     };
     const unitImages: { [key: string]: { [key: string]: string } } = {
         Attackers: {

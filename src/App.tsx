@@ -6,6 +6,7 @@ import HelpPage from "./components/helpPage";
 import SecretGame from "./components/secretGame";
 import BattleGroundDetails from "./components/battleGroundDetails";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import envConfig from "./envConfig";
 
 // Create theme once outside of component to avoid recreation on every render
 const theme = createTheme({
@@ -17,6 +18,13 @@ const theme = createTheme({
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
+            <meta
+                name="google-site-verification"
+                content={envConfig.siteVerification}
+            />
+            <React.Fragment key="adsense-script">
+                <script async src={envConfig.adsenseClient}></script>
+            </React.Fragment>{" "}
             <NavBar />
             <div className="containers">
                 <Routes>

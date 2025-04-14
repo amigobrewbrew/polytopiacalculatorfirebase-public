@@ -167,18 +167,19 @@ const AttackerPage = ({
     return (
         <Box>
             <Box sx={attackersBoxStyle}>
-                {attackers.slice(0, 5).map((def, index) => (
+                {attackers.slice(0, 5).map((att, index) => (
                     <Button
-                        key={`${def.name}-${index}`}
-                        onClick={() => onAddAttacker(def.name)}
+                        key={`${att.name}-${index}`}
+                        onClick={() => onAddAttacker(att.name)}
                         size="small"
                         variant="outlined"
                         sx={attackersButtonStyle}
                         disabled={disabled}
+                        data-testid={`attacker-${att.name.toLowerCase()}`}
                     >
                         <img
-                            src={def.img}
-                            alt={def.name}
+                            src={att.img}
+                            alt={att.name}
                             style={{
                                 ...attackersImageStyle,
                             }}
@@ -187,18 +188,19 @@ const AttackerPage = ({
                 ))}
             </Box>
             <Box sx={attackersBoxStyle}>
-                {attackers.slice(5, 10).map((def, index) => (
+                {attackers.slice(5, 10).map((att, index) => (
                     <Button
-                        key={`${def.name}-${index + 5}`}
-                        onClick={() => onAddAttacker(def.name)}
+                        key={`${att.name}-${index + 5}`}
+                        onClick={() => onAddAttacker(att.name)}
                         size="small"
                         variant="outlined"
                         sx={attackersButtonStyle}
                         disabled={disabled}
+                        data-testid={`attacker-${att.name.toLowerCase()}`}
                     >
                         <img
-                            src={def.img}
-                            alt={def.name}
+                            src={att.img}
+                            alt={att.name}
                             style={{
                                 ...attackersImageStyle,
                             }}

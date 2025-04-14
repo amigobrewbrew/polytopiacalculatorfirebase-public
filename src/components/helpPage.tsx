@@ -3,9 +3,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import CardWithShadow from "./cardWithShadow";
+import envConfig from "../envConfig";
 
 const HelpPage = () => {
-    const email = import.meta.env.VITE_EMAIL || "someone@example.com";
+    const email = envConfig.email;
 
     return (
         <Box>
