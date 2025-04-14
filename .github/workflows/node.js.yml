@@ -47,12 +47,10 @@ jobs:
                   node-version: "20.x"
                   cache: "npm"
 
-            - name: Install dependencies
+            - name: Install dependencies again
               run: npm ci
 
-            - name: Rebuild app (optional)
-              # If the build artifacts aren't passed from the build job,
-              # we’ll just rebuild here for simplicity.
+            - name: Build with Vite again
               run: npm run build
 
             - name: Set up Python

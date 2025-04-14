@@ -16,6 +16,23 @@ jest.mock("./components/secretGame", () => () => (
 jest.mock("./components/battleGroundDetails", () => () => (
     <div data-testid="battle-ground">Battle Ground</div>
 ));
+jest.mock("./envConfig", () => ({
+    __esModule: true,
+    default: {
+        firebase: {
+            apiKey: "test_firebase_api_key",
+            authDomain: "test.firebaseapp.com",
+            projectId: "test-project-id",
+            storageBucket: "test.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef",
+            measurementId: "G-TESTMEASUREMENT",
+        },
+        siteVerification: "test-verification-code",
+        email: "test@example.com",
+        adsenseClient: "https://example.com/adsense-test",
+    },
+}));
 
 describe("App Routing", () => {
     const renderWithRouter = (initialRoute: string) => {
