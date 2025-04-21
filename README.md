@@ -20,15 +20,17 @@ Firebase: https://www.youtube.com/watch?v=PKwu15ldZ7k
 
 # Tests
 
-Use "npm run test" to run both the Jest javascript tests and the robot framework for end-to-end testing.
+Use "npm run test" to run both the Jest typescript tests and the Robot Framework end-to-end tests.
 
-# How to run Robot Testing Framework seperately for debugging purposes
+# How to run Robot Framework tests locally (optional)
+
+You dont need to follow these steps. You can ignore them but then you wont be able to run 'npm run test' locally. 'npm run test' will be ran however when submitting a pull request on github.
 
 1. Create and activate a python virtual environment:
 
 ```bash
 # Create a virtual environment
-python -m venv venv
+python3 -m venv venv
 
 # Activate on Windows
 venv\Scripts\activate
@@ -37,7 +39,7 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-2. Make sure the terminal is in the python venv (normally close and re-open terminal in VS code) and install Robot Framework and required dependencies:
+2. Make sure the terminal is in the python virtual environment (venv) - sometimes you need to close and re-open terminal in VS code; Also you may need to ignore the prompt to configure the robot framework environment displayed by the command pallette - and install Robot Framework and required dependencies with pip:
 
 ```bash
 pip install -r requirements.txt
