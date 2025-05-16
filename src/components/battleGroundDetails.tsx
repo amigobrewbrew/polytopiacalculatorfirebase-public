@@ -539,7 +539,7 @@ const BattleGroundDetails = () => {
 
             const defenseForce = calculateDefenceForce(
                 defender.config.defence,
-                defender.healthBefore,
+                defender.healthAfter,
                 defender.healthMax,
                 defenderDefenseBonus
             );
