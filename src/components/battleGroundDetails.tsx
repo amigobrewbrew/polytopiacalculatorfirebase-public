@@ -529,13 +529,14 @@ const BattleGroundDetails = () => {
                 attacker.healthMax
             );
 
-            const defenderDefenseBonus = defender.poisonedBonus
-                ? 0.7
-                : defender.wallBonus
-                  ? 4
-                  : defender.defenceBonus
-                    ? 1.5
-                    : 1;
+            const defenderDefenseBonus =
+                defender.poisonedBonus || defender.becamePoisonedBonus
+                    ? 0.7
+                    : defender.wallBonus
+                      ? 4
+                      : defender.defenceBonus
+                        ? 1.5
+                        : 1;
 
             const defenseForce = calculateDefenceForce(
                 defender.config.defence,
