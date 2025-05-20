@@ -109,7 +109,7 @@ const HelpPage = () => {
                         </a>
                         <br />
                         Follow these instructions to install this web app as a
-                        local app:{" "}
+                        mobile app:{" "}
                         <a href="https://support.google.com/chrome/answer/9658361">
                             {" "}
                             Progressive web apps{" "}
