@@ -25,6 +25,14 @@ import { SoldierUnit } from "../types/SoldierUnit";
 import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 import { useSearchParams } from "react-router-dom";
 import { LATEST_VERSION } from "../config/version.global";
+import {
+    calculateAttackForce,
+    calculateAttackResult,
+    calculateAttackSplash,
+    calculateDefenceForce,
+    calculateDefenseResult,
+    calculateTotalDamage,
+} from "../utils/damageFormulae";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -513,69 +521,62 @@ const BattleGroundDetails = () => {
             }
             defenderRepeatedAttack++;
 
-            const safeBonusMultiplier = attacker.safeBonus ? 0 : 1;
-            let defenceBonusMultiplier = defender.defenceBonus ? 1.5 : 1;
-            let wallBonusMultiplier = defender.wallBonus ? 4 : 1;
-            let poisonedBonusMultiplier = 1;
+            const attackerAttack =
+                attacker.config.attack + (attacker.boostedBonus ? 0.5 : 0);
 
-            if (defender.poisonedBonus) {
-                poisonedBonusMultiplier = 0.7;
-                wallBonusMultiplier = 1;
-                defenceBonusMultiplier = 1;
-            }
-            if (attacker.id > poisoningAttacker) {
-                poisonedBonusMultiplier = 0.7;
-                wallBonusMultiplier = 1;
-                defenceBonusMultiplier = 1;
-            }
-
-            const boostedBonusMultiplier = attacker.boostedBonus ? 1 : 0;
-
-            const attackForce = parseFloat(
-                (
-                    ((attacker.config.attack + 0.5 * boostedBonusMultiplier) *
-                        attacker.healthBefore) /
-                    attacker.healthMax
-                ).toFixed(10)
+            const attackForce = calculateAttackForce(
+                attackerAttack,
+                attacker.healthBefore,
+                attacker.healthMax
             );
 
-            const defenceForce = parseFloat(
-                (
-                    ((defender.config.defence *
-                        (defender.healthBefore - totalAttackResult)) /
-                        defender.healthMax) *
-                    wallBonusMultiplier *
-                    defenceBonusMultiplier *
-                    poisonedBonusMultiplier
-                ).toFixed(10)
+            const defenderDefenseBonus =
+                defender.poisonedBonus || defender.becamePoisonedBonus
+                    ? 0.7
+                    : defender.wallBonus
+                      ? 4
+                      : defender.defenceBonus
+                        ? 1.5
+                        : 1;
+
+            const defenseForce = calculateDefenceForce(
+                defender.config.defence,
+                defender.healthAfter,
+                defender.healthMax,
+                defenderDefenseBonus
             );
 
-            const totalDamage = attackForce + defenceForce;
+            const totalDamage = calculateTotalDamage(attackForce, defenseForce);
 
-            let attackResult = Math.round(
-                parseFloat(
-                    (
-                        (attackForce / totalDamage) *
-                        (attacker.config.attack +
-                            0.5 * boostedBonusMultiplier) *
-                        4.5
-                    ).toFixed(10)
-                )
-            );
-
-            if (
+            let attackResult = 0;
+            if (attacker.explodeDamage || attacker.typeUnit === "Segment") {
+                attackResult = Math.round(
+                    calculateAttackSplash(
+                        attackForce,
+                        totalDamage,
+                        attackerAttack
+                    )
+                );
+            } else if (
                 attacker.splashDamage &&
                 (attacker.config.skills.includes("splash") ||
                     attacker.config.skills.includes("stomp"))
             ) {
-                attackResult = Math.round(attackResult * 0.5);
-            }
-            if (attacker.explodeDamage || attacker.typeUnit === "Segment") {
-                attackResult = Math.round(attackResult * 0.5);
+                attackResult = calculateAttackSplash(
+                    attackForce,
+                    totalDamage,
+                    attackerAttack
+                );
+            } else {
+                attackResult = calculateAttackResult(
+                    attackForce,
+                    totalDamage,
+                    attackerAttack
+                );
             }
 
             console.log("This is attackForce:" + attackForce);
-            console.log("This is defenceForce:" + defenceForce);
+            console.log("This is defenseForce:" + defenseForce);
             console.log("This is totalDamage:" + totalDamage);
             console.log("This is attackResult:" + attackResult);
 
@@ -583,28 +584,32 @@ const BattleGroundDetails = () => {
             defender.healthAfter = defender.healthBefore - totalAttackResult;
 
             if (defender.healthAfter > 0) {
-                const defenceResult = Math.round(
-                    parseFloat(
-                        (
-                            (defenceForce / totalDamage) *
-                            defender.config.defence *
-                            4.5
-                        ).toFixed(10)
-                    )
+                const defenceResult = calculateDefenseResult(
+                    defenseForce,
+                    totalDamage,
+                    defender.config.defence
                 );
                 console.log("This is defenceResult:" + defenceResult);
+
                 if (
-                    ["Exida", "Phychi", "Kiton", "Segment"].includes(
-                        attacker.typeUnit
-                    ) ||
-                    attacker.explodeDamage
+                    attacker.config.skills.includes("poison") ||
+                    attacker.typeUnit === "Segment"
                 ) {
                     defender.becamePoisonedBonus = true;
                     poisoningAttacker = attacker.id;
                 }
-                attacker.healthAfter =
-                    attacker.healthBefore - defenceResult * safeBonusMultiplier;
-                if (attacker.typeUnit === "Segment" || attacker.explodeDamage) {
+
+                if (
+                    !attacker.config.skills.includes("surprise") &&
+                    !defender.config.skills.includes("stiff") &&
+                    !attacker.safeBonus
+                ) {
+                    attacker.healthAfter =
+                        attacker.healthBefore - defenceResult;
+                } else if (
+                    attacker.explodeDamage ||
+                    attacker.typeUnit === "Segment"
+                ) {
                     attacker.healthAfter = 0;
                 }
             } else {

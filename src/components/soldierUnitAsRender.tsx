@@ -758,7 +758,10 @@ const SoldierUnitAsRender = ({
                 }}
                 style={{
                     display:
-                        soldierUnit.team === "Attackers" ? "visible" : "none",
+                        soldierUnit.team === "Attackers" &&
+                        !soldierUnit.config.skills.includes("surprise")
+                            ? "visible"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
