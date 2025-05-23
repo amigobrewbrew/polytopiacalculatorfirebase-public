@@ -781,10 +781,11 @@ const BattleGroundDetails = () => {
                                 label="Game version"
                                 onChange={handleGameVersionChange}
                             >
+                                {" "}
                                 {Object.entries(versionConfigs)
                                     .sort(([a], [b]) => b.localeCompare(a))
                                     .map(([version, config]) => (
-                                        <MenuItem value={version}>
+                                        <MenuItem key={version} value={version}>
                                             {version} - {config.title}
                                         </MenuItem>
                                     ))}
