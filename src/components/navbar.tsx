@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useState, useCallback } from "react";
 import BigSwords from "../img/Other/BigSwords.png";
-import HamburgerMenu from "../img/Other/menu-fill.png";
+import HamburgerMenu from "../img/Other/HamburgerMenu.png";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";

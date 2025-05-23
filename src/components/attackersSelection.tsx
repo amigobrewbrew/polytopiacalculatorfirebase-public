@@ -11,7 +11,6 @@ import Catapult from "../img/Attackers/Catapult.png";
 import Knight from "../img/Attackers/Knight.png";
 import Giant from "../img/Attackers/Giant.png";
 // import Battleship from "../img/Attackers/Battleship.png";
-// import Switch from "../img/Other/Switch1.png";
 // import Boat from "../img/Attackers/Boat.png";
 // import Ship from "../img/Attackers/Ship.png";
 import Amphibian from "../img/Attackers/Amphibian.png";
