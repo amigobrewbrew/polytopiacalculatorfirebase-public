@@ -1,9 +1,9 @@
-// Toggle this for local development
-export const isLocal = false;
-console.log(
-    "isLocal needs to be - true - for local development. Current value: ",
-    isLocal
-);
+// Use environment variable for local development mode
+export const isLocal =
+    import.meta.env.VITE_IS_LOCAL === undefined
+        ? true
+        : import.meta.env.VITE_IS_LOCAL === "true";
+console.log("isLocal value from environment: ", isLocal);
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
