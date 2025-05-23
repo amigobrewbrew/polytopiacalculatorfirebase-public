@@ -29,9 +29,10 @@ const NavBar = () => {
         <Box boxShadow={BOX_SHADOW_DEFAULT}>
             <CssBaseline />
             <Typography component={"span"} variant="body1">
+                {" "}
                 <div className="topnav" id="myTopnav" ref={myTopnavRef}>
                     <div className="logo-and-hamburger">
-                        <a href="/" className="active">
+                        <a href="/">
                             <img
                                 src={BigSwords}
                                 alt="Polytopia big swords"
