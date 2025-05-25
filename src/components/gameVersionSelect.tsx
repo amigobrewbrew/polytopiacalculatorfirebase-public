@@ -15,11 +15,11 @@ type GameVersionSelectProps = {
     handleGameVersionChange: (event: SelectChangeEvent) => void;
 };
 
-const gameVersionSelect = ({
+const gameVersionSelect: React.FC<GameVersionSelectProps> = ({
     versionConfig,
     versionConfigs,
     handleGameVersionChange,
-}: GameVersionSelectProps) => {
+}) => {
     return (
         <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
             <Box
