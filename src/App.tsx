@@ -1,30 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar";
 import HelpPage from "./components/helpPage";
 import SecretGame from "./components/secretGame";
 import BattleGroundDetails from "./components/battleGroundDetails";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import envConfig from "./envConfig";
-
-// Create theme once outside of component to avoid recreation on every render
-const theme = createTheme({
-    typography: {
-        fontFamily: "Josefin Sans, Arial, sans-serif",
-    },
-});
+import { AppProvider } from "./providers/appProvider";
 
 const App = () => {
     return (
-        <ThemeProvider theme={theme}>
+        <AppProvider>
             <meta
                 name="google-site-verification"
                 content={envConfig.siteVerification}
             />
             <React.Fragment key="adsense-script">
                 <script async src={envConfig.adsenseClient}></script>
-            </React.Fragment>{" "}
+            </React.Fragment>
             <NavBar />
             <div className="containers">
                 <Routes>
@@ -34,7 +27,7 @@ const App = () => {
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </div>
-        </ThemeProvider>
+        </AppProvider>
     );
 };
 
