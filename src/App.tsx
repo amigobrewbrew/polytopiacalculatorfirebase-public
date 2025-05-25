@@ -7,6 +7,7 @@ import SecretGame from "./components/secretGame";
 import BattleGroundDetails from "./components/battleGroundDetails";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import envConfig from "./envConfig";
+import { SnackBarProvider } from "./providers/snackbarContextProvider";
 
 // Create theme once outside of component to avoid recreation on every render
 const theme = createTheme({
@@ -18,22 +19,24 @@ const theme = createTheme({
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
-            <meta
-                name="google-site-verification"
-                content={envConfig.siteVerification}
-            />
-            <React.Fragment key="adsense-script">
-                <script async src={envConfig.adsenseClient}></script>
-            </React.Fragment>{" "}
-            <NavBar />
-            <div className="containers">
-                <Routes>
-                    <Route path="/help" element={<HelpPage />} />
-                    <Route path="/" element={<BattleGroundDetails />} />
-                    <Route path="/secretgame" element={<SecretGame />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </div>
+            <SnackBarProvider>
+                <meta
+                    name="google-site-verification"
+                    content={envConfig.siteVerification}
+                />
+                <React.Fragment key="adsense-script">
+                    <script async src={envConfig.adsenseClient}></script>
+                </React.Fragment>{" "}
+                <NavBar />
+                <div className="containers">
+                    <Routes>
+                        <Route path="/help" element={<HelpPage />} />
+                        <Route path="/" element={<BattleGroundDetails />} />
+                        <Route path="/secretgame" element={<SecretGame />} />
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                </div>
+            </SnackBarProvider>
         </ThemeProvider>
     );
 };
