@@ -28,14 +28,13 @@ const SnackBarProvider: React.FC<SnackBarContextProviderProps> = ({
 
     const handleClose = () => {
         setOpen(false);
-        setSeverity("info");
     };
 
     return (
         <SnackBarContext value={{ showSnackBar }}>
             <Snackbar
                 open={open}
-                autoHideDuration={5000}
+                autoHideDuration={4000}
                 anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                 onClose={handleClose}
             >
