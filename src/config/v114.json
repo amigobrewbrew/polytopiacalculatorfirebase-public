@@ -239,7 +239,7 @@
             "name": "IceArcher",
             "movementAbility": "land",
             "maxHealth": 10,
-            "attack": 0.1,
+            "attack": 1,
             "defence": 1,
             "skills": ["freeze", "fortify", "stiff"]
         },
@@ -257,7 +257,7 @@
             "maxHealth": 20,
             "attack": 4,
             "defence": 3,
-            "skills": []
+            "skills": ["static"]
         },
         {
             "name": "Gaami",
@@ -271,7 +271,7 @@
             "name": "Hexapod",
             "movementAbility": "land",
             "maxHealth": 5,
-            "attack": 3,
+            "attack": 2.5,
             "defence": 1,
             "skills": []
         },
