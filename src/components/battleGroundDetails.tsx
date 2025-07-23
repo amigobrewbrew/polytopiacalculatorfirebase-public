@@ -168,11 +168,14 @@ const BattleGroundDetails = () => {
         team: string,
         healthBeforeManualInput: number
     ) => {
+        // This is to fix some input glitch where +/-1 HP is done while direct input is active
+        const healthBeforeManualInputNumeric =
+            parseFloat(healthBeforeManualInput.toString()) || 0;
         if (team === "Attackers") {
             setSoldierUnitsAttackersAsRender((prev) =>
                 prev.map((u) =>
                     u.id === id
-                        ? { ...u, healthBefore: healthBeforeManualInput }
+                        ? { ...u, healthBefore: healthBeforeManualInputNumeric }
                         : u
                 )
             );
@@ -180,7 +183,7 @@ const BattleGroundDetails = () => {
             setSoldierUnitsDefendersAsRender((prev) =>
                 prev.map((u) =>
                     u.id === id
-                        ? { ...u, healthBefore: healthBeforeManualInput }
+                        ? { ...u, healthBefore: healthBeforeManualInputNumeric }
                         : u
                 )
             );
