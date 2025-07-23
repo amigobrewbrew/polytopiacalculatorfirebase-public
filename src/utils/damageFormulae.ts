@@ -3,7 +3,9 @@ export const calculateAttackForce = (
     health: number,
     maxHealth: number
 ): number => {
-    return attack * (health / maxHealth);
+    const attackForce = attack * (health / maxHealth);
+    console.log("attack force: " + attack + "*" + health + "/" + maxHealth + "=" + attackForce);
+    return attackForce;
 };
 
 export const calculateDefenceForce = (
@@ -12,14 +14,18 @@ export const calculateDefenceForce = (
     maxHealth: number,
     defenseBonus: number
 ): number => {
-    return defense * (health / maxHealth) * defenseBonus;
+    const defenceForce = defense * (health / maxHealth) * defenseBonus;
+    console.log("defence force: " + defense + "*" + health + "/" + maxHealth + "*" + defenseBonus + "=" + defenceForce);
+    return defenceForce;
 };
 
 export const calculateTotalDamage = (
     attackForce: number,
     defenseForce: number
 ): number => {
-    return attackForce + defenseForce;
+    const totalDamage = attackForce + defenseForce;
+    console.log("total damage: " + attackForce + "+" + defenseForce + "=" + totalDamage)
+    return totalDamage;
 };
 
 export const calculateAttackResult = (
@@ -27,8 +33,9 @@ export const calculateAttackResult = (
     totalDamage: number,
     attack: number
 ): number => {
-    const attackRatio = attackForce / totalDamage;
-    return Math.round(attackRatio * attack * 4.5);
+    const attackResult = Math.round(attackForce / totalDamage * attack * 4.5);
+    console.log("attack result: " + attackForce + "/" + totalDamage + "*" + attack + "*" + "4.5=" + attackResult);
+    return attackResult;
 };
 
 export const calculateAttackSplash = (
@@ -36,7 +43,9 @@ export const calculateAttackSplash = (
     totalDamage: number,
     attack: number
 ): number => {
-    return Math.round(calculateAttackResult(attackForce, totalDamage, attack) / 2);
+    const attackSplash = calculateAttackResult(attackForce, totalDamage, attack) / 2;
+    console.log("attack splash (divide 2): " + attackSplash)
+    return attackSplash;
 };
 
 export const calculateDefenseResult = (
@@ -44,6 +53,7 @@ export const calculateDefenseResult = (
     totalDamage: number,
     defense: number
 ): number => {
-    const defenseRatio = defenseForce / totalDamage;
-    return Math.round(defenseRatio * defense * 4.5);
+    const defenseResult = Math.round(defenseForce / totalDamage * defense * 4.5);
+    console.log("attack result: " + defenseForce + "/" + totalDamage + "*" + defense + "*" + "4.5=" + defenseResult);
+    return defenseResult;
 };
