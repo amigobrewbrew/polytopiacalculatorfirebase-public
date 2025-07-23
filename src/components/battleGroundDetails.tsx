@@ -550,12 +550,10 @@ const BattleGroundDetails = () => {
 
             let attackResult = 0;
             if (attacker.explodeDamage || attacker.typeUnit === "Segment") {
-                attackResult = Math.round(
-                    calculateAttackSplash(
-                        attackForce,
-                        totalDamage,
-                        attackerAttack
-                    )
+                attackResult = calculateAttackSplash(
+                    attackForce,
+                    totalDamage,
+                    attackerAttack
                 );
             } else if (
                 attacker.splashDamage &&
@@ -575,11 +573,6 @@ const BattleGroundDetails = () => {
                 );
             }
 
-            console.log("This is attackForce:" + attackForce);
-            console.log("This is defenseForce:" + defenseForce);
-            console.log("This is totalDamage:" + totalDamage);
-            console.log("This is attackResult:" + attackResult);
-
             totalAttackResult += attackResult;
             defender.healthAfter = defender.healthBefore - totalAttackResult;
 
@@ -589,7 +582,6 @@ const BattleGroundDetails = () => {
                     totalDamage,
                     defender.config.defence
                 );
-                console.log("This is defenceResult:" + defenceResult);
 
                 if (
                     attacker.config.skills.includes("poison") ||

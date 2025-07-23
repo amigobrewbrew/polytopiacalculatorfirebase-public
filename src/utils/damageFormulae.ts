@@ -3,6 +3,7 @@ export const calculateAttackForce = (
     health: number,
     maxHealth: number
 ): number => {
+    console.log(attack + "*" + health + "/" + maxHealth);
     return attack * (health / maxHealth);
 };
 
@@ -12,6 +13,7 @@ export const calculateDefenceForce = (
     maxHealth: number,
     defenseBonus: number
 ): number => {
+    console.log(defense + "*" + health + "/" + maxHealth + "*" + defenseBonus);
     return defense * (health / maxHealth) * defenseBonus;
 };
 
@@ -28,6 +30,7 @@ export const calculateAttackResult = (
     attack: number
 ): number => {
     const attackRatio = attackForce / totalDamage;
+    console.log(attackRatio + "*" + attack + "*" + "4.5");
     return Math.round(attackRatio * attack * 4.5);
 };
 
@@ -36,7 +39,7 @@ export const calculateAttackSplash = (
     totalDamage: number,
     attack: number
 ): number => {
-    return Math.round(calculateAttackResult(attackForce, totalDamage, attack) / 2);
+    return calculateAttackResult(attackForce, totalDamage, attack) / 2;
 };
 
 export const calculateDefenseResult = (
