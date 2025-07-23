@@ -314,8 +314,12 @@ const SoldierUnitAsRender = ({
     };
     const handleHitpointsChange = (healthBeforeManualInput: any) => {
         // This is to fix some input glitch where +/-1 HP is done while direct input is active
+        // Also handle localized decimal separators (comma vs period)
+        const healthBeforeManualInputNormalized = healthBeforeManualInput
+            .toString()
+            .replace(",", ".");
         const healthBeforeManualInputNumericValue =
-            parseFloat(healthBeforeManualInput) || 0;
+            parseFloat(healthBeforeManualInputNormalized) || 0;
         setHealthInputField(healthBeforeManualInputNumericValue);
         console.log(
             "Hitpoints are now: " + healthBeforeManualInputNumericValue
@@ -512,7 +516,7 @@ const SoldierUnitAsRender = ({
                                 }
                                 onKeyDown={handleKeyDown}
                                 style={{ width: 38 }}
-                                maxLength={3}
+                                maxLength={5}
                                 onFocus={handleFocus}
                             />
                         </label>
