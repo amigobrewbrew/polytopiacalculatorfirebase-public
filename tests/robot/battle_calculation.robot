@@ -77,6 +77,15 @@ Should Calculate Damage Between Units When Removing Units
     When I remove the first attacker
     Then The first defender health should be 34
 
+Should Calculate Damage With Splash To Halves
+    Given I open the main page
+    When I add a "defender" attacker
+    When I go to the next attackers selection page
+    When I add a "bomber" attacker
+    When I add a "knight" defender
+    When I toggle splsh second attacker
+    Then The first defender health should be 2.5
+
 
 *** Keywords ***
 I add a "${unit_type}" attacker
@@ -126,3 +135,8 @@ I change first two attackers position
 I remove the first attacker
     Click    ${remove_first_attacker_selector}
     Wait For Elements State    ${attackers_battleground_selector}    visible
+
+I toggle splsh second attacker
+    Click    ${second_attacker_splsh}
+    Wait For Elements State    ${attackers_battleground_selector}    visible
+

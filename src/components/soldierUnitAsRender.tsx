@@ -313,6 +313,7 @@ const SoldierUnitAsRender = ({
         console.log("Unit is poisoned");
     };
     const handleHitpointsChange = (healthBeforeManualInput: any) => {
+        // This is to fix some input glitch where +/-1 HP is done while direct input is active
         const healthBeforeManualInputNumericValue =
             parseFloat(healthBeforeManualInput) || 0;
         setHealthInputField(healthBeforeManualInputNumericValue);
