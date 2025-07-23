@@ -1,19 +1,3 @@
-import { useState, useEffect, useCallback } from "react";
-import AttackersSelection from "./attackersSelection";
-import DefendersSelection from "./defendersSelection";
-import SoldierUnitAsRender from "./soldierUnitAsRender";
-import { loadAllConfigs } from "../utils/configLoader";
-import Box from "@mui/material/Box";
-import { analytics, isLocal } from "./../firebase";
-import { logEvent } from "firebase/analytics";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import CardWithShadow from "./cardWithShadow";
-import {
-    MAX_WIDTH_PX,
-    SINGLE_COL_MAX_WIDTH_PX,
-    SINGLE_COLUMN_WIDTH_PERCENTAGE,
-} from "../customStyles";
 import {
     FormControl,
     InputLabel,
@@ -21,10 +5,21 @@ import {
     Select,
     SelectChangeEvent,
 } from "@mui/material";
-import { SoldierUnit } from "../types/SoldierUnit";
-import { UnitConfig, VersionConfig } from "../types/VersionConfig";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { logEvent } from "firebase/analytics";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { LATEST_VERSION } from "../config/version.global";
+import {
+    MAX_WIDTH_PX,
+    SINGLE_COL_MAX_WIDTH_PX,
+    SINGLE_COLUMN_WIDTH_PERCENTAGE,
+} from "../customStyles";
+import { SoldierUnit } from "../types/SoldierUnit";
+import { UnitConfig, VersionConfig } from "../types/VersionConfig";
+import { loadAllConfigs } from "../utils/configLoader";
 import {
     calculateAttackForce,
     calculateAttackResult,
@@ -33,6 +28,11 @@ import {
     calculateDefenseResult,
     calculateTotalDamage,
 } from "../utils/damageFormulae";
+import { analytics, isLocal } from "./../firebase";
+import AttackersSelection from "./attackersSelection";
+import CardWithShadow from "./cardWithShadow";
+import DefendersSelection from "./defendersSelection";
+import SoldierUnitAsRender from "./soldierUnitAsRender";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -585,7 +585,8 @@ const BattleGroundDetails = () => {
 
                 if (
                     attacker.config.skills.includes("poison") ||
-                    attacker.typeUnit === "Segment"
+                    attacker.typeUnit === "Segment" ||
+                    attacker.explodeDamage
                 ) {
                     defender.becamePoisonedBonus = true;
                     poisoningAttacker = attacker.id;
