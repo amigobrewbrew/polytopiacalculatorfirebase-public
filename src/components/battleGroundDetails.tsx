@@ -14,13 +14,7 @@ import {
     SINGLE_COL_MAX_WIDTH_PX,
     SINGLE_COLUMN_WIDTH_PERCENTAGE,
 } from "../customStyles";
-import {
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-} from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 import { SoldierUnit } from "../types/SoldierUnit";
 import { UnitConfig, VersionConfig } from "../types/VersionConfig";
 import { useSearchParams } from "react-router-dom";
@@ -33,11 +27,14 @@ import {
     calculateDefenseResult,
     calculateTotalDamage,
 } from "../utils/damageFormulae";
+import GameVersionSelect from "./gameVersionSelect";
+import { useSnackBar } from "../providers/snackbarContextProvider";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
 const BattleGroundDetails = () => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const { showSnackBar } = useSnackBar();
 
     const [versionConfigs, setVersionConfigs] = useState<
         Record<string, VersionConfig>
@@ -90,6 +87,8 @@ const BattleGroundDetails = () => {
         analyticsLogEvent(analytics, "pc_version_changed_" + version);
         setSearchParams({ version: version });
         setVersionConfig(versionConfigs[version]);
+
+        showSnackBar(`Version changed to ${version}`, "success");
     };
 
     const handleChangeCheckbox = (): void => {
@@ -753,41 +752,13 @@ const BattleGroundDetails = () => {
             </Box>
 
             {versionConfig && (
-                <CardWithShadow sx={{ p: "3px 2%", width: "100%" }}>
-                    <Box
-                        component="span"
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            typography: "body2",
-                        }}
-                    >
-                        <FormControl sx={{ my: 1, minWidth: 120 }} size="small">
-                            <InputLabel id="version-select-label">
-                                Game version
-                            </InputLabel>
-                            <Select
-                                labelId="version-select-label"
-                                id="version-select"
-                                value={versionConfig.version}
-                                label="Game version"
-                                onChange={handleGameVersionChange}
-                            >
-                                {" "}
-                                {Object.entries(versionConfigs)
-                                    .sort(([a], [b]) => b.localeCompare(a))
-                                    .map(([version, config]) => (
-                                        <MenuItem key={version} value={version}>
-                                            {version} - {config.title}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
-                        </FormControl>
-                        <span>
-                            Build version: {versionConfig?.buildVersion}
-                        </span>
-                    </Box>
-                </CardWithShadow>
+                <GameVersionSelect
+                    versionConfig={versionConfig}
+                    versionConfigs={versionConfigs}
+                    handleGameVersionChange={(event) =>
+                        handleGameVersionChange(event)
+                    }
+                />
             )}
         </Box>
     );
