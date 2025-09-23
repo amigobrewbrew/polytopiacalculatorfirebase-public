@@ -124,12 +124,8 @@ I change the health of the first defender to ${health}
     Fill Text    [id="Defenders0HitpointField"]    ${health}
     Press Keys    [id="Defenders0HitpointField"]    Enter
 
-I check the change order checkbox
-    Click    ${change_order_checkbox_selector}
-    Wait For Elements State    ${attackers_selection_selector}    visible
-
 I change first two attackers position
-    Click    ${first_attacker_health_or_move_down}
+    Drag And Drop    ${second_attacker_card}    ${first_attacker_card}
     Wait For Elements State    ${attackers_battleground_selector}    visible
 
 I remove the first attacker
@@ -137,6 +133,6 @@ I remove the first attacker
     Wait For Elements State    ${attackers_battleground_selector}    visible
 
 I toggle splsh second attacker
-    Click    ${second_attacker_splsh}
+    Click    ${second_attacker_xpld_button}
     Wait For Elements State    ${attackers_battleground_selector}    visible
 
