@@ -271,7 +271,7 @@
             "name": "Hexapod",
             "movementAbility": "land",
             "maxHealth": 5,
-            "attack": 2.5,
+            "attack": 3,
             "defence": 1,
             "skills": []
         },
@@ -297,23 +297,7 @@
             "maxHealth": 15,
             "attack": 3,
             "defence": 2,
-            "skills": []
-        },
-        {
-            "name": "Boomchi",
-            "movementAbility": "water",
-            "maxHealth": 10,
-            "attack": 3,
-            "defence": 2,
             "skills": ["explode"]
-        },
-        {
-            "name": "Living Island",
-            "movementAbility": "water",
-            "maxHealth": 20,
-            "attack": 4,
-            "defence": 4,
-            "skills": ["stomp", "stiff"]
         },
         {
             "name": "Shaman",
