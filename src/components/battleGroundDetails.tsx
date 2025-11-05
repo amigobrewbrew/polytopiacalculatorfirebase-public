@@ -22,7 +22,8 @@ import {
     SelectChangeEvent,
 } from "@mui/material";
 import { SoldierUnit } from "../types/SoldierUnit";
-import { UnitConfig, VersionConfig } from "../types/VersionConfig";
+import { PoisonScheme, VersionConfig } from "../types/VersionConfig";
+import { UnitConfig } from "../types/SoldierUnit";
 import { useSearchParams } from "react-router-dom";
 import { LATEST_VERSION } from "../config/version.global";
 import {
@@ -314,19 +315,36 @@ const BattleGroundDetails = () => {
                     if (u.id === id) {
                         const updated = { ...u };
                         updated[which] = !u[which];
-                        // Certain combos disable others
-                        if (which === "defenceBonus" && updated[which]) {
-                            updated.wallBonus = false;
-                            updated.poisonedBonus = false;
+                        if (versionConfig?.poisonScheme === PoisonScheme.OLD) {
+                            // Certain combos disable others
+                            if (which === "defenceBonus" && updated[which]) {
+                                updated.wallBonus = false;
+                                updated.poisonedBonus = false;
+                            }
+                            if (which === "wallBonus" && updated[which]) {
+                                updated.defenceBonus = false;
+                                updated.poisonedBonus = false;
+                            }
+                            if (which === "poisonedBonus" && updated[which]) {
+                                updated.wallBonus = false;
+                                updated.defenceBonus = false;
+                            }
+                        } else {
+                            // Poisoned bonus doesn't affect other bonuses
+                            if (which === "defenceBonus" && updated[which]) {
+                                updated.wallBonus = false;
+                                // updated.poisonedBonus = false;
+                            }
+                            if (which === "wallBonus" && updated[which]) {
+                                updated.defenceBonus = false;
+                                // updated.poisonedBonus = false;
+                            }
+                            if (which === "poisonedBonus" && updated[which]) {
+                                // updated.wallBonus = false;
+                                // updated.defenceBonus = false;
+                            }
                         }
-                        if (which === "wallBonus" && updated[which]) {
-                            updated.defenceBonus = false;
-                            updated.poisonedBonus = false;
-                        }
-                        if (which === "poisonedBonus" && updated[which]) {
-                            updated.wallBonus = false;
-                            updated.defenceBonus = false;
-                        }
+
                         return updated;
                     }
                     return u;
@@ -530,14 +548,30 @@ const BattleGroundDetails = () => {
                 attacker.healthMax
             );
 
-            const defenderDefenseBonus =
-                defender.poisonedBonus || defender.becamePoisonedBonus
-                    ? 0.7
-                    : defender.wallBonus
-                      ? 4
-                      : defender.defenceBonus
-                        ? 1.5
-                        : 1;
+            let defenderDefenseBonus =
+                defender.wallBonus
+                ? 4
+                : defender.defenceBonus
+                    ? 1.5
+                    : 1;
+            if (defender.poisonedBonus || defender.becamePoisonedBonus) {
+                if (versionConfig?.poisonScheme === PoisonScheme.OLD) {
+                    // Force defense bonus to 0.7
+                    defenderDefenseBonus = 0.7;
+                } else {
+                    // Just halve the defense bonus
+                    defenderDefenseBonus *= 0.5;
+                }
+            }
+
+            // const defenderDefenseBonus =
+            //     defender.poisonedBonus || defender.becamePoisonedBonus
+            //         ? 0.7
+            //         : defender.wallBonus
+            //           ? 4
+            //           : defender.defenceBonus
+            //             ? 1.5
+            //             : 1;
 
             const defenseForce = calculateDefenceForce(
                 defender.config.defence,

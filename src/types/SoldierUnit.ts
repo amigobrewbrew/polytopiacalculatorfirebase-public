@@ -1,4 +1,3 @@
-import { UnitConfig } from "./VersionConfig";
 
 export type SoldierUnit = {
     id: number;
@@ -8,8 +7,6 @@ export type SoldierUnit = {
     healthMax: number;
     healthBefore: number;
     healthAfter: number;
-    // attack: number; // TODO replace with unitConfig
-    // defence: number; // TODO replace with unitConfig
     veteran: boolean;
     defenceBonus: boolean;
     wallBonus: boolean;
@@ -21,3 +18,13 @@ export type SoldierUnit = {
     splashDamage: boolean;
     explodeDamage: boolean;
 };
+
+export type UnitConfig = {
+    name: string;
+    movementAbility: string;
+    maxHealth: number;
+    attack: number;
+    defence: number;
+    skills: string[];
+};
+

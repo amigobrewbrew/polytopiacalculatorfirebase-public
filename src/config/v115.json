@@ -1,8 +1,8 @@
 {
-    "version": "108",
-    "buildVersion": "2.11.1.13205",
-    "title": "The Forgotten + Aquarion Rework Patch",
-    "poisonScheme": "OLD",
+    "version": "115",
+    "buildVersion": "2.15.0.15024",
+    "title": "Cymanti Rework",
+    "poisonScheme": "NEW",
     "unitStats": [
         {
             "name": "Warrior",
@@ -240,7 +240,7 @@
             "name": "IceArcher",
             "movementAbility": "land",
             "maxHealth": 10,
-            "attack": 0.1,
+            "attack": 1,
             "defence": 1,
             "skills": ["freeze", "fortify", "stiff"]
         },
@@ -258,7 +258,7 @@
             "maxHealth": 20,
             "attack": 4,
             "defence": 3,
-            "skills": []
+            "skills": ["static"]
         },
         {
             "name": "Gaami",
@@ -272,7 +272,7 @@
             "name": "Hexapod",
             "movementAbility": "land",
             "maxHealth": 5,
-            "attack": 3,
+            "attack": 2.5,
             "defence": 1,
             "skills": []
         },
@@ -290,15 +290,31 @@
             "maxHealth": 5,
             "attack": 1,
             "defence": 1,
-            "skills": ["poison", "surprise"]
+            "skills": ["poison", "surprise", "double attack"]
         },
         {
             "name": "Raychi",
             "movementAbility": "water",
-            "maxHealth": 15,
+            "maxHealth": 10,
             "attack": 3,
             "defence": 2,
-            "skills": ["explode"]
+            "skills": []
+        },
+        {
+            "name": "Boomchi",
+            "movementAbility": "amphibious",
+            "maxHealth": 10,
+            "attack": 3,
+            "defence": 3,
+            "skills": ["explode", "stiff"]
+        },
+        {
+            "name": "Living Island",
+            "movementAbility": "water",
+            "maxHealth": 20,
+            "attack": 4,
+            "defence": 4,
+            "skills": ["stomp", "static", "stiff"]
         },
         {
             "name": "Shaman",
@@ -320,9 +336,9 @@
             "name": "Doomux",
             "movementAbility": "land",
             "maxHealth": 20,
-            "attack": 4,
+            "attack": 3.5,
             "defence": 2,
-            "skills": ["explode"]
+            "skills": ["explode", "static"]
         },
         {
             "name": "Centipede",
@@ -339,6 +355,27 @@
             "attack": 2,
             "defence": 2,
             "skills": ["explode", "static", "stiff"]
+        },        {
+            "name": "InsectEgg",
+            "movementAbility": "nil",
+            "maxHealth": 10,
+            "attack": 2,
+            "defence": 3,
+            "skills": ["explode", "stiff"]
+        },        {
+            "name": "Larva",
+            "movementAbility": "land",
+            "maxHealth": 10,
+            "attack": 2,
+            "defence": 2,
+            "skills": ["surprise", "static"]
+        },        {
+            "name": "Moth",
+            "movementAbility": "air",
+            "maxHealth": 10,
+            "attack": 2,
+            "defence": 0.1,
+            "skills": ["poison", "static", "stiff"]
         },
         {
             "name": "NatureBunny",
