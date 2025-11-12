@@ -309,7 +309,7 @@
             "skills": ["explode", "stiff"]
         },
         {
-            "name": "Living Island",
+            "name": "LivingIsland",
             "movementAbility": "water",
             "maxHealth": 20,
             "attack": 4,

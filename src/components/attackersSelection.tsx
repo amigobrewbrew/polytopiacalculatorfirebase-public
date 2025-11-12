@@ -33,11 +33,16 @@ import Hexapod from "../img/Attackers/Hexapod.png";
 import Kiton from "../img/Attackers/Kiton.png";
 import Phychi from "../img/Attackers/Phychi.png";
 import Raychi from "../img/Attackers/Raychi.png";
+import Boomchi from "../img/Attackers/Boomchi.png";
+import LivingIsland from "../img/Attackers/Living Island.png";
 import Shaman from "../img/Attackers/Shaman.png";
 import Exida from "../img/Attackers/Exida.png";
 import Doomux from "../img/Attackers/Doomux.png";
 import Centipede from "../img/Attackers/Centipede.png";
 import Segment from "../img/Attackers/Segment.png";
+import InsectEgg from "../img/Attackers/Insect Egg.png";
+import Larva from "../img/Attackers/Larva.png";
+import Moth from "../img/Attackers/Moth.png";
 import MindBender from "../img/Attackers/Mind Bender.png";
 import NatureBunny from "../img/Attackers/Nature Bunny.png";
 import Dagger from "../img/Attackers/Dagger.png";
@@ -135,21 +140,21 @@ const attackerPages = [
         { name: "Kiton", img: Kiton },
         { name: "Phychi", img: Phychi },
         { name: "Raychi", img: Raychi },
-        { name: "Shaman", img: Shaman },
-        { name: "Exida", img: Exida },
+        { name: "Boomchi", img: Boomchi },
+        { name: "LivingIsland", img: LivingIsland },
     ],
     // Page 5
     [
+        { name: "Shaman", img: Shaman },
+        { name: "Exida", img: Exida },
         { name: "Doomux", img: Doomux },
-        { name: "Doomux", img: Doomux },
-        { name: "Doomux", img: Doomux },
-        { name: "Doomux", img: Doomux },
-        { name: "Doomux", img: Doomux },
-        { name: "Segment", img: Segment },
-        { name: "Segment", img: Segment },
-        { name: "Segment", img: Segment },
-        { name: "Segment", img: Segment },
         { name: "Centipede", img: Centipede },
+        { name: "Segment", img: Segment },
+        { name: "InsectEgg", img: InsectEgg },
+        { name: "Larva", img: Larva },
+        { name: "Moth", img: Moth },
+        { name: "Moth", img: Moth },
+        { name: "Moth", img: Moth },
     ],
 ];
 
