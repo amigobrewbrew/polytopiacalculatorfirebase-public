@@ -8,3 +8,4 @@ ${defenders_selection_selector}                 div.containers > div > div.MuiBo
 ${remove_first_attacker_selector}               div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > div > button
 ${change_order_checkbox_selector}               div.containers > div > div.MuiBox-root.css-hr1yj1 > label
 ${first_attacker_health_or_move_down}           div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > button:nth-child(9)
+${second_attacker_splsh}                        xpath=/html/body/div/div[2]/div/div[1]/div[1]/div[2]/div/button[4]

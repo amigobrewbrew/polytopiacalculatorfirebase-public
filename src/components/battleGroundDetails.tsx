@@ -1,19 +1,3 @@
-import { useState, useEffect, useCallback } from "react";
-import AttackersSelection from "./attackersSelection";
-import DefendersSelection from "./defendersSelection";
-import SoldierUnitAsRender from "./soldierUnitAsRender";
-import { loadAllConfigs } from "../utils/configLoader";
-import Box from "@mui/material/Box";
-import { analytics, isLocal } from "./../firebase";
-import { logEvent } from "firebase/analytics";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import CardWithShadow from "./cardWithShadow";
-import {
-    MAX_WIDTH_PX,
-    SINGLE_COL_MAX_WIDTH_PX,
-    SINGLE_COLUMN_WIDTH_PERCENTAGE,
-} from "../customStyles";
 import {
     FormControl,
     InputLabel,
@@ -21,6 +5,18 @@ import {
     Select,
     SelectChangeEvent,
 } from "@mui/material";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { logEvent } from "firebase/analytics";
+import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { LATEST_VERSION } from "../config/version.global";
+import {
+    MAX_WIDTH_PX,
+    SINGLE_COL_MAX_WIDTH_PX,
+    SINGLE_COLUMN_WIDTH_PERCENTAGE,
+} from "../customStyles";
 import { SoldierUnit } from "../types/SoldierUnit";
 import { PoisonScheme, VersionConfig } from "../types/VersionConfig";
 import { UnitConfig } from "../types/SoldierUnit";
@@ -34,6 +30,11 @@ import {
     calculateDefenseResult,
     calculateTotalDamage,
 } from "../utils/damageFormulae";
+import { analytics, isLocal } from "./../firebase";
+import AttackersSelection from "./attackersSelection";
+import CardWithShadow from "./cardWithShadow";
+import DefendersSelection from "./defendersSelection";
+import SoldierUnitAsRender from "./soldierUnitAsRender";
 
 const analyticsLogEvent = isLocal ? analytics.logEvent : logEvent;
 
@@ -169,11 +170,14 @@ const BattleGroundDetails = () => {
         team: string,
         healthBeforeManualInput: number
     ) => {
+        // This is to fix some input glitch where +/-1 HP is done while direct input is active
+        const healthBeforeManualInputNumeric =
+            parseFloat(healthBeforeManualInput.toString()) || 0;
         if (team === "Attackers") {
             setSoldierUnitsAttackersAsRender((prev) =>
                 prev.map((u) =>
                     u.id === id
-                        ? { ...u, healthBefore: healthBeforeManualInput }
+                        ? { ...u, healthBefore: healthBeforeManualInputNumeric }
                         : u
                 )
             );
@@ -181,7 +185,7 @@ const BattleGroundDetails = () => {
             setSoldierUnitsDefendersAsRender((prev) =>
                 prev.map((u) =>
                     u.id === id
-                        ? { ...u, healthBefore: healthBeforeManualInput }
+                        ? { ...u, healthBefore: healthBeforeManualInputNumeric }
                         : u
                 )
             );
@@ -584,12 +588,10 @@ const BattleGroundDetails = () => {
 
             let attackResult = 0;
             if (attacker.explodeDamage || attacker.typeUnit === "Segment") {
-                attackResult = Math.round(
-                    calculateAttackSplash(
-                        attackForce,
-                        totalDamage,
-                        attackerAttack
-                    )
+                attackResult = calculateAttackSplash(
+                    attackForce,
+                    totalDamage,
+                    attackerAttack
                 );
             } else if (
                 attacker.splashDamage &&
@@ -609,11 +611,6 @@ const BattleGroundDetails = () => {
                 );
             }
 
-            console.log("This is attackForce:" + attackForce);
-            console.log("This is defenseForce:" + defenseForce);
-            console.log("This is totalDamage:" + totalDamage);
-            console.log("This is attackResult:" + attackResult);
-
             totalAttackResult += attackResult;
             defender.healthAfter = defender.healthBefore - totalAttackResult;
 
@@ -623,11 +620,11 @@ const BattleGroundDetails = () => {
                     totalDamage,
                     defender.config.defence
                 );
-                console.log("This is defenceResult:" + defenceResult);
 
                 if (
                     attacker.config.skills.includes("poison") ||
-                    attacker.typeUnit === "Segment"
+                    attacker.typeUnit === "Segment" ||
+                    attacker.explodeDamage
                 ) {
                     defender.becamePoisonedBonus = true;
                     poisoningAttacker = attacker.id;

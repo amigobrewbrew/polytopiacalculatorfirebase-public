@@ -190,7 +190,7 @@ const SoldierUnitAsRender = ({
     const [healthMaxShipUnit, setHealthMaxShipUnit] = useState(
         soldierUnit.healthMax
     );
-    const [healthInputField, setHealthInputField] = useState(
+    const [healthInputField, setHealthInputField] = useState<string | number>(
         soldierUnit.healthBefore
     );
     const [healthBeforeAsState, setHealthBeforeAsState] = useState(
@@ -323,12 +323,21 @@ const SoldierUnitAsRender = ({
         console.log("Unit is poisoned");
     };
     const handleHitpointsChange = (healthBeforeManualInput: any) => {
-        setHealthInputField(parseInt(healthBeforeManualInput));
-        console.log("Hitpoints are now: " + healthBeforeManualInput);
+        // This is to fix some input glitch where +/-1 HP is done while direct input is active
+        // Also handle localized decimal separators (comma vs period)
+        const healthBeforeManualInputNormalized = healthBeforeManualInput
+            .toString()
+            .replace(",", ".");
+        const healthBeforeManualInputNumericValue =
+            parseFloat(healthBeforeManualInputNormalized) || 0;
+        setHealthInputField(healthBeforeManualInputNumericValue);
+        console.log(
+            "Hitpoints are now: " + healthBeforeManualInputNumericValue
+        );
         onUpdateHitpoints(
             soldierUnit.id,
             soldierUnit.team,
-            healthBeforeManualInput
+            healthBeforeManualInputNumericValue
         );
     };
     const handleKeyDown = (e: any) => {
@@ -517,22 +526,17 @@ const SoldierUnitAsRender = ({
                                     "HitpointField"
                                 }
                                 type="text"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                value={
-                                    healthInputField ? healthInputField : "0"
-                                }
+                                inputMode="decimal"
+                                value={healthInputField || ""}
                                 onChange={(e) =>
-                                    setHealthInputField(
-                                        parseInt(e.target.value)
-                                    )
+                                    setHealthInputField(e.target.value)
                                 }
                                 onBlur={(e) =>
                                     handleHitpointsChange(e.target.value)
                                 }
                                 onKeyDown={handleKeyDown}
                                 style={{ width: 38 }}
-                                maxLength={2}
+                                maxLength={5}
                                 onFocus={handleFocus}
                             />
                         </label>
