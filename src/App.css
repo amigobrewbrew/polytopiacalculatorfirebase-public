@@ -108,3 +108,41 @@ body {
   font-family: Arial;
   text-align: center;
 } */
+
+/* Drag-and-drop animations for columns and cards */
+.dnd-column {
+    transition:
+        transform 200ms ease,
+        opacity 200ms ease;
+}
+
+.dnd-column.swap-out-left {
+    transform: translateX(-12px);
+    opacity: 0.85;
+}
+
+.dnd-column.swap-out-right {
+    transform: translateX(12px);
+    opacity: 0.85;
+}
+
+.dnd-card {
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.dnd-card.dragging {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Visual indicator when a card can be swapped/dropped here */
+.dnd-drop-target {
+    outline: 2px solid #2196f3;
+    outline-offset: -2px;
+}
+
+/* Hide the original list card while dragging (custom preview follows cursor) */
+.dnd-card.being-dragged {
+    opacity: 0;
+}

@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import type React from "react";
 import { ReactNode } from "react";
 import {
     BORDER_RADIUS_DEFAULT,
@@ -13,12 +14,26 @@ interface CardWithShadowProps {
     shadowAmount?: number;
     sx?: object;
     style?: object;
+    draggable?: boolean;
+    onDragStart?: (e: React.DragEvent) => void;
+    onDrag?: (e: React.DragEvent) => void;
+    onDragOver?: (e: React.DragEvent) => void;
+    onDrop?: (e: React.DragEvent) => void;
+    onDragEnd?: (e: React.DragEvent) => void;
+    className?: string;
 }
 
 const CardWithShadow = ({
     children,
     sx = {},
     style = {},
+    draggable = false,
+    onDragStart,
+    onDrag,
+    onDragOver,
+    onDrop,
+    onDragEnd,
+    className,
 }: CardWithShadowProps) => {
     return (
         <Box
@@ -32,6 +47,13 @@ const CardWithShadow = ({
                 ...sx,
             }}
             style={style}
+            draggable={draggable}
+            onDragStart={onDragStart}
+            onDrag={onDrag}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onDragEnd={onDragEnd}
+            className={className}
         >
             {children}
         </Box>
