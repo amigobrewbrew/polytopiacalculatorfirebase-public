@@ -3,6 +3,7 @@
     "buildVersion": "2.10.1.12787",
     "title": "Aquarion Rework",
     "poisonScheme": "OLD",
+    "shamanBuffScheme": "BOOST",
     "unitStats": [
         {
             "name": "Warrior",

@@ -5,6 +5,7 @@ export type VersionConfig = {
     buildVersion: string;
     title: string;
     poisonScheme: PoisonScheme;
+    shamanBuffScheme: ShamanBuffScheme;
     unitStats: UnitConfig[];
 };
 
@@ -24,3 +25,19 @@ export const PoisonScheme = {
     OLD: "OLD",
 } as const;
 export type PoisonScheme = typeof PoisonScheme[keyof typeof PoisonScheme];
+
+/**
+ * Enum for the "buff" that shamans give to neighbouring units, depending on version.
+ */
+export const ShamanBuffScheme = {
+    /**
+     * v115+ scheme: buffs movement but not damage, so has no impact on the calculator.
+     */
+    SWARM: "SWARM",
+
+    /**
+     * Pre-v115 scheme: buffs movement and damage, so should enable the BST button on units.
+     */
+    BOOST: "BOOST",
+} as const;
+export type ShamanBuffScheme = typeof ShamanBuffScheme[keyof typeof ShamanBuffScheme];

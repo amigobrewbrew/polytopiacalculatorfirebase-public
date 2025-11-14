@@ -3,6 +3,7 @@
     "buildVersion": "2.15.0.15024",
     "title": "Cymanti Rework",
     "poisonScheme": "NEW",
+    "shamanBuffScheme": "SWARM",
     "unitStats": [
         {
             "name": "Warrior",

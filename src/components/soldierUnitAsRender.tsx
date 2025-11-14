@@ -117,10 +117,12 @@ import ScoutDef from "../img/Defenders/Scout.png";
 import RammerDef from "../img/Defenders/Rammer.png";
 import BomberDef from "../img/Defenders/Bomber.png";
 import JuggernautDef from "../img/Defenders/Juggernaut.png";
+import { ShamanBuffScheme, VersionConfig } from "../types/VersionConfig";
 
 // Same Props as before
 type SoldierUnitAsRenderProps = {
     soldierUnit: SoldierUnit;
+    versionConfig: VersionConfig | undefined;
     onDelete?: any;
     onUpdateHitpoints?: any;
     onIncreaseHitpoints?: any;
@@ -138,6 +140,7 @@ type SoldierUnitAsRenderProps = {
 
 const SoldierUnitAsRender = ({
     soldierUnit,
+    versionConfig,
     onDelete,
     onUpdateHitpoints,
     onIncreaseHitpoints,
@@ -811,7 +814,7 @@ const SoldierUnitAsRender = ({
                 }}
                 style={{
                     display:
-                        soldierUnit.team === "Attackers" ? "visible" : "none",
+                        soldierUnit.team === "Attackers" ? (versionConfig?.shamanBuffScheme === ShamanBuffScheme.BOOST ? "visible" : "none") : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{
