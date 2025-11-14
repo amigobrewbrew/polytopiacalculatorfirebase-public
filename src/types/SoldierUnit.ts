@@ -1,4 +1,3 @@
-
 export type SoldierUnit = {
     id: number;
     config: UnitConfig;
@@ -27,4 +26,3 @@ export type UnitConfig = {
     defence: number;
     skills: string[];
 };
-

@@ -814,7 +814,12 @@ const SoldierUnitAsRender = ({
                 }}
                 style={{
                     display:
-                        soldierUnit.team === "Attackers" ? (versionConfig?.shamanBuffScheme === ShamanBuffScheme.BOOST ? "visible" : "none") : "none",
+                        soldierUnit.team === "Attackers"
+                            ? versionConfig?.shamanBuffScheme ===
+                              ShamanBuffScheme.BOOST
+                                ? "visible"
+                                : "none"
+                            : "none",
                     ...getSecondaryButtonStyles(),
                 }}
                 sx={{

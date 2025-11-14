@@ -11,7 +11,7 @@ export type VersionConfig = {
 
 /**
  * Enum for poison schemes, depending on version.
- * 
+ *
  * @remark If new poison schemes are released, we should refactor this enum.
  */
 export const PoisonScheme = {
@@ -24,7 +24,7 @@ export const PoisonScheme = {
      */
     OLD: "OLD",
 } as const;
-export type PoisonScheme = typeof PoisonScheme[keyof typeof PoisonScheme];
+export type PoisonScheme = (typeof PoisonScheme)[keyof typeof PoisonScheme];
 
 /**
  * Enum for the "buff" that shamans give to neighbouring units, depending on version.
@@ -40,4 +40,5 @@ export const ShamanBuffScheme = {
      */
     BOOST: "BOOST",
 } as const;
-export type ShamanBuffScheme = typeof ShamanBuffScheme[keyof typeof ShamanBuffScheme];
+export type ShamanBuffScheme =
+    (typeof ShamanBuffScheme)[keyof typeof ShamanBuffScheme];
