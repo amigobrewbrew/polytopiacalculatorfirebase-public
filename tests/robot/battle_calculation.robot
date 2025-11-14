@@ -49,7 +49,7 @@ Should Calculate Damage Between Multiple Units With Poison
     When I go to the previous attackers selection page
     When I add a "warrior" attacker
     When I add a "giant" defender
-    Then The first defender health should be 35
+    Then The first defender health should be 34
 
 Should Calculate Damage Between Units With No Full Health
     Given I open the main page

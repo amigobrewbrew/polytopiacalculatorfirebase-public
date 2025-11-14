@@ -10,14 +10,13 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { logEvent } from "firebase/analytics";
 import { useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { LATEST_VERSION } from "../config/version.global";
 import {
     MAX_WIDTH_PX,
     SINGLE_COL_MAX_WIDTH_PX,
     SINGLE_COLUMN_WIDTH_PERCENTAGE,
 } from "../customStyles";
 import { SoldierUnit } from "../types/SoldierUnit";
+import { loadAllConfigs } from "../utils/configLoader";
 import { PoisonScheme, VersionConfig } from "../types/VersionConfig";
 import { UnitConfig } from "../types/SoldierUnit";
 import { useSearchParams } from "react-router-dom";
@@ -552,12 +551,11 @@ const BattleGroundDetails = () => {
                 attacker.healthMax
             );
 
-            let defenderDefenseBonus =
-                defender.wallBonus
+            let defenderDefenseBonus = defender.wallBonus
                 ? 4
                 : defender.defenceBonus
-                    ? 1.5
-                    : 1;
+                  ? 1.5
+                  : 1;
             if (defender.poisonedBonus || defender.becamePoisonedBonus) {
                 if (versionConfig?.poisonScheme === PoisonScheme.OLD) {
                     // Force defense bonus to 0.7
