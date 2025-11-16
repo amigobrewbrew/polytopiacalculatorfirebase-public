@@ -289,7 +289,7 @@
             "name": "Phychi",
             "movementAbility": "air",
             "maxHealth": 5,
-            "attack": 1,
+            "attack": 0.7,
             "defence": 1,
             "skills": ["poison", "surprise", "double attack"]
         },
