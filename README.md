@@ -20,7 +20,7 @@ Firebase: https://www.youtube.com/watch?v=PKwu15ldZ7k
 
 # Tests
 
-Use "npm run test" to run both the Jest typescript tests and the Robot Framework end-to-end tests.
+Use "npm run test" to run both the Jest typescript tests and the Robot Framework end-to-end tests. Make sure you did "npm run start" before running the robot tests.
 
 # How to run Robot Framework tests locally (optional)
 

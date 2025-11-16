@@ -44,6 +44,7 @@ Should Calculate Damage Between Multiple Units With Poison
     When I go to the next attackers selection page
     When I go to the next attackers selection page
     When I add a "phychi" attacker
+    When I add a "phychi" attacker
     When I go to the previous attackers selection page
     When I go to the previous attackers selection page
     When I go to the previous attackers selection page
