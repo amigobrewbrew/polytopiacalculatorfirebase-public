@@ -3,6 +3,7 @@
     "buildVersion": "2.11.1.13205",
     "title": "The Forgotten + Aquarion Rework Patch",
     "poisonScheme": "OLD",
+    "shamanBuffScheme": "BOOST",
     "unitStats": [
         {
             "name": "Warrior",

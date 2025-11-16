@@ -704,6 +704,7 @@ const BattleGroundDetails = () => {
                             <SoldierUnitAsRender
                                 key={`attacker-unit-${soldierUnitAtt.id}-${soldierUnitAtt.typeUnit}`}
                                 soldierUnit={soldierUnitAtt}
+                                versionConfig={versionConfig}
                                 onDelete={handleDelete}
                                 onUpdateHitpoints={handleUpdateHitpoints}
                                 onIncreaseHitpoints={handleIncreaseHitpoints}
@@ -737,6 +738,7 @@ const BattleGroundDetails = () => {
                             <SoldierUnitAsRender
                                 key={`defender-unit-${soldierUnitDef.id}-${soldierUnitDef.typeUnit}`}
                                 soldierUnit={soldierUnitDef}
+                                versionConfig={versionConfig}
                                 onDelete={handleDelete}
                                 onUpdateHitpoints={handleUpdateHitpoints}
                                 onIncreaseHitpoints={handleIncreaseHitpoints}

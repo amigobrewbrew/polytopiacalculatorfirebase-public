@@ -3,6 +3,7 @@
     "buildVersion": "2.15.0.15024",
     "title": "Cymanti Rework",
     "poisonScheme": "NEW",
+    "shamanBuffScheme": "SWARM",
     "unitStats": [
         {
             "name": "Warrior",
@@ -355,21 +356,24 @@
             "attack": 2,
             "defence": 2,
             "skills": ["explode", "static", "stiff"]
-        },        {
+        },
+        {
             "name": "InsectEgg",
             "movementAbility": "nil",
             "maxHealth": 10,
             "attack": 2,
             "defence": 3,
             "skills": ["explode", "stiff"]
-        },        {
+        },
+        {
             "name": "Larva",
             "movementAbility": "land",
             "maxHealth": 10,
             "attack": 2,
             "defence": 2,
             "skills": ["surprise", "static"]
-        },        {
+        },
+        {
             "name": "Moth",
             "movementAbility": "air",
             "maxHealth": 10,
