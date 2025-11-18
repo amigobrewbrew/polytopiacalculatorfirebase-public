@@ -273,7 +273,7 @@
             "name": "Hexapod",
             "movementAbility": "land",
             "maxHealth": 5,
-            "attack": 2.5,
+            "attack": 3,
             "defence": 1,
             "skills": []
         },
