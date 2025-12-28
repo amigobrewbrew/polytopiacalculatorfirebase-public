@@ -301,28 +301,16 @@ const SoldierUnitAsRender = ({
     const handleClickDefenceBonus = () => {
         let defVal = !isToggleOnDefence;
         setIsToggleOnDefence(defVal);
-        if (defVal) {
-            setIsToggleOnPoisoned(false);
-            setIsToggleOnWall(false);
-        }
         console.log("Unit has defence bonus");
     };
     const handleClickWallBonus = () => {
         let wallVal = !isToggleOnWall;
         setIsToggleOnWall(wallVal);
-        if (wallVal) {
-            setIsToggleOnPoisoned(false);
-            setIsToggleOnDefence(false);
-        }
         console.log("Unit has wall bonus");
     };
     const handleClickPoisonedBonus = () => {
         let poisVal = !isToggleOnPoisoned;
         setIsToggleOnPoisoned(poisVal);
-        if (poisVal) {
-            setIsToggleOnWall(false);
-            setIsToggleOnDefence(false);
-        }
         console.log("Unit is poisoned");
     };
     const handleHitpointsChange = (healthBeforeManualInput: any) => {
