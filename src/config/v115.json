@@ -315,7 +315,7 @@
             "maxHealth": 20,
             "attack": 4,
             "defence": 4,
-            "skills": ["stomp", "static", "stiff"]
+            "skills": ["stomp", "static", "poison"]
         },
         {
             "name": "Shaman",
