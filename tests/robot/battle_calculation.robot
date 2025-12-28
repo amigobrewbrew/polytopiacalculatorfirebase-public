@@ -87,6 +87,29 @@ Should Calculate Damage With Splash To Halves
     When I toggle splsh second attacker
     Then The first defender health should be 2.5
 
+Should Calculate Damage With DEF And POIS In Version 115
+    Given I open the main page
+    When I set game version to "115"
+    When I add a "warrior" attacker
+    When I add a "warrior" defender
+    When I toggle defence bonus for first defender
+    Then The first defender health should be 6
+    When I toggle poison for first defender
+    Then The first defender health should be 5
+    When I toggle defence bonus for first defender
+    Then The first defender health should be 4
+
+Should Calculate Damage With DEF And POIS In Version 108
+    Given I open the main page
+    When I set game version to "108"
+    When I add a "warrior" attacker
+    When I add a "warrior" defender
+    When I toggle defence bonus for first defender
+    Then The first defender health should be 6
+    When I toggle poison for first defender
+    Then The first defender health should be 5
+    When I toggle defence bonus for first defender
+    Then The first defender health should be 6
 
 *** Keywords ***
 I add a "${unit_type}" attacker
@@ -140,4 +163,17 @@ I remove the first attacker
 I toggle splsh second attacker
     Click    ${second_attacker_splsh}
     Wait For Elements State    ${attackers_battleground_selector}    visible
+
+I set game version to "${version}"
+    Click    [id="version-select"]
+    Click    [data-value="${version}"]
+    Wait For Elements State    ${defenders_selection_selector}    visible
+
+I toggle defence bonus for first defender
+    Click    ${first_defender_def_button}
+    Wait For Elements State    ${defenders_battleground_selector}    visible
+
+I toggle poison for first defender
+    Click    ${first_defender_pois_button}
+    Wait For Elements State    ${defenders_battleground_selector}    visible
 
