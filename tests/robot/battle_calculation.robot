@@ -87,6 +87,17 @@ Should Calculate Damage With Splash To Halves
     When I toggle splsh second attacker
     Then The first defender health should be 2.5
 
+Should Calculate Damage With Correct Rounding
+    Given I open the main page
+    When I add a "swordsman" defender
+    When I toggle veteran bonus for first defender
+    When I change the health of the first defender to 16
+    When I go to the next attackers selection page
+    When I go to the next attackers selection page
+    When I go to the next attackers selection page
+    When I add a "hexapod" attacker
+    Then The first defender health should be 8
+
 Should Calculate Damage With DEF And POIS In Version 115
     Given I open the main page
     When I set game version to "115"
@@ -177,3 +188,6 @@ I toggle poison for first defender
     Click    ${first_defender_pois_button}
     Wait For Elements State    ${defenders_battleground_selector}    visible
 
+I toggle veteran bonus for first defender
+    Click    ${first_defender_vet_button}
+    Wait For Elements State    ${defenders_battleground_selector}    visible

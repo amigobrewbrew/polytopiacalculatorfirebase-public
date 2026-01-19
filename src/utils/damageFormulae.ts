@@ -1,3 +1,8 @@
+// Helper function to handle floating point precision in rounding
+export const safeRound = (value: number): number => {
+    return Math.round(value + 1e-10);
+};
+
 export const calculateAttackForce = (
     attack: number,
     health: number,
@@ -55,7 +60,7 @@ export const calculateAttackResult = (
     totalDamage: number,
     attack: number
 ): number => {
-    const attackResult = Math.round((attackForce / totalDamage) * attack * 4.5);
+    const attackResult = safeRound((attackForce / totalDamage) * attack * 4.5);
     console.log(
         "attack result: " +
             attackForce +
@@ -86,11 +91,11 @@ export const calculateDefenseResult = (
     totalDamage: number,
     defense: number
 ): number => {
-    const defenseResult = Math.round(
+    const defenseResult = safeRound(
         (defenseForce / totalDamage) * defense * 4.5
     );
     console.log(
-        "attack result: " +
+        "defense result: " +
             defenseForce +
             "/" +
             totalDamage +

@@ -11,3 +11,4 @@ ${first_attacker_health_or_move_down}           div.containers > div > div.MuiBo
 ${second_attacker_splsh}                        xpath=/html/body/div/div[2]/div/div[1]/div[1]/div[2]/div/button[4]
 ${first_defender_def_button}                    ${defenders_battleground_selector} >> nth=0 >> text="def"
 ${first_defender_pois_button}                   ${defenders_battleground_selector} >> nth=0 >> text="pois"
+${first_defender_vet_button}                    ${defenders_battleground_selector} >> nth=0 >> text="vet"

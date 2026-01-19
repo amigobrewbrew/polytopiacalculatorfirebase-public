@@ -562,7 +562,7 @@ const BattleGroundDetails = () => {
                     defenderDefenseBonus = 0.7;
                 } else {
                     // Just halve the defense bonus
-                    defenderDefenseBonus *= 0.5;
+                    defenderDefenseBonus = defenderDefenseBonus * 0.5;
                 }
             }
 
