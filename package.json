@@ -26,11 +26,9 @@
         "format": "npm run prettier",
         "build": "vite build",
         "preview": "vite preview",
-        "test": "npm run test:jest && npm run test:robot",
+        "test": "npm run test:jest && npm run test:e2e",
         "test:jest": "jest",
-        "test:robot": "robot tests/robot",
-        "test:robot:ci": "robot --outputdir results tests/robot/",
-        "test:robot:init": "rfbrowser init",
+        "test:e2e": "npx playwright test",
         "eject": "echo 'eject script not supported'"
     },
     "eslintConfig": {
@@ -78,6 +76,7 @@
         "prettier": "^3.5.3",
         "ts-jest": "^29.3.2",
         "ts-node": "^10.9.2",
+        "@playwright/test": "^1.52.0",
         "typescript": "^5.8.3",
         "vite": "^6.3.2"
     }
