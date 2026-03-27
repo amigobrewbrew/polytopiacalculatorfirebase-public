@@ -50,7 +50,7 @@
         ]
     },
     "engines": {
-        "node": ">=20.0.0 <23.0.0"
+        "node": ">=22.0.0 <24.0.0"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.26.9",
