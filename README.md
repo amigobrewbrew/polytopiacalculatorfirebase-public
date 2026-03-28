@@ -2,25 +2,22 @@
 
 My first project doing Typescript and React.
 
-Run the following before deploying react app to azure/firebase/hosting:
+Get started:
 
 ```bash
 npm install
+```
+
+To build and deploy:
+
+```bash
 npm run build
 npm run start
 ```
 
 # Setup
 
-For firebase hosting, configure your project API keys in `src/envConfig.ts` via the `.env` file. By default, firebase is disabled for local development (controlled by the `VITE_IS_LOCAL` env variable).
-
-More details to get started are here: https://firebase.google.com/docs/web/setup and here: https://reactjs.org/docs/create-a-new-react-app.html.
-
-# Guides
-
-React: https://www.youtube.com/watch?v=Ke90Tje7VS0
-
-Firebase: https://www.youtube.com/watch?v=PKwu15ldZ7k
+Firebase is disabled by default for local development. To enable it, copy `.env.example` to `.env` and fill in your Firebase configuration.
 
 # Tests
 
@@ -36,6 +33,12 @@ Install Playwright browsers (first time only):
 
 ```bash
 npx playwright install --with-deps chromium
+```
+
+Run only the E2E tests:
+
+```bash
+npm run test:e2e
 ```
 
 # Usage
