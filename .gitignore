@@ -39,3 +39,8 @@ dist
 # Playwright
 test-results/
 playwright-report/
+
+# Robot Framework (legacy)
+log.html
+output.xml
+report.html
