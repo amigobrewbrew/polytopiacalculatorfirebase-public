@@ -3,10 +3,8 @@
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
 
-    "javascript.suggest.autoImports": true,
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "typescript.suggest.autoImports": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
+    "js/ts.suggest.autoImports": true,
+    "js/ts.updateImportsOnFileMove.enabled": "always",
 
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
