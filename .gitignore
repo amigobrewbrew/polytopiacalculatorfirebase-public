@@ -36,12 +36,6 @@ local.settings.json
 firebase-debug.log
 dist
 
-# Robot Framework
-results/
-reports/
-log.html
-output.xml
-report.html
-browser/
-playwright-log.txt
-.venv
+# Playwright
+test-results/
+playwright-report/

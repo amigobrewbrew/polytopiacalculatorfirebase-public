@@ -20,53 +20,39 @@ Firebase: https://www.youtube.com/watch?v=PKwu15ldZ7k
 
 # Tests
 
-Use "npm run test" to run both the Jest typescript tests and the Robot Framework end-to-end tests. Make sure you did "npm run start" before running the robot tests.
+Use "npm run test" to run both the Jest typescript tests and the Playwright end-to-end tests.
 
-# How to run Robot Framework tests locally (optional)
+# How to run E2E tests locally
 
-You dont need to follow these steps. You can ignore them but then you wont be able to run 'npm run test' locally. 'npm run test' will be ran however when submitting a pull request on github.
-
-1. Create and activate a python virtual environment:
+1. Install Playwright browsers (first time only):
 
 ```bash
-# Create a virtual environment
-python3 -m venv venv
-
-# Activate on Windows
-venv\Scripts\activate
-
-# Activate on macOS/Linux
-source venv/bin/activate
+npx playwright install --with-deps chromium
 ```
 
-2. Make sure the terminal is in the python virtual environment (venv) - sometimes you need to close and re-open terminal in VS code; Also you may need to ignore the prompt to configure the robot framework environment displayed by the command pallette - and install Robot Framework and required dependencies with pip:
+2. Build the app:
 
 ```bash
-pip install -r requirements.txt
+npm run build
 ```
 
-3. Initialize Browser library:
+3. Run the E2E tests:
 
 ```bash
-rfbrowser init
+npm run test:e2e
 ```
 
-4. Run single Robot Framework tests:
+Playwright will automatically start the preview server. To run a specific test file:
 
 ```bash
-robot tests/robot/home_page.robot
+npx playwright test tests/e2e/home-page.spec.ts
 ```
 
-5. Run all Robot Framework tests:
+4. To view the test report after running:
 
 ```bash
-robot tests/robot
+npx playwright show-report
 ```
-
-6. View the results in the project folder root directory. Open log.html with browser to view screenshots of failed tests:
-   output.xml
-   log.html
-   report.html
 
 # Usage
 

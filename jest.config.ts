@@ -13,6 +13,7 @@ export default {
         "**/__tests__/**/*.[jt]s?(x)",
         "**/?(*.)+(spec|test).[jt]s?(x)",
     ],
+    testPathIgnorePatterns: ["/node_modules/", "/tests/e2e/"],
     transform: {
         "^.+\\.(ts|tsx)$": "ts-jest",
     },
