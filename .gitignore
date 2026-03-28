@@ -23,7 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Azure Functions artifacts
+# azure Functions artifacts
 local.settings.json
 
 # dotenv environment variables file
@@ -31,11 +31,26 @@ local.settings.json
 
 # firebase cache files
 /.firebase
-/.vscode
-.vscode/launch.json
 firebase-debug.log
 dist
 
-# Playwright
+# visual studio code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# playwright
 test-results/
 playwright-report/
+
+# robot framework (legacy)
+results/
+reports/
+log.html
+output.xml
+report.html
+browser/
+playwright-log.txt
+.venv
