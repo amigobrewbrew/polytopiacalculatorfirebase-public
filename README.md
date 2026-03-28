@@ -2,7 +2,13 @@
 
 My first project doing Typescript and React.
 
-Use "npm install", "npm run build" & "npm run start" before deploying react app to azure/firebase/hosting
+Run the following before deploying react app to azure/firebase/hosting:
+
+```bash
+npm install
+npm run build
+npm run start
+```
 
 # Setup
 
@@ -18,7 +24,11 @@ Firebase: https://www.youtube.com/watch?v=PKwu15ldZ7k
 
 # Tests
 
-Use "npm run test" to run both the Jest typescript tests and the Playwright end-to-end tests.
+Run both the Jest typescript tests and the Playwright end-to-end tests:
+
+```bash
+npm run test
+```
 
 # E2E Tests
 
