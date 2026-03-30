@@ -1,5 +1,4 @@
 export default {
-    preset: "ts-jest",
     testEnvironment: "jsdom",
     setupFilesAfterEnv: [
         "<rootDir>/jest.setup.ts",
@@ -15,6 +14,6 @@ export default {
     ],
     testPathIgnorePatterns: ["/node_modules/", "/tests/e2e/"],
     transform: {
-        "^.+\\.(ts|tsx)$": "ts-jest",
+        "^.+\\.(ts|tsx|js|jsx)$": "babel-jest",
     },
 };
