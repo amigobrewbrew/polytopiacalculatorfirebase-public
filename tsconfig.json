@@ -23,5 +23,5 @@
             "node"
         ]
     },
-    "include": ["src"]
+    "include": ["src", "*.config.ts", "*.setup.ts"]
 }
