@@ -532,7 +532,13 @@ const SoldierUnitAsRender = ({
                             />
                         </label>
                     </span>
-                    <span style={{ fontWeight: "bold" }}>
+                    <span
+                        style={{
+                            fontWeight: "bold",
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
                         <ArrowForwardIcon /> {displayHealthAfter()}
                     </span>
                 </div>
