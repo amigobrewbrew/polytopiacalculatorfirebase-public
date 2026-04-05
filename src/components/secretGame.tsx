@@ -366,13 +366,15 @@ const SecretGame = () => {
 
                         {/* New Game button */}
                         <Box style={{ margin: 0 }}>
-                            <button
-                                className="btn btn-success btn-lg m-2"
+                            <Button
+                                variant="contained"
+                                color="success"
+                                size="large"
                                 onClick={newGame}
-                                style={{ alignContent: "center" }}
+                                sx={{ m: 1 }}
                             >
                                 New game
-                            </button>
+                            </Button>
                         </Box>
 
                         {/* Game stats */}

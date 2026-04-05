@@ -10,12 +10,18 @@
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "module": "es2020",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": false,
         "jsx": "react-jsx",
-        "types": ["react", "react-dom", "vitest/globals", "node"]
+        "types": [
+            "react",
+            "react-dom",
+            "vitest/globals",
+            "@testing-library/jest-dom/vitest",
+            "node"
+        ]
     },
     "include": ["src"]
 }
