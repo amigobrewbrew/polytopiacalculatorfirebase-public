@@ -1,23 +1,22 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { vi } from "vitest";
 import App from "./App";
-import "@testing-library/jest-dom";
 
 // Mock the child components
-jest.mock("./components/navbar", () => () => (
-    <div data-testid="navbar">Navbar</div>
-));
-jest.mock("./components/helpPage", () => () => (
-    <div data-testid="help-page">Help Page</div>
-));
-jest.mock("./components/secretGame", () => () => (
-    <div data-testid="secret-game">Secret Game</div>
-));
-jest.mock("./components/battleGroundDetails", () => () => (
-    <div data-testid="battle-ground">Battle Ground</div>
-));
-jest.mock("./envConfig", () => ({
-    __esModule: true,
+vi.mock("./components/navbar", () => ({
+    default: () => <div data-testid="navbar">Navbar</div>,
+}));
+vi.mock("./components/helpPage", () => ({
+    default: () => <div data-testid="help-page">Help Page</div>,
+}));
+vi.mock("./components/secretGame", () => ({
+    default: () => <div data-testid="secret-game">Secret Game</div>,
+}));
+vi.mock("./components/battleGroundDetails", () => ({
+    default: () => <div data-testid="battle-ground">Battle Ground</div>,
+}));
+vi.mock("./envConfig", () => ({
     default: {
         firebase: {
             apiKey: "test_firebase_api_key",

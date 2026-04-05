@@ -21,7 +21,7 @@ Firebase is disabled by default for local development. To enable it, copy `.env.
 
 # Tests
 
-Run both the Jest typescript tests and the Playwright end-to-end tests:
+Run both the Vitest unit tests and the Playwright end-to-end tests:
 
 ```bash
 npm run test
