@@ -17,7 +17,7 @@ const selectors = {
     removeFirstAttacker:
         "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > div > button",
     changeOrderCheckbox:
-        "div.containers > div > div.MuiBox-root.css-hr1yj1 > label",
+        "[data-testid='change-order-checkbox']",
     firstAttackerMoveDown:
         "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > button:nth-child(9)",
     secondAttackerSplsh:
