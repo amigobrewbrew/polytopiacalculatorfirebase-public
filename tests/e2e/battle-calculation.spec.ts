@@ -16,8 +16,7 @@ const selectors = {
         "div.containers > div > div.MuiBox-root.css-kx72jn > div:nth-child(2)",
     removeFirstAttacker:
         "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > div > button",
-    changeOrderCheckbox:
-        "div.containers > div > div.MuiBox-root.css-hr1yj1 > label",
+    changeOrderCheckbox: "text='Use + and - to set order instead of health'",
     firstAttackerMoveDown:
         "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > button:nth-child(9)",
     secondAttackerSplsh:
@@ -47,32 +46,42 @@ async function expectAttackerHealth(page: Page, expected: number, index = 0) {
 
 async function goToNextAttackersPage(page: Page) {
     await page.click(selectors.attackersSelectionGoNext);
-    await page.locator(selectors.attackersSelection).waitFor({ state: "visible" });
+    await page
+        .locator(selectors.attackersSelection)
+        .waitFor({ state: "visible" });
 }
 
 async function goToPreviousAttackersPage(page: Page) {
     await page.click(selectors.attackersSelectionGoPrevious);
-    await page.locator(selectors.attackersSelection).waitFor({ state: "visible" });
+    await page
+        .locator(selectors.attackersSelection)
+        .waitFor({ state: "visible" });
 }
 
 async function changeAttackerHealth(page: Page, index: number, health: number) {
     const selector = `[id="Attackers${index}HitpointField"]`;
     await page.fill(selector, String(health));
     await page.press(selector, "Enter");
-    await page.locator(selectors.attackersBattleground).waitFor({ state: "visible" });
+    await page
+        .locator(selectors.attackersBattleground)
+        .waitFor({ state: "visible" });
 }
 
 async function changeDefenderHealth(page: Page, index: number, health: number) {
     const selector = `[id="Defenders${index}HitpointField"]`;
     await page.fill(selector, String(health));
     await page.press(selector, "Enter");
-    await page.locator(selectors.defendersBattleground).waitFor({ state: "visible" });
+    await page
+        .locator(selectors.defendersBattleground)
+        .waitFor({ state: "visible" });
 }
 
 async function setGameVersion(page: Page, version: string) {
     await page.click('[id="version-select"]');
     await page.click(`[data-value="${version}"]`);
-    await page.locator(selectors.defendersSelection).waitFor({ state: "visible" });
+    await page
+        .locator(selectors.defendersSelection)
+        .waitFor({ state: "visible" });
 }
 
 async function toggleDefenderDefence(page: Page) {
@@ -131,14 +140,14 @@ test.describe("Battle Calculation", () => {
     test("should calculate damage between units", async ({ page }) => {
         await addAttacker(page, "warrior");
         await addDefender(page, "warrior");
-        await expectDefenderHealth(page,5);
+        await expectDefenderHealth(page, 5);
     });
 
     test("should calculate damage between multiple units", async ({ page }) => {
         await addAttacker(page, "warrior");
         await addAttacker(page, "archer");
         await addDefender(page, "warrior");
-        await expectDefenderHealth(page,-1);
+        await expectDefenderHealth(page, -1);
     });
 
     test("should calculate damage between multiple units with poison", async ({
@@ -154,7 +163,7 @@ test.describe("Battle Calculation", () => {
         await goToPreviousAttackersPage(page);
         await addAttacker(page, "warrior");
         await addDefender(page, "giant");
-        await expectDefenderHealth(page,34);
+        await expectDefenderHealth(page, 34);
     });
 
     test("should calculate damage between units with no full health", async ({
@@ -164,8 +173,8 @@ test.describe("Battle Calculation", () => {
         await addDefender(page, "warrior");
         await changeAttackerHealth(page, 0, 7);
         await changeDefenderHealth(page, 0, 6);
-        await expectAttackerHealth(page,3);
-        await expectDefenderHealth(page,1);
+        await expectAttackerHealth(page, 3);
+        await expectDefenderHealth(page, 1);
     });
 
     test("should calculate damage between units when changing order", async ({
@@ -182,7 +191,7 @@ test.describe("Battle Calculation", () => {
         await page
             .locator(selectors.attackersBattleground)
             .waitFor({ state: "visible" });
-        await expectDefenderHealth(page,27);
+        await expectDefenderHealth(page, 27);
     });
 
     test("should calculate damage between units when removing units", async ({
@@ -195,7 +204,7 @@ test.describe("Battle Calculation", () => {
         await page
             .locator(selectors.attackersBattleground)
             .waitFor({ state: "visible" });
-        await expectDefenderHealth(page,34);
+        await expectDefenderHealth(page, 34);
     });
 
     test("should calculate damage with splash to halves", async ({ page }) => {
@@ -207,7 +216,7 @@ test.describe("Battle Calculation", () => {
         await page
             .locator(selectors.attackersBattleground)
             .waitFor({ state: "visible" });
-        await expectDefenderHealth(page,2.5);
+        await expectDefenderHealth(page, 2.5);
     });
 
     test("should calculate damage with correct rounding", async ({ page }) => {
@@ -218,7 +227,7 @@ test.describe("Battle Calculation", () => {
         await goToNextAttackersPage(page);
         await goToNextAttackersPage(page);
         await addAttacker(page, "hexapod");
-        await expectDefenderHealth(page,8);
+        await expectDefenderHealth(page, 8);
     });
 
     test("should calculate damage with DEF and POIS in version 115", async ({
@@ -228,11 +237,11 @@ test.describe("Battle Calculation", () => {
         await addAttacker(page, "warrior");
         await addDefender(page, "warrior");
         await toggleDefenderDefence(page);
-        await expectDefenderHealth(page,6);
+        await expectDefenderHealth(page, 6);
         await toggleDefenderPoison(page);
-        await expectDefenderHealth(page,5);
+        await expectDefenderHealth(page, 5);
         await toggleDefenderDefence(page);
-        await expectDefenderHealth(page,4);
+        await expectDefenderHealth(page, 4);
     });
 
     test("should calculate damage with DEF and POIS in version 108", async ({
@@ -242,10 +251,10 @@ test.describe("Battle Calculation", () => {
         await addAttacker(page, "warrior");
         await addDefender(page, "warrior");
         await toggleDefenderDefence(page);
-        await expectDefenderHealth(page,6);
+        await expectDefenderHealth(page, 6);
         await toggleDefenderPoison(page);
-        await expectDefenderHealth(page,5);
+        await expectDefenderHealth(page, 5);
         await toggleDefenderDefence(page);
-        await expectDefenderHealth(page,6);
+        await expectDefenderHealth(page, 6);
     });
 });

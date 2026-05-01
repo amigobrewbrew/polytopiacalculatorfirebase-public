@@ -22,11 +22,11 @@ const CardWithShadow = ({
 }: CardWithShadowProps) => {
     return (
         <Box
-            boxShadow={BOX_SHADOW_DEFAULT}
             sx={{
                 p: PADDING_DEFAULT,
                 backgroundColor: CARD_COLOR,
                 border: 0,
+                boxShadow: BOX_SHADOW_DEFAULT,
                 borderRadius: BORDER_RADIUS_DEFAULT,
                 mb: MARGIN_BOTTOM_DEFAULT,
                 ...sx,
