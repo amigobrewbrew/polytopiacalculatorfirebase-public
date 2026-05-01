@@ -760,6 +760,7 @@ const BattleGroundDetails = () => {
 
             <CardWithShadow sx={{ p: "0 2%", width: "100%", mt: "2px" }}>
                 <FormControlLabel
+                    data-testid="change-order-checkbox"
                     control={
                         <Checkbox
                             checked={checkedPosition}
