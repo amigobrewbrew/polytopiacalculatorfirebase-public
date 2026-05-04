@@ -108,6 +108,17 @@ async function toggleDefenderVeteran(page: Page) {
         .waitFor({ state: "visible" });
 }
 
+async function toggleAttackerExplode(page: Page) {
+    await page
+        .locator(selectors.attackersBattleground)
+        .first()
+        .locator('text="xpld"')
+        .click();
+    await page
+        .locator(selectors.attackersBattleground)
+        .waitFor({ state: "visible" });
+}
+
 test.describe("Battle Calculation", () => {
     test.beforeEach(async ({ page }) => {
         await page.goto("/");
@@ -199,6 +210,7 @@ test.describe("Battle Calculation", () => {
     });
 
     test("should calculate damage with splash to halves", async ({ page }) => {
+        await setGameVersion(page, "115");
         await addAttacker(page, "defender");
         await goToNextAttackersPage(page);
         await addAttacker(page, "bomber");
@@ -208,6 +220,36 @@ test.describe("Battle Calculation", () => {
             .locator(selectors.attackersBattleground)
             .waitFor({ state: "visible" });
         await expectDefenderHealth(page,2.5);
+    });
+
+    test("v115 (HALF splash): doomux explode on knight hp8 → 1.5", async ({
+        page,
+    }) => {
+        await setGameVersion(page, "115");
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await addAttacker(page, "doomux");
+        await addDefender(page, "knight");
+        await changeDefenderHealth(page, 0, 8);
+        await toggleAttackerExplode(page);
+        await expectDefenderHealth(page, 1.5);
+    });
+
+    test("v116 (FLOOR splash): doomux explode on knight hp8 → 2", async ({
+        page,
+    }) => {
+        await setGameVersion(page, "116");
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await addAttacker(page, "doomux");
+        await addDefender(page, "knight");
+        await changeDefenderHealth(page, 0, 8);
+        await toggleAttackerExplode(page);
+        await expectDefenderHealth(page, 2);
     });
 
     test("should calculate damage with correct rounding", async ({ page }) => {

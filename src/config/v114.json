@@ -1,9 +1,10 @@
 {
     "version": "114",
-    "buildVersion": "2.14.0.14524",
+    "buildVersion": "2.14.0",
     "title": "2025 Balance Pass",
     "poisonScheme": "OLD",
     "shamanBuffScheme": "BOOST",
+    "splashScheme": "HALF",
     "unitStats": [
         {
             "name": "Warrior",

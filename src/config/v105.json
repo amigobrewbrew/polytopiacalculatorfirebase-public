@@ -1,9 +1,10 @@
 {
     "version": "105",
-    "buildVersion": "2.10.1.12787",
+    "buildVersion": "2.10.1",
     "title": "Aquarion Rework",
     "poisonScheme": "OLD",
     "shamanBuffScheme": "BOOST",
+    "splashScheme": "HALF",
     "unitStats": [
         {
             "name": "Warrior",

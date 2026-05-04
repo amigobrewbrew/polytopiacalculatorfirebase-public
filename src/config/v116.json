@@ -1,10 +1,10 @@
 {
-    "version": "115",
-    "buildVersion": "2.15.0",
-    "title": "Cymanti Rework",
+    "version": "116",
+    "buildVersion": "2.16.4",
+    "title": "Splash Rework",
     "poisonScheme": "NEW",
     "shamanBuffScheme": "SWARM",
-    "splashScheme": "HALF",
+    "splashScheme": "FLOOR",
     "unitStats": [
         {
             "name": "Warrior",

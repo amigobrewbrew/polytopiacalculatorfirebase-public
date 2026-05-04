@@ -6,6 +6,7 @@ export type VersionConfig = {
     title: string;
     poisonScheme: PoisonScheme;
     shamanBuffScheme: ShamanBuffScheme;
+    splashScheme: SplashScheme;
     unitStats: UnitConfig[];
 };
 
@@ -42,3 +43,18 @@ export const ShamanBuffScheme = {
 } as const;
 export type ShamanBuffScheme =
     (typeof ShamanBuffScheme)[keyof typeof ShamanBuffScheme];
+
+/**
+ * Enum for splash/explode damage rounding, depending on version.
+ */
+export const SplashScheme = {
+    /**
+     * Pre-v116: splash damage is `attackResult / 2`, which can produce 0.5 fractions.
+     */
+    HALF: "HALF",
+    /**
+     * v116+: splash damage is floored to avoid half hitpoints.
+     */
+    FLOOR: "FLOOR",
+} as const;
+export type SplashScheme = (typeof SplashScheme)[keyof typeof SplashScheme];

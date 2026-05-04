@@ -17,7 +17,11 @@ import {
 } from "../customStyles";
 import { SoldierUnit } from "../types/SoldierUnit";
 import { loadAllConfigs } from "../utils/configLoader";
-import { PoisonScheme, VersionConfig } from "../types/VersionConfig";
+import {
+    PoisonScheme,
+    VersionConfig,
+    SplashScheme,
+} from "../types/VersionConfig";
 import { UnitConfig } from "../types/SoldierUnit";
 import { useSearchParams } from "react-router-dom";
 import { LATEST_VERSION } from "../config/version.global";
@@ -585,22 +589,21 @@ const BattleGroundDetails = () => {
             const totalDamage = calculateTotalDamage(attackForce, defenseForce);
 
             let attackResult = 0;
-            if (attacker.explodeDamage || attacker.typeUnit === "Segment") {
+            const isSplash =
+                attacker.explodeDamage ||
+                attacker.typeUnit === "Segment" ||
+                (attacker.splashDamage &&
+                    (attacker.config.skills.includes("splash") ||
+                        attacker.config.skills.includes("stomp")));
+            if (isSplash) {
                 attackResult = calculateAttackSplash(
                     attackForce,
                     totalDamage,
                     attackerAttack
                 );
-            } else if (
-                attacker.splashDamage &&
-                (attacker.config.skills.includes("splash") ||
-                    attacker.config.skills.includes("stomp"))
-            ) {
-                attackResult = calculateAttackSplash(
-                    attackForce,
-                    totalDamage,
-                    attackerAttack
-                );
+                if (versionConfig?.splashScheme === SplashScheme.FLOOR) {
+                    attackResult = Math.floor(attackResult);
+                }
             } else {
                 attackResult = calculateAttackResult(
                     attackForce,
