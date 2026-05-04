@@ -8,7 +8,7 @@ Get started:
 npm install
 ```
 
-To build and deploy:
+To build and run locally:
 
 ```bash
 npm run build
@@ -27,7 +27,7 @@ Run both the Vitest unit tests and the Playwright end-to-end tests:
 npm run test
 ```
 
-# E2E Tests
+## E2E Tests
 
 Install Playwright browsers (first time only):
 
