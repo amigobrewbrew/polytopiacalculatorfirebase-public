@@ -5,16 +5,52 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
-      all-dependencies:
-        patterns:
-          - "*"
+    - package-ecosystem: "npm"
+      directory: "/"
+      schedule:
+          interval: "monthly"
+      groups:
+          production-patch:
+              dependency-type: "production"
+              update-types:
+                  - "patch"
+              patterns:
+                  - "*"
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+          production-minor:
+              dependency-type: "production"
+              update-types:
+                  - "minor"
+              patterns:
+                  - "*"
+
+          development-patch:
+              dependency-type: "development"
+              update-types:
+                  - "patch"
+              patterns:
+                  - "*"
+
+          development-minor:
+              dependency-type: "development"
+              update-types:
+                  - "minor"
+              patterns:
+                  - "*"
+
+    - package-ecosystem: "github-actions"
+      directory: "/"
+      schedule:
+          interval: "monthly"
+      groups:
+          actions-patch:
+              update-types:
+                  - "patch"
+              patterns:
+                  - "*"
+
+          actions-minor:
+              update-types:
+                  - "minor"
+              patterns:
+                  - "*"
