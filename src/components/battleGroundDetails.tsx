@@ -592,6 +592,7 @@ const BattleGroundDetails = () => {
             const isSplash =
                 attacker.explodeDamage ||
                 attacker.typeUnit === "Segment" ||
+                attacker.typeUnit === "Boomchi" ||
                 (attacker.splashDamage &&
                     (attacker.config.skills.includes("splash") ||
                         attacker.config.skills.includes("stomp")));
@@ -625,6 +626,7 @@ const BattleGroundDetails = () => {
                 if (
                     attacker.config.skills.includes("poison") ||
                     attacker.typeUnit === "Segment" ||
+                    attacker.typeUnit === "Boomchi" ||
                     attacker.explodeDamage
                 ) {
                     defender.becamePoisonedBonus = true;
@@ -640,7 +642,8 @@ const BattleGroundDetails = () => {
                         attacker.healthBefore - defenceResult;
                 } else if (
                     attacker.explodeDamage ||
-                    attacker.typeUnit === "Segment"
+                    attacker.typeUnit === "Segment" ||
+                    attacker.typeUnit === "Boomchi"
                 ) {
                     attacker.healthAfter = 0;
                 }

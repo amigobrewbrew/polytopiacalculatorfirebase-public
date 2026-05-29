@@ -252,6 +252,23 @@ test.describe("Battle Calculation", () => {
         await expectDefenderHealth(page, 2);
     });
 
+    test("v116: boomchi always explodes without XPLD toggle", async ({ page }) => {
+        await setGameVersion(page, "116");
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await addAttacker(page, "boomchi");
+        await addDefender(page, "warrior");
+        await expect(
+            page
+                .locator(selectors.attackersBattleground)
+                .first()
+                .locator('text="xpld"')
+        ).toHaveCount(0);
+        await expectAttackerHealth(page, 0);
+    });
+
     test("should calculate damage with correct rounding", async ({ page }) => {
         await addDefender(page, "swordsman");
         await toggleDefenderVeteran(page);
