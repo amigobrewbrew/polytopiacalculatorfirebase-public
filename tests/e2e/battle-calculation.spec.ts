@@ -23,6 +23,7 @@ const selectors = {
     secondAttackerSplsh:
         "xpath=/html/body/div/div[2]/div/div[1]/div[1]/div[2]/div/button[4]",
 };
+const MAX_ATTACKER_PAGE_SEARCH_STEPS = 10;
 
 // Helper functions
 async function addAttacker(page: Page, unitType: string) {
@@ -30,13 +31,15 @@ async function addAttacker(page: Page, unitType: string) {
 }
 
 async function addAttackerFromAnyPage(page: Page, unitType: string) {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < MAX_ATTACKER_PAGE_SEARCH_STEPS; i++) {
         const attacker = page.locator(`[data-testid="attacker-${unitType}"]`);
         if ((await attacker.count()) > 0) {
             await attacker.first().click();
             return;
         }
-        await goToNextAttackersPage(page);
+        if (i < MAX_ATTACKER_PAGE_SEARCH_STEPS - 1) {
+            await goToNextAttackersPage(page);
+        }
     }
     throw new Error(`Could not find attacker ${unitType}`);
 }
@@ -281,7 +284,7 @@ test.describe("Battle Calculation", () => {
         await expectAttackerHealth(page, 0);
     });
 
-    test("v116: boomchi xpld toggle state does not change damage", async ({
+    test("v116: boomchi explode toggle state does not change damage", async ({
         page,
     }) => {
         await setGameVersion(page, "116");
@@ -297,6 +300,7 @@ test.describe("Battle Calculation", () => {
             .locator(selectors.attackersBattleground)
             .first()
             .locator("button", { hasText: "xpld" });
+        // Boomchi hides XPLD in UI; dispatch click to exercise explodeDamage flag parity.
         await hiddenXpldToggle.dispatchEvent("click");
 
         await expect(defenderHealthAfter).toHaveText(damageWithoutXpldToggle);
