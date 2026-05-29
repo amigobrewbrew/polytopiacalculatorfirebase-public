@@ -660,7 +660,9 @@ const SoldierUnitAsRender = ({
                     display:
                         soldierUnit.team === "Attackers" &&
                         soldierUnit.config.skills.includes("explode") &&
-                        !["Segment", "Boomchi"].includes(soldierUnit.typeUnit)
+                        !["Segment", "Boomchi", "InsectEgg"].includes(
+                            soldierUnit.typeUnit
+                        )
                             ? "visible"
                             : "none",
                     ...getSecondaryButtonStyles(),

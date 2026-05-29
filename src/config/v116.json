@@ -308,7 +308,7 @@
             "maxHealth": 10,
             "attack": 3,
             "defence": 3,
-            "skills": ["explode", "stiff"]
+            "skills": ["explode", "stiff", "static"]
         },
         {
             "name": "LivingIsland",
@@ -364,7 +364,7 @@
             "maxHealth": 10,
             "attack": 2,
             "defence": 3,
-            "skills": ["explode", "stiff"]
+            "skills": ["explode", "stiff", "static"]
         },
         {
             "name": "Larva",
