@@ -23,10 +23,25 @@ const selectors = {
     secondAttackerSplsh:
         "xpath=/html/body/div/div[2]/div/div[1]/div[1]/div[2]/div/button[4]",
 };
+const MAX_ATTACKER_PAGE_SEARCH_STEPS = 10;
 
 // Helper functions
 async function addAttacker(page: Page, unitType: string) {
     await page.click(`[data-testid="attacker-${unitType}"]`);
+}
+
+async function addAttackerFromAnyPage(page: Page, unitType: string) {
+    for (let i = 0; i < MAX_ATTACKER_PAGE_SEARCH_STEPS; i++) {
+        const attacker = page.locator(`[data-testid="attacker-${unitType}"]`);
+        if ((await attacker.count()) > 0) {
+            await attacker.first().click();
+            return;
+        }
+        if (i < MAX_ATTACKER_PAGE_SEARCH_STEPS - 1) {
+            await goToNextAttackersPage(page);
+        }
+    }
+    throw new Error(`Could not find attacker ${unitType}`);
 }
 
 async function addDefender(page: Page, unitType: string) {
@@ -267,6 +282,28 @@ test.describe("Battle Calculation", () => {
                 .locator('text="xpld"')
         ).toHaveCount(0);
         await expectAttackerHealth(page, 0);
+    });
+
+    test("v116: boomchi explode toggle state does not change damage", async ({
+        page,
+    }) => {
+        await setGameVersion(page, "116");
+        await addAttackerFromAnyPage(page, "boomchi");
+        await addDefender(page, "swordsman");
+
+        const defenderHealthAfter = page.locator(
+            '[data-testid="defenders-0-health-after"]'
+        );
+        const damageWithoutXpldToggle = await defenderHealthAfter.innerText();
+
+        const hiddenXpldToggle = page
+            .locator(selectors.attackersBattleground)
+            .first()
+            .locator("button", { hasText: "xpld" });
+        // Boomchi hides XPLD in UI; dispatch click to exercise explodeDamage flag parity.
+        await hiddenXpldToggle.dispatchEvent("click");
+
+        await expect(defenderHealthAfter).toHaveText(damageWithoutXpldToggle);
     });
 
     test("should calculate damage with correct rounding", async ({ page }) => {
