@@ -589,9 +589,11 @@ const BattleGroundDetails = () => {
             const totalDamage = calculateTotalDamage(attackForce, defenseForce);
 
             let attackResult = 0;
-            const isSplash =
+            const isExploding =
                 attacker.explodeDamage ||
-                attacker.typeUnit === "Segment" ||
+                attacker.config.skills.includes("onlyExplode");
+            const isSplash =
+                isExploding ||
                 (attacker.splashDamage &&
                     (attacker.config.skills.includes("splash") ||
                         attacker.config.skills.includes("stomp")));
@@ -624,7 +626,7 @@ const BattleGroundDetails = () => {
 
                 if (
                     attacker.config.skills.includes("poison") ||
-                    attacker.typeUnit === "Segment" ||
+                    attacker.config.skills.includes("onlyExplode") ||
                     attacker.explodeDamage
                 ) {
                     defender.becamePoisonedBonus = true;
@@ -638,17 +640,18 @@ const BattleGroundDetails = () => {
                 ) {
                     attacker.healthAfter =
                         attacker.healthBefore - defenceResult;
-                } else if (
-                    attacker.explodeDamage ||
-                    attacker.typeUnit === "Segment"
-                ) {
-                    attacker.healthAfter = 0;
                 }
             } else {
                 idxDefPos++;
                 totalAttackResult = 0;
                 poisoningAttacker = 9999;
                 defenderRepeatedAttack = 0;
+            }
+
+            // Exploding units are always consumed after attacking,
+            // whether or not the defender survives.
+            if (isExploding) {
+                attacker.healthAfter = 0;
             }
         });
 
