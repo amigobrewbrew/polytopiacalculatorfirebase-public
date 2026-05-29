@@ -308,7 +308,7 @@
             "maxHealth": 10,
             "attack": 3,
             "defence": 3,
-            "skills": ["explode", "stiff", "static"]
+            "skills": ["onlyExplode", "static", "stiff"]
         },
         {
             "name": "LivingIsland",
@@ -356,7 +356,7 @@
             "maxHealth": 10,
             "attack": 2,
             "defence": 2,
-            "skills": ["explode", "static", "stiff"]
+            "skills": ["onlyExplode", "static", "stiff"]
         },
         {
             "name": "InsectEgg",
@@ -364,7 +364,7 @@
             "maxHealth": 10,
             "attack": 2,
             "defence": 3,
-            "skills": ["explode", "stiff", "static"]
+            "skills": ["onlyExplode", "static", "stiff"]
         },
         {
             "name": "Larva",

@@ -591,9 +591,7 @@ const BattleGroundDetails = () => {
             let attackResult = 0;
             const isExploding =
                 attacker.explodeDamage ||
-                attacker.typeUnit === "Segment" ||
-                attacker.typeUnit === "Boomchi" ||
-                attacker.typeUnit === "InsectEgg";
+                attacker.config.skills.includes("onlyExplode");
             const isSplash =
                 isExploding ||
                 (attacker.splashDamage &&
@@ -628,9 +626,7 @@ const BattleGroundDetails = () => {
 
                 if (
                     attacker.config.skills.includes("poison") ||
-                    attacker.typeUnit === "Segment" ||
-                    attacker.typeUnit === "Boomchi" ||
-                    attacker.typeUnit === "InsectEgg" ||
+                    attacker.config.skills.includes("onlyExplode") ||
                     attacker.explodeDamage
                 ) {
                     defender.becamePoisonedBonus = true;
