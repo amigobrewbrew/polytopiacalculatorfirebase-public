@@ -50,8 +50,8 @@ const HelpPage = () => {
                                 (Fire Dragon and Bomber)
                             </li>
                             <li>
-                                XPLD: When toggled, unit explodes (Raychi and
-                                Doomux; Attacking Segment always explodes)
+                                XPLD: When toggled, unit explodes (Doomux);
+                                Segment, Boomchi and Insect Egg always explode
                             </li>
                             <li>
                                 SAFE: When toggled, unit is safe from
