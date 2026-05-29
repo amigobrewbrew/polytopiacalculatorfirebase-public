@@ -29,6 +29,18 @@ async function addAttacker(page: Page, unitType: string) {
     await page.click(`[data-testid="attacker-${unitType}"]`);
 }
 
+async function addAttackerFromAnyPage(page: Page, unitType: string) {
+    for (let i = 0; i < 10; i++) {
+        const attacker = page.locator(`[data-testid="attacker-${unitType}"]`);
+        if ((await attacker.count()) > 0) {
+            await attacker.first().click();
+            return;
+        }
+        await goToNextAttackersPage(page);
+    }
+    throw new Error(`Could not find attacker ${unitType}`);
+}
+
 async function addDefender(page: Page, unitType: string) {
     await page.click(`[data-testid="defender-${unitType}"]`);
 }
@@ -267,6 +279,27 @@ test.describe("Battle Calculation", () => {
                 .locator('text="xpld"')
         ).toHaveCount(0);
         await expectAttackerHealth(page, 0);
+    });
+
+    test("v116: boomchi xpld toggle state does not change damage", async ({
+        page,
+    }) => {
+        await setGameVersion(page, "116");
+        await addAttackerFromAnyPage(page, "boomchi");
+        await addDefender(page, "swordsman");
+
+        const defenderHealthAfter = page.locator(
+            '[data-testid="defenders-0-health-after"]'
+        );
+        const damageWithoutXpldToggle = await defenderHealthAfter.innerText();
+
+        const hiddenXpldToggle = page
+            .locator(selectors.attackersBattleground)
+            .first()
+            .locator("button", { hasText: "xpld" });
+        await hiddenXpldToggle.dispatchEvent("click");
+
+        await expect(defenderHealthAfter).toHaveText(damageWithoutXpldToggle);
     });
 
     test("should calculate damage with correct rounding", async ({ page }) => {
