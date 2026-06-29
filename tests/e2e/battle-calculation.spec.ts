@@ -128,6 +128,19 @@ async function toggleAttackerExplode(page: Page) {
         .waitFor({ state: "visible" });
 }
 
+async function toggleAttackerSplash(page: Page) {
+    // The splsh button is rendered (display:none) on every attacker card, so
+    // scope to the visible one belonging to the splash-capable attacker.
+    await page
+        .locator(selectors.attackersBattleground)
+        .locator('button:visible', { hasText: "splsh" })
+        .first()
+        .click();
+    await page
+        .locator(selectors.attackersBattleground)
+        .waitFor({ state: "visible" });
+}
+
 test.describe("Battle Calculation", () => {
     test.beforeEach(async ({ page }) => {
         await page.goto("/");
@@ -259,6 +272,31 @@ test.describe("Battle Calculation", () => {
         await changeDefenderHealth(page, 0, 8);
         await toggleAttackerExplode(page);
         await expectDefenderHealth(page, 2);
+    });
+
+    // Exida's poison-only splash deals no damage but still poisons the
+    // defender, which halves its defence for follow-up attackers. Exida +
+    // Warrior vs a full-health Warrior: without splash Exida hits for 8 and
+    // poisons (defender at 2), then the Warrior hits the poisoned defender for
+    // 8 → -6. With splash toggled, Exida deals 0 but still poisons, so the
+    // Warrior only takes the defender to 4.
+    test("v116: exida poison-only splash leaves defender alive (4 vs -6)", async ({
+        page,
+    }) => {
+        await setGameVersion(page, "116");
+        // Exida lives on attacker page 5; add it first so it poisons first.
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await goToNextAttackersPage(page);
+        await addAttacker(page, "exida");
+        // Next from the last page wraps back to page 1 (Warrior).
+        await goToNextAttackersPage(page);
+        await addAttacker(page, "warrior");
+        await addDefender(page, "warrior");
+        await expectDefenderHealth(page, -6);
+        await toggleAttackerSplash(page);
+        await expectDefenderHealth(page, 4);
     });
 
     test("should calculate damage with correct rounding", async ({ page }) => {

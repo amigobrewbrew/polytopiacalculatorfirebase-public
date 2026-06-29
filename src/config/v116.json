@@ -332,7 +332,7 @@
             "maxHealth": 10,
             "attack": 3,
             "defence": 1,
-            "skills": ["poison", "splash"]
+            "skills": ["poison", "poisonSplash"]
         },
         {
             "name": "Doomux",

@@ -630,7 +630,8 @@ const SoldierUnitAsRender = ({
                     display:
                         soldierUnit.team === "Attackers" &&
                         (soldierUnit.config.skills.includes("splash") ||
-                            soldierUnit.config.skills.includes("stomp"))
+                            soldierUnit.config.skills.includes("stomp") ||
+                            soldierUnit.config.skills.includes("poisonSplash"))
                             ? "visible"
                             : "none",
                     ...getSecondaryButtonStyles(),

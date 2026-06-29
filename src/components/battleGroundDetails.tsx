@@ -592,19 +592,30 @@ const BattleGroundDetails = () => {
             const isExploding =
                 attacker.explodeDamage ||
                 attacker.config.skills.includes("onlyExplode");
+            // Poison-only splash (e.g. Exida): spreads poison to the adjacent
+            // unit without dealing any splash damage.
+            const isPoisonSplash =
+                !isExploding &&
+                attacker.splashDamage &&
+                attacker.config.skills.includes("poisonSplash");
             const isSplash =
                 isExploding ||
+                isPoisonSplash ||
                 (attacker.splashDamage &&
                     (attacker.config.skills.includes("splash") ||
                         attacker.config.skills.includes("stomp")));
             if (isSplash) {
-                attackResult = calculateAttackSplash(
-                    attackForce,
-                    totalDamage,
-                    attackerAttack
-                );
-                if (versionConfig?.splashScheme === SplashScheme.FLOOR) {
-                    attackResult = Math.floor(attackResult);
+                if (isPoisonSplash) {
+                    attackResult = 0;
+                } else {
+                    attackResult = calculateAttackSplash(
+                        attackForce,
+                        totalDamage,
+                        attackerAttack
+                    );
+                    if (versionConfig?.splashScheme === SplashScheme.FLOOR) {
+                        attackResult = Math.floor(attackResult);
+                    }
                 }
             } else {
                 attackResult = calculateAttackResult(
