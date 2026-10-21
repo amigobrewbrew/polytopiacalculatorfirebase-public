@@ -543,6 +543,7 @@ const SoldierUnitAsRender = ({
                     </span>
                 </div>
                 <IconButton
+                    data-testid={`${soldierUnit.team.toLowerCase()}-${soldierUnit.id}-delete`}
                     onClick={() => onDelete(soldierUnit.id, soldierUnit.team)}
                     style={{
                         marginRight: "5%",
@@ -559,6 +560,7 @@ const SoldierUnitAsRender = ({
                 </IconButton>
             </div>
             <IconButton
+                data-testid={`${soldierUnit.team.toLowerCase()}-${soldierUnit.id}-increase`}
                 onClick={() =>
                     onIncreaseHitpoints(soldierUnit.id, soldierUnit.team)
                 }
@@ -614,6 +616,7 @@ const SoldierUnitAsRender = ({
                 mx{soldierUnit.healthMax}
             </Button>
             <Button
+                data-testid={`${soldierUnit.team.toLowerCase()}-${soldierUnit.id}-splsh`}
                 variant="outlined"
                 color="secondary"
                 size="small"
@@ -701,6 +704,7 @@ const SoldierUnitAsRender = ({
             </Button>
             <br />
             <IconButton
+                data-testid={`${soldierUnit.team.toLowerCase()}-${soldierUnit.id}-decrease`}
                 onClick={() =>
                     onDecreaseHitpoints(soldierUnit.id, soldierUnit.team)
                 }

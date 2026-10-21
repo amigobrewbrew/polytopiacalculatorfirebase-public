@@ -245,6 +245,7 @@ const DefendersSelection = ({
 
     return (
         <CardWithShadow
+            data-testid="defenders-selection"
             sx={{ p: "1%" }}
             style={{
                 maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
@@ -261,6 +262,7 @@ const DefendersSelection = ({
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
                         disabled={disabled}
+                        data-testid="defenders-selection-previous"
                     >
                         <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
                     </Button>
@@ -273,6 +275,7 @@ const DefendersSelection = ({
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
                         disabled={disabled}
+                        data-testid="defenders-selection-next"
                     >
                         <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
                     </Button>

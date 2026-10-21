@@ -11,6 +11,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { logEvent } from "firebase/analytics";
 import { useCallback, useEffect, useState } from "react";
 import {
+    LAYOUT_GAP_PX,
+    LAYOUT_PADDING_PX,
     MAX_WIDTH_PX,
     SINGLE_COL_MAX_WIDTH_PX,
     SINGLE_COLUMN_WIDTH_PERCENTAGE,
@@ -693,8 +695,8 @@ const BattleGroundDetails = () => {
                 margin: "0 auto",
                 display: "flex",
                 flexDirection: "column",
-                padding: "1%",
-                gap: "1%",
+                padding: LAYOUT_PADDING_PX,
+                gap: LAYOUT_GAP_PX,
             }}
         >
             <Box
@@ -703,10 +705,11 @@ const BattleGroundDetails = () => {
                     justifyContent: "space-between",
                     mb: 0,
                     flexFlow: "wrap",
-                    gap: "1%",
+                    gap: LAYOUT_GAP_PX,
                 }}
             >
                 <Box
+                    data-testid="attackers-battleground"
                     sx={{
                         display: "block",
                         maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
@@ -741,6 +744,7 @@ const BattleGroundDetails = () => {
                 </Box>
 
                 <Box
+                    data-testid="defenders-battleground"
                     sx={{
                         display: "block",
                         maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
@@ -793,7 +797,7 @@ const BattleGroundDetails = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     flexFlow: "wrap",
-                    gap: "1%",
+                    gap: LAYOUT_GAP_PX,
                     mb: 0,
                 }}
             >

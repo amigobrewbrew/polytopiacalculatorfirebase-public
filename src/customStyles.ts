@@ -12,3 +12,12 @@ export const getSecondaryButtonStyles = () => ({
     padding: "1% 2%",
     marginRight: "2%",
 });
+
+/**
+ * Padding/gap for the battleground layout. These must not be percentages:
+ * a percentage padding resolves against the *parent* width, so on a wide
+ * desktop window it ate enough of the 900px container that the two 425px
+ * selection cards no longer fit side by side and wrapped onto two rows.
+ */
+export const LAYOUT_PADDING_PX = "8px";
+export const LAYOUT_GAP_PX = "8px";

@@ -239,6 +239,7 @@ const AttackersSelection = ({
 
     return (
         <CardWithShadow
+            data-testid="attackers-selection"
             sx={{ p: "1%" }}
             style={{
                 maxWidth: `${SINGLE_COL_MAX_WIDTH_PX}px`,
@@ -254,6 +255,7 @@ const AttackersSelection = ({
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
                         disabled={disabled}
+                        data-testid="attackers-selection-previous"
                     >
                         <ArrowBackIosNewIcon sx={{ fontSize: "medium" }} />
                     </Button>
@@ -265,6 +267,7 @@ const AttackersSelection = ({
                         sx={{ m: 1 }}
                         style={{ maxWidth: "4em", minWidth: "4em" }}
                         disabled={disabled}
+                        data-testid="attackers-selection-next"
                     >
                         <ArrowForwardIosIcon sx={{ fontSize: "medium" }} />
                     </Button>

@@ -13,12 +13,14 @@ interface CardWithShadowProps {
     shadowAmount?: number;
     sx?: object;
     style?: object;
+    "data-testid"?: string;
 }
 
 const CardWithShadow = ({
     children,
     sx = {},
     style = {},
+    "data-testid": dataTestId,
 }: CardWithShadowProps) => {
     return (
         <Box
@@ -32,6 +34,7 @@ const CardWithShadow = ({
                 ...sx,
             }}
             style={style}
+            data-testid={dataTestId}
         >
             {children}
         </Box>

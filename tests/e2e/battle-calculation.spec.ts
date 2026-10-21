@@ -2,25 +2,17 @@ import { test, expect, Page } from "@playwright/test";
 
 // Selectors from common_selectors.resource
 const selectors = {
-    attackersBattleground:
-        "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1)",
-    defendersBattleground:
-        "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(2)",
-    attackersSelectionGoNext:
-        "div.containers > div > div.MuiBox-root.css-kx72jn > div:nth-child(1) > span > div.MuiBox-root.css-gg4vpm > button:nth-child(3)",
+    attackersBattleground: "[data-testid='attackers-battleground']",
+    defendersBattleground: "[data-testid='defenders-battleground']",
+    attackersSelectionGoNext: "[data-testid='attackers-selection-next']",
     attackersSelectionGoPrevious:
-        "div.containers > div > div.MuiBox-root.css-kx72jn > div:nth-child(1) > span > div.MuiBox-root.css-gg4vpm > button:nth-child(1)",
-    attackersSelection:
-        "div.containers > div > div.MuiBox-root.css-kx72jn > div:nth-child(1)",
-    defendersSelection:
-        "div.containers > div > div.MuiBox-root.css-kx72jn > div:nth-child(2)",
-    removeFirstAttacker:
-        "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > div > button",
+        "[data-testid='attackers-selection-previous']",
+    attackersSelection: "[data-testid='attackers-selection']",
+    defendersSelection: "[data-testid='defenders-selection']",
     changeOrderCheckbox: "[data-testid='change-order-checkbox']",
-    firstAttackerMoveDown:
-        "div.containers > div > div.MuiBox-root.css-top6dd > div:nth-child(1) > div:nth-child(1) > div > button:nth-child(9)",
-    secondAttackerSplsh:
-        "xpath=/html/body/div/div[2]/div/div[1]/div[1]/div[2]/div/button[4]",
+    removeFirstAttacker: "[data-testid='attackers-0-delete']",
+    firstAttackerMoveDown: "[data-testid='attackers-0-decrease']",
+    secondAttackerSplsh: "[data-testid='attackers-1-splsh']",
 };
 
 // Helper functions
